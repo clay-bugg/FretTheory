@@ -16,11 +16,16 @@
 
 <script>
 export default {
-  name: 'Header'
+  name: 'App'
 }
 </script>
 
 <style>
+
+h1 {
+  font-size: 3.5rem;
+}
+
 div {
   font-family: 'Kanit', sans-serif;
   margin: 0;
@@ -28,9 +33,6 @@ div {
 }
 
 #page-options {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
   margin: 1em auto;
   padding: 0 4em;
 }

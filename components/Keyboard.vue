@@ -1,30 +1,70 @@
 <template>
-  <div id="keyboard">
-    <div v-for="(key, index) in keys" :key="index" class="key" @mousedown="playNote"></div>
+  <div id="component">
+
+    <label for="keys-input">Keys</label>
+
+    <input id="keys-input"
+           v-model="keysAmount"
+           type="range"
+           step="1"
+           min="7"
+           max="21" />
+    <span id="keys-display">{{ keysAmount }}</span>
+
+    <div id="keyboard">
+      <div v-for="(key, index) in keys"
+           :key="index"
+           class="key"
+           @mousedown="playNote(key)">
+        {{ key }}
+      </div>
+
+    </div>
   </div>
 </template>
-<script>
 
-import { Howl, Howler } from 'howler';
+<script>
+import { Howl } from 'howler';
 
 export default {
   data() {
     return {
-      keys: ['C4','D4','E4','F4','G4','A4','B4'],
-    }
-  }
-}
-
-
-
+      keysAmount: 7, // Default slider value
+    };
+  },
+  computed: {
+    keys() {
+      return this.keysArray(this.keysAmount); // Generate keys based on the slider value
+    },
+  },
+  methods: {
+    playNote(note) {
+      const sound = new Howl({
+        src: [`/sounds/keyboard_samples/${note}.mp3`], // Ensure files match note values
+      });
+      sound.play();
+    },
+    keysArray(length) {
+      return Array.from({ length }, (_, i) => i + 1); // Generates [1, 2, ..., length]
+    },
+  },
+};
 </script>
 
+
 <style scoped>
+#component {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4em;
+}
 #keyboard {
   width: fit-content;
   height: 16em;
   border: 1px solid rgba(0, 0, 0, 0.111);
   display: flex;
+  margin-bottom: 1em;
 }
 
 .key {
@@ -37,5 +77,4 @@ export default {
   cursor: pointer;
   filter: brightness(95%);
 }
-
 </style>
