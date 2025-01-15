@@ -15,8 +15,8 @@
       <div v-for="(key, index) in keys"
            :key="index"
            class="key"
-           @mousedown="playNote(key)">
-        {{ key }}
+           @mousedown="playNote(noteNames[index])">
+        {{ noteNames[index] }}
       </div>
 
     </div>
@@ -29,26 +29,30 @@ import { Howl } from 'howler';
 export default {
   data() {
     return {
-      keysAmount: 7, // Default slider value
+      keysAmount: 7,
+      noteNames: ['C2', 'D2', 'E2', 'F2', 'G2', 'A2', 'B2', 'C3', 'D3', 'E3', 'F3', 'G3', 'A3', 'B3', 'C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4',],
     };
   },
   computed: {
     keys() {
-      return this.keysArray(this.keysAmount); // Generate keys based on the slider value
+      return this.keysArray(this.keysAmount);
     },
   },
-  methods: {
-    playNote(note) {
-      const sound = new Howl({
-        src: [`/sounds/keyboard_samples/${note}.mp3`], // Ensure files match note values
-      });
-      sound.play();
+    methods: {
+      playNote(note) {
+        const sound = new Howl({
+          src: [`/sounds/keyboard_samples/${note}.mp3`], 
+        });
+        sound.play();
+
+        setTimeout(() => { sound.stop() }, 6000)
+      },
+      keysArray(length) {
+        return Array.from({ length }, (_, i) => i + 1);
+      }
     },
-    keysArray(length) {
-      return Array.from({ length }, (_, i) => i + 1); // Generates [1, 2, ..., length]
-    },
-  },
-};
+  }
+
 </script>
 
 
