@@ -8,15 +8,15 @@
            type="range"
            step="1"
            min="7"
-           max="21" />
+           max="36" />
     <span id="keys-display">{{ keysAmount }}</span>
 
     <div id="keyboard">
-      <div v-for="(key, index) in keys"
-           :key="index"
-           class="key"
-           @mousedown="playNote(noteNames[index])">
-        {{ noteNames[index] }}
+      <div v-for="(key, index) in displayedKeys"
+           :key="key"
+           :class="['key', key.isSharp ? 'black' : 'white']"
+           @mousedown="playNote(key.note)">
+        {{ key.note }}
       </div>
 
     </div>
@@ -29,13 +29,52 @@ import { Howl } from 'howler';
 export default {
   data() {
     return {
-      keysAmount: 7,
-      noteNames: ['C2', 'D2', 'E2', 'F2', 'G2', 'A2', 'B2', 'C3', 'D3', 'E3', 'F3', 'G3', 'A3', 'B3', 'C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4',],
+      keysAmount: 12,
+      keys: [
+        { note: 'C3', isSharp: false },
+        { note: 'Cs3', isSharp: true },
+        { note: 'D3', isSharp: false },
+        { note: 'Ds3', isSharp: true },
+        { note: 'E3', isSharp: false },
+        { note: 'F3', isSharp: false },
+        { note: 'Fs3', isSharp: true },
+        { note: 'G3', isSharp: false },
+        { note: 'Gs3', isSharp: true },
+        { note: 'A3', isSharp: false },
+        { note: 'As3', isSharp: true },
+        { note: 'B3', isSharp: false },
+        { note: 'C4', isSharp: false },
+        { note: 'Cs4', isSharp: true },
+        { note: 'D4', isSharp: false },
+        { note: 'Ds4', isSharp: true },
+        { note: 'E4', isSharp: false },
+        { note: 'F4', isSharp: false },
+        { note: 'Fs4', isSharp: true },
+        { note: 'G4', isSharp: false },
+        { note: 'Gs4', isSharp: true },
+        { note: 'A4', isSharp: false },
+        { note: 'As4', isSharp: true },
+        { note: 'B4', isSharp: false },
+
+        { note: 'C5', isSharp: false },
+        { note: 'Cs5', isSharp: true },
+        { note: 'D5', isSharp: false },
+        { note: 'Ds5', isSharp: true },
+        { note: 'E5', isSharp: false },
+        { note: 'F5', isSharp: false },
+        { note: 'Fs5', isSharp: true },
+        { note: 'G5', isSharp: false },
+        { note: 'Gs5', isSharp: true },
+        { note: 'A5', isSharp: false },
+        { note: 'As5', isSharp: true },
+        { note: 'B5', isSharp: false }
+      ]
+      ,
     };
   },
   computed: {
-    keys() {
-      return this.keysArray(this.keysAmount);
+    displayedKeys() {
+      return this.keys.slice(0, this.keysAmount);
     },
   },
     methods: {
@@ -66,19 +105,46 @@ export default {
 #keyboard {
   width: fit-content;
   height: 16em;
-  border: 1px solid rgba(0, 0, 0, 0.111);
+  border: 3px solid rgb(0, 0, 0);
   display: flex;
   margin-bottom: 1em;
+  background-color: rgba(0, 0, 0, 0.64);
 }
 
 .key {
-  width: 4em;
   border: 1px solid black;
   background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  box-sizing: border-box;
 }
 
 .key:hover {
   cursor: pointer;
   filter: brightness(95%);
 }
+
+.white {
+  width: 4em;
+  z-index: 0;
+ 
+}
+
+.black {
+  width: 2.25em;
+  position: relative;
+  background-color: black;
+  color: white;
+  height: 10em;
+  margin: 0 -18px;
+  z-index: 1;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+
+
+
 </style>
