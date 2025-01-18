@@ -102,14 +102,14 @@ export default {
       selectedChord: '',
       highlightedNotes: [],
       chordIntervals: {
-        'M': [0,4,7],
-        'm': [0,3,7],
-        'dim': [0,3,6],
-        'aug': [0,4,8],
-        'Maj7': [0,4,7,11],
-        'm7': [0,3,7,10]
+        'M': [0, 4, 7],
+        'm': [0, 3, 7],
+        'dim': [0, 3, 6],
+        'aug': [0, 4, 8],
+        'Maj7': [0, 4, 7, 11],
+        'm7': [0, 3, 7, 10]
       }
-    };
+    }
   },
   watch: {
     selectedChordType(newVal, oldVal) {
@@ -133,12 +133,57 @@ export default {
 
       setTimeout(() => { sound.stop() }, 6000)
     },
+
     keysArray(length) {
       return Array.from({ length }, (_, i) => i + 1);
     },
-    
-  },
+
+    updateChord() { 
+      if (!this.selectedChord || !this.selectedChordType) {
+        this.highlightedNotes = [];
+        return;
+      }
+
+      const rootNote = this.selectedChord;
+      const intervals = this.chordIntervals[this.selectedChordType];
+
+      if (!intervals) {
+        console.warn(`Chord type ${this.selectedChordType} is not defined.`);
+        this.highlightedNotes = [];
+        return;
+      }
+
+      const getNoteIndex = (note) => { 
+        const noteOrder = ['C', 'Cs', 'D', 'Ds', 'E', 'F', 'Fs', 'G', 'Gs', 'A', 'As', 'B'];
+        const baseNote = note.slice(0, -1);
+        return noteOrder.indexOf(baseNote);
+      }
+
+      const rootIndex = getNoteIndex(rootNote);
+      if (rootIndex === -1) {
+        console.error(`Root note ${rootNote} not found in keys.`);
+        this.highlightedNotes = [];
+        return;
+      }
+
+      const chordNotes = intervals.map(interval => {
+        const noteIndex = (rootIndex + interval) % 12;
+        const octaveShift = Math.floor((rootIndex + interval) / 12);
+        // Find the closest note in the keys array
+        // Assuming keys are ordered from low to high
+        for (let key of this.keys) {
+          if (getNoteIndex(key.note) === noteIndex) {
+            return key.note;
+          }
+        }
+        return null;
+      }).filter(note => note !== null);
+
+      this.highlightedNotes = chordNotes;
+      }
+    }
   }
+  
 
 
 </script>
