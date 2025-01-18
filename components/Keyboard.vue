@@ -58,46 +58,7 @@ export default {
   data() {
     return {
       keysAmount: 12,
-      keys: [
-        { note: 'C3', isSharp: false },
-        { note: 'Cs3', isSharp: true },
-        { note: 'D3', isSharp: false },
-        { note: 'Ds3', isSharp: true },
-        { note: 'E3', isSharp: false },
-        { note: 'F3', isSharp: false },
-        { note: 'Fs3', isSharp: true },
-        { note: 'G3', isSharp: false },
-        { note: 'Gs3', isSharp: true },
-        { note: 'A3', isSharp: false },
-        { note: 'As3', isSharp: true },
-        { note: 'B3', isSharp: false },
-
-        { note: 'C4', isSharp: false },
-        { note: 'Cs4', isSharp: true },
-        { note: 'D4', isSharp: false },
-        { note: 'Ds4', isSharp: true },
-        { note: 'E4', isSharp: false },
-        { note: 'F4', isSharp: false },
-        { note: 'Fs4', isSharp: true },
-        { note: 'G4', isSharp: false },
-        { note: 'Gs4', isSharp: true },
-        { note: 'A4', isSharp: false },
-        { note: 'As4', isSharp: true },
-        { note: 'B4', isSharp: false },
-
-        { note: 'C5', isSharp: false },
-        { note: 'Cs5', isSharp: true },
-        { note: 'D5', isSharp: false },
-        { note: 'Ds5', isSharp: true },
-        { note: 'E5', isSharp: false },
-        { note: 'F5', isSharp: false },
-        { note: 'Fs5', isSharp: true },
-        { note: 'G5', isSharp: false },
-        { note: 'Gs5', isSharp: true },
-        { note: 'A5', isSharp: false },
-        { note: 'As5', isSharp: true },
-        { note: 'B5', isSharp: false }
-      ],
+      keys: this.generateKeys(3, 5),
       selectedChordType: '',
       selectedChord: '',
       highlightedNotes: [],
@@ -111,27 +72,43 @@ export default {
       }
     }
   },
-  watch: {
-    selectedChordType(newVal, oldVal) {
-      console.log('Option changed from', oldVal, 'to', newVal);
-      this.updateChord();
-    },
-    selectedChord(newVal, oldVal) {
-      console.log('Option changed from', oldVal, 'to', newVal);
-      this.updateChord();
-    },
-    keysAmount(newVal, oldVal) { 
-      if (newVal < 7) this.keysAmount = 7;
-      if (newVal > 7 this.keyslength) this.keysAmount = this.keysLength;
-      this.updateChord();
-    }
-  },
   computed: {
     displayedKeys() {
       return this.keys.slice(0, this.keysAmount);
+    }
+  },
+  watch: {
+    selectedChordType(newVal, oldVal) {
+      console.log('Chord type changed from', oldVal, 'to', newVal);
+      this.updateChord();
     },
+    selectedChord(newVal, oldVal) {
+      console.log('Chord root changed from', oldVal, 'to', newVal);
+      this.updateChord();
+    },
+    keysAmount(newVal) { 
+      if (newVal < 7) this.keysAmount = 7;
+      if (newVal > this.keys.length) this.keysAmount = this.keys.length;
+      this.updateChord();
+    }
   },
   methods: {
+    generateKeys(startOctave, endOctave) {
+      const notes = ['C', 'Cs', 'D', 'Ds', 'E', 'F', 'Fs', 'G', 'Gs', 'A', 'As', 'B'];
+      const keys = [];
+
+      for (let octave = startOctave; octave <= endOctave; octave++) {
+        notes.forEach(note => {
+          keys.push({
+            note: `${note}${octave}`,
+            isSharp: note.includes('s')
+          });
+        });
+      }
+
+      return keys;
+    },
+
     playNote(note) {
       const sound = new Howl({
         src: [`/sounds/keyboard_samples/${note}.mp3`],
@@ -162,7 +139,8 @@ export default {
 
       const getNoteIndex = (note) => { 
         const noteOrder = ['C', 'Cs', 'D', 'Ds', 'E', 'F', 'Fs', 'G', 'Gs', 'A', 'As', 'B'];
-        const baseNote = note.slice(0, -1);
+        const hasOctave = /\d$/.test(note);
+        const baseNote = hasOctave ? note.slice(0, -1) : note;
         return noteOrder.indexOf(baseNote);
       }
 
