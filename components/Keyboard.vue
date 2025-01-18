@@ -18,7 +18,35 @@
            @mousedown="playNote(key.note)">
         {{ key.note }}
       </div>
+    </div>
 
+    <div id="chord-select-container">
+      <label for="chord-select">Chord Finder:</label>
+
+      <select id="chord-select"
+              v-model="selectedChord">
+        <option value="A">A</option>
+        <option value="A#">A#</option>
+        <option value="B">B</option>
+        <option value="C">C</option>
+        <option value="C#">C#</option>
+        <option value="D">D</option>
+        <option value="D#">D#</option>
+        <option value="E">E</option>
+        <option value="F">F</option>
+        <option value="F#">F#</option>
+        <option value="G">G</option>
+        <option value="G#">G#</option>
+      </select>
+
+      <select id="chord-type-select"
+              v-model="selectedChordType">
+        <option value="M">Major</option>
+        <option value="m">m</option>
+        <option value="7">7</option>
+        <option value="add9">add9</option>
+        <option value="sus2">sus2</option>
+      </select>
     </div>
   </div>
 </template>
@@ -43,6 +71,7 @@ export default {
         { note: 'A3', isSharp: false },
         { note: 'As3', isSharp: true },
         { note: 'B3', isSharp: false },
+
         { note: 'C4', isSharp: false },
         { note: 'Cs4', isSharp: true },
         { note: 'D4', isSharp: false },
@@ -68,29 +97,39 @@ export default {
         { note: 'A5', isSharp: false },
         { note: 'As5', isSharp: true },
         { note: 'B5', isSharp: false }
-      ]
-      ,
+      ],
+      selectedChordType: '',
+      selectedChord: ''
     };
+  },
+  watch: {
+    selectedChordType(newVal, oldVal) {
+      console.log('Option changed from', oldVal, 'to', newVal);
+    },
+    selectedChord(newVal, oldVal) {
+      console.log('Option changed from', oldVal, 'to', newVal);
+    },
   },
   computed: {
     displayedKeys() {
       return this.keys.slice(0, this.keysAmount);
-    },
+    }
   },
-    methods: {
-      playNote(note) {
-        const sound = new Howl({
-          src: [`/sounds/keyboard_samples/${note}.mp3`], 
-        });
-        sound.play();
+  methods: {
+    playNote(note) {
+      const sound = new Howl({
+        src: [`/sounds/keyboard_samples/${note}.mp3`],
+      });
+      sound.play();
 
-        setTimeout(() => { sound.stop() }, 6000)
-      },
-      keysArray(length) {
-        return Array.from({ length }, (_, i) => i + 1);
-      }
+      setTimeout(() => { sound.stop() }, 6000)
     },
+    keysArray(length) {
+      return Array.from({ length }, (_, i) => i + 1);
+    }
+  },
   }
+
 
 </script>
 
@@ -102,6 +141,7 @@ export default {
   align-items: center;
   gap: 0.4em;
 }
+
 #keyboard {
   width: fit-content;
   height: 16em;
@@ -129,7 +169,7 @@ export default {
 .white {
   width: 4em;
   z-index: 0;
- 
+
 }
 
 .black {
@@ -144,7 +184,9 @@ export default {
   border-bottom-right-radius: 5px;
 }
 
-
-
-
+#chord-select-container {
+  display: flex;
+  place-items: center;
+  gap: 0.5em;
+}
 </style>

@@ -2,9 +2,7 @@
   <div id="page">
     <h1>Interactive Keyboard</h1>
     <Keyboard />
-    <NuxtLink to="/">
-      <Button>Back to Home</Button>
-    </NuxtLink>
+
   </div>
 </template>
 
@@ -13,7 +11,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
   height: 100vh;
 }
 
