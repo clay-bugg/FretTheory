@@ -89,19 +89,18 @@ export default {
     keysAmount(newVal) { 
       if (newVal < 7) this.keysAmount = 7;
       if (newVal > this.keys.length) this.keysAmount = this.keys.length;
-      this.updateChord();
     }
   },
   methods: {
     generateKeys(startOctave, endOctave) {
-      const notes = ['C', 'Cs', 'D', 'Ds', 'E', 'F', 'Fs', 'G', 'Gs', 'A', 'As', 'B'];
+      const notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
       const keys = [];
 
       for (let octave = startOctave; octave <= endOctave; octave++) {
         notes.forEach(note => {
           keys.push({
             note: `${note}${octave}`,
-            isSharp: note.includes('s')
+            isSharp: note.includes('#')
           });
         });
       }
@@ -116,6 +115,7 @@ export default {
       sound.play();
 
       setTimeout(() => { sound.stop() }, 6000)
+      console.log(`Note played:${note}`)
     },
 
     keysArray(length) {
@@ -138,7 +138,7 @@ export default {
       }
 
       const getNoteIndex = (note) => { 
-        const noteOrder = ['C', 'Cs', 'D', 'Ds', 'E', 'F', 'Fs', 'G', 'Gs', 'A', 'As', 'B'];
+        const noteOrder = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
         const hasOctave = /\d$/.test(note);
         const baseNote = hasOctave ? note.slice(0, -1) : note;
         return noteOrder.indexOf(baseNote);
