@@ -114,10 +114,17 @@ export default {
   watch: {
     selectedChordType(newVal, oldVal) {
       console.log('Option changed from', oldVal, 'to', newVal);
+      this.updateChord();
     },
     selectedChord(newVal, oldVal) {
       console.log('Option changed from', oldVal, 'to', newVal);
+      this.updateChord();
     },
+    keysAmount(newVal, oldVal) { 
+      if (newVal < 7) this.keysAmount = 7;
+      if (newVal > 7 this.keyslength) this.keysAmount = this.keysLength;
+      this.updateChord();
+    }
   },
   computed: {
     displayedKeys() {
@@ -169,8 +176,6 @@ export default {
       const chordNotes = intervals.map(interval => {
         const noteIndex = (rootIndex + interval) % 12;
         const octaveShift = Math.floor((rootIndex + interval) / 12);
-        // Find the closest note in the keys array
-        // Assuming keys are ordered from low to high
         for (let key of this.keys) {
           if (getNoteIndex(key.note) === noteIndex) {
             return key.note;
