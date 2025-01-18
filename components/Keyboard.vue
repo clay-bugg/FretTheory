@@ -13,8 +13,8 @@
 
     <div id="keyboard">
       <div v-for="(key, index) in displayedKeys"
-           :key="key"
-           :class="['key', key.isSharp ? 'black' : 'white']"
+           :key="key.note"
+           :class="['key', key.isSharp ? 'black' : 'white', highlightedNotes.includes(key.note) ? 'highlighted' : '']"
            @mousedown="playNote(key.note)">
         {{ key.note }}
       </div>
@@ -144,24 +144,21 @@ export default {
         return noteOrder.indexOf(baseNote);
       }
 
-      const rootIndex = getNoteIndex(rootNote);
-      if (rootIndex === -1) {
-        console.error(`Root note ${rootNote} not found in keys.`);
-        this.highlightedNotes = [];
-        return;
-      }
+      const chordNotes = [];
 
-      const chordNotes = intervals.map(interval => {
-        const noteIndex = (rootIndex + interval) % 12;
-        const octaveShift = Math.floor((rootIndex + interval) / 12);
-        for (let key of this.keys) {
-          if (getNoteIndex(key.note) === noteIndex) {
-            return key.note;
+      this.keys.forEach(key => {
+        const keyIndex = getNoteIndex(key.note);
+        if (keyIndex === -1) return;
+
+        intervals.forEach(interval => {
+          const targetIndex = (getNoteIndex(rootNote) + interval) % 12;
+          if (keyIndex === targetIndex && !chordNotes.includes(key.note)) {
+            chordNotes.push(key.note);
           }
-        }
-        return null;
-      }).filter(note => note !== null);
+        });
+      });
 
+      console.log('Highlighted Chord Notes:', chordNotes);
       this.highlightedNotes = chordNotes;
       }
     }
@@ -220,6 +217,14 @@ export default {
   z-index: 1;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
+}
+
+.highlighted.white {
+  background-color: rgb(218, 130, 130);
+}
+
+.highlighted.black {
+  background-color: rgb(218, 130, 130);
 }
 
 #chord-select-container {
