@@ -109,8 +109,10 @@ export default {
     },
 
     playNote(note) {
+      const encodedNote = encodeURIComponent(note);
+      console.log(encodedNote);
       const sound = new Howl({
-        src: [`/sounds/keyboard_samples/${note}.mp3`],
+        src: [`/sounds/keyboard_samples/${encodedNote}.mp3`],
       });
       sound.play();
 
