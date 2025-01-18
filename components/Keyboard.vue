@@ -43,9 +43,9 @@
               v-model="selectedChordType">
         <option value="M">Major</option>
         <option value="m">m</option>
-        <option value="7">7</option>
-        <option value="add9">add9</option>
-        <option value="sus2">sus2</option>
+        <option value="dim">dim</option>
+        <option value="Maj7">maj7</option>
+        <option value="m7">m7</option>
       </select>
     </div>
   </div>
@@ -99,7 +99,16 @@ export default {
         { note: 'B5', isSharp: false }
       ],
       selectedChordType: '',
-      selectedChord: ''
+      selectedChord: '',
+      highlightedNotes: [],
+      chordIntervals: {
+        'M': [0,4,7],
+        'm': [0,3,7],
+        'dim': [0,3,6],
+        'aug': [0,4,8],
+        'Maj7': [0,4,7,11],
+        'm7': [0,3,7,10]
+      }
     };
   },
   watch: {
@@ -113,7 +122,7 @@ export default {
   computed: {
     displayedKeys() {
       return this.keys.slice(0, this.keysAmount);
-    }
+    },
   },
   methods: {
     playNote(note) {
@@ -126,7 +135,8 @@ export default {
     },
     keysArray(length) {
       return Array.from({ length }, (_, i) => i + 1);
-    }
+    },
+    
   },
   }
 
