@@ -14,7 +14,11 @@
     <div id="keyboard">
       <div v-for="(key, index) in displayedKeys"
            :key="key.note"
-           :class="['key', key.isSharp ? 'black' : 'white', highlightedNotes.includes(key.note) ? 'highlighted' : '']"
+           :class="[
+            'key', key.isSharp ? 'black' : 'white',
+             highlightedNotes.includes(key.note) ? 'highlighted' : '',
+             key.note.replace(/\d/, '') === selectedChord ? 'root-note' : ''
+           ]"
            @mousedown="playNote(key.note)">
         {{ key.note }}
       </div>
@@ -221,12 +225,14 @@ export default {
   border-bottom-right-radius: 5px;
 }
 
-.highlighted.white {
-  background-color: red;
+
+
+.highlighted {
+  background-color: rgb(89, 120, 167);
 }
 
-.highlighted.black {
-  background-color: red;
+.root-note {
+  background-color: rgb(167, 74, 74) !important;
 }
 
 #chord-select-container {
