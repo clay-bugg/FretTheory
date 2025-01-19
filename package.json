@@ -11,6 +11,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@nuxt/icon": "^1.10.3",
     "git-filter-repo": "^0.0.30",
     "howler": "^2.2.4",
     "normalize.css": "^8.0.1",

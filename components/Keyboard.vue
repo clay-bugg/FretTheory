@@ -206,6 +206,7 @@ export default {
 .white {
   width: 4em;
   z-index: 0;
+  background: linear-gradient(to bottom, white 70%, rgb(216, 216, 216))
 
 }
 
@@ -219,6 +220,7 @@ export default {
   z-index: 1;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
+  background: linear-gradient(to bottom, black 60%, rgb(32, 32, 32));
 }
 
 .highlighted.white {

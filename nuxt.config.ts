@@ -2,6 +2,7 @@
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
+
   app: {
     head: {
       title: 'Music Theory',
@@ -15,5 +16,7 @@ export default defineNuxtConfig({
       ]
     }
   },
-  css: ['~/assets/styles/global.css']
+
+  css: ['~/assets/styles/global.css'],
+  modules: ['@nuxt/icon']
 })
