@@ -1,15 +1,45 @@
 <template>
   <div id="component">
 
-    <label for="keys-input">Keys</label>
+    <div id="controls">
 
-    <input id="keys-input"
-           v-model="keysAmount"
-           type="range"
-           step="1"
-           min="7"
-           max="36" />
-    <span id="keys-display">{{ keysAmount }}</span>
+      <div id="chord-select-container">
+        <label for="chord-select">Chord Finder:</label>
+        <select id="chord-select"
+                v-model="selectedChord">
+          <option value="A">A</option>
+          <option value="A#">A#</option>
+          <option value="B">B</option>
+          <option value="C">C</option>
+          <option value="C#">C#</option>
+          <option value="D">D</option>
+          <option value="D#">D#</option>
+          <option value="E">E</option>
+          <option value="F">F</option>
+          <option value="F#">F#</option>
+          <option value="G">G</option>
+          <option value="G#">G#</option>
+        </select>
+        <select id="chord-type-select"
+                v-model="selectedChordType">
+          <option value="M">Major</option>
+          <option value="m">m</option>
+          <option value="dim">dim</option>
+          <option value="Maj7">maj7</option>
+          <option value="m7">m7</option>
+        </select>
+      </div>
+      <div id="keys-select-container">
+        <label for="keys-input">Keys: </label>
+        <input id="keys-input"
+               v-model="keysAmount"
+               type="range"
+               step="1"
+               min="7"
+               max="36" />
+        <span id="keys-display">{{ keysAmount }}</span>
+      </div>
+    </div>
 
     <div id="keyboard">
       <div v-for="(key, index) in displayedKeys"
@@ -24,34 +54,6 @@
       </div>
     </div>
 
-    <div id="chord-select-container">
-      <label for="chord-select">Chord Finder:</label>
-
-      <select id="chord-select"
-              v-model="selectedChord">
-        <option value="A">A</option>
-        <option value="A#">A#</option>
-        <option value="B">B</option>
-        <option value="C">C</option>
-        <option value="C#">C#</option>
-        <option value="D">D</option>
-        <option value="D#">D#</option>
-        <option value="E">E</option>
-        <option value="F">F</option>
-        <option value="F#">F#</option>
-        <option value="G">G</option>
-        <option value="G#">G#</option>
-      </select>
-
-      <select id="chord-type-select"
-              v-model="selectedChordType">
-        <option value="M">Major</option>
-        <option value="m">m</option>
-        <option value="dim">dim</option>
-        <option value="Maj7">maj7</option>
-        <option value="m7">m7</option>
-      </select>
-    </div>
   </div>
 </template>
 
@@ -176,11 +178,42 @@ export default {
 
 
 <style scoped>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 #component {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.4em;
+  gap: 0.4em;;
+}
+
+#controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10em;
+}
+
+#chord-select-container {
+  display: flex;
+  place-items: center;
+  gap: 0.5em;
+}
+
+#chord-select-container select {
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+#keys-select-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5em;
 }
 
 #keyboard {
@@ -201,16 +234,10 @@ export default {
   box-sizing: border-box;
 }
 
-.key:hover {
-  cursor: pointer;
-  filter: brightness(95%);
-}
-
 .white {
   width: 4em;
   z-index: 0;
   background-color: white;
-
 }
 
 .black {
@@ -225,19 +252,16 @@ export default {
   border-bottom-right-radius: 5px;
 }
 
-
+.key:hover {
+  cursor: pointer;
+  filter: brightness(95%);
+}
 
 .highlighted {
-  background-color: rgb(89, 120, 167);
+  background-color: rgb(118, 140, 174);
 }
 
 .root-note {
-  background-color: rgb(167, 74, 74) !important;
-}
-
-#chord-select-container {
-  display: flex;
-  place-items: center;
-  gap: 0.5em;
+  background-color: rgb(176, 65, 65) !important;
 }
 </style>

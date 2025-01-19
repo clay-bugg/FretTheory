@@ -12,6 +12,7 @@
   flex-direction: column;
   align-items: center;
   height: 100vh;
+  gap: 2em;
 }
 
 h1 {
