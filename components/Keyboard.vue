@@ -57,7 +57,7 @@ import { Howl } from 'howler';
 export default {
   data() {
     return {
-      keysAmount: 12,
+      keysAmount: 24,
       keys: this.generateKeys(3, 5),
       selectedChordType: '',
       selectedChord: '',
@@ -139,29 +139,29 @@ export default {
         return;
       }
 
-      const getNoteIndex = (note) => { 
-        const noteOrder = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
-        const hasOctave = /\d$/.test(note);
-        const baseNote = hasOctave ? note.slice(0, -1) : note;
-        return noteOrder.indexOf(baseNote);
-      }
+      const noteOrder = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 
-      const chordNotes = [];
+      const getBaseNoteIndex = (note) => {
+        const baseNote = note.replace(/\d/, '');
+        return noteOrder.indexOf(baseNote);
+      };
+
+      const rootIndex = getBaseNoteIndex(rootNote);
+      const chordNotes = new Set();
 
       this.keys.forEach(key => {
-        const keyIndex = getNoteIndex(key.note);
-        if (keyIndex === -1) return;
+        const keyBaseIndex = getBaseNoteIndex(key.note);
 
         intervals.forEach(interval => {
-          const targetIndex = (getNoteIndex(rootNote) + interval) % 12;
-          if (keyIndex === targetIndex && !chordNotes.includes(key.note)) {
-            chordNotes.push(key.note);
+          const targetIndex = (rootIndex + interval) % 12;
+          if (keyBaseIndex === targetIndex) {
+            chordNotes.add(key.note);
           }
         });
       });
 
-      console.log('Highlighted Chord Notes:', chordNotes);
-      this.highlightedNotes = chordNotes;
+      console.log('Highlighted Chord Notes:', Array.from(chordNotes));
+      this.highlightedNotes = Array.from(chordNotes);
       }
     }
   }
@@ -190,7 +190,6 @@ export default {
 
 .key {
   border: 1px solid black;
-  background-color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -206,7 +205,7 @@ export default {
 .white {
   width: 4em;
   z-index: 0;
-  background: linear-gradient(to bottom, white 70%, rgb(216, 216, 216))
+  background-color: white;
 
 }
 
@@ -220,15 +219,14 @@ export default {
   z-index: 1;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
-  background: linear-gradient(to bottom, black 60%, rgb(32, 32, 32));
 }
 
 .highlighted.white {
-  background-color: rgb(218, 130, 130);
+  background-color: red;
 }
 
 .highlighted.black {
-  background-color: rgb(218, 130, 130);
+  background-color: red;
 }
 
 #chord-select-container {
