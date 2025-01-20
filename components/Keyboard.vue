@@ -5,37 +5,13 @@
 
       <div id="chord-select-container">
         <label for="chord-select">Chord Finder:</label>
-        <select id="chord-select"
-                v-model="selectedChord">
-          <option value="A">A</option>
-          <option value="A#">A#</option>
-          <option value="B">B</option>
-          <option value="C">C</option>
-          <option value="C#">C#</option>
-          <option value="D">D</option>
-          <option value="D#">D#</option>
-          <option value="E">E</option>
-          <option value="F">F</option>
-          <option value="F#">F#</option>
-          <option value="G">G</option>
-          <option value="G#">G#</option>
+        <select id="chord-select" v-model="selectedChord">
+          <option v-for="chord in chordOptions" :key="chord" :value="chord">{{ chord }}</option>
         </select>
-        <select id="chord-type-select"
-                v-model="selectedChordType">
-          <option value="M">Major</option>
-          <option value="m">Minor</option>
-          <option value="+">Augmented</option>
-          <option value="°">Diminished</option>
-          <option value="7">Dominant 7th</option>
-          <option value="m7">Minor 7th</option>
-          <option value="maj7">Major 7th</option>
-          <option value="°7">Diminished 7th</option>
-          <option value="sus2">Suspended 2nd</option>
-          <option value="sus4">Suspended 4th</option>
-          <option value="7sus4">Dominant 7th Suspended 4th</option>
-          <option value="maj9">Major 9th</option>
-          <option value="maj11">Major 11th</option>
-          <option value="maj13">Major 13th</option>
+        <select id="chord-type-select" v-model="selectedChordType">
+          <option v-for="type in chordTypeOptions" :key="type.value":value="type.value">
+            {{ type.label }}
+          </option>
         </select>
       </div>
 
@@ -86,6 +62,23 @@ export default {
       selectedChord: '',
       highlightedNotes: [],
       notesPlayed: null,
+      chordOptions: ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#'],
+      chordTypeOptions: [
+        { label: 'Major', value: 'M' },
+        { label: 'Minor', value: 'm' },
+        { label: 'Augmented', value: '+' },
+        { label: 'Diminished', value: '°' },
+        { label: 'Dominant 7th', value: '7' },
+        { label: 'Minor 7th', value: 'm7' },
+        { label: 'Major 7th', value: 'maj7' },
+        { label: 'Diminished 7th', value: '°7' },
+        { label: 'Suspended 2nd', value: 'sus2' },
+        { label: 'Suspended 4th', value: 'sus4' },
+        { label: 'Dominant 7th Suspended 4th', value: '7sus4' },
+        { label: 'Major 9th', value: 'maj9' },
+        { label: 'Major 11th', value: 'maj11' },
+        { label: 'Major 13th', value: 'maj13' }
+      ],
       chordIntervals: {
         'M': [0, 4, 7],
         'm': [0, 3, 7],
@@ -327,8 +320,4 @@ export default {
   position: relative;
   bottom: 2em
 }
-
-
-
-
 </style>
