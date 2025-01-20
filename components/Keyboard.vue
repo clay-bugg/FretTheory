@@ -22,20 +22,20 @@
         </select>
         <select id="chord-type-select"
                 v-model="selectedChordType">
-          <option value="M">Major</option>
-          <option value="m">m</option>
-          <option value="aug">aug</option>
-          <option value="dim">dim</option>
-          <option value="7">7</option>
-          <option value="m7">m7</option>
-          <option value="Maj7">maj7</option>
-          <option value="dim7">dim7</option>
-          <option value="sus2">sus2</option>
-          <option value="sus4">sus4</option>
-          <option value="7sus4">7sus4</option>
-          <option value="maj9">maj9</option>
-          <option value="maj11">maj11</option>
-          <option value="maj13">maj13</option>
+          <option value="Major">Major</option>
+          <option value="m">Minor</option>
+          <option value="+">Augmented</option>
+          <option value="°">Diminished</option>
+          <option value="7">Dominant 7th</option>
+          <option value="m7">Minor 7th</option>
+          <option value="maj7">Major 7th</option>
+          <option value="°7">Diminished 7th</option>
+          <option value="sus2">Suspended 2nd</option>
+          <option value="sus4">Suspended 4th</option>
+          <option value="7sus4">Dominant 7th Suspended 4th</option>
+          <option value="maj9">Major 9th</option>
+          <option value="maj11">Major 11th</option>
+          <option value="maj13">Major 13th</option>
         </select>
       </div>
       <div id="keys-select-container">
@@ -80,13 +80,13 @@ export default {
       chordIntervals: {
         'M': [0, 4, 7],
         'm': [0, 3, 7],
-        'aug': [0, 4, 8],
-        'dim': [0, 3, 6],
+        '+': [0, 4, 8],
+        '°': [0, 3, 6],
         'aug': [0, 4, 8],
         '7': [0, 4, 7, 10 ],
         'm7': [0, 3, 7, 10],
         'Maj7': [0, 4, 7, 11],
-        'dim7': [0, 3, 6, 9],
+        '°7': [0, 3, 6, 9],
         'sus2': [0, 2, 7],
         'sus4': [0, 5, 7],
         '7sus4': [0, 5, 7, 10],
