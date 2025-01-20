@@ -63,6 +63,7 @@
         {{ key.note }}
       </div>
     </div>
+    <p id="chord-played"> {{ notesPlayed }}</p>
 
     <div id="color-key-container">
       <label for="root-note-color-key">Root Note = </label>
@@ -85,6 +86,7 @@ export default {
       selectedChordType: '',
       selectedChord: '',
       highlightedNotes: [],
+      notesPlayed: [],
       chordIntervals: {
         'M': [0, 4, 7],
         'm': [0, 3, 7],
@@ -158,6 +160,7 @@ export default {
     updateChord() { 
       if (!this.selectedChord || !this.selectedChordType) {
         this.highlightedNotes = [];
+        this.notesPlayed = [];
         return;
       }
 
@@ -167,6 +170,7 @@ export default {
       if (!intervals) {
         console.warn(`Chord type ${this.selectedChordType} is not defined.`);
         this.highlightedNotes = [];
+        this.notePlayed = [];
         return;
       }
 
@@ -182,7 +186,7 @@ export default {
 
       this.keys.forEach(key => {
         const keyBaseIndex = getBaseNoteIndex(key.note);
-
+      
         intervals.forEach(interval => {
           const targetIndex = (rootIndex + interval) % 12;
           if (keyBaseIndex === targetIndex) {
@@ -191,8 +195,11 @@ export default {
         });
       });
 
-      console.log('Highlighted Chord Notes:', Array.from(chordNotes));
-      this.highlightedNotes = Array.from(chordNotes);
+      const notesArray = Array.from(chordNotes);
+      const oneOctaveNotes = notesArray.filter(note => note.endsWith('3'))
+      
+      this.highlightedNotes = notesArray;
+      this.notesPlayed = oneOctaveNotes.map(note => note.replace(/\d/, ''));
       }
     }
   }
@@ -295,29 +302,7 @@ export default {
   background-color: rgb(168, 42, 42) !important;
 }
 
-#color-key-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  gap: 1em;
-  position: relative;
-  left: 20em;
-  bottom: 1em;
+#chord-played {
+  font-size: 1.5em;
 }
-
-.note-key-color {
-  width: 1em;
-  height: 1em;
-  border: 1px solid black;
-}
-
-#root-note-color {
-  background-color: rgb(168, 42, 42,0.7);
-}
-
-#other-note-color {
-  background-color: rgba(81, 109, 151,0.7);
-}
-
-
 </style>

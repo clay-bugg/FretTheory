@@ -8,6 +8,12 @@
 </template>
 
 <style scoped>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 #page {
   display: flex;
   flex-direction: column;
@@ -19,12 +25,9 @@
 
 h1 {
   margin: 0;
-  margin-top: 2em;
   padding: 0;
-  font-size: 2em;
 }
 
 #container {
   display: block;
-}
 </style>
