@@ -63,13 +63,14 @@
         {{ key.note }}
       </div>
     </div>
-    <p id="chord-played"> {{ notesPlayed }}</p>
 
-    <div id="color-key-container">
-      <label for="root-note-color-key">Root Note = </label>
-      <div class="note-key-color" id="root-note-color"></div>
-      <label for="other-note-color-key">Other Note = </label>
-      <div class="note-key-color" id="other-note-color"></div>
+    <div id="chord-played-container">
+      <p id="chord-played"> {{ notesPlayed }}</p>
+      <div id="color-note-container">
+        <label for="root-note-color-key">Root Note = </label>
+        <div class="note-key-color"
+             id="root-note-color"></div>
+      </div>
     </div>
 
   </div>
@@ -86,7 +87,7 @@ export default {
       selectedChordType: '',
       selectedChord: '',
       highlightedNotes: [],
-      notesPlayed: [],
+      notesPlayed: null,
       chordIntervals: {
         'M': [0, 4, 7],
         'm': [0, 3, 7],
@@ -304,5 +305,29 @@ export default {
 
 #chord-played {
   font-size: 1.5em;
+}
+
+#chord-played-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12em;
+  width: 50em; 
+  position: relative;
+  bottom: 1em
+}
+
+#color-note-container {
+    display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.8em;
+}
+
+#root-note-color {
+  width: 1em;
+  height: 1em;
+  border: 1px solid black;
+  background-color: rgb(168, 42, 42);
 }
 </style>
