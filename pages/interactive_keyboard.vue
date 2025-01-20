@@ -1,5 +1,6 @@
 <template>
   <div id="page">
+    <Header :buttonLabels="['Login', 'Sign Up']" title="Music Theory" />
     <h1>Interactive Keyboard</h1>
     <Keyboard />
 
@@ -11,10 +12,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
   height: 100vh;
   gap: 2em;
-  background-image: url('public/images/background_images/notation.webp');
-  background-size: auto;
 }
 
 h1 {
@@ -22,5 +22,9 @@ h1 {
   margin-top: 2em;
   padding: 0;
   font-size: 2em;
+}
+
+#container {
+  display: block;
 }
 </style>

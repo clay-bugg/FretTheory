@@ -1,6 +1,6 @@
 <template>
   <header>
-    <h1>Music Theory</h1>
+    <h1>{{ title }}</h1>
     <div id="login"
          v-if="showButtons">
       <Button v-for="(button, index) in buttonsArray"
@@ -22,6 +22,10 @@ export default {
     showButtons: {
       type: Boolean,
       default: true
+    },
+    title: {
+      type: String,
+      required: true
     }
   },
   computed: {
@@ -54,10 +58,11 @@ header {
   height: 4rem;
   width: 100%;
   padding: 0 1em;
-  background-image: url('public/images/background_images/notation.webp');
+  background-color: rgba(255, 255, 255, 0.2);
   background-size: cover;
   background-position: center;
   position: relative;
+  backdrop-filter: blur(20px);
 }
 
 header::before {
@@ -68,6 +73,7 @@ header::before {
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 4px 10px 10px rgba(0, 0, 0, 0.147)
 }
 
 header h1,
@@ -81,6 +87,7 @@ header h1 {
   text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
   z-index: 2;
   display: block;
+  font-size: 2em;
 }
 
 

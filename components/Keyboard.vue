@@ -22,7 +22,7 @@
         </select>
         <select id="chord-type-select"
                 v-model="selectedChordType">
-          <option value="Major">Major</option>
+          <option value="M">Major</option>
           <option value="m">Minor</option>
           <option value="+">Augmented</option>
           <option value="°">Diminished</option>
@@ -38,6 +38,7 @@
           <option value="maj13">Major 13th</option>
         </select>
       </div>
+
       <div id="keys-select-container">
         <label for="keys-input">Keys: </label>
         <input id="keys-input"
@@ -89,10 +90,9 @@ export default {
         'm': [0, 3, 7],
         '+': [0, 4, 8],
         '°': [0, 3, 6],
-        'aug': [0, 4, 8],
         '7': [0, 4, 7, 10 ],
         'm7': [0, 3, 7, 10],
-        'Maj7': [0, 4, 7, 11],
+        'maj7': [0, 4, 7, 11],
         '°7': [0, 3, 6, 9],
         'sus2': [0, 2, 7],
         'sus4': [0, 5, 7],
@@ -248,6 +248,7 @@ export default {
   display: flex;
   margin-bottom: 1em;
   background-color: rgba(0, 0, 0, 0.64);
+  background-color: transparent;
 }
 
 .key {
@@ -258,12 +259,13 @@ export default {
   justify-content: flex-end;
   box-sizing: border-box;
   font-weight: 700;
+  
 }
 
 .white {
   width: 4em;
   z-index: 0;
-  background-color: white;
+  background-color: rgb(255, 255, 255);
 }
 
 .black {
@@ -276,6 +278,7 @@ export default {
   z-index: 1;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
+  border: 2px solid black;
 }
 
 .key:hover {
@@ -309,11 +312,11 @@ export default {
 }
 
 #root-note-color {
-  background-color: rgb(168, 42, 42);
+  background-color: rgb(168, 42, 42,0.7);
 }
 
 #other-note-color {
-  background-color: rgb(81, 109, 151);
+  background-color: rgba(81, 109, 151,0.7);
 }
 
 

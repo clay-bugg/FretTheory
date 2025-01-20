@@ -1,5 +1,7 @@
-- Add chord finder to /Keyboard
+<!----------Global---------->
+- Add user data functionality
 
-- Add scales to Keyboard
-
-- Add functionality to Login/Signup buttons
+<!----------KEYBOARD---------->
+- Add play chord function
+- Add styling for extended chords
+- Add scales
