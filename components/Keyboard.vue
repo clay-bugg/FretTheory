@@ -53,6 +53,7 @@
         {{ key.note }}
       </div>
     </div>
+    <p id="chord-played"> {{ notesPlayed }}</p>
 
   </div>
 </template>
@@ -68,6 +69,7 @@ export default {
       selectedChordType: '',
       selectedChord: '',
       highlightedNotes: [],
+      notesPlayed: [],
       chordIntervals: {
         'M': [0, 4, 7],
         'm': [0, 3, 7],
@@ -133,6 +135,7 @@ export default {
     updateChord() { 
       if (!this.selectedChord || !this.selectedChordType) {
         this.highlightedNotes = [];
+        this.notesPlayed = [];
         return;
       }
 
@@ -142,6 +145,7 @@ export default {
       if (!intervals) {
         console.warn(`Chord type ${this.selectedChordType} is not defined.`);
         this.highlightedNotes = [];
+        this.notePlayed = [];
         return;
       }
 
@@ -154,10 +158,10 @@ export default {
 
       const rootIndex = getBaseNoteIndex(rootNote);
       const chordNotes = new Set();
-
+      
       this.keys.forEach(key => {
         const keyBaseIndex = getBaseNoteIndex(key.note);
-
+      
         intervals.forEach(interval => {
           const targetIndex = (rootIndex + interval) % 12;
           if (keyBaseIndex === targetIndex) {
@@ -166,8 +170,10 @@ export default {
         });
       });
 
-      console.log('Highlighted Chord Notes:', Array.from(chordNotes));
-      this.highlightedNotes = Array.from(chordNotes);
+      const notesArray = Array.from(chordNotes);
+      
+      this.highlightedNotes = notesArray;
+      this.notesPlayed = notesArray.map(note => note.replace(/\d/, ''));
       }
     }
   }
@@ -263,5 +269,9 @@ export default {
 
 .root-note {
   background-color: rgb(176, 65, 65) !important;
+}
+
+#chord-played {
+  font-size: 1.5em;
 }
 </style>

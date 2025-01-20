@@ -7,6 +7,12 @@
 </template>
 
 <style scoped>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 #page {
   display: flex;
   flex-direction: column;
@@ -16,7 +22,6 @@
 }
 
 h1 {
-  margin: 0;
-  padding: 0;
+  font-size: 2.5em;
 }
 </style>
