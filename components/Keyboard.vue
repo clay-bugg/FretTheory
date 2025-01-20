@@ -56,22 +56,20 @@
            :key="key.note"
            :class="[
             'key', key.isSharp ? 'black' : 'white',
-             highlightedNotes.includes(key.note) ? 'highlighted' : '',
-             key.note.replace(/\d/, '') === selectedChord ? 'root-note' : ''
-           ]"
+            highlightedNotes.includes(key.note) ? 'highlighted' : '',
+            key.note.replace(/\d/, '') === selectedChord ? 'root-note' : ''
+          ]"
            @mousedown="playNote(key.note)">
         {{ key.note }}
       </div>
     </div>
 
-    <div id="chord-played-container">
-      <p id="chord-played"> {{ notesPlayed }}</p>
-      <div id="color-note-container">
-        <label for="root-note-color-key">Root Note = </label>
-        <div class="note-key-color"
-             id="root-note-color"></div>
-      </div>
+    <div id="color-note-container">
+      <label for="root-note-color-key">Root Note = </label>
+      <div class="note-key-color"
+           id="root-note-color"></div>
     </div>
+    <p id="chord-played"> {{ notesPlayed }}</p>
 
   </div>
 </template>
@@ -93,7 +91,7 @@ export default {
         'm': [0, 3, 7],
         '+': [0, 4, 8],
         '°': [0, 3, 6],
-        '7': [0, 4, 7, 10 ],
+        '7': [0, 4, 7, 10],
         'm7': [0, 3, 7, 10],
         'maj7': [0, 4, 7, 11],
         '°7': [0, 3, 6, 9],
@@ -103,7 +101,7 @@ export default {
         'maj9': [0, 4, 7, 11, 14],
         'maj11': [0, 4, 7, 11, 14, 17],
         'maj13': [0, 4, 7, 11, 14, 21]
-        }
+      }
     }
   },
   computed: {
@@ -120,7 +118,7 @@ export default {
       console.log('Chord root changed from', oldVal, 'to', newVal);
       this.updateChord();
     },
-    keysAmount(newVal) { 
+    keysAmount(newVal) {
       if (newVal < 7) this.keysAmount = 7;
       if (newVal > this.keys.length) this.keysAmount = this.keys.length;
     }
@@ -158,7 +156,7 @@ export default {
       return Array.from({ length }, (_, i) => i + 1);
     },
 
-    updateChord() { 
+    updateChord() {
       if (!this.selectedChord || !this.selectedChordType) {
         this.highlightedNotes = [];
         this.notesPlayed = [];
@@ -187,7 +185,7 @@ export default {
 
       this.keys.forEach(key => {
         const keyBaseIndex = getBaseNoteIndex(key.note);
-      
+
         intervals.forEach(interval => {
           const targetIndex = (rootIndex + interval) % 12;
           if (keyBaseIndex === targetIndex) {
@@ -198,13 +196,13 @@ export default {
 
       const notesArray = Array.from(chordNotes);
       const oneOctaveNotes = notesArray.filter(note => note.endsWith('3'))
-      
+
       this.highlightedNotes = notesArray;
       this.notesPlayed = oneOctaveNotes.map(note => note.replace(/\d/, ''));
-      }
     }
   }
-  
+}
+
 
 
 </script>
@@ -221,7 +219,8 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.4em;;
+  gap: 0.4em;
+  ;
 }
 
 #controls {
@@ -267,7 +266,7 @@ export default {
   justify-content: flex-end;
   box-sizing: border-box;
   font-weight: 700;
-  
+
 }
 
 .white {
@@ -299,29 +298,17 @@ export default {
   color: black
 }
 
-.root-note {
-  background-color: rgb(168, 42, 42) !important;
-}
 
-#chord-played {
-  font-size: 1.5em;
-}
-
-#chord-played-container {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 12em;
-  width: 50em; 
-  position: relative;
-  bottom: 1em
-}
 
 #color-note-container {
-    display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.8em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: relative;
+  left: 22em;
+  bottom: 0.8em;
+  gap: 0.8em;
 }
 
 #root-note-color {
@@ -330,4 +317,18 @@ export default {
   border: 1px solid black;
   background-color: rgb(168, 42, 42);
 }
+
+.root-note {
+  background-color: rgb(168, 42, 42) !important;
+}
+
+#chord-played {
+  font-size: 1.5em;
+  position: relative;
+  bottom: 2em
+}
+
+
+
+
 </style>
