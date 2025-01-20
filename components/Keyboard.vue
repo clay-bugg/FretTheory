@@ -157,7 +157,7 @@ export default {
       }
 
       const rootNote = this.selectedChord;
-      const intervals = this.chordIntervals[this.selectedChordType];
+      const intervals = this.chordIntervals[this.selectedChordType] || [];
 
       if (!intervals) {
         console.warn(`Chord type ${this.selectedChordType} is not defined.`);
