@@ -158,7 +158,7 @@ export default {
 
       const rootIndex = getBaseNoteIndex(rootNote);
       const chordNotes = new Set();
-      
+
       this.keys.forEach(key => {
         const keyBaseIndex = getBaseNoteIndex(key.note);
       
@@ -171,9 +171,10 @@ export default {
       });
 
       const notesArray = Array.from(chordNotes);
+      const oneOctaveNotes = notesArray.filter(note => note.endsWith('3'))
       
       this.highlightedNotes = notesArray;
-      this.notesPlayed = notesArray.map(note => note.replace(/\d/, ''));
+      this.notesPlayed = oneOctaveNotes.map(note => note.replace(/\d/, ''));
       }
     }
   }
