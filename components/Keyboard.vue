@@ -63,6 +63,13 @@
       </div>
     </div>
 
+    <div id="color-key-container">
+      <label for="root-note-color-key">Root Note = </label>
+      <div class="note-key-color" id="root-note-color"></div>
+      <label for="other-note-color-key">Other Note = </label>
+      <div class="note-key-color" id="other-note-color"></div>
+    </div>
+
   </div>
 </template>
 
@@ -250,6 +257,7 @@ export default {
   align-items: center;
   justify-content: flex-end;
   box-sizing: border-box;
+  font-weight: 700;
 }
 
 .white {
@@ -276,10 +284,37 @@ export default {
 }
 
 .highlighted {
-  background-color: rgb(118, 140, 174);
+  background-color: rgb(81, 109, 151);
+  color: black
 }
 
 .root-note {
-  background-color: rgb(176, 65, 65) !important;
+  background-color: rgb(168, 42, 42) !important;
 }
+
+#color-key-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 1em;
+  position: relative;
+  left: 20em;
+  bottom: 1em;
+}
+
+.note-key-color {
+  width: 1em;
+  height: 1em;
+  border: 1px solid black;
+}
+
+#root-note-color {
+  background-color: rgb(168, 42, 42);
+}
+
+#other-note-color {
+  background-color: rgb(81, 109, 151);
+}
+
+
 </style>
