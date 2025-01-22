@@ -114,15 +114,17 @@ export default {
     },
   },
   methods: {
-    generateKeys(startOctave, endOctave) { 
+    generateKeys() { 
       const notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
       const keys = [];
+      const octavesArray = [3, 4, 5];
       
-      for (let octave = startOctave; octave <= endOctave; octave++) { 
+      for (let i = 0; i < octavesArray.length; i++) { 
         notes.forEach((note) => { 
+          const appendedOctave = octavesArray[i]
           keys.push({
             note: `${note}`,
-            octave: '5',
+            octave: appendedOctave,
             sharp: note.includes('#')
           });
         })
@@ -135,7 +137,7 @@ export default {
       const sound = new Howl({
         src: [`/sounds/keyboard_samples/${encodedNote}${octave}.mp3`]
       });
-      console.log(sound)
+      console.log(`${note} note played.`)
       sound.play();
 
       setTimeout(() => {
@@ -231,7 +233,7 @@ export default {
   width: 1em;
   height: 1em;
   border: 1px solid black;
-  background-color: rgb(178, 59, 59);
+  background-color: rgb(178, 59, 59)!important;
 }
 .chord-played {
   display: flex;
