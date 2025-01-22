@@ -147,7 +147,14 @@ export default {
     },
 
     playChord() { 
-      console.log('Chord played.')
+      const chordNotes = this.chordNotes;
+      chordNotes.forEach((note => { 
+        const encodedNote = encodeURIComponent(note);
+        const sound = new Howl({
+          src: [`/sounds/keyboard_samples/${encodedNote}4.mp3`]
+        });
+        sound.play();
+      }))
     },
 
     updateChord() {
