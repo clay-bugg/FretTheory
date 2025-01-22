@@ -58,7 +58,8 @@
     </div>
 
     <div v-if="rootNote && chordType" class="chord-played">
-      <p class="chord-notes">{{ chordNotes }}</p>
+      <label for="chord-notes">{{ rootNote }}{{ chordType }}</label>
+      <p id="chord-notes">{{ chordNotes }}</p>
       <button @click="playChord(chordNotes)">Play Chord</button>
     </div>  
 
@@ -145,10 +146,15 @@ export default {
       }, 7000);
     },
 
+    playChord() { 
+      console.log('Chord played.')
+    },
+
     updateChord() {
       const rootNote = this.rootNote;
       const chordType = this.chordType
       const intervals = this.chordIntervals[chordType] || '';
+      console.log(`Chord changed to ${rootNote}${chordType}`)
 
       if (!rootNote || !chordType) return;
 
@@ -216,7 +222,7 @@ export default {
   color: #fff;
 }
 .root-note {
-  background-color: rgb(178, 59, 59);
+  background-color: rgb(178, 59, 59) !important;
 }
 .chord-note {
   background-color: rgb(94, 94, 175);;
