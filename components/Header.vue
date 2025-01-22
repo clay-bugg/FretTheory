@@ -1,104 +1,32 @@
 <template>
-  <header>
-    <h1>{{ title }}</h1>
-    <div id="login"
-         v-if="showButtons">
-      <Button v-for="(button, index) in buttonsArray"
-              :key="index">
-        {{ button.text }}
-      </Button>
-    </div>
-  </header>
+      <header>
+      <h1>music site</h1>
+    </header>
 </template>
 
 <script>
-export default {
-  name: 'Header',
-  props: {
-    buttonLabels: {
-      type: Array,
-      required: true
-    },
-    showButtons: {
-      type: Boolean,
-      default: true
-    },
-    title: {
-      type: String,
-      required: true
-    }
-  },
-  computed: {
-    buttonsArray() {
-      return this.buttonLabels.map((label, index) => {
-        return {
-          id: index + 1,
-          text: label
-        }
-      })
-    }
+  export default {
+    name: 'Header'
   }
-}
-
 </script>
 
 <style scoped>
+
 * {
-  margin: 0;
   padding: 0;
+  margin: 0;
   box-sizing: border-box;
 }
+  h1 {
+    font-size: 3em;
+    color: rgba(0, 0, 0, 0.347);
+  }
 
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #8cb5d6;
-  border-bottom: 1px solid black;
-  height: 4rem;
-  width: 100%;
-  padding: 0 1em;
-  background-color: rgba(255, 255, 255, 0.2);
-  background-size: cover;
-  background-position: center;
-  position: relative;
-  backdrop-filter: blur(20px);
-}
-
-header::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.1);
-  box-shadow: 0px 4px 10px 10px rgba(0, 0, 0, 0.147)
-}
-
-header h1,
-header div {
-  padding: 0 1em;
-  z-index: 1;
-}
-
-header h1 {
-  color: var(--deep-navy-blue);
-  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
-  z-index: 2;
-  display: block;
-  font-size: 2em;
-}
-
-
-header div {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: fit-content
-}
-
-#signup-button:hover {
-  background-color: var(--sunflower-yellow);
-}
+  header {
+    padding: 0 2em;
+    display: flex;
+    justify-content: start;
+    align-items: flex-start;
+    width: 100%;
+  }
 </style>

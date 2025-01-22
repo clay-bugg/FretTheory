@@ -1,6 +1,6 @@
 <template>
   <div id="page">
-    <Header :buttonLabels="['Login', 'Sign Up']" title="Music Theory" />
+    <Header />
     <h1>Interactive Keyboard</h1>
     <Keyboard />
 

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Guitar</h1>
+    <Header />
 
   </div>
 </template>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Music Theory</h1>
+    <Header />
 
   </div>
 </template>

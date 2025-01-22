@@ -2,6 +2,7 @@
   <div class="component">
     <div class="controls">
       <div class="chord-selector-box">
+
         <select id="root-note-selector" v-model="rootNote">
           <option
             v-for="note in rootNotes"
@@ -10,6 +11,7 @@
               {{ note }}
           </option>
         </select>
+
         <select id="chord-type-selector" v-model="chordType">
           <option
             v-for="type in chordTypes"
@@ -19,21 +21,26 @@
           </option>
         </select> 
       </div>
+
       <div class="keys-selector-box">
+
         <label for="key-selector">Keys: </label>
         <input
           id="key-selector"
           v-model="numberOfKeys"
           type="range"
           step="1"
-          min="7"
+          min="12"
           max="36"
         />
+
         <span id="keys-amount-label">{{ numberOfKeys }}</span>
+
       </div>
     </div>
+
     <div class="keyboard">
-      <div v-for="(key,index) in pianoKeys" @mousedown="playKey(key.note,key.octave)"
+      <div v-for="(key,index) in keysDisplayed" @mousedown="playKey(key.note,key.octave)"
         :key="key"
         :class="[
           'key',
@@ -44,15 +51,19 @@
         {{ key.note }}
       </div>
     </div>
+
     <div class="root-note-key">
       <label for="root-note-color">Root Note =</label>
       <span id="root-note-color"></span>
     </div>
+
     <div v-if="rootNote && chordType" class="chord-played">
       <p class="chord-notes">{{ chordNotes }}</p>
       <button @click="playChord(chordNotes)">Play Chord</button>
     </div>  
+
   </div>
+
 </template>
 
 <script>
@@ -100,14 +111,13 @@ export default {
     chordType(newVal, oldVal) { 
       console.log(`Chord type changed from ${oldVal} to ${newVal}`);
       this.updateChord();
-    }
+    },
   },
   methods: {
     generateKeys(startOctave, endOctave) { 
       const notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
       const keys = [];
       
-
       for (let octave = startOctave; octave <= endOctave; octave++) { 
         notes.forEach((note) => { 
           keys.push({
@@ -119,6 +129,7 @@ export default {
       }
       return keys;
     },
+
     playKey(note,octave) { 
       const encodedNote = encodeURIComponent(note);
       const sound = new Howl({
@@ -131,6 +142,7 @@ export default {
         sound.stop();
       }, 7000);
     },
+
     updateChord() {
       const rootNote = this.rootNote;
       const chordType = this.chordType
@@ -199,6 +211,7 @@ export default {
   background-color: black;
   z-index: 1;
   border: 2px solid black;
+  color: #fff;
 }
 .root-note {
   background-color: rgb(178, 59, 59);

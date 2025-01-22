@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header :buttonLabels="['Login', 'Sign Up']" />
+    <Header />
     <main>
       <QuoteGenerator />
       <div id="page-options">
@@ -22,6 +22,12 @@ export default {
 
 <style>
 
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
 h1 {
   font-size: 3.5rem;
 }
@@ -35,5 +41,12 @@ div {
 #page-options {
   margin: 1em auto;
   padding: 0 4em;
+}
+
+header {
+  height: 5em;
+  width: 100%;
+  padding: 0 2em;
+  border-bottom: 1px solid black;
 }
 </style>
