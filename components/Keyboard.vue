@@ -48,6 +48,10 @@
           chordNotes.includes(key.note) ? 'chord-note' : '',
           key.note === rootNote ? 'root-note' : ''
           ]">
+        <span v-if="chordNotes.includes(key.note)"
+           :class= "key.note === rootNote ? 'root-note-number' : 'chord-note-number'">
+          {{ chordNotes.indexOf(key.note) + 1}}
+        </span>
         {{ key.note }}
       </div>
     </div>
@@ -79,7 +83,6 @@ export default {
       chordType: '',
       chordNotes: [],
       rootNotes: ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'],
-      chordFingers: [],
       chordTypes: [
         { label: 'Major', value: 'M' },
         { label: 'Minor', value: 'm' },
@@ -167,14 +170,20 @@ export default {
 
       const notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
       const rootIndex = notes.indexOf(rootNote);
-      const chordNotes = new Set();
+
+      const chordNotes = [];
+    
 
       this.pianoKeys.forEach((key, index) => {
-        if (intervals.includes((index - rootIndex) % 12)) {
-          chordNotes.add(key.note);
+        const interval = (index - rootIndex) % 12;
+        if (intervals.includes(interval)) { 
+          chordNotes.push(key.note);
         }
-      });
-      this.chordNotes = Array.from(chordNotes);
+        });
+
+      this.chordNotes = chordNotes;
+
+      console.log(`Chord Notes: ${chordNotes}`);
     }
   }
 }
@@ -229,11 +238,36 @@ export default {
   color: #fff;
 }
 .root-note {
-  background-color: rgb(178, 59, 59) !important;
+  background-color: rgba(178, 59, 59, 0.647) !important;
 }
 .chord-note {
-  background-color: rgb(94, 94, 175);;
+  background-color: rgba(94, 94, 175, 0.523);;
 }
+
+.root-note-number {
+    width: 1.8em;
+  height: 1.8em;
+  display: flex;
+  align-items: center ;
+  justify-content: center;
+  border: 1px solid black;
+  border-radius: 50%;
+  background-color: rgb(178, 59, 59);
+  color: white;
+}
+
+.chord-note-number {
+  width: 1.8em;
+  height: 1.8em;
+  display: flex;
+  align-items: center ;
+  justify-content: center;
+  border: 1px solid black;
+  border-radius: 50%;
+  background-color: black;
+  color: white;
+}
+
 .root-note-key {
   display: flex;
   align-items: center;
