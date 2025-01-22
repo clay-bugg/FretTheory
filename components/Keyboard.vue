@@ -78,7 +78,8 @@ export default {
       rootNote: '',
       chordType: '',
       chordNotes: [],
-      rootNotes: ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#','A', 'A#', 'B'],
+      rootNotes: ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'],
+      chordFingers: [],
       chordTypes: [
         { label: 'Major', value: 'M' },
         { label: 'Minor', value: 'm' },
@@ -147,8 +148,7 @@ export default {
     },
 
     playChord() { 
-      const chordNotes = this.chordNotes;
-      chordNotes.forEach((note => { 
+      this.chordNotes.forEach((note => { 
         const encodedNote = encodeURIComponent(note);
         const sound = new Howl({
           src: [`/sounds/keyboard_samples/${encodedNote}4.mp3`]
