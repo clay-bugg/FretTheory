@@ -21,11 +21,12 @@
   justify-content: flex-start;
   height: 100vh;
   gap: 2em;
+  background-color: #3972A4
 }
-
 h1 {
   margin: 0;
   padding: 0;
+  font-weight: 600;
 }
 
 </style>

@@ -1,6 +1,23 @@
 <template>
   <div class="component">
     <div class="controls">
+
+      <div class="keys-selector-box">
+
+        <label for="key-selector">Keys: </label>
+        <input
+          id="key-selector"
+          v-model="numberOfKeys"
+          type="range"
+          step="1"
+          min="12"
+          max="36"
+        />
+
+        <span id="keys-amount-label">{{ numberOfKeys }}</span>
+      </div>
+    
+
       <div class="chord-selector-box">
 
         <select id="root-note-selector" v-model="rootNote">
@@ -21,22 +38,6 @@
           </option>
         </select> 
       </div>
-
-      <div class="keys-selector-box">
-
-        <label for="key-selector">Keys: </label>
-        <input
-          id="key-selector"
-          v-model="numberOfKeys"
-          type="range"
-          step="1"
-          min="12"
-          max="36"
-        />
-
-        <span id="keys-amount-label">{{ numberOfKeys }}</span>
-
-      </div>
     </div>
 
     <div class="keyboard">
@@ -56,15 +57,10 @@
       </div>
     </div>
 
-    <div class="root-note-key">
-      <label for="root-note-color">Root Note =</label>
-      <span id="root-note-color"></span>
-    </div>
-
     <div v-if="rootNote && chordType" class="chord-played">
       <label for="chord-notes">{{ rootNote }}{{ chordType }}</label>
       <p id="chord-notes">{{ chordNotes }}</p>
-      <button @click="playChord(chordNotes)">Play Chord</button>
+      <button @click="playChord(chordNotes)"><Icon />></button>
     </div>  
 
   </div>
@@ -200,17 +196,45 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 0.4em;
 }
 .controls {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  width: 55em;
 }
+
+.keys-selector-box {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  font-size: 1.1em;
+}
+
+.chord-selector-box {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+}
+
+.chord-selector-box select {
+  font-size: 1em;
+  font-family: inherit;
+  border: 2px solid black;
+  border-radius: 0.3em;
+  padding: 0 0.2em;
+}
+
 .keyboard {
   width: fit-content;
   height: 16em;
-  border: 3px solid black;
-  display: flex;  
+  border: 0.2em solid black;
+  border-top: 0.6em solid black;
+  display: flex;
+  border-top-left-radius: 0.3em;
+  border-top-right-radius: 0.3em;
+  overflow: hidden;
 }
 .key {
   border: 1px solid black;
@@ -228,16 +252,17 @@ export default {
   background-color: white;;
 }
 .black {
-  width: 2.25em;
-  height: 10em;
+  width: 2.5em;
+  height: 9.5em;
   position: relative;
-  margin: 0 -18px;
+  margin: 0 -1.25em;
   background-color: black;
   z-index: 1;
   border: 2px solid black;
+  border-bottom-left-radius: 0.4em;
+  border-bottom-right-radius: 0.4em;
   color: #fff;
 }
-
 
 .root-note-number {
     width: 1.8em;
@@ -268,24 +293,22 @@ export default {
   color: black;
 }
 
-.root-note-key {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.8em;
-  position: relative;
-  right: 22em;
-}
-#root-note-color {
-  width: 1em;
-  height: 1em;
-  border: 1px solid black;
-  background-color: rgb(178, 59, 59)!important;
-}
 .chord-played {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 1em;
+}
+
+.chord-played button {
+  font-family: inherit;
+  border-radius: 0.3em;
+  width: 2em;
+  height: 2em;
+  border: 1px solid black;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
