@@ -60,7 +60,7 @@
     <div v-if="rootNote && chordType" class="chord-played">
       <label for="chord-notes">{{ rootNote }}{{ chordType }}</label>
       <p id="chord-notes">{{ chordNotes }}</p>
-      <button @click="playChord(chordNotes)"><Icon />></button>
+      <button @click="playChord(chordNotes)">Play <Icon name="icon-park:play-one" id="play-icon" /></button>
     </div>  
 
   </div>
@@ -235,6 +235,7 @@ export default {
   border-top-left-radius: 0.3em;
   border-top-right-radius: 0.3em;
   overflow: hidden;
+  margin-bottom: 1em;
 }
 .key {
   border: 1px solid black;
@@ -302,13 +303,29 @@ export default {
 
 .chord-played button {
   font-family: inherit;
-  border-radius: 0.3em;
-  width: 2em;
-  height: 2em;
+  width: 3.7rem;
+  height: 1.2rem;
   border: 1px solid black;
-  border-radius: 50%;
+  border-radius: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 0.8em;
+  font-weight: 550;
+}
+
+.chord-played button:hover {
+  cursor: pointer;
+  filter: brightness(105%);
+}
+
+.chord-played button:active {
+  filter: brightness(95%);
+  transform: scale(0.99);
+}
+
+#play-icon {
+  width: 1.5em;
+  height: 1.5em;
 }
 </style>
