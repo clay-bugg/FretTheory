@@ -51,7 +51,8 @@
           ]">
             <span v-if="chordNotes.includes(key.note)">{{ key.note }}</span>
             <span v-if="chordNotes.includes(key.note)"
-             :class= "key.note === rootNote ? 'root-note-number' : 'chord-note-number'">
+             :class="key.note === rootNote ? 'root-note-number' : 'chord-note-number'"
+             :id="`interval-${chordNotes.indexOf(key.note) + 1}`">
               {{ chordNotes.indexOf(key.note) + 1}}
             </span>
       </div>
@@ -266,20 +267,6 @@ export default {
   z-index: 1;
 }
 
-.root-note-number {
-    width: 1.8em;
-  height: 1.8em;
-  display: flex;
-  align-items: center ;
-  justify-content: center;
-  border: 1px solid black;
-  border-radius: 50%;
-  background-color: rgb(178, 59, 59);
-  color: white;
-  position: relative;
-  bottom: 0.3em;
-}
-
 .chord-note-number {
   width: 1.8em;
   height: 1.8em;
@@ -297,6 +284,66 @@ export default {
 .black.chord-note-number {
   background-color: white;
   color: black;
+}
+
+#interval-1 {
+  width: 1.8em;
+  height: 1.8em;
+  display: flex;
+  align-items: center ;
+  justify-content: center;
+  border: 1px solid black;
+  border-radius: 50%;
+  background-color: black;
+  color: white;
+  position: relative;
+  bottom: 0.3em;
+  background-color: #7B2929;
+}
+
+#interval-2 {
+  width: 1.8em;
+  height: 1.8em;
+  display: flex;
+  align-items: center ;
+  justify-content: center;
+  border: 1px solid black;
+  border-radius: 50%;
+  background-color: black;
+  color: white;
+  position: relative;
+  bottom: 0.3em;
+  background-color: #975097;
+}
+
+#interval-3 {
+  width: 1.8em;
+  height: 1.8em;
+  display: flex;
+  align-items: center ;
+  justify-content: center;
+  border: 1px solid black;
+  border-radius: 50%;
+  background-color: black;
+  color: white;
+  position: relative;
+  bottom: 0.3em;
+  background-color: #2d2d7a;
+}
+
+#interval-4 {
+  width: 1.8em;
+  height: 1.8em;
+  display: flex;
+  align-items: center ;
+  justify-content: center;
+  border: 1px solid black;
+  border-radius: 50%;
+  background-color: black;
+  color: white;
+  position: relative;
+  bottom: 0.3em;
+  background-color: #a7461d;
 }
 
 .chord-played {
