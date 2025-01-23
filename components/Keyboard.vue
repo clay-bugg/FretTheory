@@ -49,7 +49,7 @@
           chordNotes.includes(key.note) ? 'chord-note' : '',
           key.note === rootNote ? 'root-note' : ''
           ]">
-            {{ key.note }}
+            <span v-if="chordNotes.includes(key.note)">{{ key.note }}</span>
             <span v-if="chordNotes.includes(key.note)"
              :class= "key.note === rootNote ? 'root-note-number' : 'chord-note-number'">
               {{ chordNotes.indexOf(key.note) + 1}}
@@ -243,6 +243,7 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
+  gap: 0.5em;
 }
 .key:hover {
   cursor: pointer;
@@ -258,11 +259,11 @@ export default {
   position: relative;
   margin: 0 -1.25em;
   background-color: black;
-  z-index: 1;
   border: 2px solid black;
   border-bottom-left-radius: 0.4em;
   border-bottom-right-radius: 0.4em;
   color: #fff;
+  z-index: 1;
 }
 
 .root-note-number {
@@ -275,6 +276,8 @@ export default {
   border-radius: 50%;
   background-color: rgb(178, 59, 59);
   color: white;
+  position: relative;
+  bottom: 0.3em;
 }
 
 .chord-note-number {
@@ -287,6 +290,8 @@ export default {
   border-radius: 50%;
   background-color: black;
   color: white;
+  position: relative;
+  bottom: 0.3em;
 }
 
 .black.chord-note-number {
