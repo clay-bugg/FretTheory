@@ -61,7 +61,7 @@
           </span>
 
       </div>
-      
+
     </div>
 
     <div class="chord-played"
@@ -160,8 +160,21 @@ export default {
       }, 7000);
     },
 
-    playChord() { 
-      
+    playChord(notes) { 
+      notes = notes.map((note) => { 
+        return encodeURIComponent(note);
+      })
+      const sounds = [];
+      notes.forEach((note) => {
+        const sound = new Howl({
+          src: [`/sounds/keyboard_samples/${note}4.mp3`]
+        });
+        sounds.push(sound)
+      });
+
+      sounds.forEach((sound) => { 
+        sound.play();
+      })
     },
 
     updateChord() {
