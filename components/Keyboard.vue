@@ -1,5 +1,6 @@
 <template>
   <div class="component">
+
     <div class="controls">
 
       <div class="keys-selector-box">
@@ -16,7 +17,6 @@
 
         <span id="keys-amount-label">{{ numberOfKeys }}</span>
       </div>
-    
 
       <div class="chord-selector-box">
 
@@ -38,30 +38,37 @@
           </option>
         </select> 
       </div>
+
     </div>
 
     <div class="keyboard">
-      <div v-for="(key,index) in keysDisplayed" @mousedown="playKey(key.note,key.octave)"
+
+      <div v-for="(key,index) in keysDisplayed"
         :key="key"
         :class="[
           'key',
-          key.sharp ? 'black' : 'white',
-          highlightedNotes.includes(key.note) ? 'chord-note' : '',
-          key.note === rootNote ? 'root-note' : ''
-          ]">
-            <span v-if="highlightedNotes.includes(key.note)">{{ key.note }}</span>
-            <span v-if="highlightedNotes.includes(key.note)"
-             :class="key.note === rootNote ? 'root-note-number' : 'chord-note-number'"
-             :id="`interval-${highlightedNotes.indexOf(key.note) + 1}`">
-              {{ highlightedNotes.indexOf(key.note) + 1}}
-            </span>
+          {
+            'black': key.sharp,
+            'white': !key.sharp,
+            'highlighted-note': highlightedNotes.includes(key.note),
+            'root-note': key.note === rootNote
+          }]"  
+        @mousedown="playKey(key.note,key.octave)">
+
+          <span v-if="highlightedNotes.includes(key.note)">{{ key.note }}</span>
+          <span v-if="highlightedNotes.includes(key.note)" :class="key.note === rootNote ? 'root-note-number' : 'chord-note-number'" :id="`interval-${highlightedNotes.indexOf(key.note) + 1}`">
+            {{ highlightedNotes.indexOf(key.note) + 1}}
+          </span>
+
       </div>
+      
     </div>
 
-    <div v-if="rootNote && chordType" class="chord-played">
-      <label for="chord-notes">{{ rootNote }}{{ chordType }}</label>
-      <p id="chord-notes">{{ chordNotes }}</p>
-      <button @click="playChord(chordNotes)">Play <Icon name="icon-park:play-one" id="play-icon" /></button>
+    <div class="chord-played"
+      v-if="rootNote && chordType">
+        <label for="chord-notes">{{ rootNote }}{{ chordType }}</label>
+        <p id="chord-notes">{{ chordNotes }}</p>
+        <button @click="playChord(chordNotes)">Play <Icon name="icon-park:play-one" id="play-icon" /></button>
     </div>  
 
   </div>
@@ -154,13 +161,7 @@ export default {
     },
 
     playChord() { 
-      this.highlightedNotes.forEach((note => { 
-        const encodedNote = encodeURIComponent(note);
-        const sound = new Howl({
-          src: [`/sounds/keyboard_samples/${encodedNote}4.mp3`]
-        });
-        sound.play();
-      }))
+      
     },
 
     updateChord() {
