@@ -46,14 +46,14 @@
         :class="[
           'key',
           key.sharp ? 'black' : 'white',
-          chordNotes.includes(key.note) ? 'chord-note' : '',
+          highlightedNotes.includes(key.note) ? 'chord-note' : '',
           key.note === rootNote ? 'root-note' : ''
           ]">
-            <span v-if="chordNotes.includes(key.note)">{{ key.note }}</span>
-            <span v-if="chordNotes.includes(key.note)"
+            <span v-if="highlightedNotes.includes(key.note)">{{ key.note }}</span>
+            <span v-if="highlightedNotes.includes(key.note)"
              :class="key.note === rootNote ? 'root-note-number' : 'chord-note-number'"
-             :id="`interval-${chordNotes.indexOf(key.note) + 1}`">
-              {{ chordNotes.indexOf(key.note) + 1}}
+             :id="`interval-${highlightedNotes.indexOf(key.note) + 1}`">
+              {{ highlightedNotes.indexOf(key.note) + 1}}
             </span>
       </div>
     </div>
@@ -78,16 +78,22 @@ export default {
       pianoKeys: this.generateKeys(3, 5),
       rootNote: '',
       chordType: '',
+      highlightedNotes: [],
       chordNotes: [],
       rootNotes: ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'],
       chordTypes: [
         { label: 'Major', value: 'M' },
+        { label: 'Major 6th', value: 'maj6' },
+        { label: 'Major 6/9', value: '6/9' },
+        { label: 'Major 7th', value: '7' },
+        { label: 'Major 9th', value: '9' },
+        { label: 'Major 11th', value: '11' },
+        { label: 'Major 13th', value: '13'},
         { label: 'Minor', value: 'm' },
-        { label: 'Augmented', value: '+' },
-        { label: 'Diminished', value: '°' },
-        { label: 'Dominant 7th', value: '7' },
         { label: 'Minor 7th', value: 'm7' },
-        { label: 'Major 7th', value: 'maj7'}
+        { label: 'Dominant 7th', value: '7' },
+        { label: 'Diminished', value: '°' },
+        { label: 'Augmented', value: '+' },
       ],
       chordIntervals: {
         'M': [0, 4, 7],
@@ -148,7 +154,7 @@ export default {
     },
 
     playChord() { 
-      this.chordNotes.forEach((note => { 
+      this.highlightedNotes.forEach((note => { 
         const encodedNote = encodeURIComponent(note);
         const sound = new Howl({
           src: [`/sounds/keyboard_samples/${encodedNote}4.mp3`]
@@ -168,19 +174,19 @@ export default {
       const notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
       const rootIndex = notes.indexOf(rootNote);
 
-      const chordNotes = [];
-    
+      const highlightedNotes = [];
+      const chordNotes = new Set();
 
       this.pianoKeys.forEach((key, index) => {
         const interval = (index - rootIndex) % 12;
         if (intervals.includes(interval)) { 
-          chordNotes.push(key.note);
+          highlightedNotes.push(key.note);
+          chordNotes.add(key.note);
         }
         });
 
-      this.chordNotes = chordNotes;
-
-      console.log(`Chord Notes: ${chordNotes}`);
+      this.highlightedNotes = highlightedNotes;
+      this.chordNotes = Array.from(chordNotes);
     }
   }
 }

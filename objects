@@ -1,0 +1,14 @@
+const chordTypes = {
+  'major':{name: 'maj', intervals: [0,4,7], major: true},
+  'minor': { name: 'm', intervals: [0, 3, 7], minor: true },
+  'augmented':{name: 'aug', intervals: [0,4,8], aug: true},
+}
+
+const targetChordType = 'major'
+
+for (const chordtype in chordTypes) { 
+  if (chordtype === targetChordType)
+    console.log(chordTypes[targetChordType].intervals)
+}
+
+
