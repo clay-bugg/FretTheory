@@ -167,13 +167,14 @@ export default {
       const sounds = [];
       notes.forEach((note) => {
         const sound = new Howl({
-          src: [`/sounds/keyboard_samples/${note}4.mp3`]
+          src: [`/sounds/keyboard_samples/${note}4.mp3`],
+          preload: true
         });
-        sounds.push(sound)
+        sounds.push(sound);
       });
 
       sounds.forEach((sound) => { 
-        sound.play();
+        sound.once('load', () => sound.play());
       })
     },
 
