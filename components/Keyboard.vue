@@ -81,32 +81,39 @@ import { Howl } from 'howler';
 export default {
   setup() {
     const activeChordNotes = ref([]);
+    const soundsCache = {};
+
+    const preloadSounds = (notes) => { 
+      notes.forEach((note) => {
+        if (!soundsCache[note]) {
+          soundsCache[note] = new Howl({
+            src: [`/sounds/keyboard_samples/${encodeURIComponent(note)}4.mp3`],
+            preload: true,
+          });
+        }
+      });
+    }
 
     const playChord = (notes) => {
-      notes = notes.map((note) => encodeURIComponent(note));
+      preloadSounds(notes);
+    
 
       if (activeChordNotes.value.length) {
         activeChordNotes.value.forEach((sound) => sound.stop());
       }
 
-      const sounds = notes.map((note) =>
-        new Howl({
-          src: [`/sounds/keyboard_samples/${note}4.mp3`],
-          preload: true
-        })
-      );
+      const playingSounds = notes.map((note) => soundsCache[note]);
 
-      Promise.all(
-        sounds.map((sound) =>
-          new Promise((resolve) => sound.once('load', resolve))
-        )
-      ).then(() => {
-        sounds.forEach((sound) => sound.play());
-        activeChordNotes.value = sounds;
+      playingSounds.forEach((sound) => {
+        sound.seek(0);
+        sound.play();
       });
+
+      activeChordNotes.value = playingSounds;
+
     };
 
-    return { playChord };
+    return { playChord, activeChordNotes };
   },
   
   data() { 
@@ -117,7 +124,6 @@ export default {
       chordType: '',
       highlightedNotes: [],
       chordNotes: [],
-      activeChordNotes: [],
       rootNotes: ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'],
       chordTypes: [
         { label: 'Major', value: 'M' },
@@ -189,6 +195,32 @@ export default {
       setTimeout(() => {
         sound.stop();
       }, 7000);
+    },
+
+        updateChord() {
+      const rootNote = this.rootNote;
+      const chordType = this.chordType
+      const intervals = this.chordIntervals[chordType] || '';
+      console.log(`Chord changed to ${rootNote}${chordType}`)
+
+      if (!rootNote || !chordType) return;
+
+      const notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+      const rootIndex = notes.indexOf(rootNote);
+
+      const highlightedNotes = [];
+      const chordNotes = new Set();
+
+      this.pianoKeys.forEach((key, index) => {
+        const interval = (index - rootIndex) % 12;
+        if (intervals.includes(interval)) { 
+          highlightedNotes.push(key.note);
+          chordNotes.add(key.note);
+        }
+        });
+
+      this.highlightedNotes = highlightedNotes;
+      this.chordNotes = Array.from(chordNotes);
     }
   }
 }
