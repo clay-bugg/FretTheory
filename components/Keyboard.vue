@@ -56,7 +56,7 @@
         @mousedown="playKey(key.note,key.octave)">
 
           <span v-if="highlightedNotes.includes(key.note)">{{ key.note }}</span>
-          <span v-if="highlightedNotes.includes(key.note)" :class="key.note === rootNote ? 'root-note-number' : 'chord-note-number'" :id="`interval-${highlightedNotes.indexOf(key.note) + 1}`">
+          <span v-if="highlightedNotes.includes(key.note)" :class="['interval', `interval-${highlightedNotes.indexOf(key.note) + 1}`]">
             {{ highlightedNotes.indexOf(key.note) + 1}}
           </span>
 
@@ -199,7 +199,7 @@ export default {
         setTimeout(() => {
           sound.seek(0);
           sound.play();
-        }, index * 50);
+        }, index * 20);
       });
 
       this.activeChordNotes = playingSounds;
@@ -289,7 +289,7 @@ export default {
   z-index: 1;
 }
 
-.chord-note-number {
+.interval {
   width: 1.8em;
   height: 1.8em;
   display: flex;
@@ -303,68 +303,16 @@ export default {
   bottom: 0.3em;
 }
 
-.black.chord-note-number {
-  background-color: white;
-  color: black;
-}
-
-#interval-1 {
-  width: 1.8em;
-  height: 1.8em;
-  display: flex;
-  align-items: center ;
-  justify-content: center;
-  border: 1px solid black;
-  border-radius: 50%;
-  background-color: black;
-  color: white;
-  position: relative;
-  bottom: 0.3em;
+.interval-1 {
   background-color: #7B2929;
 }
-
-#interval-2 {
-  width: 1.8em;
-  height: 1.8em;
-  display: flex;
-  align-items: center ;
-  justify-content: center;
-  border: 1px solid black;
-  border-radius: 50%;
-  background-color: black;
-  color: white;
-  position: relative;
-  bottom: 0.3em;
+.interval-2 {
   background-color: #975097;
 }
-
-#interval-3 {
-  width: 1.8em;
-  height: 1.8em;
-  display: flex;
-  align-items: center ;
-  justify-content: center;
-  border: 1px solid black;
-  border-radius: 50%;
-  background-color: black;
-  color: white;
-  position: relative;
-  bottom: 0.3em;
+.interval-3 {
   background-color: #2d2d7a;
 }
-
-#interval-4 {
-  width: 1.8em;
-  height: 1.8em;
-  display: flex;
-  align-items: center ;
-  justify-content: center;
-  border: 1px solid black;
-  border-radius: 50%;
-  background-color: black;
-  color: white;
-  position: relative;
-  bottom: 0.3em;
+.interval-4 {
   background-color: #a7461d;
 }
 
