@@ -79,42 +79,6 @@
 import { Howl } from 'howler';
 
 export default {
-  setup() {
-    const activeChordNotes = ref([]);
-    const soundsCache = {};
-
-    const preloadSounds = (notes) => { 
-      notes.forEach((note) => {
-        if (!soundsCache[note]) {
-          soundsCache[note] = new Howl({
-            src: [`/sounds/keyboard_samples/${encodeURIComponent(note)}4.mp3`],
-            preload: true,
-          });
-        }
-      });
-    }
-    const playChord = (notes) => {
-      preloadSounds(notes);
-    
-      if (activeChordNotes.value.length) {
-        activeChordNotes.value.forEach((sound) => sound.stop());
-      }
-
-      const playingSounds = notes.map((note) => soundsCache[note]);
-
-      playingSounds.forEach((sound, index) => {
-        setTimeout(() => {
-          sound.seek(0);
-          sound.play();
-        }, index * 20);
-      });
-
-      activeChordNotes.value = playingSounds;
-    };
-
-    return { playChord, activeChordNotes };
-  },
-  
   data() { 
     return {
       numberOfKeys: 24,
@@ -123,6 +87,8 @@ export default {
       chordType: '',
       highlightedNotes: [],
       chordNotes: [],
+      activeChordNotes: [],
+      soundsCache: {},
       rootNotes: ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'],
       chordTypes: [
         { label: 'Major', value: 'maj' },
@@ -159,6 +125,7 @@ export default {
       console.log(`Root note changed from ${oldVal} to ${newVal}`);
       this.updateChord();
     },
+
     chordType(newVal, oldVal) { 
       console.log(`Chord type changed from ${oldVal} to ${newVal}`);
       this.updateChord();
@@ -183,20 +150,7 @@ export default {
       return keys;
     },
 
-    playKey(note,octave) { 
-      const encodedNote = encodeURIComponent(note);
-      const sound = new Howl({
-        src: [`/sounds/keyboard_samples/${encodedNote}${octave}.mp3`]
-      });
-      console.log(`${note} note played.`)
-      sound.play();
-
-      setTimeout(() => {
-        sound.stop();
-      }, 7000);
-    },
-
-        updateChord() {
+    updateChord() {
       const rootNote = this.rootNote;
       const chordType = this.chordType
       const intervals = this.chordIntervals[chordType] || '';
@@ -220,6 +174,46 @@ export default {
 
       this.highlightedNotes = highlightedNotes;
       this.chordNotes = Array.from(chordNotes);
+    },
+
+    playKey(note,octave) { 
+      const encodedNote = encodeURIComponent(note);
+      const sound = new Howl({
+        src: [`/sounds/keyboard_samples/${encodedNote}${octave}.mp3`]
+      });
+      console.log(`${note} note played.`)
+      sound.play();
+
+      setTimeout(() => {
+        sound.stop();
+      }, 7000);
+    },
+
+    playChord(notes) { 
+
+      notes.forEach((note) => {
+        if (!this.soundsCache[note]) {
+          this.soundsCache[note] = new Howl({
+            src: [`/sounds/keyboard_samples/${encodeURIComponent(note)}4.mp3`],
+            preload: true
+          });
+        }
+      });
+
+      if (this.activeChordNotes.length) { 
+        this.activeChordNotes.forEach((sound) => sound.stop());
+      }
+
+      const playingSounds = notes.map((note) => this.soundsCache[note]);
+
+      playingSounds.forEach((sound, index) => {
+        setTimeout(() => {
+          sound.seek(0);
+          sound.play();
+        }, index * 50);
+      });
+
+      this.activeChordNotes = playingSounds;
     }
   }
 }
