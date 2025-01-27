@@ -394,6 +394,10 @@ export default {
   font-size: 1.3em;
 }
 
+#chord-notes {
+  font-weight: 400;
+}
+
 .chord-played button {
   font-family: inherit;
   width: 3rem;
