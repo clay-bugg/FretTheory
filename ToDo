@@ -2,6 +2,12 @@
 - Add user data functionality
 
 <!----------KEYBOARD---------->
-- Add play chord function
-- Add styling for extended chords
+- Make chords play as an arpeggio 
 - Add scales
+<!----------STYLE---------->
+- Add transitions for chord note appearances
+- Add keyboard styling
+- Style slider for keys
+- Relative sizes for screen widths
+- Get a new font
+- Add styling for extended chords

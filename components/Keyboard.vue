@@ -93,24 +93,23 @@ export default {
         }
       });
     }
-
     const playChord = (notes) => {
       preloadSounds(notes);
     
-
       if (activeChordNotes.value.length) {
         activeChordNotes.value.forEach((sound) => sound.stop());
       }
 
       const playingSounds = notes.map((note) => soundsCache[note]);
 
-      playingSounds.forEach((sound) => {
-        sound.seek(0);
-        sound.play();
+      playingSounds.forEach((sound, index) => {
+        setTimeout(() => {
+          sound.seek(0);
+          sound.play();
+        }, index * 20);
       });
 
       activeChordNotes.value = playingSounds;
-
     };
 
     return { playChord, activeChordNotes };
