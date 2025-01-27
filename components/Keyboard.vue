@@ -151,29 +151,18 @@ export default {
     },
 
     updateChord() {
-      const rootNote = this.rootNote;
-      const chordType = this.chordType
-      const intervals = this.chordIntervals[chordType] || '';
-      console.log(`Chord changed to ${rootNote}${chordType}`)
+      if (!this.rootNote || !this.chordType) return;
 
-      if (!rootNote || !chordType) return;
-
+      const intervals = this.chordIntervals[this.chordType] || [];
       const notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
-      const rootIndex = notes.indexOf(rootNote);
+      const rootIndex = notes.indexOf(this.rootNote);
 
-      const highlightedNotes = [];
-      const chordNotes = new Set();
+      this.highlightedNotes = intervals.map((interval) => {
+        return notes[(rootIndex + interval) % 12];
+      });
 
-      this.pianoKeys.forEach((key, index) => {
-        const interval = (index - rootIndex) % 12;
-        if (intervals.includes(interval)) { 
-          highlightedNotes.push(key.note);
-          chordNotes.add(key.note);
-        }
-        });
-
-      this.highlightedNotes = highlightedNotes;
-      this.chordNotes = Array.from(chordNotes);
+      this.chordNotes = Array.from(new Set(this.highlightedNotes));
+      console.log(`Chord changed to ${this.rootNote}${this.chordType}`);
     },
 
     playKey(note,octave) { 
