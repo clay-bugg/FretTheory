@@ -390,7 +390,7 @@ export default {
   align-items: center;
   justify-content: center;
   gap: 1em;
-  font-weight: 900;
+  font-weight: 700;
   font-size: 1.3em;
 }
 

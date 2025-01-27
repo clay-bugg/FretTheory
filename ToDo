@@ -2,7 +2,7 @@
 - Add user data functionality
 
 <!----------KEYBOARD---------->
-- Make chords play as an arpeggio 
+- Make the octaves of the notes played in a chord relative to the starting note 
 - Add scales
 <!----------STYLE---------->
 - Add transitions for chord note appearances
