@@ -125,7 +125,7 @@ export default {
       chordNotes: [],
       rootNotes: ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'],
       chordTypes: [
-        { label: 'Major', value: 'M' },
+        { label: 'Major', value: 'maj' },
         { label: 'Major 6th', value: 'maj6' },
         { label: 'Major 6/9', value: '6/9' },
         { label: 'Major 7th', value: '7' },
@@ -139,7 +139,7 @@ export default {
         { label: 'Augmented', value: '+' },
       ],
       chordIntervals: {
-        'M': [0, 4, 7],
+        'maj': [0, 4, 7],
         'm': [0, 3, 7],
         '+': [0, 4, 8],
         '°': [0, 3, 6],
