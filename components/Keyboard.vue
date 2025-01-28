@@ -184,28 +184,41 @@ export default {
       }, 7000);
     },
 
-    playChord(notes) { 
+    playChord(notes) {
+      const baseOctave = 4;
+      notes.forEach((note, index) => {
+        let octave = baseOctave;
+        if (index > 3) {
+          octave = baseOctave + 1;
+        }
+        const fullNote = `${note}${octave}`;
 
-      notes.forEach((note) => {
-        if (!this.soundsCache[note]) {
-          this.soundsCache[note] = new Howl({
-            src: [`/sounds/keyboard_samples/${encodeURIComponent(note)}4.mp3`],
+        if (!this.soundsCache[fullNote]) {
+          this.soundsCache[fullNote] = new Howl({
+            src: [`/sounds/keyboard_samples/${encodeURIComponent(fullNote)}.mp3`],
             preload: true
           });
         }
       });
 
-      if (this.activeChordNotes.length) { 
+      if (this.activeChordNotes.length) {
         this.activeChordNotes.forEach((sound) => sound.stop());
       }
 
-      const playingSounds = notes.map((note) => this.soundsCache[note]);
-
+      const playingSounds = notes.map((note, index) => {
+        let octave = baseOctave;
+        if (index > 3) {
+          octave = baseOctave + 1;
+        }
+        const fullNote = `${note}${octave}`;
+        return this.soundsCache[fullNote];
+      })
+        ;
       playingSounds.forEach((sound, index) => {
         setTimeout(() => {
           sound.seek(0);
           sound.play();
-        }, index * 20);
+        }, index * 200);
       });
 
       this.activeChordNotes = playingSounds;
