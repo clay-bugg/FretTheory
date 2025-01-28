@@ -68,7 +68,9 @@
       v-if="rootNote && chordType">
         <label for="chord-notes">{{ rootNote }}{{ chordType }}</label>
         <p id="chord-notes">{{ chordNotes }}</p>
-        <button @click="playChord(chordNotes)"><Icon name="icon-park:play-one" id="play-icon" /></button>
+        <button @click="playChord(chordNotes, arpeggiated)"><Icon name="icon-park:play-one" id="play-icon" /></button>
+        <label for="arpeggiated">Arpeggio</label>
+        <input id="arpeggiated" v-model="isArpeggiated" type="checkbox" />
     </div>  
 
   </div>
@@ -89,6 +91,8 @@ export default {
       chordNotes: [],
       activeChordNotes: [],
       soundsCache: {},
+      arpeggiated: 300,
+      isArpeggiated: false,
       rootNotes: ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'],
       chordTypes: [
         { label: 'Major', value: 'maj' },
@@ -184,7 +188,7 @@ export default {
       }, 7000);
     },
 
-    playChord(notes) {
+    playChord(notes, arpeggiated) {
       const baseOctave = 4;
       notes.forEach((note, index) => {
         let octave = baseOctave;
@@ -204,6 +208,7 @@ export default {
       if (this.activeChordNotes.length) {
         this.activeChordNotes.forEach((sound) => sound.stop());
       }
+      const delay = this.isArpeggiated ? this.arpeggiated : 0;
 
       const playingSounds = notes.map((note, index) => {
         let octave = baseOctave;
@@ -212,16 +217,20 @@ export default {
         }
         const fullNote = `${note}${octave}`;
         return this.soundsCache[fullNote];
-      })
-        ;
+      });
       playingSounds.forEach((sound, index) => {
         setTimeout(() => {
           sound.seek(0);
           sound.play();
-        }, index * 200);
+        }, index * delay);
       });
 
       this.activeChordNotes = playingSounds;
+    },
+
+    playArpeggio() { 
+      this.isArpeggiated = !this.isArpeggiated;
+     
     }
   }
 }
