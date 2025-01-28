@@ -94,10 +94,10 @@ export default {
         { label: 'Major', value: 'maj' },
         { label: 'Major 6th', value: 'maj6' },
         { label: 'Major 6/9', value: '6/9' },
-        { label: 'Major 7th', value: '7' },
-        { label: 'Major 9th', value: '9' },
-        { label: 'Major 11th', value: '11' },
-        { label: 'Major 13th', value: '13'},
+        { label: 'Major 7th', value: 'maj7' },
+        { label: 'Major 9th', value: 'maj9' },
+        { label: 'Major 11th', value: 'maj11' },
+        { label: 'Major 13th', value: 'maj13'},
         { label: 'Minor', value: 'm' },
         { label: 'Minor 7th', value: 'm7' },
         { label: 'Dominant 7th', value: '7' },
@@ -106,12 +106,18 @@ export default {
       ],
       chordIntervals: {
         'maj': [0, 4, 7],
+        'maj6': [0, 4, 7, 9],
+        '6/9': [0, 4, 7, 9, 14],
+        'maj7': [0, 4, 7, 11],
+        'maj9': [0, 4, 7, 11, 14],
+        'maj11': [0, 4, 7, 11, 14, 17],
+        'maj13': [0, 4, 7, 11, 14, 17, 21],
         'm': [0, 3, 7],
         '+': [0, 4, 8],
         '°': [0, 3, 6],
         '7': [0, 4, 7, 10],
         'm7': [0, 3, 7, 10],
-        'maj7': [0, 4, 7, 11]
+        
       }
     }
   },
