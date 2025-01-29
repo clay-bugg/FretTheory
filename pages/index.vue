@@ -5,9 +5,8 @@
       <QuoteGenerator />
       <div id="page-options">
         <PageOption :cards="[
-          { to: '/music_theory', src: '/images/button_images/music_theory.png', alt: 'Music Theory' },
-          { to: '/interactive_tools', src: '/images/button_images/interactive_tools.png', alt: 'Tools' },
-          { to: '/cheatsheets', src: '/images/button_images/cheatsheets.png', alt: 'CheatSheets' }
+          { to: '/instruments', src: '/images/buttons/Instruments-button.png', alt: 'Instruments' },
+          { to: '/tools', src: '/images/buttons/tools-button.png', alt: 'Tools' }
         ]" />
       </div>
     </main>

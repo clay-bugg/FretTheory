@@ -326,22 +326,35 @@ export default {
   border: 1px solid black;
   border-radius: 50%;
   background-color: black;
-  color: white;
+  color: black;
   position: relative;
   bottom: 0.3em;
+  font-weight: 900;
 }
 
 .interval-1 {
-  background-color: #7B2929;
+  background-color: #ae2b2b;
 }
 .interval-2 {
-  background-color: #975097;
+  background-color: #ae2b2b;
 }
 .interval-3 {
-  background-color: #2d2d7a;
+  background-color: #ae2b2b;
 }
 .interval-4 {
-  background-color: #a7461d;
+  background-color: #ae2b2b;
+}
+
+.interval-5 {
+  background-color: #276398;
+}
+
+.interval-6 {
+  background-color: #276398;
+}
+
+.interval-7 {
+  background-color: #276398;
 }
 
 .chord-played {

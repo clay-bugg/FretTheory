@@ -2,7 +2,7 @@
 - Add user data functionality
 
 <!----------KEYBOARD---------->
-- Make the octaves of the notes played in a chord relative to the starting note 
+- fix higher voicing for some chords
 - Add scales
 <!----------STYLE---------->
 - Add transitions for chord note appearances
