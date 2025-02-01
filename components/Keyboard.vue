@@ -50,14 +50,14 @@
           {
             'black': key.sharp,
             'white': !key.sharp,
-            'highlighted-note': highlightedNotes.includes(key.note),
+            'highlighted-note': chordNotes.includes(key.note),
             'root-note': key.note === rootNote
           }]"  
         @mousedown="playKey(key.note,key.octave)">
 
-          <span v-if="highlightedNotes.includes(key.note)">{{ key.note }}</span>
-          <span v-if="highlightedNotes.includes(key.note)" :class="['interval', `interval-${highlightedNotes.indexOf(key.note) + 1}`]">
-            {{ highlightedNotes.indexOf(key.note) + 1}}
+          <span v-if="chordNotes.includes(key.note)">{{ key.note }}</span>
+          <span v-if="chordNotes.includes(key.note)" :class="['interval', `interval-${chordNotes.indexOf(key.note) + 1}`]">
+            {{ chordNotes.indexOf(key.note) + 1}}
           </span>
 
       </div>
@@ -87,7 +87,6 @@ export default {
       pianoKeys: this.generateKeys(3, 5),
       rootNote: '',
       chordType: '',
-      highlightedNotes: [],
       chordNotes: [],
       activeChordNotes: [],
       soundsCache: {},
@@ -131,24 +130,24 @@ export default {
     }
   },
   watch: {
-    rootNote(newVal, oldVal) { 
-      console.log(`Root note changed from ${oldVal} to ${newVal}`);
+    rootNote(newVal) { 
+      console.log(`Root note changed to ${newVal}`);
       this.updateChord();
     },
 
-    chordType(newVal, oldVal) { 
-      console.log(`Chord type changed from ${oldVal} to ${newVal}`);
+    chordType(newVal) { 
+      console.log(`Chord type changed to ${newVal}`);
       this.updateChord();
     },
   },
   methods: {
-    generateKeys() { 
+    generateKeys() {
       const notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
       const keys = [];
       const octavesArray = [3, 4, 5];
-      
-      for (let i = 0; i < octavesArray.length; i++) { 
-        notes.forEach((note) => { 
+
+      for (let i = 0; i < octavesArray.length; i++) {
+        notes.forEach((note) => {
           const appendedOctave = octavesArray[i]
           keys.push({
             note: `${note}`,
@@ -167,20 +166,40 @@ export default {
       const notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
       const rootIndex = notes.indexOf(this.rootNote);
 
-      this.highlightedNotes = intervals.map((interval) => {
+      this.chordNotes = intervals.map((interval) => {
         return notes[(rootIndex + interval) % 12];
       });
 
-      this.chordNotes = Array.from(new Set(this.highlightedNotes));
+      this.chordNotes = Array.from(new Set(this.chordNotes));
       console.log(`Chord changed to ${this.rootNote}${this.chordType}`);
     },
 
-    playKey(note,octave) { 
+    assignChordOctaves(rootNote, chordNotes, baseOctave = 3) { 
+      const noteOrder = this.rootNotes;
+      let currentOctave = baseOctave;
+      let lastNoteIndex = noteOrder.indexOf(rootNote);
+      let chordWithOctaves = [];
+
+      chordNotes.forEach((note) => {
+        let noteIndex = noteOrder.indexOf(note);
+
+        if (noteIndex <= lastNoteIndex) {
+          currentOctave++;
+        }
+
+        chordWithOctaves.push(`${note}${currentOctave}`);
+        lastNoteIndex = noteIndex;
+      });
+
+      return chordWithOctaves
+    },
+
+    playKey(note, octave) {
       const encodedNote = encodeURIComponent(note);
       const sound = new Howl({
         src: [`/sounds/keyboard_samples/${encodedNote}${octave}.mp3`]
       });
-      console.log(`${note} note played.`)
+      console.log(`${note}${octave} note played.`)
       sound.play();
 
       setTimeout(() => {
@@ -188,37 +207,27 @@ export default {
       }, 7000);
     },
 
-    playChord(notes, arpeggiated) {
-      const baseOctave = 4;
-      notes.forEach((note, index) => {
-        let octave = baseOctave;
-        if (index > 3) {
-          octave = baseOctave + 1;
-        }
-        const fullNote = `${note}${octave}`;
+    playChord(notes) {
+      if (!this.rootNote || !this.chordType) return;
 
+      const chordNotesWithOctaves = this.assignChordOctaves(this.rootNote, notes);
+
+      const playingSounds = chordNotesWithOctaves.map((fullNote) => {
         if (!this.soundsCache[fullNote]) {
           this.soundsCache[fullNote] = new Howl({
             src: [`/sounds/keyboard_samples/${encodeURIComponent(fullNote)}.mp3`],
             preload: true
           });
         }
+        return { sound: this.soundsCache[fullNote] };
       });
 
       if (this.activeChordNotes.length) {
-        this.activeChordNotes.forEach((sound) => sound.stop());
+        this.activeChordNotes.forEach(({ sound }) => sound.stop());
       }
       const delay = this.isArpeggiated ? this.arpeggiated : 0;
 
-      const playingSounds = notes.map((note, index) => {
-        let octave = baseOctave;
-        if (index > 3) {
-          octave = baseOctave + 1;
-        }
-        const fullNote = `${note}${octave}`;
-        return this.soundsCache[fullNote];
-      });
-      playingSounds.forEach((sound, index) => {
+      playingSounds.forEach(({ sound }, index) => {
         setTimeout(() => {
           sound.seek(0);
           sound.play();
@@ -226,11 +235,7 @@ export default {
       });
 
       this.activeChordNotes = playingSounds;
-    },
 
-    playArpeggio() { 
-      this.isArpeggiated = !this.isArpeggiated;
-     
     }
   }
 }
