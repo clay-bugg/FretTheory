@@ -1,11 +1,13 @@
-<!----------Global---------->
+<!----------Global------------>
 - Add user data functionality
 
 <!----------KEYBOARD---------->
 - fix higher voicing for some chords
 - Make arpeggio option into a button
 - Add scales
-<!----------STYLE---------->
+<!---------HEADER------------->
+
+<!----------STYLE------------->
 - Add transitions for chord note appearances
 - Add keyboard styling
 - Style slider for keys
