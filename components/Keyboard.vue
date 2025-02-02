@@ -225,7 +225,7 @@ export default {
       if (this.activeChordNotes.length) {
         this.activeChordNotes.forEach(({ sound }) => sound.stop());
       }
-      const delay = this.isArpeggiated ? this.arpeggiated : 0;
+      const delay = this.isArpeggiated ? this.arpeggiated : 20;
 
       playingSounds.forEach(({ sound }, index) => {
         setTimeout(() => {

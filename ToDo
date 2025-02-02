@@ -1,12 +1,15 @@
 <!----------Global------------>
-- Add user data functionality
+- Add local storage
 
 <!----------KEYBOARD---------->
-- fix higher voicing for some chords
 - Make arpeggio option into a button
 - Add scales
+- Add drag functionality for mouse on keys
+- Add keyboard input to play keys
 <!---------HEADER------------->
-
+-Add buttons as props
+<!--------BUTTON-------------->
+-Create Button element
 <!----------STYLE------------->
 - Add transitions for chord note appearances
 - Add keyboard styling
@@ -14,3 +17,4 @@
 - Relative sizes for screen widths
 - Get a new font
 - Add styling for extended chords
+<!-----------BUTTON---------->
