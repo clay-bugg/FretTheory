@@ -5,23 +5,31 @@
       <h1 >About page</h1>
     </NuxtLink>
 
-      <nav>
-        <NuxtLink to="/instruments">
-          <button class="button">Instruments</button>
-        </NuxtLink>
-        <NuxtLink to="/tools">
-          <button class="button">Tools</button>
-        </NuxtLink>
-
+    <nav>
+      <Button 
+        v-for="(btn, index) in buttons" 
+        :key="index" 
+        :buttonURL="btn.url" 
+        :label="btn.label" 
+      />  
     </nav>
-
   </header>
 </template>
 
 <script>
-  export default {
-  
+export default {
+  props: {
+    buttons: {
+      type: Array,
+      default: () => [
+        { url: 'pagelink', label: 'label' },
+        { url: 'pagelink', label: 'label' }
+      ]
+    }
   }
+}
+
+  
 </script>
 
 <style scoped>

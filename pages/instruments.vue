@@ -1,11 +1,27 @@
 <template>
   <div id="page">
-    <Header />
+    <Header 
+      :buttons="[
+        { url: '/instruments', label: 'Instruments' },
+        { url: '/tools', label: 'Tools' }
+      ]"
+    />
     <h1>Interactive Keyboard</h1>
     <Keyboard />
-
+    <Guitar />
   </div>
 </template>
+
+<script>
+export default {
+  data() { 
+    return {
+
+      }
+
+  }
+}
+</script>
 
 <style scoped>
 * {

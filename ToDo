@@ -16,5 +16,6 @@
 - Style slider for keys
 - Relative sizes for screen widths
 - Get a new font
+<Button buttonURL="/instruments"></Button>
 - Add styling for extended chords
 <!-----------BUTTON---------->
