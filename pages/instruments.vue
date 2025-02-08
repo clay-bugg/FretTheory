@@ -7,11 +7,21 @@
       ]"
     />
     <h1>Interactive Keyboard</h1>
-    <div class="instrument-selector-box">
-      <input type="radio" class="instrument-selector" id="keyboard-option" name="keyboard" value="keyboard" checked />
-      <input type="radio" class="instrument-selector" id="guitar-option" name="guitar" value="guitar" checked />
+    <label for="instrument-selector-box" id="instrument-selector-box-label">Instrument</label>
+    <div id="instrument-selector-box">
+      <input
+      v-for="(instrument, key) in instruments"
+        :key="key"
+        class="instrument-selector"
+        :id="key"
+        type="radio" 
+        :value="key"
+        name="instrument"
+        v-model="selectedInstrument"
+      />
     </div>
-    <Keyboard />
+    <Keyboard v-if="selectedInstrument === 'keyboard'" />
+    <Guitar v-if="selectedInstrument === 'guitar'"/>
   </div>
 </template>
 
@@ -19,9 +29,27 @@
 export default {
   data() { 
     return {
-    
+      instruments: {
+        keyboard: { checked: false },
+        guitar: { checked: false }
+      },
+      selectedInstrument: ''
+    }
+  },
+  mounted() { 
+    this.setInstrument()
+  },
+  methods: {
+    setInstrument() { 
+      for (const key in this.instruments) { 
+        if (this.instruments[key].checked) { 
+          this.selectedInstrument = key;
+          break;
+        }
       }
+    }
   }
+  
 }
 </script>
 
@@ -38,7 +66,7 @@ export default {
   align-items: center;
   justify-content: flex-start;
   height: 100vh;
-  gap: 2em;
+  gap: 1em;
   background-color: #487dac
 }
 h1 {
@@ -48,7 +76,7 @@ h1 {
   font-size: 3em;
 }
 
-.instrument-selector-box {
+#instrument-selector-box {
   width: fit-content;
   height: fit-content;
   display: flex;
@@ -59,11 +87,27 @@ h1 {
 
 .instrument-selector {
   width: 4em;
-  appearance: none;
+  
   border: 1px solid black;
   height: 2em;
   background-color: white;
   border-radius: 5px;
+  position: relative;
+}
+
+.instrument-selector::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border: 1px solid red;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  
 }
 
 .instrument-selector:hover {
