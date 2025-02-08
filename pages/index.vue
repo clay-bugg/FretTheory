@@ -1,6 +1,10 @@
 <template>
   <div>
-    <Header />
+    <Header :buttons="[
+  { url: '/login', label: 'login' },
+  { url: '/signup', label: 'Sign Up' }
+    ]"/>
+
     <main>
       <QuoteGenerator />
       <div id="page-options">
