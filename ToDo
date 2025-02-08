@@ -1,21 +1,20 @@
-<!----------Global------------>
+<!----------GLOBAL------------>
 - Add local storage
 
+<!----------INSTRUMANETS---->
+- Make guitar and keyboard components interchangable
 <!----------KEYBOARD---------->
-- Make arpeggio option into a button
 - Add scales
 - Add drag functionality for mouse on keys
 - Add keyboard input to play keys
-<!---------HEADER------------->
--Add buttons as props
-<!--------BUTTON-------------->
--Create Button element
+- Make arpeggio option into a button
+
 <!----------STYLE------------->
 - Add transitions for chord note appearances
 - Add keyboard styling
 - Style slider for keys
 - Relative sizes for screen widths
 - Get a new font
-<Button buttonURL="/instruments"></Button>
 - Add styling for extended chords
-<!-----------BUTTON---------->
+
+

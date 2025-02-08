@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="page">
     <Header :buttons="[
   { url: '/login', label: 'login' },
   { url: '/signup', label: 'Sign Up' }
@@ -35,10 +35,10 @@ h1 {
   font-size: 3.5rem;
 }
 
-div {
-  font-family: 'Kanit', sans-serif;
-  margin: 0;
+#page {
+  font-family: 'Kanit', sans-serif; 
   padding: 0;
+  background-color: #487dac;
 }
 
 #page-options {

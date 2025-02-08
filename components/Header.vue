@@ -2,7 +2,7 @@
   <header>
     
     <NuxtLink to="/"  id="title">
-      <h1 >About page</h1>
+      <h1 >Music</h1>
     </NuxtLink>
 
     <nav>
@@ -40,15 +40,17 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 0 2em;
+  backdrop-filter: brightness(85%);
 }
 
 #title {
   font-size: 3em;
   text-decoration: none;
+  color: rgba(0, 0, 0, 0.47);
 }
 
 #title:visited {
-  color: black;
+  color: rgba(0, 0, 0, 0.47);
 }
 
   nav {
