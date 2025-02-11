@@ -6,22 +6,31 @@
         { url: '/tools', label: 'Tools' }
       ]"
     />
-    <h1>Interactive Keyboard</h1>
-    <label for="instrument-selector-box" id="instrument-selector-box-label">Instrument</label>
+    <h1>Interactive Charts</h1>
+
+    <label for="instrument-selector-box" id="instrument-selector-box-label">
+      Instrument
+    </label>
     <div id="instrument-selector-box">
-      <input
-      v-for="(instrument, key) in instruments"
+      <label v-for="(instrument, key) in instruments"
         :key="key"
         class="instrument-selector"
-        :id="key"
-        type="radio" 
-        :value="key"
-        name="instrument"
-        v-model="selectedInstrument"
-      />
+      >
+        <input 
+          type="radio"
+          :value="key"
+          name="instrument"
+          v-model="selectedInstrument"
+        />
+
+        <img :src="instrument.image" :alt="key" class="instrument.image" />
+      </label>
+    
     </div>
+
     <Keyboard v-if="selectedInstrument === 'keyboard'" />
     <Guitar v-if="selectedInstrument === 'guitar'"/>
+    
   </div>
 </template>
 
@@ -30,10 +39,10 @@ export default {
   data() { 
     return {
       instruments: {
-        keyboard: { checked: false },
-        guitar: { checked: false }
+        keyboard: { image: '/images/KeyboardButton.png' },
+        guitar: { image: '/images/GuitarButton.png' }
       },
-      selectedInstrument: ''
+      selectedInstrument: null
     }
   },
   mounted() { 
@@ -66,7 +75,7 @@ export default {
   align-items: center;
   justify-content: flex-start;
   height: 100vh;
-  gap: 1em;
+  gap: 0.5em;
   background-color: #487dac
 }
 h1 {
@@ -85,40 +94,64 @@ h1 {
   gap: 2em;
 }
 
-.instrument-selector {
-  width: 4em;
-  
-  border: 1px solid black;
-  height: 2em;
-  background-color: white;
-  border-radius: 5px;
-  position: relative;
+
+#instrument-selector-box input {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
 }
 
-.instrument-selector::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  border: 1px solid red;
+#instrument-selector-box img {
+  width: 100%;
+  height: 100%;
+}
+
+
+
+
+
+.instrument-selector {
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  width: 6em;
+  height: 3em;
+  border: 1px solid black;
+  background-color: white;
+  border-radius: 6px;
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+  overflow: hidden;
+}
 
-  
+.instrument-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .instrument-selector:hover {
-  cursor: pointer;
   filter: brightness(90%);
-  
 }
 
 .instrument-selector:active {
-  filter:brightness(100%);
-  
+  filter: brightness(100%);
 }
+
+input[type="radio"]:checked + img {
+  border: 2px solid #3498db;
+  border-radius: 5px;
+  background-color: rgba(52, 152, 219, 0.2);
+}
+
+
+
+
+
+
+
 
 </style>

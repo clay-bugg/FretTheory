@@ -53,7 +53,10 @@
             'highlighted-note': chordNotes.includes(key.note),
             'root-note': key.note === rootNote
           }]"  
-        @mousedown="playKey(key.note,key.octave)">
+        @mousedown="onMouseDown(key)"
+        @mouseenter="onMouseEnter(key)"
+        @mouseup="onMouseUp(key)"
+        @mouseleave="onMouseUp(key)">
 
           <span v-if="chordNotes.includes(key.note)">{{ key.note }}</span>
           <span v-if="chordNotes.includes(key.note)" :class="['interval', `interval-${chordNotes.indexOf(key.note) + 1}`]">
@@ -193,6 +196,18 @@ export default {
       });
 
       return chordWithOctaves
+    },
+    onMouseDown(key) {
+      this.isMouseDown = true;
+      this.playKey(key.note, key.octave);
+    },
+    onMouseEnter(key) {
+      if (this.isMouseDown) {
+        this.playKey(key.note, key.octave);
+      }
+    },
+    onMouseUp() {
+      this.isMouseDown = false;
     },
 
     playKey(note, octave) {
@@ -336,20 +351,20 @@ export default {
   color: black;
   position: relative;
   bottom: 0.3em;
-  font-weight: 900;
+  font-weight: 700;
 }
 
 .interval-1 {
   background-color: #ae2b2b;
 }
 .interval-2 {
-  background-color: #ae2b2b;
+  background-color: #ffffff;
 }
 .interval-3 {
-  background-color: #ae2b2b;
+  background-color: #ffffff;
 }
 .interval-4 {
-  background-color: #ae2b2b;
+  background-color: #ffffff;
 }
 
 .interval-5 {
@@ -357,11 +372,13 @@ export default {
 }
 
 .interval-6 {
-  background-color: #276398;
+  background-color: #000000;
+  color: white;
 }
 
 .interval-7 {
-  background-color: #276398;
+  background-color: #000000;
+  color: white;
 }
 
 .chord-played {

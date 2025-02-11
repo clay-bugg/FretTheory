@@ -2,12 +2,13 @@
 - Add local storage
 
 <!----------INSTRUMANETS---->
-- Make guitar and keyboard components interchangable
+- Style     
 <!----------KEYBOARD---------->
 - Add scales
 - Add drag functionality for mouse on keys
 - Add keyboard input to play keys
 - Make arpeggio option into a button
+- Add a toggle switch to show piano notes
 
 <!----------STYLE------------->
 - Add transitions for chord note appearances
