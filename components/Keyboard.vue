@@ -55,8 +55,8 @@
           }]"  
         @mousedown="onMouseDown(key)"
         @mouseenter="onMouseEnter(key)"
-        @mouseup="onMouseUp(key)"
-        @mouseleave="onMouseUp(key)">
+        @mouseup="onMouseUp" 
+      >
 
           <span v-if="chordNotes.includes(key.note)">{{ key.note }}</span>
           <span v-if="chordNotes.includes(key.note)" :class="['interval', `interval-${chordNotes.indexOf(key.note) + 1}`]">
@@ -93,6 +93,7 @@ export default {
       rootNote: '',
       chordType: '',
       chordNotes: [],
+      isMouseDown: false,
       arpeggiated: false,
       activeChordNotes: [],
       soundsCache: {},
@@ -199,6 +200,7 @@ export default {
     },
     onMouseDown(key) {
       this.isMouseDown = true;
+      console.log(this.isMouseDown)
       this.playKey(key.note, key.octave);
     },
     onMouseEnter(key) {
@@ -207,6 +209,7 @@ export default {
       }
     },
     onMouseUp() {
+      console.log(this.isMouseDown)
       this.isMouseDown = false;
     },
 
