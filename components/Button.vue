@@ -1,26 +1,33 @@
 <template>
+
   <NuxtLink class="button" :to="buttonURL">
     {{ label }}
   </NuxtLink>
+
 </template>
 
 <script>
+
 export default {
   props: {
+
     buttonURL: {
       type: String,
       default: '/',
       required: true
     },
+
     label: {
       type: String,
       default: 'button'
     }
   }
 }
+
 </script>
 
 <style scoped>
+
   .button {
     width: 6em;
     height: 2em;
