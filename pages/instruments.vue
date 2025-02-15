@@ -68,7 +68,6 @@ export default {
   padding: 0;
   box-sizing: border-box;
 }
-
 #page {
   display: flex;
   flex-direction: column;
@@ -84,7 +83,6 @@ h1 {
   font-weight: 600;
   font-size: 3em;
 }
-
 #instrument-selector-box {
   width: fit-content;
   height: fit-content;
@@ -93,23 +91,15 @@ h1 {
   justify-content: space-between;
   gap: 2em;
 }
-
-
 #instrument-selector-box input {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
 }
-
 #instrument-selector-box img {
   width: 100%;
   height: 100%;
 }
-
-
-
-
-
 .instrument-selector {
   appearance: none;
   -moz-appearance: none;
@@ -126,21 +116,17 @@ h1 {
   cursor: pointer;
   overflow: hidden;
 }
-
 .instrument-image {
   width: 100%;
   height: 100%;
   object-fit: contain;
 }
-
 .instrument-selector:hover {
   filter: brightness(90%);
 }
-
 .instrument-selector:active {
   filter: brightness(100%);
 }
-
 input[type="radio"]:checked + img {
   border: 2px solid #3498db;
   border-radius: 5px;
