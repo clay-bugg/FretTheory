@@ -1,4 +1,5 @@
 <template>
+
   <div id="page">
     <h3>{{ header }}</h3>
   </div>
