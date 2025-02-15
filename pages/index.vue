@@ -6,7 +6,6 @@
     ]"/>
 
     <main>
-      <QuoteGenerator />
       <div id="page-options">
         <PageOption :cards="[
           { to: '/instruments', src: '/images/buttons/Instruments-button.png', alt: 'Instruments' },
