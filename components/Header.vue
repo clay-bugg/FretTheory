@@ -2,7 +2,7 @@
   <header>
     
     <NuxtLink to="/"  id="title">
-      <h1 >Music</h1>
+      <h1 >{{ title }}</h1>
     </NuxtLink>
 
     <nav>
@@ -19,6 +19,10 @@
 <script>
 export default {
   props: {
+    title: {
+      type: String,
+      required: false
+    },
     buttons: {
       type: Array,
       default: () => [
@@ -46,7 +50,7 @@ header {
 #title {
   font-size: 3em;
   text-decoration: none;
-  color: rgba(0, 0, 0, 0.47);
+  color: rgb(0, 0, 0);
 }
 
 #title:visited {

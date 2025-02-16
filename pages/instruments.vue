@@ -1,6 +1,6 @@
 <template>
   <div id="page">
-    <Header 
+    <Header title="Instruments"
       :buttons="[
         { url: '/instruments', label: 'Instruments' },
         { url: '/tools', label: 'Tools' }
@@ -8,11 +8,9 @@
     />
     <h1>Interactive Charts</h1>
 
-    <label for="instrument-selector-box" id="instrument-selector-box-label">
-      Instrument
-    </label>
-    <div id="instrument-selector-box">
-      <label v-for="(instrument, key) in instruments"
+    <div id="instrument">
+      <div id="instrument-selector-box">
+        <label v-for="(instrument, key) in instruments"
         :key="key"
         class="instrument-selector"
       >
@@ -24,13 +22,12 @@
         />
 
         <img :src="instrument.image" :alt="key" class="instrument.image" />
-      </label>
-    
+        </label>
+      </div>
+      <Keyboard v-if="selectedInstrument === 'keyboard'" />
+      <Guitar v-if="selectedInstrument === 'guitar'"/>
     </div>
 
-    <Keyboard v-if="selectedInstrument === 'keyboard'" />
-    <Guitar v-if="selectedInstrument === 'guitar'"/>
-    
   </div>
 </template>
 
@@ -85,13 +82,24 @@ h1 {
   font-size: 3em;
 }
 
+#instrument {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: fit-content;
+  gap: 3em;
+  position: relative;
+  right: 6em;
+}
+
 #instrument-selector-box {
   width: fit-content;
   height: fit-content;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  gap: 2em;
+  gap: 1em;
 }
 
 
