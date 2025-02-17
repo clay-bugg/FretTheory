@@ -354,9 +354,34 @@ export default {
 .chord-note {
   color: black(255, 255, 255);
 }
+
 .note-name {
   font-size: 0.8em;
+  color: white;
+  border: 1px solid black;
+  width: 1em;
+  height: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.1em;
+  background-color: black;
+
 }
+
+.black .note-name {
+  background-color: white;
+  border-radius: 50px;
+  color: black;
+  position: relative;
+  bottom: 0.2em;
+}
+
+.white .note-name {
+  border-radius: 50px;
+  
+}
+
 #interval-1,
 #chord-note-1 {
   background-color: #bb4343;
