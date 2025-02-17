@@ -6,9 +6,10 @@
         { url: '/tools', label: 'Tools' }
       ]"
     />
+
     <h1>Interactive Charts</h1>
 
-    <div id="instrument">
+    
       <div id="instrument-selector-box">
         <label v-for="(instrument, key) in instruments"
         :key="key"
@@ -26,7 +27,7 @@
       </div>
       <Keyboard v-if="selectedInstrument === 'keyboard'" />
       <Guitar v-if="selectedInstrument === 'guitar'"/>
-    </div>
+    
 
   </div>
 </template>
@@ -36,8 +37,8 @@ export default {
   data() { 
     return {
       instruments: {
-        keyboard: { image: '/images/KeyboardButton.png' },
-        guitar: { image: '/images/GuitarButton.png' }
+        keyboard: { image: '/images/buttons/KeyboardButton.png' },
+        guitar: { image: '/images/buttons/GuitarButton.png' }
       },
       selectedInstrument: null
     }
@@ -80,21 +81,10 @@ h1 {
   font-weight: 600;
   font-size: 3em;
 }
-
-#instrument {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: fit-content;
-  gap: 3em;
-  position: relative;
-  right: 6em;
-}
 #instrument-selector-box {
   width: fit-content;
   height: fit-content;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: space-between;
   gap: 1em;

@@ -56,11 +56,9 @@
         @mousedown="onMouseDown(key)"
         @mouseenter="onMouseEnter(key)"
         @mouseup="onMouseUp" 
-      >
-
-          <span v-if="chordNotes.includes(key.note)">{{ key.note }}</span>
-          <span v-if="chordNotes.includes(key.note)" :class="['interval', `interval-${chordNotes.indexOf(key.note) + 1}`]">
-            {{ chordNotes.indexOf(key.note) + 1}}
+      >   <span v-if="chordNotes.includes(key.note)" class="note-name">{{ chordNotes.indexOf(key.note) + 1 }}</span>
+          <span v-if="chordNotes.includes(key.note)" class="interval" :id="`interval-${chordNotes.indexOf(key.note) + 1}`">
+            {{ key.note }}
           </span>
 
       </div>
@@ -70,12 +68,12 @@
     <div class="chord-played"
       v-if="rootNote && chordType">
         <label for="chord-notes">{{ rootNote }}{{ chordType }}</label>
-        <p id="chord-notes">{{ chordNotes }}</p>
-        <button @click="playChord(chordNotes)"><Icon name="icon-park:plabuty-one" id="play-icon" /></button>
-        <label for ="argeggiate-notes">Argeggio</label>
+        <p v-for="(note, index) in chordNotes" :key="index" class="chord-note ":id="`chord-note-${index + 1}`">
+          {{ note }}
+        </p>
+        <button @click="playChord(chordNotes)">Play<Icon name="line-md:play-filled" id="play-icon" /></button>
+        <label for="argeggiate-notes">Argeggio</label>
         <input id="argeggiate-notes" type="checkbox" v-model="arpeggiated">
-
-     
     </div>  
 
   </div>
@@ -319,7 +317,7 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  gap: 0.5em;
+  gap: 0.1em;
 }
 .key:hover {
   cursor: pointer;
@@ -341,94 +339,105 @@ export default {
   color: #fff;
   z-index: 1;
 }
-
 .interval {
-  width: 1.8em;
-  height: 1.8em;
+  width: 100%;
+  height: 1.2em;
   display: flex;
   align-items: center ;
   justify-content: center;
-  border: 1px solid black;
-  border-radius: 50%;
-  background-color: black;
+  border-top: 2px solid black;
   color: black;
-  position: relative;
-  bottom: 0.3em;
-  font-weight: 700;
+  font-weight: 500;
+  color: black;
+  font-size: 1.1em;
 }
-
-.interval-1 {
-  background-color: #ae2b2b;
+.chord-note {
+  color: black(255, 255, 255);
 }
-.interval-2 {
-  background-color: #ffffff;
+.note-name {
+  font-size: 0.8em;
 }
-.interval-3 {
-  background-color: #ffffff;
+#interval-1,
+#chord-note-1 {
+  background-color: #bb4343;
 }
-.interval-4 {
-  background-color: #ffffff;
+#interval-2,
+#chord-note-2 {
+  background-color: #c75d11;
 }
-
-.interval-5 {
-  background-color: #276398;
+#interval-3,
+#chord-note-3 {
+  background-color: #bea815;
 }
-
-.interval-6 {
-  background-color: #000000;
-  color: white;
+#interval-4,
+#chord-note-4 {
+  background-color: #54a034;
 }
-
-.interval-7 {
-  background-color: #000000;
-  color: white;
+#interval-5,
+#chord-note-5 {
+  background-color: #259f8e;
+  color: rgb(0, 0, 0);
 }
-
+#interval-6,
+#chord-note-6 {
+  background-color: #4960c4;
+  color: black;
+}
+#interval-7,
+#chord-note-7 {
+  background-color: #ca71b9;
+  color: black
+}
 .chord-played {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 1em;
-  font-weight: 700;
-  font-size: 1.3em;
+  font-size: 1.2em;
+  font-weight: 600;
 }
-
-#chord-notes {
-  font-weight: 400;
-}
-
-.chord-played button {
-  font-family: inherit;
-  width: 3rem;
-  height: 1.5rem;
-  border: 1px solid black;
-  border-radius: 20px;
+.chord-note {
+  width: 2em;
+  height: 1.2em;
+  border-radius: 5px;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0.1em;
-  font-size: 0.8em;
-  font-weight: 550;
-  box-shadow: -0.5px 0.5px 0.5px rgba(0,0,0,0.5);
-  position: relative;
-  top: 0.1em;
+  border: 1px solid black;
+  font-weight: 400;
 }
-
+.chord-played button {
+  font-family: inherit;
+  width: 4rem;
+  height: 1.6rem;
+  border: 1px solid black;
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.5em;
+  font-weight: 300;
+  box-shadow: -0.5px 0.5px 0.5px rgba(0,0,0,0.5);
+  padding: 0 0.8em;
+ 
+}
 .chord-played button:hover {
   cursor: pointer;
   filter: brightness(120%);
 }
-
 .chord-played button:active {
   filter: brightness(100%);
   transform: translate(-0.5px, 0.5px);
   box-shadow: inset -0.5px 0.5px 0.5px rgba(0,0,0,0.5);
 }
 
-
-
+label[for="argeggiate-notes"] {
+  font-weight: 300;
+}
 #play-icon {
-  width: 1.6em;
-  height: 1.6em;
+  height: 3em;
+  width: 3em;
+  position: relative;
+  top: 0.1em;
 }
 </style>
