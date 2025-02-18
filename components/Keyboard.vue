@@ -56,9 +56,9 @@
         @mousedown="onMouseDown(key)"
         @mouseenter="onMouseEnter(key)"
         @mouseup="onMouseUp" 
-      >   <span v-if="chordNotes.includes(key.note)" class="note-name">{{ chordNotes.indexOf(key.note) + 1 }}</span>
+      >   
           <span v-if="chordNotes.includes(key.note)" class="interval" :id="`interval-${chordNotes.indexOf(key.note) + 1}`">
-            {{ key.note }}
+            {{ chordNotes.indexOf(key.note) + 1 }}
           </span>
 
       </div>
