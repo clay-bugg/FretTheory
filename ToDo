@@ -1,14 +1,12 @@
 <!----------GLOBAL------------>
 - Add local storage
 
-<!----------INSTRUMANETS---->
-- Style     
+<!----------INSTRUMANETS---->     
 <!----------KEYBOARD---------->
 - Add scales
-- Add drag functionality for mouse on keys
 - Add keyboard input to play keys
-- Make arpeggio option into a button
 - Add a toggle switch to show piano notes
+- Move arpeggiate function into settings panel
 
 <!----------STYLE------------->
 - Add transitions for chord note appearances
@@ -16,6 +14,6 @@
 - Style slider for keys
 - Relative sizes for screen widths
 - Get a new font
-- Add styling for extended chords
+- Style settings panel
 
 

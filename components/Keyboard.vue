@@ -16,6 +16,7 @@
         />
 
         <span id="keys-amount-label">{{ numberOfKeys }}</span>
+
       </div>
 
       <div class="chord-selector-box">
@@ -47,7 +48,7 @@
     <div class="keyboard">
 
       <div v-for="(key,index) in keysDisplayed"
-        :key="key"
+        :key="`${key.note}${key.octave}`"
         :class="[
           'key',
           {
@@ -60,40 +61,48 @@
         @mouseenter="onMouseEnter(key)"
         @mouseup="onMouseUp" 
       >   
+          <span v-if="notesDisplayed">{{ key.note }}</span>
           <span v-if="chordNotes.includes(key.note)" class="interval" :id="`interval-${chordNotes.indexOf(key.note) + 1}`">
             {{ chordNotes.indexOf(key.note) + 1 }}
           </span>
+          
 
       </div>
 
     </div>
 
-    <div class="chord-played"
-      v-if="rootNote && chordType">
-        <label for="chord-notes">{{ rootNote }}{{ chordType }}</label>
-        <p v-for="(note, index) in chordNotes" :key="index" class="chord-note ":id="`chord-note-${index + 1}`">
-          <span>{{ note }}<br>{{ index + 1 }}</span>
-        </p>
-        <button @click="playChord(chordNotes)" id="play-button">Play<Icon name="line-md:play-filled" id="play-icon" /></button>
-        <label for="argeggiate-notes">Argeggio</label>
-        <input id="argeggiate-notes" type="checkbox" v-model="arpeggiated">
+    <div class="chord-played" v-if="rootNote && chordType">
+      <label for="chord-notes">{{ rootNote }}{{ chordType }}</label>
+      <p v-for="(note, index) in chordNotes" :key="index" class="chord-note ":id="`chord-note-${index + 1}`">
+        <span>{{ note }}<br>{{ index + 1 }}</span>
+      </p>
+      <button @click="playChord(chordNotes)" id="play-button">Play<Icon name="line-md:play-filled" id="play-icon" /></button>
     </div>
 
     <div class="settings-panel" v-if="settingsOpened">
+
       <header>
         <h3>Settings</h3>
         <Icon name="qlementine-icons:close-16" id="settings-close" @click="toggleSettings()" />
       </header>
+
       <div id="settings-body">
-      <ul>
-          <l1>
-            <div v-for="setting in settings" :key="setting" class="setting" :id="setting.value"
-              >{{ setting.name }}
-              <input v-model="tempo" :type="setting.type" v-bind="setting.type === 'number' ? { min: setting.min, max: setting.max } : {}" />
-            </div>
-          </l1>
-      </ul>
+        <ul>
+          <li>
+            <p>Display Key Notes: </p>
+            <input type="checkbox" v-model="notesDisplayed"/>
+          </li>
+          <li>
+            <p>Arpeggiate Chord: </p>
+            <input type="checkbox" v-model="arpeggiated">
+          </li>
+          <li>
+            <p>Arpeggio Delay: </p>
+            <input type="number" v-model="arpeggioDelay"/>
+            </li>
+        </ul>
       </div>
+
     </div>
   </div>
 
@@ -105,16 +114,10 @@ import { Howl } from 'howler';
 export default {
   data() { 
     return {
+      pianoKeys: this.generateKeys(),
       numberOfKeys: 24,
-      pianoKeys: this.generateKeys(3, 5),
-      rootNote: '',
-      chordType: '',
-      chordNotes: [],
-      isMouseDown: false,
-      arpeggiated: false,
-      activeChordNotes: [],
-      soundsCache: {},
       rootNotes: ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'],
+      rootNote: '',
       chordTypes: [
         { label: 'Major', value: 'maj' },
         { label: 'Major 6th', value: 'maj6' },
@@ -129,6 +132,9 @@ export default {
         { label: 'Diminished', value: '°' },
         { label: 'Augmented', value: '+' },
       ],
+      chordType: '',
+      chordNotes: [],
+      activeChordNotes: [],
       chordIntervals: {
         'maj': [0, 4, 7],
         'maj6': [0, 4, 7, 9],
@@ -144,15 +150,12 @@ export default {
         'm7': [0, 3, 7, 10],
         
       },
+      soundsCache: {},
+      isMouseDown: false,
       settingsOpened: false,
-      settings: [
-        { value: 'note-display', name: 'Note Dislpay', type: 'checkbox' },
-        { value: 'arpeggiate', name: 'Arpeggiate', type: 'checkbox' },
-        { value: 'arpeggio-delay', name: 'Arpeggio Delay', type: 'number', min: "40", max: "500" }
-      ],
-      tempo: 70
-        
-      
+      notesDisplayed: false,
+      arpeggiated: false,
+      arpeggioDelay: 70, 
     }
   },
   computed: {
@@ -165,7 +168,6 @@ export default {
       console.log(`Root note changed to ${newVal}`);
       this.updateChord();
     },
-
     chordType(newVal) { 
       console.log(`Chord type changed to ${newVal}`);
       this.updateChord();
@@ -189,7 +191,6 @@ export default {
       }
       return keys;
     },
-
     updateChord() {
       if (!this.rootNote || !this.chordType) return;
 
@@ -204,8 +205,7 @@ export default {
       this.chordNotes = Array.from(new Set(this.chordNotes));
       console.log(`Chord changed to ${this.rootNote}${this.chordType}`);
     },
-
-    assignChordOctaves(rootNote, chordNotes, baseOctave = 3) { 
+    assignChordOctaves(rootNote, chordNotes, baseOctave = 3) {
       const noteOrder = this.rootNotes;
       let currentOctave = baseOctave;
       let lastNoteIndex = noteOrder.indexOf(rootNote);
@@ -238,7 +238,6 @@ export default {
       console.log(this.isMouseDown)
       this.isMouseDown = false;
     },
-
     playKey(note, octave) {
       const encodedNote = encodeURIComponent(note);
       const sound = new Howl({
@@ -251,7 +250,6 @@ export default {
         sound.stop();
       }, 7000);
     },
-
     playChord(notes) {
       if (!this.rootNote || !this.chordType) return;
 
@@ -271,7 +269,7 @@ export default {
         this.activeChordNotes.forEach(({ sound }) => sound.stop());
       }
 
-      const delay = this.arpeggiated ? this.tempo : 20;
+      const delay = this.arpeggiated ? this.arpeggioDelay : 20;
 
       playingSounds.forEach(({ sound }, index) => {
         setTimeout(() => {
@@ -283,8 +281,11 @@ export default {
       this.activeChordNotes = playingSounds;
 
     },
-    toggleSettings() { 
+    toggleSettings() {
       this.settingsOpened = !this.settingsOpened;
+    },
+    displayNotes() { 
+      this.notesDisplayed = !this.notesDisplayed;
     }
   }
 }
@@ -296,7 +297,6 @@ export default {
   padding: 0;
   box-sizing: border-box;
 }
-
 .component {
   display: flex;
   flex-direction: column;
@@ -313,20 +313,17 @@ export default {
   position: relative;
   padding-left: 0.7em;
 }
-
 .keys-selector-box {
   display: flex;
   align-items: center;
   gap: 0.4em;
   font-size: 1.1em;
 }
-
 .chord-selector-box {
   display: flex;
   align-items: center;
   gap: 0.4em;
 }
-
 .chord-selector-box select {
   font-size: 1em;
   font-family: inherit;
@@ -334,7 +331,6 @@ export default {
   border-radius: 0.3em;
   padding: 0 0.2em;
 }
-
 #settings-button {
   display: inline-block;
   width: 2em;
@@ -343,8 +339,6 @@ export default {
   background-size: 100% 100%;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cpath d='m12.594 23.258l-.012.002l-.071.035l-.02.004l-.014-.004l-.071-.036q-.016-.004-.024.006l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.016-.018m.264-.113l-.014.002l-.184.093l-.01.01l-.003.011l.018.43l.005.012l.008.008l.201.092q.019.005.029-.008l.004-.014l-.034-.614q-.005-.019-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.003-.011l.018-.43l-.003-.012l-.01-.01z'/%3E%3Cpath fill='%23fff' d='M16 15c1.306 0 2.418.835 2.83 2H20a1 1 0 1 1 0 2h-1.17a3.001 3.001 0 0 1-5.66 0H4a1 1 0 1 1 0-2h9.17A3 3 0 0 1 16 15m0 2a1 1 0 1 0 0 2a1 1 0 0 0 0-2M8 9a3 3 0 0 1 2.762 1.828l.067.172H20a1 1 0 0 1 .117 1.993L20 13h-9.17a3.001 3.001 0 0 1-5.592.172L5.17 13H4a1 1 0 0 1-.117-1.993L4 11h1.17A3 3 0 0 1 8 9m0 2a1 1 0 1 0 0 2a1 1 0 0 0 0-2m8-8c1.306 0 2.418.835 2.83 2H20a1 1 0 1 1 0 2h-1.17a3.001 3.001 0 0 1-5.66 0H4a1 1 0 0 1 0-2h9.17A3 3 0 0 1 16 3m0 2a1 1 0 1 0 0 2a1 1 0 0 0 0-2' stroke-width='1' stroke='%23000'/%3E%3C/g%3E%3C/svg%3E");
 }
-
-
 #settings-button:hover {
   cursor: pointer;
 }
@@ -359,7 +353,7 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 2;
-  border-radius: 5px;
+  border-radius: 10px;
   
 }
 .settings-panel header {
@@ -367,14 +361,34 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 0.5em;
+  padding: 1em 0.5em;
   background-color: #cecece;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  font-size: 1.2em;
+}
+.settings-panel ul {
+  font-size: 1.2em;
+}
+.settings-panel input[type="number"] {
+  border: 1px solid black;
+  border-radius: 4px;
+  font-size: 1;
+  width: 4.5em;
+  padding: 0.1em;
 }
 #settings-body {
   padding: 0.5em 0.8em;
 }
 #settings-close:hover {
   cursor: pointer;
+}
+#settings-body li {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.5em;
+  margin: 0.5em;
 }
 .keyboard {
   width: fit-content;
@@ -401,7 +415,7 @@ export default {
 }
 .white {
   width: 4em;
-  background-color: white;;
+  background-color: white;
 }
 .black {
   width: 2.5em;
@@ -434,11 +448,10 @@ export default {
   position: relative;
   top: 0.8em;
 }
-
 .note-name {
   font-size: 0.8em;
   color: white;
-  border: 1px solid black;
+  border: 1px solid rgb(181, 101, 101);
   width: 1em;
   height: 1em;
   display: flex;
@@ -448,7 +461,6 @@ export default {
   background-color: black;
 
 }
-
 .black .note-name {
   background-color: white;
   border-radius: 50px;
@@ -456,12 +468,9 @@ export default {
   position: relative;
   bottom: 0.2em;
 }
-
 .white .note-name {
-  border-radius: 50px;
-  
+  border-radius: 50px;  
 }
-
 #interval-1,
 #chord-note-1 {
   background-color: #bb4343;
@@ -524,21 +533,19 @@ export default {
   align-items: center;
   font-size: 0.5em;
   font-weight: 300;
-  box-shadow: -0.5px 0.5px 0.5px rgba(0,0,0,0.5);
+  box-shadow: -0.7px 0.7px 0.7px rgba(0,0,0,0.5);
   padding: 0 0.8em;
- 
 }
-#play-button {
+#play-button:hover {
   cursor: pointer;
   filter: brightness(120%);
 }
-#play-button {
+#play-button:active {
   filter: brightness(100%);
-  transform: translate(-0.5px, 0.5px);
-  box-shadow: inset -0.5px 0.5px 0.5px rgba(0,0,0,0.5);
+  transform: translate(-0.7px, 0.7px);
+  box-shadow: inset -0.7px 0.7px 0.7px rgba(0,0,0,0.5);
 }
-
-label[for="argeggiate-notes"] {
+label[for="arpeggiate-notes"] {
   font-weight: 300;
 }
 #play-icon {
@@ -546,9 +553,6 @@ label[for="argeggiate-notes"] {
   width: 3em;
   position: relative;
   top: 0.1em;
-}
-#arpeggio-delay input {
-  width: 4em;
 }
 
 </style>
