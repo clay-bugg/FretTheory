@@ -10,10 +10,11 @@
     <h1>Interactive Charts</h1>
 
     
-      <div id="instrument-selector-box">
+      <div id="instrument-button-box">
         <label v-for="(instrument, key) in instruments"
         :key="key"
-        class="instrument-selector"
+        class="instrument-button"
+        :id="`${key}-button`"
       >
         <input 
           type="radio"
@@ -81,24 +82,29 @@ h1 {
   font-weight: 600;
   font-size: 3em;
 }
-#instrument-selector-box {
+#instrument-button-box {
   width: fit-content;
   height: fit-content;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1em;
+  border: 1px solid black;
+  padding: 0.8em;
+  padding-top: 1.5em;
+  border-radius: 15px;
+  background-color: rgba(0,0,0,0.1);
 }
-#instrument-selector-box input {
+#instrument-button-box input {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
 }
-#instrument-selector-box img {
+#instrument-button-box img {
   width: 100%;
   height: 100%;
 }
-.instrument-selector {
+.instrument-button {
   appearance: none;
   -moz-appearance: none;
   -webkit-appearance: none;
@@ -112,23 +118,43 @@ h1 {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  overflow: hidden;
+  
 }
 .instrument-image {
   width: 100%;
   height: 100%;
   object-fit: contain;
 }
-.instrument-selector:hover {
+.instrument-button:hover {
   filter: brightness(90%);
 }
-.instrument-selector:active {
+.instrument-button:active {
   filter: brightness(100%);
 }
 input[type="radio"]:checked + img {
   border: 2px solid #3498db;
   border-radius: 5px;
   background-color: rgba(52, 152, 219, 0.2);
+}
+#keyboard-button::before {
+  content: "Keyboard";
+  position: absolute;
+  bottom: 3em;
+  width: 100%;
+  text-align: center;
+  font-family: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+}
+#guitar-button::before {
+  content: "Guitar";
+  position: absolute;
+  bottom: 3em;
+  width: 100%;
+  text-align: center;
+  font-family: inherit;
+  font-weight: 600;
+  text-decoration: underline;
 }
 
 
