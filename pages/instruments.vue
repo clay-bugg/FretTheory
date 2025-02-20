@@ -1,34 +1,31 @@
 <template>
   <div id="page">
-    <Header title="Instruments"
+    <Header heading="Music" subheading="Interactive Instruments" id="header"
       :buttons="[
         { url: '/instruments', label: 'Instruments' },
         { url: '/tools', label: 'Tools' }
       ]"
     />
-
-    <h1>Interactive Charts</h1>
-
-    
-      <div id="instrument-button-box">
-        <label v-for="(instrument, key) in instruments"
+    <div id="instrument-button-box">
+      <label v-for="(instrument, key) in instruments"
         :key="key"
         class="instrument-button"
         :id="`${key}-button`"
       >
-        <input 
+      <input 
           type="radio"
           :value="key"
           name="instrument"
           v-model="selectedInstrument"
-        />
+      />
 
-        <img :src="instrument.image" :alt="key" class="instrument.image" />
-        </label>
-      </div>
+      <img :src="instrument.image" :alt="key" class="instrument.image" />
+      </label>
+    </div>
+    <div id="instrument">
       <Keyboard v-if="selectedInstrument === 'keyboard'" />
       <Guitar v-if="selectedInstrument === 'guitar'"/>
-    
+    </div>
 
   </div>
 </template>
@@ -71,10 +68,13 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
   height: 100vh;
   gap: 0.5em;
-  background-color: #487dac
+  background-color: #487dac;
+}
+#header {
+  position: absolute;
+  top: 0;
 }
 h1 {
   margin: 0;
@@ -94,6 +94,7 @@ h1 {
   padding-top: 1.5em;
   border-radius: 15px;
   background-color: rgba(0,0,0,0.1);
+  margin-top: 6em;
 }
 #instrument-button-box input {
   appearance: none;

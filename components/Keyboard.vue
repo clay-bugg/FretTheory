@@ -99,7 +99,7 @@
           <li>
             <p>Arpeggio Delay: </p>
             <input type="number" v-model="arpeggioDelay"/>
-            </li>
+          </li>
         </ul>
       </div>
 

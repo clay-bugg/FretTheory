@@ -1,9 +1,11 @@
 <template>
   <header>
-    
-    <NuxtLink to="/"  id="title">
-      <h1 >{{ title }}</h1>
-    </NuxtLink>
+    <div id="title">
+      <NuxtLink to="/"  id="heading">
+        <h1 >{{ heading }}</h1>
+      </NuxtLink>
+      <h2 id="subheading">{{ subheading }}</h2>
+    </div>
 
     <nav>
       <Button 
@@ -19,7 +21,11 @@
 <script>
 export default {
   props: {
-    title: {
+    heading: {
+      type: String,
+      required: false
+    },
+    subheading: {
       type: String,
       required: false
     },
@@ -39,31 +45,42 @@ export default {
 <style scoped>
 header {
   width: 100%;
-  height: 5em;
+  height: 4em;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 2em;
   backdrop-filter: brightness(85%);
 }
-
 #title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: fit-content;
+  gap: 1em;
+  padding: 0;
+  margin: 0;
+  position: relative;
+  top: 0.7em;
+}
+#heading {
   font-size: 3em;
   text-decoration: none;
   color: rgb(0, 0, 0);
 }
-
-#title:visited {
+#heading:visited {
   color: rgba(0, 0, 0, 0.47);
 }
-
+#subheading {
+  font-size: 2em;
+  position: relative;
+  top: 0.3em;
+}
   nav {
     display: flex;
-    justify-content: space-bwtween;
+    justify-content: space-between;
     align-items: center;
     gap: 1em;
   }
 
-
-  
 </style>
