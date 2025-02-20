@@ -61,7 +61,8 @@
         @mouseenter="onMouseEnter(key)"
         @mouseup="onMouseUp" 
       >   
-          <span v-if="notesDisplayed">{{ key.note }}</span>
+          <span v-if="notesDisplayed === 'all'">{{ key.note }}</span>
+          <span v-if="notesDisplayed === 'chord' && chordNotes.includes(key.note)">{{ key.note }}</span>
           <span v-if="chordNotes.includes(key.note)" class="interval" :id="`interval-${chordNotes.indexOf(key.note) + 1}`">
             {{ chordNotes.indexOf(key.note) + 1 }}
           </span>
@@ -89,8 +90,13 @@
       <div id="settings-body">
         <ul>
           <li>
-            <p>Display Key Notes: </p>
-            <input type="checkbox" v-model="notesDisplayed"/>
+            <p>Note Labels:</p>
+            <input type="radio" name="notes-displayed" v-model="notesDisplayed"  value="all" id="all-notes-checkbox"/>
+            <label for="all-notes-checkbox">All</label>
+            <input type="radio"  name="notes-displayed"v-model="notesDisplayed" value="chord" id="chord-notes-checkbox" />
+            <label for="chord-notes-checkbox">Chord</label>
+            <input type="radio"  name="notes-displayed"v-model="notesDisplayed" value="none" id="no-notes-checkbox" />
+            <label for="no-notes-checkbox">None</label>
           </li>
           <li>
             <p>Arpeggiate Chord: </p>
@@ -153,7 +159,7 @@ export default {
       soundsCache: {},
       isMouseDown: false,
       settingsOpened: false,
-      notesDisplayed: false,
+      notesDisplayed: 'none',
       arpeggiated: false,
       arpeggioDelay: 70, 
     }
@@ -172,6 +178,9 @@ export default {
       console.log(`Chord type changed to ${newVal}`);
       this.updateChord();
     },
+    notesDisplayed(newVal) { 
+      console.log(`Notes displayed set to ${newVal}`)
+    }
   },
   methods: {
     generateKeys() {
@@ -285,7 +294,7 @@ export default {
       this.settingsOpened = !this.settingsOpened;
     },
     displayNotes() { 
-      this.notesDisplayed = !this.notesDisplayed;
+      this.allNotesDisplayed = !this.allNotesDisplayed;
     }
   }
 }
@@ -343,15 +352,15 @@ export default {
   cursor: pointer;
 }
 .settings-panel {
-  width: 20em;
-  height: 20em;
+  width: 14em;
+  height: 18em;
   border: 1px solid black;
   background-color: #f2f2f2;
   border-radius: 5px;
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(210%, -50%);
   z-index: 2;
   border-radius: 10px;
   
@@ -377,8 +386,9 @@ export default {
   width: 4.5em;
   padding: 0.1em;
 }
-#settings-body {
-  padding: 0.5em 0.8em;
+#settings-body label {
+  margin-right: 0.5em;
+  
 }
 #settings-close:hover {
   cursor: pointer;
@@ -388,7 +398,8 @@ export default {
   align-items: center;
   justify-content: flex-start;
   gap: 0.5em;
-  margin: 0.5em;
+  display: block;
+  border: 1px solid rgba(0,0,0,0.3);
 }
 .keyboard {
   width: fit-content;
