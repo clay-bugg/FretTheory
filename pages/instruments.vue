@@ -70,7 +70,8 @@ export default {
   align-items: center;
   height: 100vh;
   gap: 0.5em;
-  background-color: #487dac;
+   background-image: url('public/images/backgrounds/y-so-serious.png');
+   background-size: center;
 }
 #header {
   position: absolute;

@@ -5,15 +5,11 @@
 <!----------KEYBOARD---------->
 - Add scales
 - Add keyboard input to play keys
-- Add a toggle switch to show piano notes
-- Move arpeggiate function into settings panel
 
 <!----------STYLE------------->
 - Add transitions for chord note appearances
 - Add keyboard styling
 - Style slider for keys
 - Relative sizes for screen widths
-- Get a new font
-- Style settings panel
 
 

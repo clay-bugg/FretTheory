@@ -37,10 +37,10 @@
             :value="type.value">
               {{ type.label }}
           </option>
-        </select> 
-        
-        <Icon id="settings-button" name="mingcute:settings-6-line" @click="toggleSettings()"/>
-    
+        </select>
+        <button id="settings-button">
+          <Icon id="settings-icon" name="mi:options-horizontal" @click="toggleSettings()"/>
+        </button> 
       </div>
 
     </div>
@@ -71,7 +71,15 @@
       </div>
 
     </div>
+    <div id="chord-buttons">
 
+      <button v-if="rootNote"
+        v-for="type in chordTypes"
+        :key="type"
+        :value="type.value">
+          {{ rootNote }}{{ type.value }}
+    </button>
+   </div>
     <div class="chord-played" v-if="rootNote && chordType">
       <label for="chord-notes">{{ rootNote }}{{ chordType }}</label>
       <p v-for="(note, index) in chordNotes" :key="index" class="chord-note ":id="`chord-note-${index + 1}`">
@@ -91,12 +99,14 @@
         <ul>
           <li>
             <p>Note Labels:</p>
-            <input type="radio" name="notes-displayed" v-model="notesDisplayed"  value="all" id="all-notes-checkbox"/>
-            <label for="all-notes-checkbox">All</label>
-            <input type="radio"  name="notes-displayed"v-model="notesDisplayed" value="chord" id="chord-notes-checkbox" />
-            <label for="chord-notes-checkbox">Chord</label>
-            <input type="radio"  name="notes-displayed"v-model="notesDisplayed" value="none" id="no-notes-checkbox" />
-            <label for="no-notes-checkbox">None</label>
+            <div id="notes-labels">
+              <input type="radio" name="notes-displayed" v-model="notesDisplayed"  value="all" id="all-notes-checkbox"/>
+              <label for="all-notes-checkbox" class="notes-checkbox">All</label>
+              <input type="radio"  name="notes-displayed"v-model="notesDisplayed" value="chord" id="chord-notes-checkbox" />
+              <label for="chord-notes-checkbox" class="notes-checkbox">Chord</label>
+              <input type="radio"  name="notes-displayed"v-model="notesDisplayed" value="none" id="no-notes-checkbox" />
+              <label for="no-notes-checkbox" class="notes-checkbox">None</label>
+            </div>
           </li>
           <li>
             <p>Arpeggiate Chord: </p>
@@ -104,7 +114,8 @@
           </li>
           <li>
             <p>Arpeggio Delay: </p>
-            <input type="number" v-model="arpeggioDelay"/>
+            <input type="number" v-model="arpeggioDelay" id="arpeggio-delay "/>
+            <p id="ms">ms</p>
           </li>
         </ul>
       </div>
@@ -301,6 +312,7 @@ export default {
 </script>
 
 <style scoped>
+/*--------GLOBAL---------*/
 * {
   margin: 0;
   padding: 0;
@@ -313,12 +325,15 @@ export default {
   gap: 0.4em;
   width: fit-content;
   position: relative;
+  background-color: rgb(0,0,0,0);
 }
+
+/*--------CONTROLS---------*/
 .controls {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 57em;
+  width: 56em;
   position: relative;
   padding-left: 0.7em;
 }
@@ -344,13 +359,27 @@ export default {
   display: inline-block;
   width: 2em;
   height: 2em;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cpath d='m12.594 23.258l-.012.002l-.071.035l-.02.004l-.014-.004l-.071-.036q-.016-.004-.024.006l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.016-.018m.264-.113l-.014.002l-.184.093l-.01.01l-.003.011l.018.43l.005.012l.008.008l.201.092q.019.005.029-.008l.004-.014l-.034-.614q-.005-.019-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.003-.011l.018-.43l-.003-.012l-.01-.01z'/%3E%3Cpath fill='%23fff' d='M16 15c1.306 0 2.418.835 2.83 2H20a1 1 0 1 1 0 2h-1.17a3.001 3.001 0 0 1-5.66 0H4a1 1 0 1 1 0-2h9.17A3 3 0 0 1 16 15m0 2a1 1 0 1 0 0 2a1 1 0 0 0 0-2M8 9a3 3 0 0 1 2.762 1.828l.067.172H20a1 1 0 0 1 .117 1.993L20 13h-9.17a3.001 3.001 0 0 1-5.592.172L5.17 13H4a1 1 0 0 1-.117-1.993L4 11h1.17A3 3 0 0 1 8 9m0 2a1 1 0 1 0 0 2a1 1 0 0 0 0-2m8-8c1.306 0 2.418.835 2.83 2H20a1 1 0 1 1 0 2h-1.17a3.001 3.001 0 0 1-5.66 0H4a1 1 0 0 1 0-2h9.17A3 3 0 0 1 16 3m0 2a1 1 0 1 0 0 2a1 1 0 0 0 0-2' stroke-width='1' stroke='%23000'/%3E%3C/g%3E%3C/svg%3E");
+  border-radius: 5px;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #e0e0e0;
+
 }
 #settings-button:hover {
   cursor: pointer;
+  transform: scale(1.06);
+  background-color: #fff;
 }
+#settings-button:active {
+  transform: scale(1);
+}
+#settings-icon {
+  width: 100%;
+  height: 100%;
+}
+
 .settings-panel {
   width: 14em;
   height: 18em;
@@ -360,7 +389,7 @@ export default {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(210%, -50%);
+  transform: translate(210%, -66%);
   z-index: 2;
   border-radius: 10px;
   
@@ -376,6 +405,11 @@ export default {
   border-top-right-radius: 10px;
   font-size: 1.2em;
 }
+#notes-labels {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
 .settings-panel ul {
   font-size: 1.2em;
 }
@@ -386,12 +420,18 @@ export default {
   width: 4.5em;
   padding: 0.1em;
 }
-#settings-body label {
-  margin-right: 0.5em;
-  
+.notes-checkbox {
+  font-size: 0.9em;
 }
 #settings-close:hover {
   cursor: pointer;
+}
+#settings-body {
+  text-align: center;
+}
+#settings-body label {
+  margin-right: 0.5em;
+  
 }
 #settings-body li {
   display: flex;
@@ -400,7 +440,15 @@ export default {
   gap: 0.5em;
   display: block;
   border: 1px solid rgba(0,0,0,0.3);
+  padding: 0.3em 0.5em;
 }
+#ms {
+  display: inline;
+  margin-left: 0.1em;
+  font-size: 0.8em;
+}
+
+/*--------KEYBOARD---------*/
 .keyboard {
   width: fit-content;
   height: 16em;
@@ -451,6 +499,19 @@ export default {
   font-weight: 500;
   color: black;
   font-size: 1.1em;
+  background-color: #3d9ea3;
+}
+#interval-1 {
+  background-color: #bb4343 !important;
+}
+#interval-5,
+#interval-6,
+#interval-7
+ {
+  width: 1.5em;
+  height: 1.5em;
+  border-radius: 50px;
+  border: 2px solid black;
 }
 .chord-note {
   color: black(255, 255, 255);
@@ -482,36 +543,34 @@ export default {
 .white .note-name {
   border-radius: 50px;  
 }
-#interval-1,
-#chord-note-1 {
-  background-color: #bb4343;
+/*--------DISPLAY---------*/
+#chord-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: fit-content;
+  gap: 1.5em;
 }
-#interval-2,
-#chord-note-2 {
-  background-color: #c75d11;
+#chord-buttons button {
+  padding: 0.5em;
+  border-radius: 5px;
+  border: 1px solid black;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.5em;
+  font-weight: 600;
+  box-shadow: -0.7px 0.7px 0.7px rgba(0,0,0,0.5);
+  font-family: inherit;
 }
-#interval-3,
-#chord-note-3 {
-  background-color: #bea815;
+#chord-buttons button:hover {
+  cursor: pointer;
+  filter: brightness(105%);
 }
-#interval-4,
-#chord-note-4 {
-  background-color: #54a034;
-}
-#interval-5,
-#chord-note-5 {
-  background-color: #259f8e;
-  color: rgb(0, 0, 0);
-}
-#interval-6,
-#chord-note-6 {
-  background-color: #4960c4;
-  color: black;
-}
-#interval-7,
-#chord-note-7 {
-  background-color: #ca71b9;
-  color: black
+#chord-buttons button:active {
+  filter: brightness(100%);
+  transform: translate(-0.7px, 0.7px);
+  box-shadow: inset -0.7px 0.7px 0.7px rgba(0,0,0,0.5);
 }
 .chord-played {
   display: flex;
@@ -565,5 +624,4 @@ label[for="arpeggiate-notes"] {
   position: relative;
   top: 0.1em;
 }
-
 </style>
