@@ -72,10 +72,12 @@ export default {
   gap: 0.5em;
    background-image: url('public/images/backgrounds/y-so-serious.png');
    background-size: center;
+   color: white;
 }
 #header {
   position: absolute;
   top: 0;
+  border-bottom: 2px solid white;
 }
 h1 {
   margin: 0;

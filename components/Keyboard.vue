@@ -20,7 +20,7 @@
       </div>
 
       <div class="chord-selector-box">
-
+        <label for="root-note-selector">Chord: </label>
         <select id="root-note-selector" v-model="rootNote">
           <option
             v-for="note in rootNotes"
@@ -75,7 +75,7 @@
     <div class="chord-played" v-if="rootNote && chordType">
       <label for="chord-notes">{{ rootNote }}{{ chordType }}</label>
       <p v-for="(note, index) in chordNotes" :key="index" class="chord-note ":id="`chord-note-${index + 1}`">
-        <span>{{ note + '-'}}</span>
+        {{ note }}
       </p>
       <button @click="playChord(chordNotes)" id="play-button">Play<Icon name="line-md:play-filled" id="play-icon" /></button>
     </div>
@@ -384,6 +384,7 @@ export default {
   transform: translate(210%, -66%);
   z-index: 2;
   border-radius: 10px;
+  color: black;
   
 }
 .settings-panel header {
@@ -537,15 +538,20 @@ export default {
 /*--------DISPLAY---------*/
 .chord-played {
   display: flex;
-  align-items: center;
+  align-items: space-between;
+  width: fit-content;
   justify-content: space-between; 
   width: fit-content;
   font-size: 1.2em;
   font-weight: 600;
   color: white;
+  gap: 1.2em;
 }
-
- #play-button {
+.chord-played span {
+  position: relative;
+  bottom: 2em;
+}
+#play-button {
   font-family: inherit;
   width: 4rem;
   height: 1.6rem;
