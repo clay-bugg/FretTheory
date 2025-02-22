@@ -71,19 +71,11 @@
       </div>
 
     </div>
-    <div id="chord-buttons">
-
-      <button v-if="rootNote"
-        v-for="type in chordTypes"
-        :key="type"
-        :value="type.value">
-          {{ rootNote }}{{ type.value }}
-    </button>
-   </div>
+    
     <div class="chord-played" v-if="rootNote && chordType">
       <label for="chord-notes">{{ rootNote }}{{ chordType }}</label>
       <p v-for="(note, index) in chordNotes" :key="index" class="chord-note ":id="`chord-note-${index + 1}`">
-        <span>{{ note }}<br>{{ index + 1 }}</span>
+        <span>{{ note + '-'}}</span>
       </p>
       <button @click="playChord(chordNotes)" id="play-button">Play<Icon name="line-md:play-filled" id="play-icon" /></button>
     </div>
@@ -507,7 +499,7 @@ export default {
 #interval-5,
 #interval-6,
 #interval-7
- {
+ 
   width: 1.5em;
   height: 1.5em;
   border-radius: 50px;
@@ -544,54 +536,16 @@ export default {
   border-radius: 50px;  
 }
 /*--------DISPLAY---------*/
-#chord-buttons {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: fit-content;
-  gap: 1.5em;
-}
-#chord-buttons button {
-  padding: 0.5em;
-  border-radius: 5px;
-  border: 1px solid black;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 0.5em;
-  font-weight: 600;
-  box-shadow: -0.7px 0.7px 0.7px rgba(0,0,0,0.5);
-  font-family: inherit;
-}
-#chord-buttons button:hover {
-  cursor: pointer;
-  filter: brightness(105%);
-}
-#chord-buttons button:active {
-  filter: brightness(100%);
-  transform: translate(-0.7px, 0.7px);
-  box-shadow: inset -0.7px 0.7px 0.7px rgba(0,0,0,0.5);
-}
 .chord-played {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 1em;
+  justify-content: space-between; 
+  width: fit-content;
   font-size: 1.2em;
   font-weight: 600;
-  position: relative;
-  padding-right: 3em;
+  color: white;
 }
-.chord-note {
-  width: 2em;
-  height: 1.2em;
-  border-radius: 5px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid black;
-  font-weight: 400;
-}
+
  #play-button {
   font-family: inherit;
   width: 4rem;
