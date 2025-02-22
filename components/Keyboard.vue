@@ -321,6 +321,26 @@ watch(notesDisplayed, (newVal) => {
   gap: 0.4em;
   font-size: 1.1em;
 }
+.keys-selector-box input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+}
+.keys-selector-box input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 1.2em;
+  width: 1.2em;
+  background-color: white;
+  border-radius: 50px;
+  cursor: pointer;
+  position: relative;
+  bottom: 0.4em;
+  border: 2px solid black;
+}
+.keys-selector-box input[type="range"]::-webkit-slider-runnable-track {
+  height: 0.4em;
+  border-radius: 2px;
+  
+}
 .chord-selector-box {
   display: flex;
   align-items: center;
