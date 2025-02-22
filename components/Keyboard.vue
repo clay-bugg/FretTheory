@@ -528,7 +528,6 @@ watch(notesDisplayed, (newVal) => {
   gap: 1.2em; 
 }
 #play-button {
-#play-button {
   font-family: inherit;
   width: 4rem;
   height: 1.6rem;
