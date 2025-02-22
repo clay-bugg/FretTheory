@@ -498,8 +498,7 @@ export default {
 }
 #interval-5,
 #interval-6,
-#interval-7
- 
+#interval-7 {
   width: 1.5em;
   height: 1.5em;
   border-radius: 50px;
