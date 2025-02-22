@@ -72,10 +72,12 @@ export default {
   gap: 0.5em;
    background-image: url('public/images/backgrounds/y-so-serious.png');
    background-size: center;
+   color: white;
 }
 #header {
   position: absolute;
   top: 0;
+  border-bottom: 2px solid white;
 }
 h1 {
   margin: 0;
@@ -90,12 +92,15 @@ h1 {
   align-items: center;
   justify-content: space-between;
   gap: 1em;
-  border: 1px solid black;
-  padding: 0.8em;
-  padding-top: 1.5em;
   border-radius: 15px;
-  background-color: rgba(0,0,0,0.1);
   margin-top: 6em;
+  background-color: rgba(178, 178, 178, 0.1);
+  padding: 0.5em 0.6em;
+  border: 0.5px solid rgba(255, 255, 255, 0.529);
+  border-radius: 15px;
+  backdrop-filter: blur(1.5px);
+  position: relative;
+  top: 2em;
 }
 #instrument-button-box input {
   appearance: none;
@@ -141,7 +146,7 @@ input[type="radio"]:checked + img {
 #keyboard-button::before {
   content: "Keyboard";
   position: absolute;
-  bottom: 3em;
+  bottom: 3.6em;
   width: 100%;
   text-align: center;
   font-family: inherit;
@@ -151,7 +156,7 @@ input[type="radio"]:checked + img {
 #guitar-button::before {
   content: "Guitar";
   position: absolute;
-  bottom: 3em;
+  bottom: 3.6em;
   width: 100%;
   text-align: center;
   font-family: inherit;
