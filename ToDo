@@ -1,15 +1,16 @@
 <!----------GLOBAL------------>
 - Add local storage
 
-<!----------INSTRUMANETS---->     
+<!----------INSTRUMENETS---->     
 <!----------KEYBOARD---------->
 - Add scales
-- Add keyboard input to play keys
+- Categorise and add more chord variations
+
 
 <!----------STYLE------------->
 - Add transitions for chord note appearances
 - Add keyboard styling
-- Style slider for keys
 - Relative sizes for screen widths
+- Adjust styling for extended chords
 
 

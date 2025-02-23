@@ -6,8 +6,9 @@
         { url: '/tools', label: 'Tools' }
       ]"
     />
-    <div id="instrument-button-box">
-      <label v-for="(instrument, key) in instruments"
+    <div id="instrument">
+      <div id="instrument-button-box" @click="selectedInstrument">
+        <label v-for="(instrument, key) in instruments" :is="selectedInstrument"
         :key="key"
         class="instrument-button"
         :id="`${key}-button`"
@@ -18,14 +19,14 @@
           name="instrument"
           v-model="selectedInstrument"
       />
-
-      <img :src="instrument.image" :alt="key" class="instrument.image" />
-      </label>
-    </div>
-    <div id="instrument">
-      <Keyboard v-if="selectedInstrument === 'keyboard'" />
-      <Guitar v-if="selectedInstrument === 'guitar'"/>
-    </div>
+        <img :src="instrument.image" :alt="key" class="instrument.image" />
+        </label>
+      </div>
+      <div id="selected-instrument">
+        <Keyboard v-if="selectedInstrument === 'keyboard'" />
+        <Guitar v-if="selectedInstrument === 'guitar'"/>
+        </div>
+    </div> 
 
   </div>
 </template>
@@ -85,22 +86,34 @@ h1 {
   font-weight: 600;
   font-size: 3em;
 }
+#instrument{
+  width: fit-content;
+  position: absolute;
+  left: 0;
+  top: 30%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2em;
+  margin-left: 4em;
+  height: 24.808em;
+}
 #instrument-button-box {
   width: fit-content;
   height: fit-content;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  gap: 1em;
+  height: fit-content;
+  gap: 2.5em;
   border-radius: 15px;
-  margin-top: 6em;
   background-color: rgba(178, 178, 178, 0.1);
   padding: 0.5em 0.6em;
   border: 0.5px solid rgba(255, 255, 255, 0.529);
   border-radius: 15px;
   backdrop-filter: blur(1.5px);
-  position: relative;
-  top: 2em;
+
 }
 #instrument-button-box input {
   appearance: none;
@@ -117,7 +130,6 @@ h1 {
   -webkit-appearance: none;
   width: 6em;
   height: 3em;
-  border: 1px solid black;
   background-color: white;
   border-radius: 6px;
   position: relative;
@@ -125,7 +137,6 @@ h1 {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  
 }
 .instrument-image {
   width: 100%;
@@ -139,7 +150,7 @@ h1 {
   filter: brightness(100%);
 }
 input[type="radio"]:checked + img {
-  border: 2px solid #3498db;
+  border: none;
   border-radius: 5px;
   background-color: rgba(52, 152, 219, 0.2);
 }

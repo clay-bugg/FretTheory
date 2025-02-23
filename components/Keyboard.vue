@@ -1,4 +1,4 @@
-<template>
+<template> 
   <div class="component">
     <div class="controls">
       <div class="keys-selector-box">
@@ -340,6 +340,7 @@ watch(notesDisplayed, (newVal) => {
   height: 0.4em;
   border-radius: 2px;
   
+  
 }
 .chord-selector-box {
   display: flex;
@@ -470,6 +471,7 @@ watch(notesDisplayed, (newVal) => {
 .white {
   width: 4em;
   background-color: white;
+  color: black;
 }
 .black {
   width: 2.5em;
