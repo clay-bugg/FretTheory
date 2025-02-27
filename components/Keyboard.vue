@@ -469,12 +469,12 @@ watch(notesDisplayed, (newVal) => {
   filter: brightness(95%);
 }
 .white {
-  width: 3.5em;
+  width: 4em;
   background-color: white;
   color: black;
 }
 .black {
-  width: 2.188em;
+  width: 2.5em;
   height: 9em;
   position: relative;
   margin: 0 -1.25em;

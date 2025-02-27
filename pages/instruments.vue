@@ -2,12 +2,14 @@
   <div id="page">
     <Header heading="Music" subheading="Interactive Instruments" id="header"
       :buttons="[
-        { url: '/instruments', label: 'Instruments' },
-        { url: '/tools', label: 'Tools' }
+      { url: '/instruments', label: 'Instruments' },
+      { url: '/tools', label: 'Tools' }
       ]"
-    />
+      />
 
-      <div id="instrument-button-box" @click="selectedInstrument">
+
+      <div class="selected-instrument">
+      <div class="instrument-button-box" @click="selectedInstrument">
         <label v-for="(instrument, key) in instruments" :is="selectedInstrument"
         :key="key"
         class="instrument-button"
@@ -22,10 +24,9 @@
         <img :src="instrument.image" :alt="key" class="instrument.image" />
         </label>
       </div>
-      <div id="selected-instrument">
-        <Keyboard v-if="selectedInstrument === 'keyboard'" />
-        <Guitar v-if="selectedInstrument === 'guitar'"/>
-        </div>
+      <Keyboard v-if="selectedInstrument === 'keyboard'" />
+      <Guitar v-if="selectedInstrument === 'guitar'"/>
+    </div>
      
 
   </div>
@@ -79,7 +80,8 @@ export default {
 #header {
   position: absolute;
   top: 0;
-  border-bottom: 2px solid white;
+  border-bottom: 2px solid
+   white;
 }
 h1 {
   margin: 0;
@@ -88,7 +90,17 @@ h1 {
   font-size: 3em;
 }
 
-#instrument-button-box {
+.selected-instrument {
+  position: relative;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5em;
+  
+}
+
+.instrument-button-box {
   width: fit-content;
   height: fit-content;
   display: flex;
@@ -103,17 +115,14 @@ h1 {
   border: 0.5px solid rgba(255, 255, 255, 0.529);
   border-radius: 15px;
   backdrop-filter: blur(1.5px);
-  position: absolute;
-  left: 2em;
-  top: 40%;
 
 }
-#instrument-button-box input {
+.instrument-button-box input {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
 }
-#instrument-button-box img {
+.instrument-button-box img {
   width: 100%;
   height: 100%;
 }
@@ -167,6 +176,7 @@ input[type="radio"]:checked + img {
   font-weight: 600;
   text-decoration: underline;
 }
+
 
 
 
