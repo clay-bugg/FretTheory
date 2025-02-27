@@ -18,7 +18,7 @@
 
         <label for="root-note-selector">Chord: </label>
         <select id="root-note-selector" v-model="rootNote">
-          <option v-for="note in rootNotes" :key="note" :value="note">
+          <option v-for="note in Notes" :key="note" :value="note">
             {{ note }}
           </option>
         </select>
@@ -150,7 +150,7 @@ function updateChord() {
   console.log(`Chord changed to ${rootNote.value}${chordType.value}`)
 }
 function assignChordOctaves(root, chordNotesArray, baseOctave = 3) {
-  const noteOrder = rootNotes.value
+  const noteOrder = Notes.value
   let currentOctave = baseOctave
   let lastNoteIndex = noteOrder.indexOf(root)
   const chordWithOctaves = []
@@ -210,7 +210,7 @@ function playChord(notes) {
 // --------REACIVITY--------
 const pianoKeys = ref(generateKeys())
 const numberOfKeys = ref(24)
-const rootNotes = ref(['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'])
+const Notes = ref(['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'])
 const rootNote = ref('')
 const chordTypes = ref([
   { label: 'Major', value: 'maj' },
