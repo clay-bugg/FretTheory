@@ -5,6 +5,7 @@
       { url: '/tools', label: 'Tools' }
       ]"
     />
+    <Keyboard />
   </div>
 </template>
 

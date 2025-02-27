@@ -447,7 +447,7 @@ watch(notesDisplayed, (newVal) => {
 /*--------KEYBOARD---------*/
 .keyboard {
   width: fit-content;
-  height: 16em;
+  height: 15em;
   border: 0.2em solid black;
   border-top: 0.6em solid black;
   display: flex;
@@ -469,13 +469,13 @@ watch(notesDisplayed, (newVal) => {
   filter: brightness(95%);
 }
 .white {
-  width: 4em;
+  width: 3.5em;
   background-color: white;
   color: black;
 }
 .black {
-  width: 2.5em;
-  height: 9.5em;
+  width: 2.188em;
+  height: 9em;
   position: relative;
   margin: 0 -1.25em;
   background-color: black;

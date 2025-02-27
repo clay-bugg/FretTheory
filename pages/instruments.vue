@@ -6,7 +6,7 @@
         { url: '/tools', label: 'Tools' }
       ]"
     />
-    <div id="instrument">
+
       <div id="instrument-button-box" @click="selectedInstrument">
         <label v-for="(instrument, key) in instruments" :is="selectedInstrument"
         :key="key"
@@ -26,7 +26,7 @@
         <Keyboard v-if="selectedInstrument === 'keyboard'" />
         <Guitar v-if="selectedInstrument === 'guitar'"/>
         </div>
-    </div> 
+     
 
   </div>
 </template>
@@ -69,6 +69,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   height: 100vh;
   gap: 0.5em;
    background-image: url('public/images/backgrounds/y-so-serious.png');
@@ -86,18 +87,7 @@ h1 {
   font-weight: 600;
   font-size: 3em;
 }
-#instrument{
-  width: fit-content;
-  position: absolute;
-  left: 0;
-  top: 30%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 2em;
-  margin-left: 4em;
-  height: 24.808em;
-}
+
 #instrument-button-box {
   width: fit-content;
   height: fit-content;
@@ -113,6 +103,9 @@ h1 {
   border: 0.5px solid rgba(255, 255, 255, 0.529);
   border-radius: 15px;
   backdrop-filter: blur(1.5px);
+  position: absolute;
+  left: 2em;
+  top: 40%;
 
 }
 #instrument-button-box input {
