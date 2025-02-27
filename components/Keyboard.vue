@@ -484,6 +484,7 @@ watch(notesDisplayed, (newVal) => {
   border-bottom-right-radius: 0.4em;
   color: #fff;
   z-index: 1;
+  overflow: hidden;
 }
 .interval {
   width: 100%;
@@ -495,27 +496,49 @@ watch(notesDisplayed, (newVal) => {
   color: black;
   font-weight: 500;
   font-size: 1.1em;
-  background-color: #3d9ea3;
 }
-#interval-1 {
-  background-color: #bb4343 !important;
+#interval-1,
+#interval-5 {
+  background-color: #c71111;
+}
+#chord-note-1,
+#chord-note-5 {
+  color: #c71111;
+}
+#interval-2,
+#interval-6 {
+  background-color: #445ccf;
+}
+#chord-note-2,
+#chord-note-6 {
+  color: #445ccf;
+}
+#interval-3,
+#interval-7
+ {
+  background-color: #d8d643;
+}
+#chord-note-3,
+#chord-note-7 {
+  color: #d8d643;
+}
+#interval-4 {
+  background-color: #41bf41;
+}
+#chord-note-4 {
+  color: #41bf41;
 }
 #interval-5,
 #interval-6,
 #interval-7 {
- 
-  width: 1.5em;
-  height: 1.5em;
+  width: 1.1em;
+  height: 1.1em;
   border-radius: 50px;
   border: 2px solid black;
+  margin-bottom: 0.1em;
+
 }
 
-.chord-note {
-  color: #3d9ea3;
-}
-#chord-note-1 {
-  color: #bb4343;
-}
 .note-name {
   font-size: 0.8em;
   color: white;
