@@ -11,6 +11,7 @@
         { url: '/tools', label: 'Tools' }
       ]"
     />
+    <Sound />
 
     <div class="selected-instrument">
       <div class="instrument-button-box">
@@ -79,6 +80,18 @@ onMounted(setInstrument);
   background-image: url('/images/backgrounds/y-so-serious.png');
   background-size: center;
   color: white;
+}
+#page::before {
+  content: '';
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  opacity: 0.1;
+  position: absolute;
 }
 
 #header {

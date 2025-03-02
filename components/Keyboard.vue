@@ -101,15 +101,18 @@
       <div
         v-for="(key, index) in keysDisplayed"
         :key="`${key.note}${key.octave}`"
+        :id="`interval-${chordNotes.indexOf(key.note) + 1}`"
         :class="[
           'key',
           {
             black: key.sharp,
             white: !key.sharp,
             'highlighted-note': chordNotes.includes(key.note),
+            'interval': chordNotes.includes(key.note),
             'root-note': key.note === rootNote,
           },
-        ]"
+]
+  "
         @mousedown="onMouseDown(key)"
         @mouseenter="onMouseEnter(key)"
         @mouseup="onMouseUp"
@@ -119,13 +122,6 @@
           v-if="notesDisplayed === 'chord' && chordNotes.includes(key.note)"
         >
           {{ key.note }}
-        </span>
-        <span
-          v-if="chordNotes.includes(key.note)"
-          class="interval"
-          :id="`interval-${chordNotes.indexOf(key.note) + 1}`"
-        >
-          {{ chordNotes.indexOf(key.note) + 1 }}
         </span>
       </div>
     </div>
@@ -141,7 +137,6 @@
         {{ note }}
       </p>
       <button @click="playChord(chordNotes)" id="play-button">
-        Play
         <Icon name="line-md:play-filled" id="play-icon" />
       </button>
     </div>
@@ -324,7 +319,7 @@ const isMouseDown = ref(false);
 const settingsOpened = ref(false);
 const notesDisplayed = ref("none");
 const arpeggiated = ref(false);
-const arpeggioDelay = ref(70);
+const arpeggioDelay = ref(200);
 
 //--------COMPUTED--------
 const keysDisplayed = computed(() =>
@@ -380,8 +375,8 @@ watch(notesDisplayed, (newVal) => {
   width: fit-content;
   position: relative;
   background-color: rgb(0, 0, 0, 0);
+  justify-content: flex-start;
 }
-
 /*--------CONTROLS---------*/
 .controls {
   display: flex;
@@ -458,9 +453,10 @@ watch(notesDisplayed, (newVal) => {
 .settings-panel {
   width: 35%;
   color: white;
-  background-color: rgba(79, 79, 79, 0.95);
+  background-color: rgba(79, 79, 79, 0.96);
   backdrop-filter: blur(1px);
   border-radius: 5px;
+  border: 5px solid black;
   position: absolute;
   top: 120%;
   right: -2%;
@@ -542,9 +538,8 @@ watch(notesDisplayed, (newVal) => {
 /*--------KEYBOARD---------*/
 .keyboard {
   width: fit-content;
-  height: 15em;
-  border: 0.2em solid black;
-  border-top: 0.6em solid black;
+  height: 250px;
+  border: 5px solid black;
   display: flex;
   border-top-left-radius: 0.3em;
   border-top-right-radius: 0.3em;
@@ -559,101 +554,44 @@ watch(notesDisplayed, (newVal) => {
   align-items: center;
   justify-content: flex-end;
   gap: 0.1em;
+  font-weight: 900;
 }
 .key:hover {
   cursor: pointer;
-  filter: brightness(95%);
 }
 .white {
-  width: 4em;
+  width: 70px;
   background-color: white;
   color: black;
+  opacity: 0.5;
+}
+.white:hover {
+  opacity: 0.6;
 }
 .black {
-  width: 2.5em;
-  height: 9em;
+  width: 45px;
+  height: 140px;
   position: relative;
-  margin: 0 -1.25em;
+  margin: 0 -22.5px;
   background-color: black;
   border: 2px solid black;
-  border-bottom-left-radius: 0.4em;
-  border-bottom-right-radius: 0.4em;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
   color: #fff;
   z-index: 1;
   overflow: hidden;
+  padding-bottom: 0.3em;
+  border-top: 1px solid black;
 }
-.interval {
-  width: 100%;
-  height: 1.2em;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-top: 2px solid black;
+.black:hover {
+  background-color: rgb(65, 65, 65);
+}
+.white.interval {
+  opacity: 0.7;
+}
+.black.interval {
+  background-color: rgb(190, 190, 190);
   color: black;
-  font-weight: 500;
-  font-size: 1.1em;
-}
-#interval-1,
-#interval-5 {
-  background-color: #c71111;
-}
-#chord-note-1,
-#chord-note-5 {
-  color: #c71111;
-}
-#interval-2,
-#interval-6 {
-  background-color: #445ccf;
-}
-#chord-note-2,
-#chord-note-6 {
-  color: #445ccf;
-}
-#interval-3,
-#interval-7 {
-  background-color: #d8d643;
-}
-#chord-note-3,
-#chord-note-7 {
-  color: #d8d643;
-}
-#interval-4 {
-  background-color: #41bf41;
-}
-#chord-note-4 {
-  color: #41bf41;
-}
-#interval-5,
-#interval-6,
-#interval-7 {
-  width: 1.1em;
-  height: 1.1em;
-  border-radius: 50px;
-  border: 2px solid black;
-  margin-bottom: 0.1em;
-}
-
-.note-name {
-  font-size: 0.8em;
-  color: white;
-  border: 1px solid rgb(181, 101, 101);
-  width: 1em;
-  height: 1em;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 1.1em;
-  background-color: black;
-}
-.black .note-name {
-  background-color: white;
-  border-radius: 50px;
-  color: black;
-  position: relative;
-  bottom: 0.2em;
-}
-.white .note-name {
-  border-radius: 50px;
 }
 /*--------DISPLAY---------*/
 .chord-played {
@@ -668,23 +606,22 @@ watch(notesDisplayed, (newVal) => {
   gap: 1em;
   background-color: rgba(178, 178, 178, 0.1);
   padding: 0.5em 0.6em;
-  border: 0.5px solid rgba(255, 255, 255, 0.529);
   border-radius: 25px;
-  backdrop-filter: blur(1.5px);
+  backdrop-filter: blur(1.2px)brightness(160%);
+  box-shadow: 0 0 2px 0.5px rgb(255, 255, 255);
 }
 #play-button {
   font-family: inherit;
-  width: 4rem;
-  height: 1.6rem;
+  width: 30px;
+  height: 30px;
   border: 1px solid black;
   border-radius: 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 0.5em;
   font-weight: 300;
+  font-size: 2em;
   box-shadow: -0.7px 0.7px 0.7px rgba(0, 0, 0, 0.5);
-  padding: 0 0.8em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 #play-button:hover {
   cursor: pointer;
@@ -694,14 +631,5 @@ watch(notesDisplayed, (newVal) => {
   filter: brightness(100%);
   transform: translate(-0.7px, 0.7px);
   box-shadow: inset -0.7px 0.7px 0.7px rgba(0, 0, 0, 0.5);
-}
-label[for="arpeggiate-notes"] {
-  font-weight: 300;
-}
-#play-icon {
-  height: 3em;
-  width: 3em;
-  position: relative;
-  top: 0.1em;
 }
 </style>
