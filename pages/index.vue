@@ -37,7 +37,6 @@ h1 {
 #page {
   font-family: 'Kanit', sans-serif; 
   padding: 0;
-  background-color: #487dac;
 }
 
 #page-options {

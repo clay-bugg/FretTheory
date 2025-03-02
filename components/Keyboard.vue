@@ -1,4 +1,4 @@
-<template> 
+<template>
   <div class="component">
     <div class="controls">
       <div class="keys-selector-box">
@@ -15,7 +15,6 @@
       </div>
 
       <div class="chord-selector-box">
-
         <label for="root-note-selector">Chord: </label>
         <select id="root-note-selector" v-model="rootNote">
           <option v-for="note in Notes" :key="note" :value="note">
@@ -27,10 +26,12 @@
           <option
             v-for="type in chordTypes"
             :key="type.value"
-            :value="type.value">
+            :value="type.value"
+          >
             {{ type.label }}
           </option>
         </select>
+
         <button id="settings-button">
           <Icon
             id="settings-icon"
@@ -39,6 +40,61 @@
           />
         </button>
       </div>
+
+      <Transition name="slide">
+        <div class="settings-panel" v-if="settingsOpened">
+          <ul>
+            <li>
+              <p>Note Labels:</p>
+              <div id="notes-labels">
+                <input
+                  type="radio"
+                  name="notes-displayed"
+                  v-model="notesDisplayed"
+                  value="all"
+                  id="all-notes-checkbox"
+                />
+                <label for="all-notes-checkbox" class="notes-checkbox"
+                  >All</label
+                >
+                <input
+                  type="radio"
+                  name="notes-displayed"
+                  v-model="notesDisplayed"
+                  value="chord"
+                  id="chord-notes-checkbox"
+                />
+                <label for="chord-notes-checkbox" class="notes-checkbox"
+                  >Chord</label
+                >
+                <input
+                  type="radio"
+                  name="notes-displayed"
+                  v-model="notesDisplayed"
+                  value="none"
+                  id="no-notes-checkbox"
+                />
+                <label for="no-notes-checkbox" class="notes-checkbox"
+                  >None</label
+                >
+              </div>
+            </li>
+            <li>
+              <p>Arpeggiate Chord:</p>
+              <input type="checkbox" v-model="arpeggiated" />
+            </li>
+            <li>
+              <p>Arpeggio Delay:</p>
+              <input
+                type="number"
+                v-model="arpeggioDelay"
+                id="arpeggio-delay"
+              />
+              <p id="ms">ms</p>
+            </li>
+          </ul>
+        </div>
+      </Transition>
     </div>
 
     <div class="keyboard">
@@ -47,14 +103,21 @@
         :key="`${key.note}${key.octave}`"
         :class="[
           'key',
-          { 'black': key.sharp, 'white': !key.sharp, 'highlighted-note': chordNotes.includes(key.note), 'root-note': key.note === rootNote }
+          {
+            black: key.sharp,
+            white: !key.sharp,
+            'highlighted-note': chordNotes.includes(key.note),
+            'root-note': key.note === rootNote,
+          },
         ]"
         @mousedown="onMouseDown(key)"
         @mouseenter="onMouseEnter(key)"
         @mouseup="onMouseUp"
       >
         <span v-if="notesDisplayed === 'all'">{{ key.note }}</span>
-        <span v-if="notesDisplayed === 'chord' && chordNotes.includes(key.note)">
+        <span
+          v-if="notesDisplayed === 'chord' && chordNotes.includes(key.note)"
+        >
           {{ key.note }}
         </span>
         <span
@@ -69,7 +132,12 @@
 
     <div class="chord-played" v-if="rootNote && chordType">
       <label for="chord-notes">{{ rootNote }}{{ chordType }}</label>
-      <p v-for="(note, index) in chordNotes" :key="index" class="chord-note ":id="`chord-note-${index + 1}`">
+      <p
+        v-for="(note, index) in chordNotes"
+        :key="index"
+        class="chord-note"
+        :id="`chord-note-${index + 1}`"
+      >
         {{ note }}
       </p>
       <button @click="playChord(chordNotes)" id="play-button">
@@ -77,216 +145,224 @@
         <Icon name="line-md:play-filled" id="play-icon" />
       </button>
     </div>
-
-    <div class="settings-panel" v-if="settingsOpened">
-      <header>
-        <h3>Settings</h3>
-        <Icon name="qlementine-icons:close-16" id="settings-close" @click="toggleSettings" />
-      </header>
-      <div id="settings-body">
-        <ul>
-          <li>
-            <p>Note Labels:</p>
-            <div id="notes-labels">
-              <input type="radio" name="notes-displayed" v-model="notesDisplayed" value="all" id="all-notes-checkbox" />
-              <label for="all-notes-checkbox" class="notes-checkbox">All</label>
-              <input type="radio" name="notes-displayed" v-model="notesDisplayed" value="chord" id="chord-notes-checkbox" />
-              <label for="chord-notes-checkbox" class="notes-checkbox">Chord</label>
-              <input type="radio" name="notes-displayed" v-model="notesDisplayed" value="none" id="no-notes-checkbox" />
-              <label for="no-notes-checkbox" class="notes-checkbox">None</label>
-            </div>
-          </li>
-          <li>
-            <p>Arpeggiate Chord: </p>
-            <input type="checkbox" v-model="arpeggiated" />
-          </li>
-          <li>
-            <p>Arpeggio Delay: </p>
-            <input type="number" v-model="arpeggioDelay" id="arpeggio-delay" />
-            <p id="ms">ms</p>
-          </li>
-        </ul>
-      </div>
-    </div>
   </div>
 </template>
 
 <script setup>
 //------IMPORts
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch } from "vue";
 
-import { Howl } from 'howler'
+import { Howl } from "howler";
 
 // --------FUNCTIONS--------
 function generateKeys() {
-  const notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
-  const keys = []
-  const octavesArray = [3, 4, 5]
+  const notes = [
+    "C",
+    "C#",
+    "D",
+    "D#",
+    "E",
+    "F",
+    "F#",
+    "G",
+    "G#",
+    "A",
+    "A#",
+    "B",
+  ];
+  const keys = [];
+  const octavesArray = [3, 4, 5];
   for (const octave of octavesArray) {
     notes.forEach((note) => {
       keys.push({
         note,
         octave,
-        sharp: note.includes('#')
-      })
-    })
+        sharp: note.includes("#"),
+      });
+    });
   }
-  return keys
+  return keys;
 }
 function updateChord() {
-  if (!rootNote.value || !chordType.value) return
+  if (!rootNote.value || !chordType.value) return;
 
-  const intervals = chordIntervals[chordType.value] || []
-  const notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
-  const rootIndex = notes.indexOf(rootNote.value)
+  const intervals = chordIntervals[chordType.value] || [];
+  const notes = [
+    "C",
+    "C#",
+    "D",
+    "D#",
+    "E",
+    "F",
+    "F#",
+    "G",
+    "G#",
+    "A",
+    "A#",
+    "B",
+  ];
+  const rootIndex = notes.indexOf(rootNote.value);
 
   let updatedChordNotes = intervals.map((interval) => {
-    return notes[(rootIndex + interval) % 12]
-  })
+    return notes[(rootIndex + interval) % 12];
+  });
   // Remove duplicate notes
-  updatedChordNotes = Array.from(new Set(updatedChordNotes))
-  chordNotes.value = updatedChordNotes
+  updatedChordNotes = Array.from(new Set(updatedChordNotes));
+  chordNotes.value = updatedChordNotes;
 
-  console.log(`Chord changed to ${rootNote.value}${chordType.value}`)
+  console.log(`Chord changed to ${rootNote.value}${chordType.value}`);
 }
 function assignChordOctaves(root, chordNotesArray, baseOctave = 3) {
-  const noteOrder = Notes.value
-  let currentOctave = baseOctave
-  let lastNoteIndex = noteOrder.indexOf(root)
-  const chordWithOctaves = []
+  const noteOrder = Notes.value;
+  let currentOctave = baseOctave;
+  let lastNoteIndex = noteOrder.indexOf(root);
+  const chordWithOctaves = [];
 
   chordNotesArray.forEach((note) => {
-    const noteIndex = noteOrder.indexOf(note)
+    const noteIndex = noteOrder.indexOf(note);
     if (noteIndex <= lastNoteIndex) {
-      currentOctave++
+      currentOctave++;
     }
-    chordWithOctaves.push(`${note}${currentOctave}`)
-    lastNoteIndex = noteIndex
-  })
+    chordWithOctaves.push(`${note}${currentOctave}`);
+    lastNoteIndex = noteIndex;
+  });
 
-  return chordWithOctaves
+  return chordWithOctaves;
 }
 function playKey(note, octave) {
-  const encodedNote = encodeURIComponent(note)
+  const encodedNote = encodeURIComponent(note);
   const sound = new Howl({
-    src: [`/sounds/keyboard_samples/${encodedNote}${octave}.mp3`]
-  })
-  console.log(`${note}${octave} note played.`)
-  sound.play()
+    src: [`/sounds/keyboard_samples/${encodedNote}${octave}.mp3`],
+  });
+  console.log(`${note}${octave} note played.`);
+  sound.play();
 
   setTimeout(() => {
-    sound.stop()
-  }, 7000)
+    sound.stop();
+  }, 7000);
 }
 function playChord(notes) {
-  if (!rootNote.value || !chordType.value) return
+  if (!rootNote.value || !chordType.value) return;
 
-  const chordNotesWithOctaves = assignChordOctaves(rootNote.value, notes)
+  const chordNotesWithOctaves = assignChordOctaves(rootNote.value, notes);
   const playingSounds = chordNotesWithOctaves.map((fullNote) => {
     if (!soundsCache[fullNote]) {
       soundsCache[fullNote] = new Howl({
         src: [`/sounds/keyboard_samples/${encodeURIComponent(fullNote)}.mp3`],
-        preload: true
-      })
+        preload: true,
+      });
     }
-    return { sound: soundsCache[fullNote] }
-  })
+    return { sound: soundsCache[fullNote] };
+  });
 
   if (activeChordNotes.value.length) {
-    activeChordNotes.value.forEach(({ sound }) => sound.stop())
+    activeChordNotes.value.forEach(({ sound }) => sound.stop());
   }
 
-  const delay = arpeggiated.value ? arpeggioDelay.value : 20
+  const delay = arpeggiated.value ? arpeggioDelay.value : 20;
 
   playingSounds.forEach(({ sound }, index) => {
     setTimeout(() => {
-      sound.seek(0)
-      sound.play()
-    }, index * delay)
-  })
+      sound.seek(0);
+      sound.play();
+    }, index * delay);
+  });
 
-  activeChordNotes.value = playingSounds
+  activeChordNotes.value = playingSounds;
 }
 // --------REACIVITY--------
-const pianoKeys = ref(generateKeys())
-const numberOfKeys = ref(24)
-const Notes = ref(['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'])
-const rootNote = ref('')
+const pianoKeys = ref(generateKeys());
+const numberOfKeys = ref(24);
+const Notes = ref([
+  "C",
+  "C#",
+  "D",
+  "D#",
+  "E",
+  "F",
+  "F#",
+  "G",
+  "G#",
+  "A",
+  "A#",
+  "B",
+]);
+const rootNote = ref("");
 const chordTypes = ref([
-  { label: 'Major', value: 'maj' },
-  { label: 'Major 6th', value: 'maj6' },
-  { label: 'Major 6/9', value: '6/9' },
-  { label: 'Major 7th', value: 'maj7' },
-  { label: 'Major 9th', value: 'maj9' },
-  { label: 'Major 11th', value: 'maj11' },
-  { label: 'Major 13th', value: 'maj13' },
-  { label: 'Minor', value: 'm' },
-  { label: 'Minor 7th', value: 'm7' },
-  { label: 'Dominant 7th', value: '7' },
-  { label: 'Diminished', value: '°' },
-  { label: 'Augmented', value: '+' }
-])
-const chordType = ref('')
-const chordNotes = ref([])
-const activeChordNotes = ref([])
+  { label: "Major", value: "maj" },
+  { label: "Major 6th", value: "maj6" },
+  { label: "Major 6/9", value: "6/9" },
+  { label: "Major 7th", value: "maj7" },
+  { label: "Major 9th", value: "maj9" },
+  { label: "Major 11th", value: "maj11" },
+  { label: "Major 13th", value: "maj13" },
+  { label: "Minor", value: "m" },
+  { label: "Minor 7th", value: "m7" },
+  { label: "Dominant 7th", value: "7" },
+  { label: "Diminished", value: "°" },
+  { label: "Augmented", value: "+" },
+]);
+const chordType = ref("");
+const chordNotes = ref([]);
+const activeChordNotes = ref([]);
 const chordIntervals = {
   maj: [0, 4, 7],
   maj6: [0, 4, 7, 9],
-  '6/9': [0, 4, 7, 9, 14],
+  "6/9": [0, 4, 7, 9, 14],
   maj7: [0, 4, 7, 11],
   maj9: [0, 4, 7, 11, 14],
   maj11: [0, 4, 7, 11, 14, 17],
   maj13: [0, 4, 7, 11, 14, 17, 21],
   m: [0, 3, 7],
-  '+': [0, 4, 8],
-  '°': [0, 3, 6],
-  '7': [0, 4, 7, 10],
-  m7: [0, 3, 7, 10]
-}
-const soundsCache = reactive({})
-const isMouseDown = ref(false)
-const settingsOpened = ref(false)
-const notesDisplayed = ref('none')
-const arpeggiated = ref(false)
-const arpeggioDelay = ref(70)
+  "+": [0, 4, 8],
+  "°": [0, 3, 6],
+  7: [0, 4, 7, 10],
+  m7: [0, 3, 7, 10],
+};
+const soundsCache = reactive({});
+const isMouseDown = ref(false);
+const settingsOpened = ref(false);
+const notesDisplayed = ref("none");
+const arpeggiated = ref(false);
+const arpeggioDelay = ref(70);
 
 //--------COMPUTED--------
 const keysDisplayed = computed(() =>
   pianoKeys.value.slice(0, numberOfKeys.value)
-)
+);
 
 // ------EVENT HANDLERS--------
 function onMouseDown(key) {
-  isMouseDown.value = true
-  console.log(isMouseDown.value)
-  playKey(key.note, key.octave)
+  isMouseDown.value = true;
+  console.log(isMouseDown.value);
+  playKey(key.note, key.octave);
 }
 
 function onMouseEnter(key) {
   if (isMouseDown.value) {
-    playKey(key.note, key.octave)
+    playKey(key.note, key.octave);
   }
 }
 
 function onMouseUp() {
-  console.log(isMouseDown.value)
-  isMouseDown.value = false
+  console.log(isMouseDown.value);
+  isMouseDown.value = false;
 }
 
 function toggleSettings() {
-  settingsOpened.value = !settingsOpened.value
+  settingsOpened.value = !settingsOpened.value;
 }
 
 // -------- WATCHERS --------
 watch([rootNote, chordType], () => {
-  console.log(`Root note changed to ${rootNote.value}`)
-  console.log(`Chord type changed to ${chordType.value}`)
-  updateChord()
-})
+  console.log(`Root note changed to ${rootNote.value}`);
+  console.log(`Chord type changed to ${chordType.value}`);
+  updateChord();
+});
 
 watch(notesDisplayed, (newVal) => {
-  console.log(`Notes displayed set to ${newVal}`)
-})
+  console.log(`Notes displayed set to ${newVal}`);
+});
 </script>
 
 <style scoped>
@@ -314,12 +390,14 @@ watch(notesDisplayed, (newVal) => {
   width: 56em;
   position: relative;
   padding-left: 0.7em;
+  z-index: 3;
 }
 .keys-selector-box {
   display: flex;
   align-items: center;
   gap: 0.4em;
   font-size: 1.1em;
+  z-index: 1;
 }
 .keys-selector-box input[type="range"] {
   -webkit-appearance: none;
@@ -339,13 +417,12 @@ watch(notesDisplayed, (newVal) => {
 .keys-selector-box input[type="range"]::-webkit-slider-runnable-track {
   height: 0.4em;
   border-radius: 2px;
-  
-  
 }
 .chord-selector-box {
   display: flex;
   align-items: center;
   gap: 0.4em;
+  z-index: 1;
 }
 .chord-selector-box select {
   font-size: 1em;
@@ -364,6 +441,7 @@ watch(notesDisplayed, (newVal) => {
   justify-content: center;
   align-items: center;
   background-color: #e0e0e0;
+  z-index: 2;
 }
 #settings-button:hover {
   cursor: pointer;
@@ -378,19 +456,19 @@ watch(notesDisplayed, (newVal) => {
   height: 100%;
 }
 .settings-panel {
-  width: 12em;
-  height: 18em;
-  border: 1px solid black;
-  background-color: #f2f2f2;
+  width: 35%;
+  color: white;
+  background-color: rgba(79, 79, 79, 0.95);
+  backdrop-filter: blur(1px);
   border-radius: 5px;
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(240%, -50%);
-  z-index: 2;
-  border-radius: 10px;
-  color: black;
-  
+  top: 120%;
+  right: -2%;
+  z-index: 0;
+  padding: 1.5em 0;
+  font-family: inherit;
+  font-size: 1.2em;
+
 }
 .settings-panel header {
   height: 1.5em;
@@ -403,15 +481,22 @@ watch(notesDisplayed, (newVal) => {
   border-top-right-radius: 10px;
   font-size: 1.2em;
 }
-#notes-labels {
+.settings-panel ul {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  list-style: none;
+  gap: 0.8em;;
+}
+.settings-panel li {
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  width: fit-content;
+  justify-content: space-between;
+  gap: 0.4em;
 }
-.settings-panel ul {
-  font-size: 1.2em;
-}
-.settings-panel input[type='number'] {
+.settings-panel input[type="number"] {
   border: 1px solid black;
   border-radius: 4px;
   font-size: 1;
@@ -424,25 +509,35 @@ watch(notesDisplayed, (newVal) => {
 #settings-close:hover {
   cursor: pointer;
 }
-#settings-body {
-  text-align: center;
-}
-#settings-body label {
-  margin-right: 0.5em;
-}
-#settings-body li {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 0.5em;
-  display: block;
-  border: 1px solid rgba(0, 0, 0, 0.3);
-  padding: 0.3em 0.5em;
-}
 #ms {
   display: inline;
   margin-left: 0.1em;
   font-size: 0.8em;
+}
+/*--------SETTINGS TRANSITION--------*/
+.slide-enter-active,
+.slide-leave-active {
+  transition: transform 0.3s ease-in-out, opacity 0.4s;
+}
+.slide-enter-from {
+  transform: translateY(-20%);
+  opacity: 0;
+  
+}
+.slide-enter-to {
+  transform: translateY(0);
+  opacity: 1;
+  
+}
+.slide-leave-from {
+  transform: translateY(0);
+  opacity: 1;
+  
+}
+.slide-leave-to {
+  transform: translateY(-20%);
+  opacity: 0;
+  
 }
 /*--------KEYBOARD---------*/
 .keyboard {
@@ -455,6 +550,7 @@ watch(notesDisplayed, (newVal) => {
   border-top-right-radius: 0.3em;
   overflow: hidden;
   margin-bottom: 1em;
+  z-index: 0;
 }
 .key {
   border: 1px solid black;
@@ -514,8 +610,7 @@ watch(notesDisplayed, (newVal) => {
   color: #445ccf;
 }
 #interval-3,
-#interval-7
- {
+#interval-7 {
   background-color: #d8d643;
 }
 #chord-note-3,
@@ -536,7 +631,6 @@ watch(notesDisplayed, (newVal) => {
   border-radius: 50px;
   border: 2px solid black;
   margin-bottom: 0.1em;
-
 }
 
 .note-name {
@@ -577,7 +671,6 @@ watch(notesDisplayed, (newVal) => {
   border: 0.5px solid rgba(255, 255, 255, 0.529);
   border-radius: 25px;
   backdrop-filter: blur(1.5px);
- 
 }
 #play-button {
   font-family: inherit;

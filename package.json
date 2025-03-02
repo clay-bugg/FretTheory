@@ -7,20 +7,16 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare",
-    "test": "jest"
+    "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@nuxt/icon": "^1.10.3",
-    "git-filter-repo": "^0.0.30",
     "howler": "^2.2.4",
     "iconify": "^1.4.0",
-    "normalize.css": "^8.0.1",
-    "nuxt": "^3.15.0",
+    "nuxt": "^3.15.4",
     "vue": "latest",
     "vue-router": "latest"
   },
   "devDependencies": {
-    "jest": "^29.7.0"
+    "@nuxt/icon": "^1.10.3"
   }
 }
