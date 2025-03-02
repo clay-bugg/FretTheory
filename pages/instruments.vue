@@ -1,63 +1,65 @@
 <template>
   <div id="page">
-    <Header heading="Music" subheading="Interactive Instruments" id="header"
+    <Header 
+      heading="Music" 
+      subheading="Interactive Instruments" 
+      hcolor="white" 
+      shcolor="white"
+      id="header"
       :buttons="[
-      { url: '/instruments', label: 'Instruments' },
-      { url: '/tools', label: 'Tools' }
+        { url: '/instruments', label: 'Instruments' },
+        { url: '/tools', label: 'Tools' }
       ]"
-      />
+    />
 
-
-      <div class="selected-instrument">
-      <div class="instrument-button-box" @click="selectedInstrument">
-        <label v-for="(instrument, key) in instruments" :is="selectedInstrument"
-        :key="key"
-        class="instrument-button"
-        :id="`${key}-button`"
-      >
-      <input 
-          type="radio"
-          :value="key"
-          name="instrument"
-          v-model="selectedInstrument"
-      />
-        <img :src="instrument.image" :alt="key" class="instrument.image" />
+    <div class="selected-instrument">
+      <div class="instrument-button-box">
+        <label 
+          v-for="(instrument, key) in instruments" 
+          :key="key" 
+          class="instrument-button"
+          :id="`${key}-button`"
+        >
+          <input 
+            type="radio"
+            :value="key"
+            name="instrument"
+            v-model="selectedInstrument"
+          />
+          <img :src="instrument.image" :alt="key" class="instrument-image" />
         </label>
       </div>
+
       <Keyboard v-if="selectedInstrument === 'keyboard'" />
       <Guitar v-if="selectedInstrument === 'guitar'"/>
     </div>
-     
-
   </div>
 </template>
 
-<script>
-export default {
-  data() { 
-    return {
-      instruments: {
-        keyboard: { image: '/images/buttons/KeyboardButton.png' },
-        guitar: { image: '/images/buttons/GuitarButton.png' }
-      },
-      selectedInstrument: null
-    }
-  },
-  mounted() { 
-    this.setInstrument()
-  },
-  methods: {
-    setInstrument() { 
-      for (const key in this.instruments) { 
-        if (this.instruments[key].checked) { 
-          this.selectedInstrument = key;
-          break;
-        }
-      }
+<script setup>
+import { ref, onMounted } from 'vue';
+
+// Instruments data
+const instruments = ref({
+  keyboard: { image: '/images/buttons/KeyboardButton.png' },
+  guitar: { image: '/images/buttons/GuitarButton.png' }
+});
+
+// Selected instrument state
+const selectedInstrument = ref(null);
+
+// Function to set the initial instrument
+const setInstrument = () => {
+  for (const key in instruments.value) {
+    if (instruments.value[key].checked) {
+      selectedInstrument.value = key;
+      break;
     }
   }
-  
-}
+};
+
+// Set instrument on component mount
+onMounted(setInstrument);
 </script>
 
 <style scoped>
@@ -66,6 +68,7 @@ export default {
   padding: 0;
   box-sizing: border-box;
 }
+
 #page {
   display: flex;
   flex-direction: column;
@@ -73,16 +76,18 @@ export default {
   justify-content: center;
   height: 100vh;
   gap: 0.5em;
-   background-image: url('public/images/backgrounds/y-so-serious.png');
-   background-size: center;
-   color: white;
+  background-image: url('/images/backgrounds/y-so-serious.png');
+  background-size: center;
+  color: white;
 }
+
 #header {
   position: absolute;
   top: 0;
-  border-bottom: 2px solid
-   white;
+  border-bottom: 2px solid white;
+  font-size: 2rem;
 }
+
 h1 {
   margin: 0;
   padding: 0;
@@ -97,92 +102,69 @@ h1 {
   align-items: center;
   justify-content: space-between;
   gap: 5em;
-  
 }
 
 .instrument-button-box {
-  width: fit-content;
-  height: fit-content;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  height: fit-content;
   gap: 2.5em;
   border-radius: 15px;
   background-color: rgba(178, 178, 178, 0.1);
   padding: 0.5em 0.6em;
   border: 0.5px solid rgba(255, 255, 255, 0.529);
-  border-radius: 15px;
   backdrop-filter: blur(1.5px);
-
 }
+
 .instrument-button-box input {
   appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
 }
-.instrument-button-box img {
-  width: 100%;
-  height: 100%;
-}
-.instrument-button {
-  appearance: none;
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  width: 6em;
-  height: 3em;
-  background-color: white;
-  border-radius: 6px;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
+
 .instrument-image {
   width: 100%;
   height: 100%;
   object-fit: contain;
 }
+
+.instrument-button {
+  width: 6em;
+  height: 3em;
+  background-color: white;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
 .instrument-button:hover {
   filter: brightness(90%);
 }
+
 .instrument-button:active {
   filter: brightness(100%);
 }
+
 input[type="radio"]:checked + img {
-  border: none;
   border-radius: 5px;
   background-color: rgba(52, 152, 219, 0.2);
 }
+
+#keyboard-button::before,
+#guitar-button::before {
+  position: absolute;
+  bottom: 3.6em;
+  width: 100%;
+  text-align: center;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
 #keyboard-button::before {
   content: "Keyboard";
-  position: absolute;
-  bottom: 3.6em;
-  width: 100%;
-  text-align: center;
-  font-family: inherit;
-  font-weight: 600;
-  text-decoration: underline;
 }
+
 #guitar-button::before {
   content: "Guitar";
-  position: absolute;
-  bottom: 3.6em;
-  width: 100%;
-  text-align: center;
-  font-family: inherit;
-  font-weight: 600;
-  text-decoration: underline;
 }
-
-
-
-
-
-
-
-
-
 </style>

@@ -1,30 +1,30 @@
 <template>
   <div id="page">
-    <Header :buttons="[
-  { url: '/login', label: 'login' },
-  { url: '/signup', label: 'Sign Up' }
-    ]"/>
+    <Header 
+      :buttons="[
+        { url: '/login', label: 'Login' },
+        { url: '/signup', label: 'Sign Up' }
+      ]"
+    />
 
     <main>
       <div id="page-options">
-        <PageOption :cards="[
-          { to: '/instruments', src: '/images/buttons/Instruments-button.png', alt: 'Instruments' },
-          { to: '/tools', src: '/images/buttons/tools-button.png', alt: 'Tools' }
-        ]" />
+        <PageOption 
+          :cards="[
+            { to: '/instruments', src: '/images/buttons/Instruments-button.png', alt: 'Instruments' },
+            { to: '/tools', src: '/images/buttons/tools-button.png', alt: 'Tools' }
+          ]" 
+        />
       </div>
     </main>
   </div>
 </template>
 
-<script>
-export default {
-  name: 'App'
-}
+<script setup>
 </script>
 
 <style>
-
-*{
+* {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
@@ -35,7 +35,7 @@ h1 {
 }
 
 #page {
-  font-family: 'Kanit', sans-serif; 
+  font-family: 'Kanit', sans-serif;
   padding: 0;
 }
 

@@ -1,24 +1,25 @@
 <template>
-  <div v-for="(card, index) in cards"
-       :key="index"
-       id="card-options">
+  <div 
+    v-for="(card, index) in cards" 
+    :key="index" 
+    id="card-options"
+  >
     <NuxtLink :to="card.to">
-      <img :src="card.src"
-           :alt="card.alt" />
+      <img 
+        :src="card.src" 
+        :alt="card.alt" 
+      />
     </NuxtLink>
   </div>
 </template>
 
-<script>
-export default {
-  name: 'PageOption',
-  props: {
-    cards: {
-      type: Array,
-      required: true,
-    },
-  },
-}
+<script setup>
+defineProps({
+  cards: {
+    type: Array,
+    required: true
+  }
+});
 </script>
 
 <style scoped>

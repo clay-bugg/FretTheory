@@ -1,10 +1,10 @@
 <template>
   <header>
     <div id="title">
-      <NuxtLink to="/"  id="heading">
-        <h1 >{{ heading }}</h1>
+      <NuxtLink to="/" id="heading">
+        <h1 :style="{ color: hcolor }">{{ heading }}</h1>
       </NuxtLink>
-      <h2 id="subheading">{{ subheading }}</h2>
+      <h2 id="subheading" :style="{ color: shcolor }">{{ subheading }}</h2>
     </div>
 
     <nav>
@@ -13,33 +13,37 @@
         :key="index" 
         :buttonURL="btn.url" 
         :label="btn.label" 
-      />  
+      />
     </nav>
   </header>
 </template>
 
-<script>
-export default {
-  props: {
-    heading: {
-      type: String,
-      required: false
-    },
-    subheading: {
-      type: String,
-      required: false
-    },
-    buttons: {
-      type: Array,
-      default: () => [
-        { url: 'pagelink', label: 'label' },
-        { url: 'pagelink', label: 'label' }
-      ]
-    }
+<script setup>
+defineProps({
+  heading: {
+    type: String,
+    required: false
+  },
+  subheading: {
+    type: String,
+    required: false
+  },
+  buttons: {
+    type: Array,
+    default: () => [
+      { url: 'pagelink', label: 'label' },
+      { url: 'pagelink', label: 'label' }
+    ]
+  },
+  hcolor: { 
+    type: String,
+    default: '#fff'
+  },
+  shcolor: { 
+    type: String,
+    default: '#fff'
   }
-}
-
-  
+});
 </script>
 
 <style scoped>
@@ -52,6 +56,7 @@ header {
   padding: 0 2em;
   backdrop-filter: brightness(85%);
 }
+
 #title {
   display: flex;
   align-items: center;
@@ -63,24 +68,25 @@ header {
   position: relative;
   top: 0.7em;
 }
+
 #heading {
   font-size: 3em;
   text-decoration: none;
   color: rgb(0, 0, 0);
 }
+
 #heading:visited {
   color: rgba(0, 0, 0, 0.47);
 }
+
 #subheading {
   font-size: 2em;
   position: relative;
   top: 0.3em;
 }
-  nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1em;
-  }
 
+nav {
+  display: flex;
+  justify-content: space
+}
 </style>
