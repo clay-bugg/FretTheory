@@ -317,7 +317,7 @@ const chordIntervals = {
 const soundsCache = reactive({});
 const isMouseDown = ref(false);
 const settingsOpened = ref(false);
-const notesDisplayed = ref("none");
+const notesDisplayed = ref("all");
 const arpeggiated = ref(false);
 const arpeggioDelay = ref(200);
 
@@ -382,9 +382,10 @@ watch(notesDisplayed, (newVal) => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 56em;
+  width: 100%;
   position: relative;
-  padding-left: 0.7em;
+  padding-left: 0.6em;
+  padding-right: 0.3em;
   z-index: 3;
 }
 .keys-selector-box {
@@ -555,6 +556,8 @@ watch(notesDisplayed, (newVal) => {
   justify-content: flex-end;
   gap: 0.1em;
   font-weight: 900;
+  font-size: 1.3em;
+  padding-bottom: 0.2em;
 }
 .key:hover {
   cursor: pointer;
@@ -563,10 +566,11 @@ watch(notesDisplayed, (newVal) => {
   width: 70px;
   background-color: white;
   color: black;
-  opacity: 0.5;
+  opacity: 0.6;
+  
 }
 .white:hover {
-  opacity: 0.6;
+  opacity: 0.7;
 }
 .black {
   width: 45px;
@@ -580,17 +584,28 @@ watch(notesDisplayed, (newVal) => {
   color: #fff;
   z-index: 1;
   overflow: hidden;
-  padding-bottom: 0.3em;
   border-top: 1px solid black;
+  font-size: 1.1em;
 }
 .black:hover {
   background-color: rgb(65, 65, 65);
 }
+.interval:hover {
+  filter: brightness(110%);
+}
 .white.interval {
   opacity: 0.7;
+  border: 3px solid black;
+  background-color: rgba(172, 216, 218, 0.561);
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  color: white;
 }
 .black.interval {
-  background-color: rgb(190, 190, 190);
+  color: black;
+  border: 4px solid black;
+  border-top: 1px solid black;
+  background-color: rgb(46, 122, 122);
   color: black;
 }
 /*--------DISPLAY---------*/
@@ -604,11 +619,10 @@ watch(notesDisplayed, (newVal) => {
   font-weight: 600;
   color: white;
   gap: 1em;
-  background-color: rgba(178, 178, 178, 0.1);
+  background-color: rgba(178, 178, 178, 0.5);
   padding: 0.5em 0.6em;
   border-radius: 25px;
-  backdrop-filter: blur(1.2px)brightness(160%);
-  box-shadow: 0 0 2px 0.5px rgb(255, 255, 255);
+  border: 4px solid black;
 }
 #play-button {
   font-family: inherit;
