@@ -566,11 +566,7 @@ watch(notesDisplayed, (newVal) => {
   width: 70px;
   background-color: white;
   color: black;
-  opacity: 0.6;
   
-}
-.white:hover {
-  opacity: 0.7;
 }
 .black {
   width: 45px;
@@ -587,26 +583,11 @@ watch(notesDisplayed, (newVal) => {
   border-top: 1px solid black;
   font-size: 1.1em;
 }
-.black:hover {
-  background-color: rgb(65, 65, 65);
-}
-.interval:hover {
-  filter: brightness(110%);
-}
 .white.interval {
-  opacity: 0.7;
-  border: 3px solid black;
-  background-color: rgba(172, 216, 218, 0.561);
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
-  color: white;
+  background-color: rgb(195, 195, 195);
 }
 .black.interval {
-  color: black;
-  border: 4px solid black;
-  border-top: 1px solid black;
-  background-color: rgb(46, 122, 122);
-  color: black;
+  background-color: rgb(195, 195, 195);
 }
 /*--------DISPLAY---------*/
 .chord-played {
@@ -617,33 +598,23 @@ watch(notesDisplayed, (newVal) => {
   width: fit-content;
   font-size: 1.2em;
   font-weight: 600;
-  color: white;
   gap: 1em;
-  background-color: rgba(178, 178, 178, 0.5);
   padding: 0.5em 0.6em;
-  border-radius: 25px;
   border: 4px solid black;
 }
 #play-button {
   font-family: inherit;
   width: 30px;
   height: 30px;
-  border: 1px solid black;
+  border: 2px solid black;
   border-radius: 20px;
   font-weight: 300;
   font-size: 2em;
-  box-shadow: -0.7px 0.7px 0.7px rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
 }
 #play-button:hover {
   cursor: pointer;
-  filter: brightness(120%);
-}
-#play-button:active {
-  filter: brightness(100%);
-  transform: translate(-0.7px, 0.7px);
-  box-shadow: inset -0.7px 0.7px 0.7px rgba(0, 0, 0, 0.5);
 }
 </style>

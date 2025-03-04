@@ -3,8 +3,6 @@
     <Header 
       heading="Music" 
       subheading="Interactive Instruments" 
-      hcolor="white" 
-      shcolor="white"
       id="header"
       :buttons="[
         { url: '/instruments', label: 'Instruments' },
@@ -19,14 +17,16 @@
         class="instrument-button" 
         :id="`${button.label.toLowerCase()}-button`"
         :style="{ backgroundImage: `url(${button.image})` }"
-        @click="selectInstrumnent(button.label.toLowerCase())">
+        @click="selectInstrument(button.label.toLowerCase())">
           {{ button.label }} 
       </div>
     </div>
 
-    <div class="instrument">
-      <Keyboard v-if="selectedInstrument === 'keyboard'"/>
-    </div>
+    
+      <Keyboard v-if="selectedInstrument === 'keyboard'" />
+      <Guitar v-else-if="selectedInstrument === 'guitar'" />
+    
+    
   </div>
 </template>
 
@@ -40,7 +40,7 @@ const instrumentButtons = ref([
 
 const selectedInstrument = ref('keyboard')
 
-function selectInstrumnent(instrument) { 
+function selectInstrument(instrument) { 
   selectedInstrument.value = instrument;
 }
 
@@ -54,45 +54,33 @@ function selectInstrumnent(instrument) {
   justify-content: flex-start;
   height: 100vh;
   width: 100vw;
-  background-image: url('/images/backgrounds/y-so-serious.png');
-  background-position: center;
-  color: white;
-  position: relative;
-  padding-top: 15em;
 }
 
 #header {
-  position: absolute;
   top: 0;
-  border-bottom: 2px solid white;
+  border-bottom: 2px solid black;
   font-size: 2rem;
 }
 
-h1 {
-  margin: 0;
-  padding: 0;
-  font-weight: 600;
-  font-size: 3em;
-}
 
 .instrument {
   display: flex;
   align-items: center;
-  width: fit-content;
+  width: 100%;
   position: relative;
+  justify-content: center;
 }
 
 .instrument-button-box {
   display: flex;
   align-items: center;
   width: fit-content;
-  background-color: rgb(0, 0, 0);
   gap: 0.5em;
 }
 .instrument-button {
   cursor: pointer;
   height: 76px;
-  width: 157px;
+  width: 154px;
   border-radius: 10px;
   background-repeat: no-repeat;
   background-size: contain;
@@ -103,6 +91,7 @@ h1 {
   flex-direction: column;
   justify-content: flex-end;
   font-size: 1.5em;
+  border: 1px solid black;
 }
 
 .instrument-button:hover {

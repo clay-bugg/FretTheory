@@ -54,7 +54,6 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 0 2em;
-  backdrop-filter: brightness(85%);
 }
 
 #title {
@@ -69,21 +68,7 @@ header {
   top: 0.7em;
 }
 
-#heading {
-  font-size: 3em;
-  text-decoration: none;
-  color: rgb(0, 0, 0);
-}
 
-#heading:visited {
-  color: rgba(0, 0, 0, 0.47);
-}
-
-#subheading {
-  font-size: 2em;
-  position: relative;
-  top: 0.3em;
-}
 
 nav {
   display: flex;
