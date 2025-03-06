@@ -10,6 +10,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@nuxtjs/google-fonts": "^3.2.0",
     "howler": "^2.2.4",
     "iconify": "^1.4.0",
     "nuxt": "^3.15.4",

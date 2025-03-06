@@ -1,0 +1,7 @@
+<template>
+  <h1>Theory</h1>
+</template>
+
+<script setup>
+
+</script>

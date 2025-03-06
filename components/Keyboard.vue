@@ -413,6 +413,7 @@ watch(notesDisplayed, (newVal) => {
 .keys-selector-box input[type="range"]::-webkit-slider-runnable-track {
   height: 0.4em;
   border-radius: 2px;
+  background-color: black;
 }
 .chord-selector-box {
   display: flex;

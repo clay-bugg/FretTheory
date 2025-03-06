@@ -2,5 +2,13 @@
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
-  modules: ['@nuxt/icon']
+  modules:
+    ['@nuxt/icon', '@nuxtjs/google-fonts'],
+  
+  googleFonts: {
+    families: {
+      'Orbitron': true,
+      'Big Shoulders Stencil': true
+    },
+  }
 })
