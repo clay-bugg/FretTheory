@@ -1,17 +1,14 @@
 <template>
-  <div>
-    <Header />
-    <main>
-      <slot />
-    </main>
-  </div>
+  <Header class="header"/>
+  <slot />
 </template>
 
 <script setup>
-import { ref } from 'vue';
-
+import { ref } from 'vue'
 </script>
 
-<style scoped>
-
+<style>
+  .header {
+    width: 100%;
+  }
 </style>

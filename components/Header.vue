@@ -1,16 +1,14 @@
 <template>
   <header>
+    <div id="left-header-line"></div>
+    <div id="right-header-line"></div>
     <nav>
       <ul>
-        <li><NuxtLink to="/instruments"><button :class="{ active: route.path === '/instruments' }">Instruments</button></NuxtLink></li>
-        <li><NuxtLink to="/tools"><button :class="{ active: route.path === '/tools' }">Tools</button></NuxtLink></li>
-      </ul>
-    </nav>
-    <NuxtLink to="/"><div class="heading"></div></NuxtLink>
-    <nav>
-      <ul>
-        <li><NuxtLink to="/practice"><button :class="{ active: route.path === '/practice' }">Practice</button></NuxtLink></li>
-        <li><NuxtLink to="/theory"><button :class="{ active: route.path === '/theory' }">Theory</button></NuxtLink></li>
+        <li><NuxtLink to="/instruments" class="button" :class="{ active: route.path === '/instruments' }"><p>Instruments</p></NuxtLink></li>
+        <li><NuxtLink to="/tools" class="button" :class="{ active: route.path === '/tools' }"> <p>Tools</p></NuxtLink></li>
+        <li><NuxtLink to="/" class="logo"><img src="/images/Header.png"></NuxtLink></li> 
+        <li><NuxtLink to="/practice" class="button" :class="{ active: route.path === '/practice' }" ><p>Practice</p></NuxtLink></li>
+        <li><NuxtLink to="/theory" class="button" :class="{ active: route.path === '/theory' }"><p>Theory</p></NuxtLink></li>
       </ul> 
     </nav>
   </header>
@@ -21,7 +19,6 @@ import { ref } from 'vue';
 import { useRoute } from '#imports';
 
 const route = useRoute();
-
 </script>
 
 <style scoped>
@@ -33,47 +30,82 @@ header {
   align-items: center;
   border-bottom: 1px solid black;
   position: relative;
+  z-index: 1;
+  font-family: 'Orbitron';
+  font-size: 1em;
+  box-shadow: 0 4px 15px black;
+  background-color: rgb(245, 245, 245);
+  min-width: fit-content;
 }
-
-header::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 0;
-  width: 100%;
-  background-color: rgb(0,0,0);
-  height: 10px;
-  z-index: 0;
-}
-
 .heading {
-  width: 500px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url('/images/Header.png');
-  background-position: center;
-  background-size: cover;
-  height:100px;
+  height: 100px;
   position: relative;
   z-index: 1;
+  height: auto;
 }
 .heading:hover {
   cursor: pointer;
 }
-
-
+header img {
+  width: auto;
+  height: 5em;;
+  z-index: 2;
+}
+.logo {
+  z-index: 2;
+}
 h1 {
   font-size: 3rem;
   color: black;
   margin: 0;
 }
-
+nav {
+  display: flex;
+  justify-content: center;
+  width: 100%;;
+  align-items: center;
+}
 nav ul {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  width: fit-content;
-  list-style: none
+  list-style: none;
+  width: 100%;
+  justify-content: space-evenly;
+  padding: 0;
+}
+.button {
+  appearance: none;
+  border: none;
+  background-color: black;
+  width: 165px;
+  border-radius: 10px;
+  color: white;
+  font-size: 1.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Orbitron';
+  text-decoration: none;
+  font-weight: 280;
+  height: 2em;
+}
+.button:hover {
+  cursor: pointer;
+  transform: scale(1.01);
+  text-shadow: 0 0 1px rgb(233, 233, 233);
+  text-decoration: none;
+}
+.button:active {
+  transform: scale(1);
+  text-shadow: 0 0 1px rgb(233, 233, 233);
+}
+.button:visited {
+  text-decoration: none;
+}
+nav {
+  z-index: 2;
 }
 </style>
