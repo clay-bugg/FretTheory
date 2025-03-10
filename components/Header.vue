@@ -32,7 +32,7 @@ header {
   position: relative;
   z-index: 1;
   font-family: 'Orbitron';
-  font-size: 1em;
+  font-size: 1rem;
   box-shadow: 0 4px 15px black;
   background-color: rgb(245, 245, 245);
   min-width: fit-content;
@@ -78,8 +78,8 @@ nav ul {
 }
 .button {
   appearance: none;
-  border: none;
-  background-color: black;
+  border: 2px solid black;
+  background: url('images/nav-button-texture.png');
   width: 165px;
   border-radius: 10px;
   color: white;
@@ -90,7 +90,7 @@ nav ul {
   font-family: 'Orbitron';
   text-decoration: none;
   font-weight: 280;
-  height: 2em;
+  height: 1.6em;
 }
 .button:hover {
   cursor: pointer;
