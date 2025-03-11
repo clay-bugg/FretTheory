@@ -30,7 +30,7 @@ const selectedOption = ref('')
 }
 .instrument-container {
   width: 75em;
-  height: 30em;
+  height: 35em;
   margin: 0 auto;
   margin-top: 10%;
   display: flex;
