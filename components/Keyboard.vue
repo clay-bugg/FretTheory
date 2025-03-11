@@ -22,7 +22,7 @@ import { ref } from 'vue'
   background-color: rgb(46, 46, 46);
   border-radius: 35px;
 }
-
 .keyboard-inner {
+  color: black;
 }
 </style>

@@ -1,20 +1,25 @@
 <template>
-  <select v-model="selectedOption" @change="emit('update:selectecdOption', selectedOption)">-
+  <select :value="selectedOption" @change="emit('update:selectedOption', $event.target.value)">
     <option v-for="option in options" :key="option">{{ option }}</option>
   </select>
 </template>
 
 <script setup>
+import { defineProps, defineEmits } from 'vue'
+
 const props = defineProps({
   options: {
     type: Array,
-    default: () => ['Selector'] 
+    default: () => ['Selector']
+  },
+  selectedOption: {
+    type: String,
+    default: ''
   }
 })
 
-const emit = defineEmits(['update:selectecdOption'])
+const emit = defineEmits(['update:selectedOption']);
 
-const selectedOption = ref(props.options[0])
 </script>
 
 <style scoped>

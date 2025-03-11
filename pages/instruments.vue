@@ -4,10 +4,12 @@
     <div class="instrument-container">
 
       <div class="instrument-selector">
-        <Selector :options="['Keyboard', 'Guitar']"/>
+        <Selector v-model:selectedOption="selectedOption" :options="['Keyboard', 'Guitar']" />
       </div>
 
-      <Keyboard />
+      <Keyboard v-if="selectedOption === 'Keyboard'" />
+      <Guitar v-if="selectedOption === 'Guitar'" />
+      <p v-else="Instrumnent"></p>
 
     </div>
   </div>
@@ -17,6 +19,7 @@
 <script setup>
 import { ref } from 'vue';
 
+const selectedOption = ref('')
 </script>
 
 <style scoped>
@@ -26,8 +29,8 @@ import { ref } from 'vue';
 
 }
 .instrument-container {
-  width: 70em;
-  height: 25em;
+  width: 75em;
+  height: 30em;
   margin: 0 auto;
   margin-top: 10%;
   display: flex;
@@ -42,6 +45,5 @@ import { ref } from 'vue';
   justify-content: flex-end;
   align-items: center;
   width: 100%;
-  background-color: grey;
 }
 </style>
