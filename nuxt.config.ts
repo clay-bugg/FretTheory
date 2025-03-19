@@ -1,11 +1,14 @@
 export default defineNuxtConfig({
-  compatibilityDate: '2024-11-01',
-  devtools: { enabled: true },
-  modules: ['@nuxtjs/google-fonts'],
-  googleFonts: {
+  fonts: {
+    provider: 'google',
     families: {
-      Orbitron: [100, 300, 400, 500, 700, 900]
-    },
-    display: 'swap'
-  }
+      Roboto:   {
+        name: 'Roboto',
+        wght: [400, 700],
+        style: ['normal', 'italic']
+      }
+    }
+  },
+
+  compatibilityDate: '2025-03-15'
 })

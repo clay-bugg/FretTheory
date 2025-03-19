@@ -11,6 +11,7 @@ const props = defineProps({
   options: {
     type: Array,
     default: () => ['Selector']
+  
   },
   selectedOption: {
     type: String,
