@@ -31,27 +31,22 @@
             <NoteButton id="synth-tone" />
           </div>
         </div>
-      </div>
+      
 
-      <div class="keys">
-        {{ pianoKeys }}
-      </div>
-    </div>
+  <div class="keys" v-for="note in notes" :key="note">
+  </div>
+        
+  </div>
+  </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref } from 'vue';
 
 const arpeggiated = ref(false);
 
 const noteButtons = ref(['All', 'Chord', 'None']);
-
-const pianoKeys = computed(() => {
-  const notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
-  return notes;
-  })
-
   
 </script>
 

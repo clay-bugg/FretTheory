@@ -2,14 +2,30 @@
 <div class="arpeggio-box">
   <p>Arpeggiator</p>
   <p class="arpeggio-display" type="text" placeholder="00.0" value="''">{{ currentArpeggio }}</p>
-  <input v-model="currentArpeggio" class="arpeggio-speed" type="number" />
+  <div class="buttons">
+    <button @click="changeArpeggioValue('&lt;')"><</button>
+    <button @click="changeArpeggioValue('&gt;')">></button>
+  </div>
 </div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
 
-const currentArpeggio = ref('');
+const currentArpeggio = ref(0);
+
+function changeArpeggioValue(inc) { 
+  if (currentArpeggio === 0 || currentArpeggio === '') return;
+
+  let currentNum = 0;
+
+
+  if (inc === '>') {
+    currentArpeggio.value += 1;
+  } else if (inc === '<' && inc) {
+    currentArpeggio.value -= 1;
+  }
+}
 
 </script>
 
@@ -22,6 +38,9 @@ const currentArpeggio = ref('');
 }
 p {
   color: rgb(234, 234, 234);
+  letter-spacing: 0.2em;
+  font-family: '1.2em';
+  font-size: 1.2em;
 }
   .arpeggio-box {
     display: flex;
@@ -47,7 +66,18 @@ p {
     .arpeggio-speed {
       appearance: none;
       -webkit-appearance: none;
-  
+    }
+    button {
+      width: 80px;
+      height: 30px;
+      font-size: 1.2em;
+      
+    }
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+      width: fit-content;
+      gap: 0.5em;
 
     }
 </style>
