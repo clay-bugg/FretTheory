@@ -4,7 +4,7 @@
     <div class="instrument-container">
 
       <div class="instrument-selector">
-        <Selector v-model:selectedOption="selectedOption" :options="['Keyboard', 'Guitar']" />
+        <Selector v-model="selectedOption" :options="['Keyboard', 'Guitar']" />
       </div>
 
       <Keyboard v-if="selectedOption === 'Keyboard'" />

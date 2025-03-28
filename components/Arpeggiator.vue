@@ -26,7 +26,6 @@ function changeArpeggioValue(inc) {
     currentArpeggio.value -= 1;
   }
 }
-
 </script>
 
 <style scoped>

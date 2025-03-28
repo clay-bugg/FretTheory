@@ -1,5 +1,5 @@
 <template>
-  <select :value="selectedOption" @change="emit('update:selectedOption', $event.target.value)">
+  <select :value="modelValue" @change="$emit('update:modelValue', $event.target.value)">
     <option v-for="option in options" :key="option">{{ option }}</option>
   </select>
 </template>
@@ -19,7 +19,7 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['update:selectedOption']);
+const emit = defineEmits(['update:modelValue']);
 
 </script>
 
