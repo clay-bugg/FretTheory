@@ -4,7 +4,7 @@
       <div class="keys-selector-box">
         <label for="key-selector">Keys: </label>
         <input
-          id="key-selector"
+          class="key-selector"
           v-model="numberOfKeys"
           type="range"
           step="1"
@@ -16,13 +16,13 @@
 
       <div class="chord-selector-box">
         <label for="root-note-selector">Chord: </label>
-        <select id="root-note-selector" v-model="rootNote">
+        <select class="root-note-selector" v-model="rootNote">
           <option v-for="note in Notes" :key="note" :value="note">
             {{ note }}
           </option>
         </select>
 
-        <select id="chord-type-selector" v-model="chordType">
+        <select class="chord-type-selector" v-model="chordType">
           <option
             v-for="type in chordTypes"
             :key="type.value"
@@ -32,7 +32,7 @@
           </option>
         </select>
 
-        <button id="settings-button">
+        <button class="settings-button">
           <Icon
             id="settings-icon"
             name="mi:options-horizontal"
@@ -111,8 +111,7 @@
             'interval': chordNotes.includes(key.note),
             'root-note': key.note === rootNote,
           },
-]
-  "
+]"
         @mousedown="onMouseDown(key)"
         @mouseenter="onMouseEnter(key)"
         @mouseup="onMouseUp"
@@ -136,8 +135,8 @@
       >
         {{ note }}
       </p>
-      <button @click="playChord(chordNotes)" id="play-button">
-        <Icon name="line-md:play-filled" id="play-icon" />
+      <button @click="playChord(chordNotes)" class="play-button">
+        <Icon name="line-md:play-filled" class="play-icon" />
       </button>
     </div>
   </div>
@@ -603,7 +602,7 @@ watch(notesDisplayed, (newVal) => {
   padding: 0.5em 0.6em;
   border: 4px solid black;
 }
-#play-button {
+.play-button {
   font-family: inherit;
   width: 30px;
   height: 30px;
@@ -615,7 +614,7 @@ watch(notesDisplayed, (newVal) => {
   justify-content: center;
   align-items: center;
 }
-#play-button:hover {
+.play-button:hover {
   cursor: pointer;
 }
 </style>
