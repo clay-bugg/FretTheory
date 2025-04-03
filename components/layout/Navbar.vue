@@ -1,17 +1,19 @@
 <template>
   <nav>
-    <nuxt-link
+    <NuxtLink
       v-for="(button, index) in navButtons"
       :key="index"
       :to="button.link"
       class="button"
     >
       {{ button.label }}
-    </nuxt-link>
+  </NuxtLink>
   </nav>
 </template>
 
 <script setup>
+import { ref } from 'vue';
+
 const navButtons = ref([
   { label: "Instruments", link: "/instruments" },
   { label: "Tools", link: "/tools" },
@@ -35,8 +37,6 @@ nav {
   border: none;
   background: none;
   font-size: 1.4em;
-  font-weight: 900;
-  font-family: "Orbitron";
   text-shadow: 0 0 1px black;
   text-decoration: none;
 }
