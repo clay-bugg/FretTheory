@@ -25,7 +25,7 @@ definePageMeta({
 }
 
 #page {
-  font-family: "Kanit", sans-serif;
+  font-family: "Orbitron", sans-serif;
   padding: 0;
   display: flex;
   align-items: center;

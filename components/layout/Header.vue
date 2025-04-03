@@ -88,9 +88,9 @@ nav ul {
   font-family: 'Orbitron';
   text-decoration: none;
   font-weight: 280;
-  height: 1.3em;
-  width: 8em;
-  padding: 1em;
+  height: 1em;
+  width: 7em;
+  padding: 0.8em;
 }
 .button:focus {
   appearance: none;

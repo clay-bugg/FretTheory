@@ -1,16 +1,18 @@
 <template>
-  <div id="page">
-  </div>
+  <div id="page"></div>
 </template>
 
-<script setup>
-</script>
+<script setup></script>
 
 <style scoped>
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+body {
+  font-family: "Orbitron", sans-serif;
 }
 
 #page {
@@ -20,6 +22,6 @@
   align-items: center;
   justify-content: flex-start;
   gap: 2em;
-  background-color: #3972A4;
+  background-color: #3972a4;
 }
 </style>
