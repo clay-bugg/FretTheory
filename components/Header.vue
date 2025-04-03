@@ -6,7 +6,7 @@
       <ul>
         <li><NuxtLink to="/instruments" class="button" :class="{ active: route.path === '/instruments' }"><p>Instruments</p></NuxtLink></li>
         <li><NuxtLink to="/tools" class="button" :class="{ active: route.path === '/tools' }"> <p>Tools</p></NuxtLink></li>
-        <li><NuxtLink to="/" class="logo"><img src="/Header.png"></NuxtLink></li> 
+        <li><NuxtLink to="/" class="logo"><img src="/images/logo.png"></NuxtLink></li> 
         <li><NuxtLink to="/practice" class="button" :class="{ active: route.path === '/practice' }" ><p>Practice</p></NuxtLink></li>
         <li><NuxtLink to="/theory" class="button" :class="{ active: route.path === '/theory' }"><p>Theory</p></NuxtLink></li>
       </ul> 
@@ -77,19 +77,20 @@ nav ul {
 }
 .button {
   appearance: none;
-  border: 2px solid black;
-  background: url('public/nav-button-texture.png');
-  width: 165px;
+  border: 4px solid black;
+  background: url('public/images/backgrounds/nav-button-texture.png');
   border-radius: 10px;
   color: white;
-  font-size: 1.5em;
+  font-size: 1.2rem;
   display: flex;
   justify-content: center;
   align-items: center;
   font-family: 'Orbitron';
   text-decoration: none;
   font-weight: 280;
-  height: 1.6em;
+  height: 1.3em;
+  width: 8em;
+  padding: 1em;
 }
 .button:focus {
   appearance: none;

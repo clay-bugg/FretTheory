@@ -1,11 +1,5 @@
 <template>
   <div id="page">
-    <Header 
-      :buttons="[
-        { url: '/instruments', label: 'Instruments' },
-        { url: '/tools', label: 'Tools' }
-      ]"
-    />
   </div>
 </template>
 

@@ -1,16 +1,5 @@
 <template>
   <div id="page">
-    <Header 
-      heading="Music" 
-      subheading="Interactive Instruments" 
-      id="header"
-      :buttons="[
-        { url: '/instruments', label: 'Instruments' },
-        { url: '/tools', label: 'Tools' }
-      ]"
-    />
-
-
     <div class="instrument-button-box">
       <div v-for="button in instrumentButtons"
         :key="button.label"
