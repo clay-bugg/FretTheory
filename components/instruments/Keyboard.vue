@@ -155,7 +155,7 @@
 //------IMPORts
 import { ref, computed, watch } from "vue";
 
-import { Howl } from "howler";
+import * as Tone from 'tone';
 
 // --------FUNCTIONS--------
 function generateKeys() {
@@ -233,16 +233,13 @@ function assignChordOctaves(root, chordNotesArray, baseOctave = 3) {
   return chordWithOctaves;
 }
 function playKey(note, octave) {
-  const encodedNote = encodeURIComponent(note);
-  const sound = new Howl({
-    src: [`/sounds/keyboard_samples/${encodedNote}${octave}.mp3`],
-  });
-  console.log(`${note}${octave} note played.`);
-  sound.play();
+  const synth = new Tone.Synth().toDestination();
 
-  setTimeout(() => {
-    sound.stop();
-  }, 7000);
+  const noteToPlay = `${note}${octave}`;
+
+  synth.triggerAttackRelease(noteToPlay, '8n');
+
+  console.log(`${noteToPlay} note played.`)
 }
 function playChord(notes) {
   if (!rootNote.value || !chordType.value) return;
