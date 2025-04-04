@@ -130,9 +130,11 @@
       </div>
     </div>
     <div class="octaves-chords">
+
     <div class="octave-picker">
       
     </div>
+
     <div class="chord-played" v-if="rootNote && chordType">
       <label for="chord-notes">{{ rootNote }}{{ chordType }}</label>
       <p
@@ -237,38 +239,33 @@ function playKey(note, octave) {
 
   const noteToPlay = `${note}${octave}`;
 
-  synth.triggerAttackRelease(noteToPlay, '8n');
+  synth.triggerAttackRelease(noteToPlay, '4n');
 
   console.log(`${noteToPlay} note played.`)
 }
+
 function playChord(notes) {
   if (!rootNote.value || !chordType.value) return;
 
-  const chordNotesWithOctaves = assignChordOctaves(rootNote.value, notes);
-  const playingSounds = chordNotesWithOctaves.map((fullNote) => {
-    if (!soundsCache[fullNote]) {
-      soundsCache[fullNote] = new Howl({
-        src: [`/sounds/keyboard_samples/${encodeURIComponent(fullNote)}.mp3`],
-        preload: true,
-      });
-    }
-    return { sound: soundsCache[fullNote] };
-  });
+  const polySynth = new Tone.PolySynth(Tone.Synth).toDestination();
 
-  if (activeChordNotes.value.length) {
-    activeChordNotes.value.forEach(({ sound }) => sound.stop());
+  const chordNotesWithOctaves = assignChordOctaves(rootNote.value, notes);
+
+  if (arpeggiated.value) {
+    chordNotesWithOctaves.forEach((note, index) => {
+      setTimeout(() => {
+        polySynth.triggerAttackRelease('note', '4n');
+      }, index * arpeggioDelay.value);
+    });
+  } else { 
+    polySynth.triggerAttackRelease(chordNotesWithOctaves, '4n');
   }
 
-  const delay = arpeggiated.value ? arpeggioDelay.value : 20;
+  console.log(`${chordNotesWithOctaves.join(', ')} chord played.`)
 
-  playingSounds.forEach(({ sound }, index) => {
-    setTimeout(() => {
-      sound.seek(0);
-      sound.play();
-    }, index * delay);
-  });
 
-  activeChordNotes.value = playingSounds;
+
+
 }
 // --------REACIVITY--------
 const pianoKeys = ref(generateKeys());
@@ -319,7 +316,6 @@ const chordIntervals = {
   7: [0, 4, 7, 10],
   m7: [0, 3, 7, 10],
 };
-const soundsCache = reactive({});
 const isMouseDown = ref(false);
 const settingsOpened = ref(false);
 const notesDisplayed = ref("all");
@@ -334,7 +330,6 @@ const keysDisplayed = computed(() =>
 // ------EVENT HANDLERS--------
 function onMouseDown(key) {
   isMouseDown.value = true;
-  console.log(isMouseDown.value);
   playKey(key.note, key.octave);
 }
 
@@ -345,7 +340,6 @@ function onMouseEnter(key) {
 }
 
 function onMouseUp() {
-  console.log(isMouseDown.value);
   isMouseDown.value = false;
 }
 
@@ -354,15 +348,15 @@ function toggleSettings() {
 }
 
 // -------- WATCHERS --------
-watch([rootNote, chordType], () => {
-  console.log(`Root note changed to ${rootNote.value}`);
-  console.log(`Chord type changed to ${chordType.value}`);
+watch(rootNote, (newVal) => {
+  console.log(`Root note changed to ${newVal}`);
+  updateChord();
+});
+watch(chordType, (newVal) => {
+  console.log(`Chord type changed to ${newVal}`)
   updateChord();
 });
 
-watch(notesDisplayed, (newVal) => {
-  console.log(`Notes displayed set to ${newVal}`);
-});
 </script>
 
 <style scoped>
