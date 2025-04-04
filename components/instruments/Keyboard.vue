@@ -1,130 +1,138 @@
 <template>
   <div class="component">
-    <div class="controls">
-      <div class="keys-selector-box">
-        <label for="key-selector">Keys: </label>
-        <input
-          class="key-selector"
-          v-model="numberOfKeys"
-          type="range"
-          step="1"
-          min="12"
-          max="36"
-        />
-        <span id="keys-amount-label">{{ numberOfKeys }}</span>
-      </div>
-
-      <div class="chord-selector-box">
-        <label for="root-note-selector">Chord: </label>
-        <select class="root-note-selector" v-model="rootNote">
-          <option v-for="note in Notes" :key="note" :value="note">
-            {{ note }}
-          </option>
-        </select>
-
-        <select class="chord-type-selector" v-model="chordType">
-          <option
-            v-for="type in chordTypes"
-            :key="type.value"
-            :value="type.value"
-          >
-            {{ type.label }}
-          </option>
-        </select>
-
-        <button class="settings-button">
-          <Icon
-            id="settings-icon"
-            name="mi:options-horizontal"
-            @click="toggleSettings"
-          />
-        </button>
-      </div>
-
-      <Transition name="slide">
-        <div class="settings-panel" v-if="settingsOpened">
-          <ul>
-            <li>
-              <p>Note Labels:</p>
-              <div id="notes-labels">
-                <input
-                  type="radio"
-                  name="notes-displayed"
-                  v-model="notesDisplayed"
-                  value="all"
-                  id="all-notes-checkbox"
-                />
-                <label for="all-notes-checkbox" class="notes-checkbox"
-                  >All</label
-                >
-                <input
-                  type="radio"
-                  name="notes-displayed"
-                  v-model="notesDisplayed"
-                  value="chord"
-                  id="chord-notes-checkbox"
-                />
-                <label for="chord-notes-checkbox" class="notes-checkbox"
-                  >Chord</label
-                >
-                <input
-                  type="radio"
-                  name="notes-displayed"
-                  v-model="notesDisplayed"
-                  value="none"
-                  id="no-notes-checkbox"
-                />
-                <label for="no-notes-checkbox" class="notes-checkbox"
-                  >None</label
-                >
-              </div>
-            </li>
-            <li>
-              <p>Arpeggiate Chord:</p>
-              <input type="checkbox" v-model="arpeggiated" />
-            </li>
-            <li>
-              <p>Arpeggio Delay:</p>
-              <input
-                type="number"
-                v-model="arpeggioDelay"
-                id="arpeggio-delay"
-              />
-              <p id="ms">ms</p>
-            </li>
-          </ul>
-        </div>
-      </Transition>
-    </div>
-
     <div class="keyboard">
-      <div
-        v-for="(key, index) in keysDisplayed"
-        :key="`${key.note}${key.octave}`"
-        :id="`interval-${chordNotes.indexOf(key.note) + 1}`"
-        :class="[
-          'key',
-          {
-            black: key.sharp,
-            white: !key.sharp,
-            'highlighted-note': chordNotes.includes(key.note),
-            'interval': chordNotes.includes(key.note),
-            'root-note': key.note === rootNote,
-          },
-]"
-        @mousedown="onMouseDown(key)"
-        @mouseenter="onMouseEnter(key)"
-        @mouseup="onMouseUp"
-      >
-        <span v-if="notesDisplayed === 'all'">{{ key.note }}</span>
-        <span
-          v-if="notesDisplayed === 'chord' && chordNotes.includes(key.note)"
+      <div class="controls">
+
+        <div class="notes-labels">
+          <div class="notes-selector">
+            <input
+              type="radio"
+              name="notes-displayed"
+              v-model="notesDisplayed"
+              value="all"
+              class="all-notes-checkbox"
+              :class="{ active: notesDisplayed === 'all' }"
+            />
+            <label
+              for="all-notes-checkbox"
+              class="notes-checkbox"
+              id="all-notes-label"
+              >All</label
+            >
+          </div>
+          <div class="notes-selector">
+            <input
+              type="radio"
+              name="notes-displayed"
+              v-model="notesDisplayed"
+              value="chord"
+              class="chord-notes-checkbox"
+              :class="{ active: notesDisplayed === 'chord' }"
+            />
+            <label
+              for="chord-notes-checkbox"
+              class="notes-checkbox"
+              id="chord-notes-label"
+              >Chord</label
+            >
+          </div>
+          <div class="notes-selector">
+            <input
+              type="radio"
+              name="notes-displayed"
+              v-model="notesDisplayed"
+              value="none"
+              class="no-notes-checkbox"
+              :class="{ active: notesDisplayed === 'none' }"
+            />
+            <label
+              for="no-notes-checkbox"
+              class="notes-checkbox"
+              id="no-notes-label"
+              >None</label
+            >
+          </div>
+        </div>
+
+        <div class="arpeggio-box">
+        <div class="arpeggio-label">
+        <p>Arpeggio:</p>
+        <input type="checkbox" v-model="arpeggiated" />
+        </div>
+        <div class="arpeggio-delay">
+        <p>Arpeggio Delay:</p>
+        <input type="number" v-model="arpeggioDelay" class="arpeggio-delay" />
+        <p class="ms">ms</p>
+        </div>
+        </div>
+        <div class="chord-selector-box">
+          <label for="root-note-selector">Chord: </label>
+          <select class="root-note-selector" v-model="rootNote">
+            <option v-for="note in Notes" :key="note" :value="note">
+              {{ note }}
+            </option>
+          </select>
+
+          <select class="chord-type-selector" v-model="chordType">
+            <option
+              v-for="type in chordTypes"
+              :key="type.value"
+              :value="type.value"
+            >
+              {{ type.label }}
+            </option>
+          </select>
+
+          <button class="settings-button">
+            <Icon
+              id="settings-icon"
+              name="mi:options-horizontal"
+              @click="toggleSettings"
+            />
+          </button>
+        </div>
+
+        <Transition name="slide">
+          <div class="settings-panel" v-if="settingsOpened">
+            <ul>
+              <li></li>
+            </ul>
+          </div>
+        </Transition>
+      </div>
+
+      <div class="keys">
+        <div
+          v-for="(key, index) in keysDisplayed"
+          :key="`${key.note}${key.octave}`"
+          :id="`interval-${chordNotes.indexOf(key.note) + 1}`"
+          :class="[
+            'key',
+            {
+              black: key.sharp,
+              white: !key.sharp,
+              'highlighted-note': chordNotes.includes(key.note),
+              interval: chordNotes.includes(key.note),
+              'root-note': key.note === rootNote,
+            },
+          ]"
+          @mousedown="onMouseDown(key)"
+          @mouseenter="onMouseEnter(key)"
+          @mouseup="onMouseUp"
         >
-          {{ key.note }}
-        </span>
+          <span v-if="notesDisplayed === 'all'">{{ key.note }}</span>
+          <span
+            v-if="notesDisplayed === 'chord' && chordNotes.includes(key.note)"
+          >
+            {{ key.note }}
+          </span>
+        </div>
       </div>
     </div>
-
+    <div class="octaves-chords">
+    <div class="octave-picker">
+      
+    </div>
     <div class="chord-played" v-if="rootNote && chordType">
       <label for="chord-notes">{{ rootNote }}{{ chordType }}</label>
       <p
@@ -138,6 +146,7 @@
       <button @click="playChord(chordNotes)" class="play-button">
         <Icon name="line-md:play-filled" class="play-icon" />
       </button>
+    </div>
     </div>
   </div>
 </template>
@@ -382,38 +391,14 @@ watch(notesDisplayed, (newVal) => {
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  height: 8em;
   position: relative;
   padding-left: 0.6em;
   padding-right: 0.3em;
   z-index: 3;
+  color: rgb(215, 215, 215)
 }
-.keys-selector-box {
-  display: flex;
-  align-items: center;
-  gap: 0.4em;
-  font-size: 1.1em;
-  z-index: 1;
-}
-.keys-selector-box input[type="range"] {
-  -webkit-appearance: none;
-  appearance: none;
-}
-.keys-selector-box input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  height: 1.2em;
-  width: 1.2em;
-  background-color: white;
-  border-radius: 50px;
-  cursor: pointer;
-  position: relative;
-  bottom: 0.4em;
-  border: 2px solid black;
-}
-.keys-selector-box input[type="range"]::-webkit-slider-runnable-track {
-  height: 0.4em;
-  border-radius: 2px;
-  background-color: black;
-}
+
 .chord-selector-box {
   display: flex;
   align-items: center;
@@ -427,7 +412,47 @@ watch(notesDisplayed, (newVal) => {
   border-radius: 0.3em;
   padding: 0 0.2em;
 }
-#settings-button {
+.notes-labels {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
+  font-size: 20px;
+}
+.notes-selector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.notes-selector input {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  height: 30px;
+  width: 30px;
+  border: 3px solid black;
+  border-radius: 50px;
+  background-color: red;
+  cursor: pointer;
+}
+.notes-selector input.active {
+  background-color: greenyellow;
+}
+.arpeggio-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
+}
+.arpeggio-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.settings-button {
   display: inline-block;
   width: 2em;
   height: 2em;
@@ -439,15 +464,15 @@ watch(notesDisplayed, (newVal) => {
   background-color: #e0e0e0;
   z-index: 2;
 }
-#settings-button:hover {
+.settings-button:hover {
   cursor: pointer;
   transform: scale(1.06);
   background-color: #fff;
 }
-#settings-button:active {
+.settings-button:active {
   transform: scale(1);
 }
-#settings-icon {
+.settings-icon {
   width: 100%;
   height: 100%;
 }
@@ -465,7 +490,6 @@ watch(notesDisplayed, (newVal) => {
   padding: 1.5em 0;
   font-family: inherit;
   font-size: 1.2em;
-
 }
 .settings-panel header {
   height: 1.5em;
@@ -484,7 +508,7 @@ watch(notesDisplayed, (newVal) => {
   justify-content: space-between;
   align-items: center;
   list-style: none;
-  gap: 0.8em;;
+  gap: 0.8em;
 }
 .settings-panel li {
   display: flex;
@@ -503,10 +527,10 @@ watch(notesDisplayed, (newVal) => {
 .notes-checkbox {
   font-size: 0.9em;
 }
-#settings-close:hover {
+.settings-close:hover {
   cursor: pointer;
 }
-#ms {
+.ms {
   display: inline;
   margin-left: 0.1em;
   font-size: 0.8em;
@@ -519,25 +543,27 @@ watch(notesDisplayed, (newVal) => {
 .slide-enter-from {
   transform: translateY(-20%);
   opacity: 0;
-  
 }
 .slide-enter-to {
   transform: translateY(0);
   opacity: 1;
-  
 }
 .slide-leave-from {
   transform: translateY(0);
   opacity: 1;
-  
 }
 .slide-leave-to {
   transform: translateY(-20%);
   opacity: 0;
-  
 }
 /*--------KEYBOARD---------*/
 .keyboard {
+  border: 1px solid black;
+  padding: 1em;
+  border-radius: 15px;
+  background-color: rgb(42, 42, 42);
+}
+.keys {
   width: fit-content;
   height: 250px;
   border: 5px solid black;
@@ -566,7 +592,6 @@ watch(notesDisplayed, (newVal) => {
   width: 70px;
   background-color: white;
   color: black;
-  
 }
 .black {
   width: 45px;
