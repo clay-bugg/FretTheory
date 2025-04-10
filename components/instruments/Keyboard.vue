@@ -1,9 +1,35 @@
 <template>
   <div class="component">
+
     <div class="keyboard">
+
       <div class="controls">
 
-        <div class="notes-labels">
+        <div class="arpeggio-box control">
+
+          <div class="arpeggio-label">
+            <p>Arpeggio:</p>
+            <input
+              type="checkbox"
+              v-model="arpeggiated"
+              :style="{
+                backgroundColor: arpeggiated ? 'rgb(133, 206, 23)' : 'red',
+              }"
+            />
+          </div>
+
+          <div class="arpeggio-delay">
+            <input
+              type="number"
+              v-model="arpeggioDelay"
+              class="arpeggio-delay"
+            />
+            <p class="ms">ms</p>
+          </div>
+
+        </div>
+
+        <div class="notes-labels control">
           <div class="notes-selector">
             <input
               type="radio"
@@ -13,13 +39,9 @@
               class="all-notes-checkbox"
               :class="{ active: notesDisplayed === 'all' }"
             />
-            <label
-              for="all-notes-checkbox"
-              class="notes-checkbox"
-              id="all-notes-label"
-              >All</label
-            >
+            <label for="all-notes-checkbox" class="notes-checkbox">All</label>
           </div>
+
           <div class="notes-selector">
             <input
               type="radio"
@@ -29,13 +51,11 @@
               class="chord-notes-checkbox"
               :class="{ active: notesDisplayed === 'chord' }"
             />
-            <label
-              for="chord-notes-checkbox"
-              class="notes-checkbox"
-              id="chord-notes-label"
+            <label for="chord-notes-checkbox" class="notes-checkbox"
               >Chord</label
             >
           </div>
+
           <div class="notes-selector">
             <input
               type="radio"
@@ -52,44 +72,31 @@
               >None</label
             >
           </div>
+
         </div>
 
-        <div class="arpeggio-box">
-        <div class="arpeggio-label">
-        <p>Arpeggio:</p>
-        <input type="checkbox" v-model="arpeggiated" />
-        </div>
-        <div class="arpeggio-delay">
-        <p>Arpeggio Delay:</p>
-        <input type="number" v-model="arpeggioDelay" class="arpeggio-delay" />
-        <p class="ms">ms</p>
-        </div>
-        </div>
-        <div class="chord-selector-box">
+        <div class="chord-selector-box control">
+
           <label for="root-note-selector">Chord: </label>
-          <select class="root-note-selector" v-model="rootNote">
-            <option v-for="note in Notes" :key="note" :value="note">
-              {{ note }}
-            </option>
-          </select>
 
-          <select class="chord-type-selector" v-model="chordType">
-            <option
-              v-for="type in chordTypes"
-              :key="type.value"
-              :value="type.value"
-            >
-              {{ type.label }}
-            </option>
-          </select>
+          <div class="chord-selector-inputs">
+            <select class="root-note-selector" v-model="rootNote">
+              <option v-for="note in notes" :key="note" :value="note">
+                {{ note }}
+              </option>
+            </select>
 
-          <button class="settings-button">
-            <Icon
-              id="settings-icon"
-              name="mi:options-horizontal"
-              @click="toggleSettings"
-            />
-          </button>
+            <select class="chord-type-selector" v-model="chordType">
+              <option
+                v-for="type in chordTypes"
+                :key="type.value"
+                :value="type.value"
+              >
+                {{ type.label }}
+              </option>
+            </select>
+          </div>
+
         </div>
 
         <Transition name="slide">
@@ -102,17 +109,17 @@
       </div>
 
       <div class="keys">
-        <div
-          v-for="(key, index) in keysDisplayed"
+
+        <div v-for="(key, index) in keysDisplayed"
           :key="`${key.note}${key.octave}`"
-          :id="`interval-${chordNotes.indexOf(key.note) + 1}`"
+          :id="`interval-${chordnotes.indexOf(key.note) + 1}`"
           :class="[
             'key',
             {
               black: key.sharp,
               white: !key.sharp,
-              'highlighted-note': chordNotes.includes(key.note),
-              interval: chordNotes.includes(key.note),
+              'highlighted-note': chordnotes.includes(key.note),
+              interval: chordnotes.includes(key.note),
               'root-note': key.note === rootNote,
             },
           ]"
@@ -122,33 +129,31 @@
         >
           <span v-if="notesDisplayed === 'all'">{{ key.note }}</span>
           <span
-            v-if="notesDisplayed === 'chord' && chordNotes.includes(key.note)"
+            v-if="notesDisplayed === 'chord' && chordnotes.includes(key.note)"
           >
             {{ key.note }}
           </span>
         </div>
+        
       </div>
-    </div>
-    <div class="octaves-chords">
 
-    <div class="octave-picker">
-      
     </div>
 
-    <div class="chord-played" v-if="rootNote && chordType">
-      <label for="chord-notes">{{ rootNote }}{{ chordType }}</label>
-      <p
-        v-for="(note, index) in chordNotes"
+    <div class="chord-played">
+
+      <p class="chord-notes-label">{{ rootNote }}{{ chordType }} | </p>
+
+      <p v-for="(note, index) in chordnotes"
         :key="index"
         class="chord-note"
-        :id="`chord-note-${index + 1}`"
-      >
+        :id="`chord-note-${index + 1}`">
         {{ note }}
       </p>
-      <button @click="playChord(chordNotes)" class="play-button">
+
+      <button @click="playChord(chordnotes)" class="play-button">
         <Icon name="line-md:play-filled" class="play-icon" />
       </button>
-    </div>
+
     </div>
   </div>
 </template>
@@ -157,9 +162,27 @@
 //------IMPORts
 import { ref, computed, watch } from "vue";
 
-import * as Tone from 'tone';
+import * as Tone from "tone";
 
-// --------FUNCTIONS--------
+const pianoKeys = ref(generateKeys());
+
+const numberOfKeys = ref(24);
+
+const notes = ref([
+  "C",
+  "C#",
+  "D",
+  "D#",
+  "E",
+  "F",
+  "F#",
+  "G",
+  "G#",
+  "A",
+  "A#",
+  "B",
+]);
+
 function generateKeys() {
   const notes = [
     "C",
@@ -208,22 +231,22 @@ function updateChord() {
   ];
   const rootIndex = notes.indexOf(rootNote.value);
 
-  let updatedChordNotes = intervals.map((interval) => {
+  let updatedChordnotes = intervals.map((interval) => {
     return notes[(rootIndex + interval) % 12];
   });
   // Remove duplicate notes
-  updatedChordNotes = Array.from(new Set(updatedChordNotes));
-  chordNotes.value = updatedChordNotes;
+  updatedChordnotes = Array.from(new Set(updatedChordnotes));
+  chordnotes.value = updatedChordnotes;
 
   console.log(`Chord changed to ${rootNote.value}${chordType.value}`);
 }
-function assignChordOctaves(root, chordNotesArray, baseOctave = 3) {
-  const noteOrder = Notes.value;
+function assignChordOctaves(root, chordnotesArray, baseOctave = 2) {
+  const noteOrder = notes.value;
   let currentOctave = baseOctave;
   let lastNoteIndex = noteOrder.indexOf(root);
   const chordWithOctaves = [];
 
-  chordNotesArray.forEach((note) => {
+  chordnotesArray.forEach((note) => {
     const noteIndex = noteOrder.indexOf(note);
     if (noteIndex <= lastNoteIndex) {
       currentOctave++;
@@ -239,11 +262,10 @@ function playKey(note, octave) {
 
   const noteToPlay = `${note}${octave}`;
 
-  synth.triggerAttackRelease(noteToPlay, '4n');
+  synth.triggerAttackRelease(noteToPlay, "3n");
 
-  console.log(`${noteToPlay} note played.`)
+  console.log(`${noteToPlay} note played.`);
 }
-
 function playChord(notes) {
   if (!rootNote.value || !chordType.value) return;
 
@@ -254,37 +276,22 @@ function playChord(notes) {
   if (arpeggiated.value) {
     chordNotesWithOctaves.forEach((note, index) => {
       setTimeout(() => {
-        polySynth.triggerAttackRelease('note', '4n');
+        polySynth.triggerAttackRelease("note", "4n");
       }, index * arpeggioDelay.value);
     });
-  } else { 
-    polySynth.triggerAttackRelease(chordNotesWithOctaves, '4n');
+  } else {
+    polySynth.triggerAttackRelease(chordNotesWithOctaves, "2n");
   }
 
-  console.log(`${chordNotesWithOctaves.join(', ')} chord played.`)
-
-
-
-
+  console.log(`${chordNotesWithOctaves.join(", ")} chord played.`);
 }
+
 // --------REACIVITY--------
-const pianoKeys = ref(generateKeys());
-const numberOfKeys = ref(24);
-const Notes = ref([
-  "C",
-  "C#",
-  "D",
-  "D#",
-  "E",
-  "F",
-  "F#",
-  "G",
-  "G#",
-  "A",
-  "A#",
-  "B",
-]);
-const rootNote = ref("");
+const keysDisplayed = computed(() =>
+  pianoKeys.value.slice(0, numberOfKeys.value)
+);
+
+const rootNote = ref("-rootnote ");
 const chordTypes = ref([
   { label: "Major", value: "maj" },
   { label: "Major 6th", value: "maj6" },
@@ -299,9 +306,8 @@ const chordTypes = ref([
   { label: "Diminished", value: "°" },
   { label: "Augmented", value: "+" },
 ]);
-const chordType = ref("");
-const chordNotes = ref([]);
-const activeChordNotes = ref([]);
+const chordType = ref("chordtype-");
+const chordnotes = ref([]);
 const chordIntervals = {
   maj: [0, 4, 7],
   maj6: [0, 4, 7, 9],
@@ -317,15 +323,11 @@ const chordIntervals = {
   m7: [0, 3, 7, 10],
 };
 const isMouseDown = ref(false);
-const settingsOpened = ref(false);
 const notesDisplayed = ref("all");
 const arpeggiated = ref(false);
 const arpeggioDelay = ref(200);
 
 //--------COMPUTED--------
-const keysDisplayed = computed(() =>
-  pianoKeys.value.slice(0, numberOfKeys.value)
-);
 
 // ------EVENT HANDLERS--------
 function onMouseDown(key) {
@@ -343,20 +345,15 @@ function onMouseUp() {
   isMouseDown.value = false;
 }
 
-function toggleSettings() {
-  settingsOpened.value = !settingsOpened.value;
-}
-
 // -------- WATCHERS --------
 watch(rootNote, (newVal) => {
   console.log(`Root note changed to ${newVal}`);
   updateChord();
 });
 watch(chordType, (newVal) => {
-  console.log(`Chord type changed to ${newVal}`)
+  console.log(`Chord type changed to ${newVal}`);
   updateChord();
 });
-
 </script>
 
 <style scoped>
@@ -375,33 +372,26 @@ watch(chordType, (newVal) => {
   position: relative;
   background-color: rgb(0, 0, 0, 0);
   justify-content: flex-start;
+  font-family: "Orbitron";
 }
+input {
+  font-family: "Ubuntu";
+}
+
 /*--------CONTROLS---------*/
 .controls {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  align-items: flex-end;
+  justify-content: space-evenly;
   width: 100%;
-  height: 8em;
+  height: 6em;
   position: relative;
-  padding-left: 0.6em;
-  padding-right: 0.3em;
   z-index: 3;
-  color: rgb(215, 215, 215)
+  color: rgb(215, 215, 215);
+  padding: 0 1em 1em;
 }
-
-.chord-selector-box {
-  display: flex;
-  align-items: center;
-  gap: 0.4em;
-  z-index: 1;
-}
-.chord-selector-box select {
-  font-size: 1em;
-  font-family: inherit;
-  border: 2px solid black;
-  border-radius: 0.3em;
-  padding: 0 0.2em;
+.control {
+  width: 270px;
 }
 .notes-labels {
   display: flex;
@@ -415,138 +405,108 @@ watch(chordType, (newVal) => {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  gap: 0.3em;
 }
 .notes-selector input {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  height: 30px;
-  width: 30px;
+  height: 40px;
+  width: 40px;
   border: 3px solid black;
   border-radius: 50px;
   background-color: red;
   cursor: pointer;
+  position: relative;
+}
+.notes-selector input::after {
+  content: "";
+  position: absolute;
+  top: 1.5px;
+  bottom: 0;
+  left: 1.4px;
+  right: 0;
+  width: 32px;
+  height: 32px;
+  background-image: url("public/images/backgrounds/nav-button-texture.png");
+  background-position: center;
+
+  border-radius: 50px;
 }
 .notes-selector input.active {
-  background-color: greenyellow;
+  background-color: rgb(133, 206, 23);
+}
+.notes-checkbox {
+  font-size: 0.6em;
 }
 .arpeggio-label {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1em;
+  gap: 0.4em;
+  margin-bottom: 0.5em;
+}
+.arpeggio-label input {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+  width: 40px;
+  height: 25px;
+  border: 3px solid rgb(0, 0, 0);
+  position: relative;
+  border-radius: 5px;
+  background-color: red;
+}
+.arpeggio-label input::after {
+  content: "";
+  position: absolute;
+  top: 1px;
+  bottom: 0;
+  left: 2px;
+  right: 0;
+  width: 13px;
+  height: 13px;
+  border: 2px solid black;
+  background-color: rgb(54, 54, 54);
+  border-radius: 3px;
+  transform: translateX(0%);
+  transition: linear 80ms;
+}
+.arpeggio-label input:checked::after {
+  transform: translateX(80%);
+  transition: linear 80ms;
 }
 .arpeggio-box {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 0.2em;
 }
-
-.settings-button {
-  display: inline-block;
-  width: 2em;
-  height: 2em;
-  border-radius: 5px;
-  border: 1px solid black;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #e0e0e0;
-  z-index: 2;
-}
-.settings-button:hover {
-  cursor: pointer;
-  transform: scale(1.06);
-  background-color: #fff;
-}
-.settings-button:active {
-  transform: scale(1);
-}
-.settings-icon {
-  width: 100%;
-  height: 100%;
-}
-.settings-panel {
-  width: 35%;
-  color: white;
-  background-color: rgba(79, 79, 79, 0.96);
-  backdrop-filter: blur(1px);
-  border-radius: 5px;
-  border: 5px solid black;
-  position: absolute;
-  top: 120%;
-  right: -2%;
-  z-index: 0;
-  padding: 1.5em 0;
-  font-family: inherit;
-  font-size: 1.2em;
-}
-.settings-panel header {
-  height: 1.5em;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1em 0.5em;
-  background-color: #cecece;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  font-size: 1.2em;
-}
-.settings-panel ul {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  list-style: none;
-  gap: 0.8em;
-}
-.settings-panel li {
-  display: flex;
-  align-items: center;
-  width: fit-content;
-  justify-content: space-between;
-  gap: 0.4em;
-}
-.settings-panel input[type="number"] {
-  border: 1px solid black;
-  border-radius: 4px;
-  font-size: 1;
-  width: 4.5em;
-  padding: 0.1em;
-}
-.notes-checkbox {
-  font-size: 0.9em;
-}
-.settings-close:hover {
-  cursor: pointer;
+.arpeggio-delay input {
+  width: 6em;
 }
 .ms {
   display: inline;
   margin-left: 0.1em;
   font-size: 0.8em;
 }
-/*--------SETTINGS TRANSITION--------*/
-.slide-enter-active,
-.slide-leave-active {
-  transition: transform 0.3s ease-in-out, opacity 0.4s;
+.chord-selector-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4em;
+  z-index: 1;
 }
-.slide-enter-from {
-  transform: translateY(-20%);
-  opacity: 0;
+.chord-selector-box select {
+  font-size: 1em;
+  font-family: inherit;
+  border: 2px solid black;
+  border-radius: 0.3em;
+  padding: 0 0.2em;
 }
-.slide-enter-to {
-  transform: translateY(0);
-  opacity: 1;
-}
-.slide-leave-from {
-  transform: translateY(0);
-  opacity: 1;
-}
-.slide-leave-to {
-  transform: translateY(-20%);
-  opacity: 0;
-}
+
 /*--------KEYBOARD---------*/
 .keyboard {
   border: 1px solid black;
@@ -575,21 +535,26 @@ watch(chordType, (newVal) => {
   font-weight: 900;
   font-size: 1.3em;
   padding-bottom: 0.2em;
+  font-weight: 600;
+  font-family: "Ubuntu";
 }
 .key:hover {
   cursor: pointer;
 }
 .white {
   width: 70px;
-  background-color: white;
+  background-color: rgb(255, 255, 255);
   color: black;
+}
+.white:hover {
+  background-color: rgb(240, 240, 240);
 }
 .black {
   width: 45px;
   height: 140px;
   position: relative;
   margin: 0 -22.5px;
-  background-color: black;
+  background-color: rgb(0, 0, 0);
   border: 2px solid black;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
@@ -599,11 +564,21 @@ watch(chordType, (newVal) => {
   border-top: 1px solid black;
   font-size: 1.1em;
 }
+.black:hover {
+  background-color: rgb(20, 20, 20);
+}
 .white.interval {
-  background-color: rgb(195, 195, 195);
+  background-color: rgb(113, 162, 211);
+}
+.white.interval:hover {
+  background-color: rgb(97, 147, 196);
 }
 .black.interval {
-  background-color: rgb(195, 195, 195);
+  background-color: rgb(83, 132, 181);
+  color: black;
+}
+.black.interval:hover {
+  background-color: rgb(68, 117, 166);
 }
 /*--------DISPLAY---------*/
 .chord-played {
@@ -616,7 +591,9 @@ watch(chordType, (newVal) => {
   font-weight: 600;
   gap: 1em;
   padding: 0.5em 0.6em;
-  border: 4px solid black;
+  border: 5px solid black;
+  border-radius: 15px;
+  font-family: "Ubuntu";
 }
 .play-button {
   font-family: inherit;
@@ -632,5 +609,11 @@ watch(chordType, (newVal) => {
 }
 .play-button:hover {
   cursor: pointer;
+}
+.root-note {
+  background-color: rgb(173, 59, 59) !important;
+}
+.root-note:hover {
+  background-color: rgb(158, 44, 44) !important;
 }
 </style>

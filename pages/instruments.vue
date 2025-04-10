@@ -38,13 +38,13 @@ const selectedInstrument = ref("Keyboard");
   height: 100vh;
   width: 100vw;
   margin-top: 4em;
-    font-family: "Orbitron", sans-serif;
+  font-family: "Ubuntu", sans-serif;
 }
 select {
   font-size: 1em;
-  font-family: "Orbitron";
   border: 2px solid black;
   border-radius: 0.3em;
   padding: 0 0.2em;
+  margin-bottom: 4em;
 }
 </style>
