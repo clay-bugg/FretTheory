@@ -119,12 +119,13 @@
               black: key.sharp,
               white: !key.sharp,
               'highlighted-note': chordnotes.includes(key.note),
-              interval: chordnotes.includes(key.note),
+              'interval': chordnotes.includes(key.note),
               'root-note': key.note === rootNote,
             },
           ]"
           @mousedown="playKey(key.note, key.octave)"
           @mouseup="stopKey(key.note, key.octave)"
+          @mouseleave="stopKey(key.note, key.octave)"
         >
           <span v-if="notesDisplayed === 'all'">{{ key.note }}</span>
           <span
@@ -163,44 +164,25 @@ import { ref, computed, watch } from "vue";
 
 import * as Tone from "tone";
 
+//--------Generate Keys--------//
+const notes = ref(["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B",]);
+
 const pianoKeys = ref(generateKeys());
 
 const numberOfKeys = ref(24);
 
-const notes = ref([
-  "C",
-  "C#",
-  "D",
-  "D#",
-  "E",
-  "F",
-  "F#",
-  "G",
-  "G#",
-  "A",
-  "A#",
-  "B",
-]);
+const keysDisplayed = computed(() =>
+  pianoKeys.value.slice(0, numberOfKeys.value)
+);
 
 function generateKeys() {
-  const notes = [
-    "C",
-    "C#",
-    "D",
-    "D#",
-    "E",
-    "F",
-    "F#",
-    "G",
-    "G#",
-    "A",
-    "A#",
-    "B",
-  ];
+
   const keys = [];
+
   const octavesArray = [3, 4, 5];
+
   for (const octave of octavesArray) {
-    notes.forEach((note) => {
+    notes.value.forEach((note) => {
       keys.push({
         note,
         octave,
@@ -210,43 +192,74 @@ function generateKeys() {
   }
   return keys;
 }
+
+//--------Update Chord--------//
+const rootNote = ref("");
+
+const chordType = ref("chordtype-");
+
+const chordTypes = ref([
+  { label: "Major", value: "maj" },
+  { label: "Major 6th", value: "maj6" },
+  { label: "Major 6/9", value: "6/9" },
+  { label: "Major 7th", value: "maj7" },
+  { label: "Major 9th", value: "maj9" },
+  { label: "Major 11th", value: "maj11" },
+  { label: "Major 13th", value: "maj13" },
+  { label: "Minor", value: "m" },
+  { label: "Minor 7th", value: "m7" },
+  { label: "Dominant 7th", value: "7" },
+  { label: "Diminished", value: "°" },
+  { label: "Augmented", value: "+" },
+]);
+
+const chordIntervals = {
+  maj: [0, 4, 7],
+  maj6: [0, 4, 7, 9],
+  "6/9": [0, 4, 7, 9, 14],
+  maj7: [0, 4, 7, 11],
+  maj9: [0, 4, 7, 11, 14],
+  maj11: [0, 4, 7, 11, 14, 17],
+  maj13: [0, 4, 7, 11, 14, 17, 21],
+  m: [0, 3, 7],
+  "+": [0, 4, 8],
+  "°": [0, 3, 6],
+  7: [0, 4, 7, 10],
+  m7: [0, 3, 7, 10],
+};
+
+const chordnotes = ref([]);
+
+const notesDisplayed = ref("all");
+
+const arpeggiated = ref(false);
+
+const arpeggioDelay = ref(200);
+
 function updateChord() {
   if (!rootNote.value || !chordType.value) return;
 
   const intervals = chordIntervals[chordType.value] || [];
-  const notes = [
-    "C",
-    "C#",
-    "D",
-    "D#",
-    "E",
-    "F",
-    "F#",
-    "G",
-    "G#",
-    "A",
-    "A#",
-    "B",
-  ];
-  const rootIndex = notes.indexOf(rootNote.value);
+
+  const rootIndex = notes.value.indexOf(rootNote.value);
 
   let updatedChordnotes = intervals.map((interval) => {
-    return notes[(rootIndex + interval) % 12];
+    return notes.value[(rootIndex + interval) % 12];
   });
-  // Remove duplicate notes
+
   updatedChordnotes = Array.from(new Set(updatedChordnotes));
   chordnotes.value = updatedChordnotes;
 
   console.log(`Chord changed to ${rootNote.value}${chordType.value}`);
 }
+
 function assignChordOctaves(root, chordnotesArray, baseOctave = 2) {
-  const noteOrder = notes.value;
   let currentOctave = baseOctave;
-  let lastNoteIndex = noteOrder.indexOf(root);
+  let lastNoteIndex = notes.value.indexOf(root);
   const chordWithOctaves = [];
 
   chordnotesArray.forEach((note) => {
-    const noteIndex = noteOrder.indexOf(note);
+    const noteIndex = notes.value.indexOf(note);
     if (noteIndex <= lastNoteIndex) {
       currentOctave++;
     }
@@ -257,6 +270,7 @@ function assignChordOctaves(root, chordnotesArray, baseOctave = 2) {
   return chordWithOctaves;
 }
 
+//--------Synth--------//
 const synth = new Tone.Synth().toDestination();
 
 const activeNotes = new Set();
@@ -299,45 +313,14 @@ function playChord(notes) {
   console.log(`${chordNotesWithOctaves.join(", ")} chord played.`);
 }
 
-// --------REACIVITY--------
-const keysDisplayed = computed(() =>
-  pianoKeys.value.slice(0, numberOfKeys.value)
-);
 
-const rootNote = ref("-rootnote ");
-const chordTypes = ref([
-  { label: "Major", value: "maj" },
-  { label: "Major 6th", value: "maj6" },
-  { label: "Major 6/9", value: "6/9" },
-  { label: "Major 7th", value: "maj7" },
-  { label: "Major 9th", value: "maj9" },
-  { label: "Major 11th", value: "maj11" },
-  { label: "Major 13th", value: "maj13" },
-  { label: "Minor", value: "m" },
-  { label: "Minor 7th", value: "m7" },
-  { label: "Dominant 7th", value: "7" },
-  { label: "Diminished", value: "°" },
-  { label: "Augmented", value: "+" },
-]);
-const chordType = ref("chordtype-");
-const chordnotes = ref([]);
-const chordIntervals = {
-  maj: [0, 4, 7],
-  maj6: [0, 4, 7, 9],
-  "6/9": [0, 4, 7, 9, 14],
-  maj7: [0, 4, 7, 11],
-  maj9: [0, 4, 7, 11, 14],
-  maj11: [0, 4, 7, 11, 14, 17],
-  maj13: [0, 4, 7, 11, 14, 17, 21],
-  m: [0, 3, 7],
-  "+": [0, 4, 8],
-  "°": [0, 3, 6],
-  7: [0, 4, 7, 10],
-  m7: [0, 3, 7, 10],
-};
-const notesDisplayed = ref("all");
-const arpeggiated = ref(false);
-const arpeggioDelay = ref(200);
+
+
+
+
+
+
+
 
 
 
