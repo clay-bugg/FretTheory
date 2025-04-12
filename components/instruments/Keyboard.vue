@@ -123,9 +123,8 @@
               'root-note': key.note === rootNote,
             },
           ]"
-          @mousedown="onMouseDown(key)"
-          @mouseenter="onMouseEnter(key)"
-          @mouseup="onMouseUp"
+          @mousedown="playKey(key.note, key.octave)"
+          @mouseup="stopKey(key.note, key.octave)"
         >
           <span v-if="notesDisplayed === 'all'">{{ key.note }}</span>
           <span
@@ -257,15 +256,29 @@ function assignChordOctaves(root, chordnotesArray, baseOctave = 2) {
 
   return chordWithOctaves;
 }
+
+const synth = new Tone.Synth().toDestination();
+
+const activeNotes = new Set();
+
 function playKey(note, octave) {
-  const synth = new Tone.Synth().toDestination();
 
   const noteToPlay = `${note}${octave}`;
 
-  synth.triggerAttackRelease(noteToPlay, "3n");
+  synth.triggerAttack(noteToPlay);
+
+  activeNotes.add(noteToPlay);
 
   console.log(`${noteToPlay} note played.`);
 }
+
+function stopKey(note, octave) {
+  const notePlaying = `${note}${octave}`; 
+  
+  activeNotes.delete(notePlaying);
+  synth.triggerRelease();
+}
+
 function playChord(notes) {
   if (!rootNote.value || !chordType.value) return;
 
@@ -322,28 +335,11 @@ const chordIntervals = {
   7: [0, 4, 7, 10],
   m7: [0, 3, 7, 10],
 };
-const isMouseDown = ref(false);
 const notesDisplayed = ref("all");
 const arpeggiated = ref(false);
 const arpeggioDelay = ref(200);
 
-//--------COMPUTED--------
 
-// ------EVENT HANDLERS--------
-function onMouseDown(key) {
-  isMouseDown.value = true;
-  playKey(key.note, key.octave);
-}
-
-function onMouseEnter(key) {
-  if (isMouseDown.value) {
-    playKey(key.note, key.octave);
-  }
-}
-
-function onMouseUp() {
-  isMouseDown.value = false;
-}
 
 // -------- WATCHERS --------
 watch(rootNote, (newVal) => {
