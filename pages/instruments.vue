@@ -11,24 +11,23 @@
   </div>
 </template>
 
+
 <script setup>
+
 import { ref } from "vue";
+
 import Keyboard from "@/components/instruments/Keyboard.vue";
+
 import Guitar from "@/components/instruments/Guitar.vue";
 
 const instrumentOptions = ref([
-  {
-    label: "Keyboard",
-    image: "public/images/backgrounds/nav-button-texture.png",
-  },
-  {
-    label: "Guitar",
-    image: "public/images/backgrounds/nav-button-texture.png",
-  },
+  { label: "Keyboard", image: "public/images/backgrounds/nav-button-texture.png"},
+  { label: "Guitar", image: "public/images/backgrounds/nav-button-texture.png"},
 ]);
 
 const selectedInstrument = ref("Keyboard");
 </script>
+
 
 <style scoped>
 .page {

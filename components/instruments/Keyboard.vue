@@ -112,14 +112,14 @@
 
         <div v-for="(key, index) in keysDisplayed"
           :key="`${key.note}${key.octave}`"
-          :id="`interval-${chordnotes.indexOf(key.note) + 1}`"
+          :id="`interval-${chordNotes.indexOf(key.note) + 1}`"
           :class="[
             'key',
             {
               black: key.sharp,
               white: !key.sharp,
-              'highlighted-note': chordnotes.includes(key.note),
-              'interval': chordnotes.includes(key.note),
+              'highlighted-note': chordNotes.includes(key.note),
+              'interval': chordNotes.includes(key.note),
               'root-note': key.note === rootNote,
             },
           ]"
@@ -129,7 +129,7 @@
         >
           <span v-if="notesDisplayed === 'all'">{{ key.note }}</span>
           <span
-            v-if="notesDisplayed === 'chord' && chordnotes.includes(key.note)"
+            v-if="notesDisplayed === 'chord' && chordNotes.includes(key.note)"
           >
             {{ key.note }}
           </span>
@@ -143,14 +143,14 @@
 
       <p class="chord-notes-label">{{ rootNote }}{{ chordType }} | </p>
 
-      <p v-for="(note, index) in chordnotes"
+      <p v-for="(note, index) in chordNotes"
         :key="index"
         class="chord-note"
         :id="`chord-note-${index + 1}`">
         {{ note }}
       </p>
 
-      <button @click="playChord(chordnotes)" class="play-button">
+      <button @mousedown="playChord('play')" @mouseup="playChord('stop')" class="play-button">
         <Icon name="line-md:play-filled" class="play-icon" />
       </button>
 
@@ -158,11 +158,14 @@
   </div>
 </template>
 
+
+
 <script setup>
-//------IMPORts
-import { ref, computed, watch } from "vue";
+//------IMPORtssatch } from "vue";
 
 import * as Tone from "tone";
+
+
 
 //--------Generate Keys--------//
 const notes = ref(["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B",]);
@@ -196,7 +199,17 @@ function generateKeys() {
 //--------Update Chord--------//
 const rootNote = ref("");
 
-const chordType = ref("chordtype-");
+watch(rootNote, (newVal) => {
+  console.log(`Root note changed to ${newVal}`);
+  updateChord();
+});
+
+const chordType = ref("");
+
+watch(chordType, (newVal) => {
+  console.log(`Chord type changed to ${newVal}`);
+  updateChord();
+});
 
 const chordTypes = ref([
   { label: "Major", value: "maj" },
@@ -228,7 +241,7 @@ const chordIntervals = {
   m7: [0, 3, 7, 10],
 };
 
-const chordnotes = ref([]);
+const chordNotes = ref([]);
 
 const notesDisplayed = ref("all");
 
@@ -243,22 +256,21 @@ function updateChord() {
 
   const rootIndex = notes.value.indexOf(rootNote.value);
 
-  let updatedChordnotes = intervals.map((interval) => {
+  let updatedChordNotes = intervals.map((interval) => {
     return notes.value[(rootIndex + interval) % 12];
   });
 
-  updatedChordnotes = Array.from(new Set(updatedChordnotes));
-  chordnotes.value = updatedChordnotes;
+  updatedChordNotes = Array.from(new Set(updatedChordNotes));
+  chordNotes.value = updatedChordNotes;
 
   console.log(`Chord changed to ${rootNote.value}${chordType.value}`);
 }
-
-function assignChordOctaves(root, chordnotesArray, baseOctave = 2) {
+function assignChordOctaves(root, chordNotesArray, baseOctave = 2) {
   let currentOctave = baseOctave;
   let lastNoteIndex = notes.value.indexOf(root);
   const chordWithOctaves = [];
 
-  chordnotesArray.forEach((note) => {
+  chordNotesArray.forEach((note) => {
     const noteIndex = notes.value.indexOf(note);
     if (noteIndex <= lastNoteIndex) {
       currentOctave++;
@@ -271,71 +283,76 @@ function assignChordOctaves(root, chordnotesArray, baseOctave = 2) {
 }
 
 //--------Synth--------//
-const synth = new Tone.Synth().toDestination();
+let synth;
+
+let polySynth
+
+onMounted(() => { 
+
+  if (typeof window !== 'undefined') { 
+
+  synth = new Tone.Synth().toDestination();
+
+  polySynth = new Tone.PolySynth(Tone.Synth).toDestination();
+  }
+});
 
 const activeNotes = new Set();
 
 function playKey(note, octave) {
 
-  const noteToPlay = `${note}${octave}`;
+  const playedNote = `${note}${octave}`;
 
-  synth.triggerAttack(noteToPlay);
+  synth.triggerAttack(playedNote);
 
-  activeNotes.add(noteToPlay);
+  activeNotes.add(playedNote);
 
-  console.log(`${noteToPlay} note played.`);
+  console.log(`${playedNote} note played.`);
 }
 
 function stopKey(note, octave) {
-  const notePlaying = `${note}${octave}`; 
-  
-  activeNotes.delete(notePlaying);
+
+  if (!synth) return;
+
+  const playedNote = `${note}${octave}`;
+
+  activeNotes.delete(playedNote);
+
   synth.triggerRelease();
+
 }
 
-function playChord(notes) {
+const activeChord = new Set();
+
+function playChord(action) {
+
+  const notesWithOctaves = assignChordOctaves(rootNote.value, chordNotes.value);
+
   if (!rootNote.value || !chordType.value) return;
 
-  const polySynth = new Tone.PolySynth(Tone.Synth).toDestination();
+  if (action === 'play') {
 
-  const chordNotesWithOctaves = assignChordOctaves(rootNote.value, notes);
+      polySynth.triggerAttack(notesWithOctaves);
 
-  if (arpeggiated.value) {
-    chordNotesWithOctaves.forEach((note, index) => {
-      setTimeout(() => {
-        polySynth.triggerAttackRelease("note", "4n");
-      }, index * arpeggioDelay.value);
-    });
-  } else {
-    polySynth.triggerAttackRelease(chordNotesWithOctaves, "2n");
+      activeChord.add(notesWithOctaves);
+
+      console.log(`${notesWithOctaves.join(", ")} chord played.`);
+
+    } else if (action === 'stop') {
+
+      polySynth.triggerRelease(notesWithOctaves);
+
+      activeChord.delete(notesWithOctaves)
+
+    }
   }
 
-  console.log(`${chordNotesWithOctaves.join(", ")} chord played.`);
-}
-
-
-
-
-
-
-
-
-
-
-
-
-// -------- WATCHERS --------
-watch(rootNote, (newVal) => {
-  console.log(`Root note changed to ${newVal}`);
-  updateChord();
-});
-watch(chordType, (newVal) => {
-  console.log(`Chord type changed to ${newVal}`);
-  updateChord();
-});
 </script>
 
+
+
 <style scoped>
+
 /*--------GLOBAL---------*/
 * {
   margin: 0;
@@ -563,7 +580,7 @@ input {
 .chord-played {
   display: flex;
   align-items: center;
-  width: fit-content;
+  width: 280px;
   justify-content: space-between;
   width: fit-content;
   font-size: 1.2em;
