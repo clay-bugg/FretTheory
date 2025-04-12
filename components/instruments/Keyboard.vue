@@ -287,7 +287,7 @@ function assignChordOctaves(root, chordNotesArray, baseOctave = 2) {
 //--------Synth--------//
 let synth;
 
-let polySynth
+let polySynth;
 
 onMounted(() => { 
 
