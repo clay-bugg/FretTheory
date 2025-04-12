@@ -139,6 +139,8 @@
 
     </div>
 
+    <p class="chord-played-label">Chord Played</p>
+
     <div class="chord-played">
 
       <p class="chord-notes-label">{{ rootNote }}{{ chordType }} | </p>
@@ -577,19 +579,28 @@ input {
   background-color: rgb(68, 117, 166);
 }
 /*--------DISPLAY---------*/
+.chord-played-label {
+  font-size: 1.5rem;
+  margin-top: 2em;
+}
 .chord-played {
   display: flex;
   align-items: center;
-  width: 280px;
+  width: 400px;
   justify-content: space-between;
-  width: fit-content;
   font-size: 1.2em;
   font-weight: 600;
-  gap: 1em;
   padding: 0.5em 0.6em;
   border: 5px solid black;
   border-radius: 15px;
   font-family: "Ubuntu";
+}
+.chord-notes-label {
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  
+  
 }
 .play-button {
   font-family: inherit;
