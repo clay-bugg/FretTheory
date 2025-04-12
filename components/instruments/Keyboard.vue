@@ -5,30 +5,6 @@
 
       <div class="controls">
 
-        <div class="arpeggio-box control">
-
-          <div class="arpeggio-label">
-            <p>Arpeggio:</p>
-            <input
-              type="checkbox"
-              v-model="arpeggiated"
-              :style="{
-                backgroundColor: arpeggiated ? 'rgb(133, 206, 23)' : 'red',
-              }"
-            />
-          </div>
-
-          <div class="arpeggio-delay">
-            <input
-              type="number"
-              v-model="arpeggioDelay"
-              class="arpeggio-delay"
-            />
-            <p class="ms">ms</p>
-          </div>
-
-        </div>
-
         <div class="notes-labels control">
           <div class="notes-selector">
             <input
@@ -161,13 +137,10 @@
 </template>
 
 
-
 <script setup>
-//------IMPORtssatch } from "vue";
+import { ref, onMounted, computed, watch } from 'vue';
 
 import * as Tone from "tone";
-
-
 
 //--------Generate Keys--------//
 const notes = ref(["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B",]);
@@ -229,29 +202,26 @@ const chordTypes = ref([
 ]);
 
 const chordIntervals = {
-  maj: [0, 4, 7],
-  maj6: [0, 4, 7, 9],
+  "maj": [0, 4, 7],
+  "maj6": [0, 4, 7, 9],
   "6/9": [0, 4, 7, 9, 14],
-  maj7: [0, 4, 7, 11],
-  maj9: [0, 4, 7, 11, 14],
-  maj11: [0, 4, 7, 11, 14, 17],
-  maj13: [0, 4, 7, 11, 14, 17, 21],
-  m: [0, 3, 7],
+  "maj7": [0, 4, 7, 11],
+  "maj9": [0, 4, 7, 11, 14],
+  "maj11":[0, 4, 7, 11, 14, 17],
+  "maj13": [0, 4, 7, 11, 14, 17, 21],
+  "m": [0, 3, 7],
   "+": [0, 4, 8],
   "°": [0, 3, 6],
-  7: [0, 4, 7, 10],
-  m7: [0, 3, 7, 10],
+  "7": [0, 4, 7, 10],
+  "m7": [0, 3, 7, 10]
 };
 
 const chordNotes = ref([]);
 
 const notesDisplayed = ref("all");
 
-const arpeggiated = ref(false);
-
-const arpeggioDelay = ref(200);
-
 function updateChord() {
+
   if (!rootNote.value || !chordType.value) return;
 
   const intervals = chordIntervals[chordType.value] || [];
@@ -352,7 +322,6 @@ function playChord(action) {
 </script>
 
 
-
 <style scoped>
 
 /*--------GLOBAL---------*/
@@ -436,54 +405,6 @@ input {
 }
 .notes-checkbox {
   font-size: 0.6em;
-}
-.arpeggio-label {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.4em;
-  margin-bottom: 0.5em;
-}
-.arpeggio-label input {
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  cursor: pointer;
-  width: 40px;
-  height: 25px;
-  border: 3px solid rgb(0, 0, 0);
-  position: relative;
-  border-radius: 5px;
-  background-color: red;
-}
-.arpeggio-label input::after {
-  content: "";
-  position: absolute;
-  top: 1px;
-  bottom: 0;
-  left: 2px;
-  right: 0;
-  width: 13px;
-  height: 13px;
-  border: 2px solid black;
-  background-color: rgb(54, 54, 54);
-  border-radius: 3px;
-  transform: translateX(0%);
-  transition: linear 80ms;
-}
-.arpeggio-label input:checked::after {
-  transform: translateX(80%);
-  transition: linear 80ms;
-}
-.arpeggio-box {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.2em;
-}
-.arpeggio-delay input {
-  width: 6em;
 }
 .ms {
   display: inline;
