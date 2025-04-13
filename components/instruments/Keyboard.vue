@@ -1,53 +1,41 @@
 <template>
   <div class="component">
 
-    <div class="keyboard">
+    <div :class="octaveAmount === '1' ? 'one-octave-keyboard' : 'keyboard'">
 
       <div class="controls">
 
+        <div class="octave-select control">
+
+          <p class="octave-selector-label">Octaves<br/>Displayed: {{ octaveAmount }}</p>
+
+          <div class="octave-selector">
+            <input v-model="octaveAmount" :class="{ active: octaveAmount === '1' }" type="radio" value="1" />
+            <input v-model="octaveAmount" :class="{ active: octaveAmount === '2' }" type="radio" value="2" />
+            <input v-model="octaveAmount" :class="{ active: octaveAmount === '3' }" type="radio" value="3" />
+          </div>
+        </div>
+
         <div class="notes-labels control">
-          <div class="notes-selector">
-            <input
-              type="radio"
-              name="notes-displayed"
-              v-model="notesDisplayed"
-              value="all"
-              class="all-notes-checkbox"
-              :class="{ active: notesDisplayed === 'all' }"
-            />
-            <label for="all-notes-checkbox" class="notes-checkbox">All</label>
-          </div>
+          <p>Note Labels</p>
+            <div class="notes-labels-checkboxes">
 
-          <div class="notes-selector">
-            <input
-              type="radio"
-              name="notes-displayed"
-              v-model="notesDisplayed"
-              value="chord"
-              class="chord-notes-checkbox"
-              :class="{ active: notesDisplayed === 'chord' }"
-            />
-            <label for="chord-notes-checkbox" class="notes-checkbox"
-              >Chord</label
-            >
-          </div>
+              <div class="notes-labels-checkbox">
+                <p class="notes-checkbox">All</p>
+                <input v-model="notesDisplayed" :class="['all-notes-checkbox', { active: notesDisplayed === 'all' }]" type="radio" value="all" />
+              </div>
 
-          <div class="notes-selector">
-            <input
-              type="radio"
-              name="notes-displayed"
-              v-model="notesDisplayed"
-              value="none"
-              class="no-notes-checkbox"
-              :class="{ active: notesDisplayed === 'none' }"
-            />
-            <label
-              for="no-notes-checkbox"
-              class="notes-checkbox"
-              id="no-notes-label"
-              >None</label
-            >
-          </div>
+              <div class="notes-labels-checkbox">
+                <p class="notes-checkbox">Chord</p>
+                <input v-model="notesDisplayed" :class="['chord-notes-checkbox', { active: notesDisplayed === 'chord' }]" type="radio" value="chord" />
+              </div>
+
+              <div class="notes-labels-checkbox">
+                <p class="notes-checkbox">None</p>
+                <input v-model="notesDisplayed" :class="['no-notes-checkbox', { active: notesDisplayed === 'none' }]" type="radio" value="none" />
+              </div>
+
+            </div>
 
         </div>
 
@@ -75,18 +63,11 @@
 
         </div>
 
-        <Transition name="slide">
-          <div class="settings-panel" v-if="settingsOpened">
-            <ul>
-              <li></li>
-            </ul>
-          </div>
-        </Transition>
       </div>
 
-      <div class="keys">
+      <div :class="octaveAmount === '1' ? 'one-octave-keys' : 'keys'">
 
-        <div v-for="(key, index) in keysDisplayed"
+        <div v-for="(key, index) in pianoKeys"
           :key="`${key.note}${key.octave}`"
           :id="`interval-${chordNotes.indexOf(key.note) + 1}`"
           :class="[
@@ -145,31 +126,27 @@ import * as Tone from "tone";
 //--------Generate Keys--------//
 const notes = ref(["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B",]);
 
-const pianoKeys = ref(generateKeys());
-
-const numberOfKeys = ref(24);
-
-const keysDisplayed = computed(() =>
-  pianoKeys.value.slice(0, numberOfKeys.value)
-);
-
-function generateKeys() {
+const pianoKeys = computed(() => {
+  const start = 3;
+  const end = start + octaveAmount.value - 1;
+  const octavesArray = Array.from({ length: octaveAmount.value }, (_, i) => start + i);
 
   const keys = [];
-
-  const octavesArray = [3, 4, 5];
-
   for (const octave of octavesArray) {
     notes.value.forEach((note) => {
       keys.push({
         note,
         octave,
-        sharp: note.includes("#"),
+        sharp: note.includes('#'),
       });
     });
   }
+
   return keys;
-}
+});
+
+//--------Octave Amount--------//
+const octaveAmount = ref(2);
 
 //--------Update Chord--------//
 const rootNote = ref("");
@@ -360,12 +337,60 @@ input {
 .control {
   width: 270px;
 }
+/*--------OCTAVESELECT--------*/
+.octave-select {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.5em;
+}
+.octave-selector {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5em;
+
+}
+.octave-selector-label {
+  text-align: center;
+}
+.octave-selector input {
+  width: 20px;
+  height: 20px;
+  appearance: none;;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border: 2px solid black;
+  background-color: rgb(208, 208, 208);
+}
+.octave-selector input.active {
+  background-color: rgb(133, 206, 23);
+}
+.octave-selector input:hover {
+  cursor: pointer;
+}
+/*--------=NOTELABELS--------*/
 .notes-labels {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   gap: 1em;
   font-size: 20px;
+}
+.notes-labels-checkboxes {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5em;
+}
+.notes-labels-checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.2em;
 }
 .notes-selector {
   display: flex;
@@ -374,19 +399,19 @@ input {
   flex-direction: column;
   gap: 0.3em;
 }
-.notes-selector input {
-  appearance: none;
+.notes-labels-checkboxes input {
+  width: 20px;
+  height: 20px;
+  appearance: none;;
   -webkit-appearance: none;
   -moz-appearance: none;
-  height: 40px;
-  width: 40px;
-  border: 3px solid black;
-  border-radius: 50px;
-  background-color: red;
-  cursor: pointer;
-  position: relative;
+  border: 2px solid black;
+  background-color: rgb(208, 208, 208);
 }
-.notes-selector input::after {
+.notes-labels-checkboxes input.active {
+  background-color: rgb(133, 206, 23);
+}
+.notes-labels-checkboxes input::after {
   content: "";
   position: absolute;
   top: 1.5px;
@@ -400,17 +425,16 @@ input {
 
   border-radius: 50px;
 }
-.notes-selector input.active {
+.notes-labels-checkboxes input.active {
   background-color: rgb(133, 206, 23);
+}
+.notes-labels-checkboxes input:hover {
+  cursor: hover;
 }
 .notes-checkbox {
   font-size: 0.6em;
 }
-.ms {
-  display: inline;
-  margin-left: 0.1em;
-  font-size: 0.8em;
-}
+/*---------CHORDSELECT--------*/
 .chord-selector-box {
   display: flex;
   flex-direction: column;
@@ -432,8 +456,26 @@ input {
   padding: 1em;
   border-radius: 15px;
   background-color: rgb(42, 42, 42);
+  width: fit-content;
+}
+.one-octave-keyboard {
+  border: 1px solid black;
+  padding: 1em;
+  border-radius: 15px;
+  background-color: rgb(42, 42, 42);
 }
 .keys {
+  width: fit-content;
+  height: 250px;
+  border: 5px solid black;
+  display: flex;
+  border-top-left-radius: 0.3em;
+  border-top-right-radius: 0.3em;
+  overflow: hidden;
+  margin-bottom: 1em;
+  z-index: 0;
+}
+.one-octave-keys {
   width: fit-content;
   height: 250px;
   border: 5px solid black;
@@ -499,6 +541,12 @@ input {
 .black.interval:hover {
   background-color: rgb(68, 117, 166);
 }
+.root-note {
+  background-color: rgb(173, 59, 59) !important;
+}
+.root-note:hover {
+  background-color: rgb(158, 44, 44) !important;
+}
 /*--------DISPLAY---------*/
 .chord-played-label {
   font-size: 1.5rem;
@@ -538,10 +586,5 @@ input {
 .play-button:hover {
   cursor: pointer;
 }
-.root-note {
-  background-color: rgb(173, 59, 59) !important;
-}
-.root-note:hover {
-  background-color: rgb(158, 44, 44) !important;
-}
+
 </style>
