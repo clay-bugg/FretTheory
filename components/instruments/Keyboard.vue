@@ -17,7 +17,7 @@
         </div>
 
         <div class="notes-labels control">
-          <p>Note Labels</p>
+          <p class="note-labels-title">Note Labels</p>
             <div class="notes-labels-checkboxes">
 
               <div class="notes-labels-checkbox">
@@ -41,7 +41,7 @@
 
         <div class="chord-selector-box control">
 
-          <label for="root-note-selector">Chord: </label>
+          <p>Chord</p>
 
           <div class="chord-selector-inputs">
             <select class="root-note-selector" v-model="rootNote">
@@ -336,14 +336,17 @@ input {
 }
 .control {
   width: 270px;
+  height: 100%;
 }
 /*--------OCTAVESELECT--------*/
 .octave-select {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   flex-direction: column;
   gap: 0.5em;
+  padding: 0.5em 0;
+
 }
 .octave-selector {
   display: flex;
@@ -374,10 +377,10 @@ input {
 .notes-labels {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   flex-direction: column;
-  gap: 1em;
-  font-size: 20px;
+  gap: 0.5em;
+  padding: 0.5em 0;
 }
 .notes-labels-checkboxes {
   display: flex;
@@ -391,6 +394,7 @@ input {
   justify-content: center;
   flex-direction: column;
   gap: 0.2em;
+  width: 2.5em;
 }
 .notes-selector {
   display: flex;
@@ -411,20 +415,6 @@ input {
 .notes-labels-checkboxes input.active {
   background-color: rgb(133, 206, 23);
 }
-.notes-labels-checkboxes input::after {
-  content: "";
-  position: absolute;
-  top: 1.5px;
-  bottom: 0;
-  left: 1.4px;
-  right: 0;
-  width: 32px;
-  height: 32px;
-  background-image: url("public/images/backgrounds/nav-button-texture.png");
-  background-position: center;
-
-  border-radius: 50px;
-}
 .notes-labels-checkboxes input.active {
   background-color: rgb(133, 206, 23);
 }
@@ -432,22 +422,26 @@ input {
   cursor: hover;
 }
 .notes-checkbox {
-  font-size: 0.6em;
+  font-size: 0.8em
 }
 /*---------CHORDSELECT--------*/
 .chord-selector-box {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
   gap: 0.4em;
   z-index: 1;
+  padding: 0.5em 0;
 }
 .chord-selector-box select {
   font-size: 1em;
   font-family: inherit;
   border: 2px solid black;
   border-radius: 0.3em;
-  padding: 0 0.2em;
+  text-align: center;
+  font-weight: 500;
+  padding: 0.1em;
 }
 
 /*--------KEYBOARD---------*/
