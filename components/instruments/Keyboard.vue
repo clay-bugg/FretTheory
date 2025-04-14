@@ -3,11 +3,11 @@
 
     <div :class="octaveAmount === '1' ? 'one-octave-keyboard' : 'keyboard'">
 
-      <div class="controls">
+      <div :class="octaveAmount === '1' ? 'one-octave-controls' : 'controls'">
 
         <div class="octave-select control">
 
-          <p class="octave-selector-label">Octaves<br/>Displayed: {{ octaveAmount }}</p>
+          <p class="octave-selector-label control-label">Octaves<br/>Displayed: {{ octaveAmount }}</p>
 
           <div class="octave-selector">
             <input v-model="octaveAmount" :class="{ active: octaveAmount === '1' }" type="radio" value="1" />
@@ -17,7 +17,7 @@
         </div>
 
         <div class="notes-labels control">
-          <p class="note-labels-title">Note Labels</p>
+          <p class="note-labels-title control-label">Note Labels</p>
             <div class="notes-labels-checkboxes">
 
               <div class="notes-labels-checkbox">
@@ -41,7 +41,7 @@
 
         <div class="chord-selector-box control">
 
-          <p>Chord</p>
+          <p class="control-label">Chord</p>
 
           <div class="chord-selector-inputs">
             <select class="root-note-selector" v-model="rootNote">
@@ -334,6 +334,20 @@ input {
   color: rgb(215, 215, 215);
   padding: 0 1em 1em;
 }
+.one-octave-controls {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-evenly;
+  width: 100%;
+  height: 6em;
+  position: relative;
+  z-index: 3;
+  color: rgb(215, 215, 215);
+  padding: 0 1em 1em;
+  gap: 2em;
+  position: relative;
+  right: 2em;
+}
 .control {
   width: 270px;
   height: 100%;
@@ -359,13 +373,14 @@ input {
   text-align: center;
 }
 .octave-selector input {
-  width: 20px;
-  height: 20px;
+  width: 25px;
+  height: 25px;
   appearance: none;;
   -webkit-appearance: none;
   -moz-appearance: none;
   border: 2px solid black;
-  background-color: rgb(208, 208, 208);
+  background-color: rgb(152, 12, 12);
+  border-radius: 5px;
 }
 .octave-selector input.active {
   background-color: rgb(133, 206, 23);
@@ -404,22 +419,20 @@ input {
   gap: 0.3em;
 }
 .notes-labels-checkboxes input {
-  width: 20px;
-  height: 20px;
+  width: 25px;
+  height: 25px;
   appearance: none;;
   -webkit-appearance: none;
   -moz-appearance: none;
   border: 2px solid black;
-  background-color: rgb(208, 208, 208);
-}
-.notes-labels-checkboxes input.active {
-  background-color: rgb(133, 206, 23);
+  background-color: rgb(152, 12, 12);
+  border-radius: 5px;
 }
 .notes-labels-checkboxes input.active {
   background-color: rgb(133, 206, 23);
 }
 .notes-labels-checkboxes input:hover {
-  cursor: hover;
+  cursor: pointer;
 }
 .notes-checkbox {
   font-size: 0.8em
@@ -443,42 +456,57 @@ input {
   font-weight: 500;
   padding: 0.1em;
 }
+.chord-selector-inputs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
 
 /*--------KEYBOARD---------*/
 .keyboard {
   border: 1px solid black;
-  padding: 1em;
   border-radius: 15px;
   background-color: rgb(42, 42, 42);
   width: fit-content;
+  height: 28em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  padding: 2em 4em 1em;
 }
 .one-octave-keyboard {
   border: 1px solid black;
-  padding: 1em;
   border-radius: 15px;
   background-color: rgb(42, 42, 42);
+  height: 28em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  padding: 2em 4em 2em;
+  width: 37.5em;
 }
 .keys {
   width: fit-content;
   height: 250px;
-  border: 5px solid black;
   display: flex;
-  border-top-left-radius: 0.3em;
-  border-top-right-radius: 0.3em;
   overflow: hidden;
   margin-bottom: 1em;
   z-index: 0;
+  border-top: 5px solid black;
+  
 }
 .one-octave-keys {
   width: fit-content;
   height: 250px;
-  border: 5px solid black;
   display: flex;
-  border-top-left-radius: 0.3em;
-  border-top-right-radius: 0.3em;
   overflow: hidden;
   margin-bottom: 1em;
   z-index: 0;
+  margin: 0 auto;
+  border-top: 5px solid black;
 }
 .key {
   border: 1px solid black;
@@ -486,12 +514,13 @@ input {
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  gap: 0.1em;
   font-weight: 900;
   font-size: 1.3em;
   padding-bottom: 0.2em;
   font-weight: 600;
   font-family: "Ubuntu";
+  border-bottom-left-radius: 5px; 
+  border-bottom-right-radius: 5px;
 }
 .key:hover {
   cursor: pointer;
