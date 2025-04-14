@@ -1,9 +1,9 @@
 <template>
   <div class="component">
 
-    <div :class="octaveAmount === '1' ? 'one-octave-keyboard' : 'keyboard'">
+    <div class="keyboard">
 
-      <div :class="octaveAmount === '1' ? 'one-octave-controls' : 'controls'">
+      <div class="controls">
         
         <div class="starting-octave control">
 
@@ -77,7 +77,7 @@
 
       </div>
 
-      <div :class="octaveAmount === '1' ? 'one-octave-keys' : 'keys'">
+      <div class="keys">
 
         <div v-for="(key, index) in pianoKeys"
           :key="`${key.note}${key.octave}`"
@@ -356,30 +356,17 @@ input {
 .controls {
   display: flex;
   align-items: flex-end;
-  justify-content: space-evenly;
+  justify-content: center;
   width: 100%;
   height: 6em;
   position: relative;
   z-index: 3;
   color: rgb(215, 215, 215);
   padding: 0 1em 1em;
+  gap: 3em;
 }
-.one-octave-controls {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-evenly;
-  width: 100%;
-  height: 6em;
-  position: relative;
-  z-index: 3;
-  color: rgb(215, 215, 215);
-  padding: 0 1em 1em;
-  gap: 2em;
-  position: relative;
-  right: 2em;
-}
+
 .control {
-  width: 270px;
   height: 100%;
   display: flex;
   align-items: center;
@@ -394,6 +381,9 @@ input {
   align-items: center;
   justify-content: space-between;
   width: fit-content;
+  gap: 0.4em;
+  font-size: 1.2rem;
+  font-weight: 700;
 }
 .starting-octave-button {
   width: 25px;
@@ -497,18 +487,7 @@ input {
   flex-direction: column;
   padding: 2em 4em 1em;
 }
-.one-octave-keyboard {
-  border: 1px solid black;
-  border-radius: 15px;
-  background-color: rgb(42, 42, 42);
-  height: 28em;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-direction: column;
-  padding: 2em 4em 2em;
-  width: 37.5em;
-}
+
 .keys {
   width: fit-content;
   height: 250px;
@@ -516,19 +495,9 @@ input {
   overflow: hidden;
   margin-bottom: 1em;
   z-index: 0;
-  border-top: 5px solid black;
-  
+  border-top: 5px solid black; 
 }
-.one-octave-keys {
-  width: fit-content;
-  height: 250px;
-  display: flex;
-  overflow: hidden;
-  margin-bottom: 1em;
-  z-index: 0;
-  margin: 0 auto;
-  border-top: 5px solid black;
-}
+
 .key {
   border: 1px solid black;
   display: flex;
