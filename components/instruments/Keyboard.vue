@@ -4,6 +4,18 @@
     <div :class="octaveAmount === '1' ? 'one-octave-keyboard' : 'keyboard'">
 
       <div :class="octaveAmount === '1' ? 'one-octave-controls' : 'controls'">
+        
+        <div class="starting-octave control">
+
+          <p class="control-label">Starting Octave</p>
+
+          <div class="starting-octave-selector">
+            <button class="starting-octave-button" @click="changeStartingOctave('-')">-</button>
+            {{ startingOctave }}
+            <button class="starting-octave-button" @click="changeStartingOctave('+')">+</button>
+          </div>
+
+        </div>
 
         <div class="octave-select control">
 
@@ -128,7 +140,6 @@ const notes = ref(["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "
 
 const pianoKeys = computed(() => {
   const start = 3;
-  const end = start + octaveAmount.value - 1;
   const octavesArray = Array.from({ length: octaveAmount.value }, (_, i) => start + i);
 
   const keys = [];
@@ -145,8 +156,27 @@ const pianoKeys = computed(() => {
   return keys;
 });
 
-//--------Octave Amount--------//
+//--------Octaves--------//
 const octaveAmount = ref(2);
+
+const startingOctave = ref(3)
+
+function changeStartingOctave(op) { 
+  if (op === '+') {
+    if (startingOctave.value === 6) {
+      return;
+    } else {
+      startingOctave.value++
+    }
+
+  } else if (op === '-') {
+    if (startingOctave.value === 1) {
+      return;
+    } else {
+      startingOctave.value--
+    }
+  }
+}
 
 //--------Update Chord--------//
 const rootNote = ref("");
@@ -351,17 +381,25 @@ input {
 .control {
   width: 270px;
   height: 100%;
-}
-/*--------OCTAVESELECT--------*/
-.octave-select {
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-direction: column;
   gap: 0.5em;
   padding: 0.5em 0;
-
 }
+/*--------STARTINGOCTAVE--------*/
+.starting-octave-selector {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: fit-content;
+}
+.starting-octave-button {
+  width: 25px;
+  height: 25px;
+}
+/*--------OCTAVESELECT--------*/
 .octave-selector {
   display: flex;
   align-items: center;
@@ -389,14 +427,6 @@ input {
   cursor: pointer;
 }
 /*--------=NOTELABELS--------*/
-.notes-labels {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-direction: column;
-  gap: 0.5em;
-  padding: 0.5em 0;
-}
 .notes-labels-checkboxes {
   display: flex;
   align-items: center;
@@ -438,15 +468,6 @@ input {
   font-size: 0.8em
 }
 /*---------CHORDSELECT--------*/
-.chord-selector-box {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.4em;
-  z-index: 1;
-  padding: 0.5em 0;
-}
 .chord-selector-box select {
   font-size: 1em;
   font-family: inherit;
