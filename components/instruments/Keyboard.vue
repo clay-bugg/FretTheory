@@ -139,8 +139,7 @@ import * as Tone from "tone";
 const notes = ref(["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B",]);
 
 const pianoKeys = computed(() => {
-  const start = 3;
-  const octavesArray = Array.from({ length: octaveAmount.value }, (_, i) => start + i);
+  const octavesArray = Array.from({ length: octaveAmount.value }, (_, i) => startingOctave.value + i);
 
   const keys = [];
   for (const octave of octavesArray) {
@@ -176,6 +175,7 @@ function changeStartingOctave(op) {
       startingOctave.value--
     }
   }
+
 }
 
 //--------Update Chord--------//
