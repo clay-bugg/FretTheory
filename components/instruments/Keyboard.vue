@@ -244,8 +244,8 @@ function updateChord() {
 
   console.log(`Chord changed to ${rootNote.value}${chordType.value}`);
 }
-function assignChordOctaves(root, chordNotesArray, baseOctave = 2) {
-  let currentOctave = baseOctave;
+function assignChordOctaves(root, chordNotesArray) {
+  let currentOctave = startingOctave.value;
   let lastNoteIndex = notes.value.indexOf(root);
   const chordWithOctaves = [];
 
