@@ -549,7 +549,7 @@ input {
   cursor: pointer;
 }
 .white {
-  width: 85px;
+  width: 70px;
   background-color: rgb(255, 255, 255);
   color: black;
 }
