@@ -79,10 +79,11 @@
 
       </div>
 
-      <div class="keys" :style="`--white-key-count: ${whiteKeyCount}`">
+      <div class="keys" :style="keyStyles">
 
         <div v-for="(key, index) in pianoKeys"
           :key="`${key.note}${key.octave}`"
+          :style="{'fontSize': keyFontSize}"
           :id="`interval-${chordNotes.indexOf(key.note) + 1}`"
           :class="[
             'key',
@@ -157,9 +158,38 @@ const pianoKeys = computed(() => {
   return keys;
 });
 
+const keyStyles = computed(() => { 
+
 const whiteKeyCount = computed(() =>
   pianoKeys.value.filter((k) => !k.sharp).length
 );
+
+const keysHeight = computed(() => { 
+  if (octaveAmount.value === '1') {
+    return '350px'
+} else if (octaveAmount.value === '2') { 
+      return '260px'
+    } else if (octaveAmount.value === '3') { 
+        return '180px'
+  }
+})
+
+  return {   
+    '--white-key-count': whiteKeyCount.value,
+    'height': keysHeight.value
+}
+})
+
+const keyFontSize = computed(() => { 
+    if (octaveAmount.value === '1') {
+    return '1.6rem'
+} else if (octaveAmount.value === '2') { 
+      return '1rem'
+    } else if (octaveAmount.value === '3') { 
+        return '0.8rem'
+  }
+})
+
 
 //--------Octaves--------//
 const octaveAmount = ref('2');
@@ -518,17 +548,16 @@ input {
   border-top-left-radius: 40px;
   border-top-right-radius: 40px;
   background-color: rgb(42, 42, 42);
-  width: 1200px;
-  height: 26em;
+  width: 1000px;
+  height: fit-content;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   flex-direction: column;
   padding: 2em 4em 1em;
 }
 .keys {
   width: 100%;
-  height: 300px;
   display: flex;
   overflow: hidden;
   margin-bottom: 1em;
@@ -542,13 +571,12 @@ input {
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  font-weight: 900;
-  font-size: 1.3em;
   padding-bottom: 0.2em;
   font-weight: 600;
   font-family: "Ubuntu";
   border-bottom-left-radius: 5px; 
   border-bottom-right-radius: 5px;
+  font-size: 0.9rem;
 }
 .key:hover {
   cursor: pointer;
@@ -576,9 +604,9 @@ input {
   z-index: 2;
   overflow: hidden;
   border-top: 1px solid black;
-  font-size: 1.1em;
   margin-left: calc(100% / var(--white-key-count) * -0.6);
   left: calc(100% / var(--white-key-count) * 0.3);
+  padding-bottom: 0.4em;
 }
 .black:hover {
   background-color: rgb(20, 20, 20);
