@@ -7,11 +7,13 @@
         
         <div class="starting-octave control">
 
-          <p class="control-label">Starting Octave</p>
+          <p class="control-label">Octave Range</p>
 
           <div class="starting-octave-selector">
             <button class="starting-octave-button" @click="changeStartingOctave('-')">-</button>
-            {{ startingOctave }}
+            <p v-if="octaveAmount === '1'">{{ startingOctave }}</p>
+            <p v-else-if="octaveAmount === '2'">{{ startingOctave }}-{{ startingOctave + 1 }}</p>
+            <p v-else-if="octaveAmount === '3'">{{ startingOctave }}-{{ startingOctave + 2 }}</p>
             <button class="starting-octave-button" @click="changeStartingOctave('+')">+</button>
           </div>
 
@@ -156,7 +158,7 @@ const pianoKeys = computed(() => {
 });
 
 //--------Octaves--------//
-const octaveAmount = ref(2);
+const octaveAmount = ref('2');
 
 const startingOctave = ref(3)
 
@@ -194,55 +196,86 @@ watch(chordType, (newVal) => {
 });
 
 const chordTypes = ref([
-  { label: "Major", value: "maj" },
-  { label: "Major 6th", value: "maj6" },
-  { label: "Major 6/9", value: "6/9" },
-  { label: "Major 7th", value: "maj7" },
-  { label: "Major 9th", value: "maj9" },
-  { label: "Major 11th", value: "maj11" },
-  { label: "Major 13th", value: "maj13" },
-  { label: "Minor", value: "m" },
-  { label: "Minor 7th", value: "m7" },
-  { label: "Dominant 7th", value: "7" },
-  { label: "Diminished", value: "°" },
-  { label: "Augmented", value: "+" },
+  {
+    label: "Major",
+    value: "maj",
+    intervals: [0, 4, 7],
+    intervalNames: ["1", "3", "5"]  // Root, Major 3rd, Perfect 5th
+  },
+  {
+    label: "Minor",
+    value: "m",
+    intervals: [0, 3, 7],
+    intervalNames: ["1", "♭3", "5"]  // Root, Minor 3rd, Perfect 5th
+  },
+  {
+    label: "Augmented",
+    value: "+",
+    intervals: [0, 4, 8],
+    intervalNames: ["1", "3", "♯5"]  // Root, Major 3rd, Augmented 5th
+  },
+  {
+    label: "Diminished",
+    value: "°",
+    intervals: [0, 3, 6],
+    intervalNames: ["1", "♭3", "♭5"]  // Root, Flat 3rd, Diminished 5th
+  },
+  {
+    label: "Dominant 7th",
+    value: "7",
+    intervals: [0, 4, 7, 10],
+    intervalNames: ["1", "3", "5", "♭7"]  // Root, Major 3rd, Perfect 5th, Minor 7th
+  },
+  {
+    label: "Major 7th",
+    value: "maj7",
+    intervals: [0, 4, 7, 11],
+    intervalNames: ["1", "3", "5", "7"]  // Root, Major 3rd, Perfect 5th, Major 7th
+  },
+  {
+    label: "Minor 7th",
+    value: "m7",
+    intervals: [0, 3, 7, 10],
+    intervalNames: ["1", "♭3", "5", "♭7"]  // Root, Minor 3rd, Perfect 5th, Minor 7th
+  },
+  {
+    label: "Suspended 2nd",
+    value: "sus2",
+    intervals: [0, 2, 7],
+    intervalNames: ["1", "2", "5"]  // Root, Major 2nd, Perfect 5th
+  },
+  {
+    label: "Suspended 4th",
+    value: "sus4",
+    intervals: [0, 5, 7],
+    intervalNames: ["1", "4", "5"]  // Root, Perfect 4th, Perfect 5th
+  },
+  {
+    label: "Major 6th",
+    value: "maj6",
+    intervals: [0, 4, 7, 9],
+    intervalNames: ["1", "3", "5", "6"]  // Root, Major 3rd, Perfect 5th, Major 6th
+  }
 ]);
-
-const chordIntervals = {
-  "maj": [0, 4, 7],
-  "maj6": [0, 4, 7, 9],
-  "6/9": [0, 4, 7, 9, 14],
-  "maj7": [0, 4, 7, 11],
-  "maj9": [0, 4, 7, 11, 14],
-  "maj11":[0, 4, 7, 11, 14, 17],
-  "maj13": [0, 4, 7, 11, 14, 17, 21],
-  "m": [0, 3, 7],
-  "+": [0, 4, 8],
-  "°": [0, 3, 6],
-  "7": [0, 4, 7, 10],
-  "m7": [0, 3, 7, 10]
-};
 
 const chordNotes = ref([]);
 
 const notesDisplayed = ref("all");
 
 function updateChord() {
-
   if (!rootNote.value || !chordType.value) return;
 
-  const intervals = chordIntervals[chordType.value] || [];
+  const chord = chordTypes.value.find(c => c.value === chordType.value);
+  if (!chord) return;
 
+  const { intervals, intervalNames } = chord;
   const rootIndex = notes.value.indexOf(rootNote.value);
 
-  let updatedChordNotes = intervals.map((interval) => {
-    return notes.value[(rootIndex + interval) % 12];
-  });
+  const updatedChordNotes = intervals.map(i => notes.value[(rootIndex + i) % 12]);
 
-  updatedChordNotes = Array.from(new Set(updatedChordNotes));
-  chordNotes.value = updatedChordNotes;
-
-  console.log(`Chord changed to ${rootNote.value}${chordType.value}`);
+  chordNotes.value = Array.from(new Set(updatedChordNotes));
+  // Optional: store intervalNames too if you want to display them
+  console.log(`Chord: ${rootNote.value}${chordType.value}, Notes: ${chordNotes.value.join(", ")}, Intervals: ${intervalNames.join(", ")}`);
 }
 function assignChordOctaves(root, chordNotesArray) {
   let currentOctave = startingOctave.value;
@@ -329,7 +362,7 @@ function playChord(action) {
 </script>
 
 
-<style scoped>
+<style scoped> 
 
 /*--------GLOBAL---------*/
 * {
@@ -478,6 +511,8 @@ input {
 .keyboard {
   border: 1px solid black;
   border-radius: 15px;
+  border-top-left-radius: 40px;
+  border-top-right-radius: 40px;
   background-color: rgb(42, 42, 42);
   width: fit-content;
   height: 28em;
@@ -487,17 +522,15 @@ input {
   flex-direction: column;
   padding: 2em 4em 1em;
 }
-
 .keys {
   width: fit-content;
-  height: 250px;
+  height: 300px;
   display: flex;
   overflow: hidden;
   margin-bottom: 1em;
   z-index: 0;
   border-top: 5px solid black; 
 }
-
 .key {
   border: 1px solid black;
   display: flex;
@@ -516,7 +549,7 @@ input {
   cursor: pointer;
 }
 .white {
-  width: 70px;
+  width: 85px;
   background-color: rgb(255, 255, 255);
   color: black;
 }
@@ -524,10 +557,10 @@ input {
   background-color: rgb(240, 240, 240);
 }
 .black {
-  width: 45px;
-  height: 140px;
+  width: 60px;
+  height: 160px;
   position: relative;
-  margin: 0 -22.5px;
+  margin: 0 -30px;
   background-color: rgb(0, 0, 0);
   border: 2px solid black;
   border-bottom-left-radius: 8px;
@@ -542,20 +575,20 @@ input {
   background-color: rgb(20, 20, 20);
 }
 .white.interval {
-  background-color: rgb(113, 162, 211);
+  background-color: rgb(125, 162, 199);
 }
 .white.interval:hover {
   background-color: rgb(97, 147, 196);
 }
 .black.interval {
-  background-color: rgb(83, 132, 181);
+  background-color: rgb(125, 162, 199);
   color: black;
 }
 .black.interval:hover {
   background-color: rgb(68, 117, 166);
 }
 .root-note {
-  background-color: rgb(173, 59, 59) !important;
+  background-color: rgb(197, 98, 98) !important;
 }
 .root-note:hover {
   background-color: rgb(158, 44, 44) !important;
@@ -568,14 +601,12 @@ input {
 .chord-played {
   display: flex;
   align-items: center;
-  width: 400px;
+  width: fit-content;
   justify-content: space-between;
   font-size: 1.2em;
-  font-weight: 600;
-  padding: 0.5em 0.6em;
-  border: 5px solid black;
-  border-radius: 15px;
+  font-weight: 800;
   font-family: "Ubuntu";
+  gap: 1em;
 }
 .chord-notes-label {
   display: flex;
@@ -588,9 +619,7 @@ input {
   font-family: inherit;
   width: 30px;
   height: 30px;
-  border: 2px solid black;
-  border-radius: 20px;
-  font-weight: 300;
+  font-weight: 500;
   font-size: 2em;
   display: flex;
   justify-content: center;
@@ -598,6 +627,6 @@ input {
 }
 .play-button:hover {
   cursor: pointer;
+  transform: scale(1.1);
 }
-
 </style>
