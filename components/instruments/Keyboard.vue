@@ -79,7 +79,7 @@
 
       </div>
 
-      <div class="keys">
+      <div class="keys" :style="`--white-key-count: ${whiteKeyCount}`">
 
         <div v-for="(key, index) in pianoKeys"
           :key="`${key.note}${key.octave}`"
@@ -156,6 +156,10 @@ const pianoKeys = computed(() => {
 
   return keys;
 });
+
+const whiteKeyCount = computed(() =>
+  pianoKeys.value.filter((k) => !k.sharp).length
+);
 
 //--------Octaves--------//
 const octaveAmount = ref('2');
@@ -514,8 +518,8 @@ input {
   border-top-left-radius: 40px;
   border-top-right-radius: 40px;
   background-color: rgb(42, 42, 42);
-  width: fit-content;
-  height: 28em;
+  width: 1200px;
+  height: 26em;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -523,13 +527,14 @@ input {
   padding: 2em 4em 1em;
 }
 .keys {
-  width: fit-content;
+  width: 100%;
   height: 300px;
   display: flex;
   overflow: hidden;
   margin-bottom: 1em;
   z-index: 0;
   border-top: 5px solid black; 
+  position: relative;
 }
 .key {
   border: 1px solid black;
@@ -549,27 +554,31 @@ input {
   cursor: pointer;
 }
 .white {
-  width: 70px;
   background-color: rgb(255, 255, 255);
   color: black;
+  flex: 1;
+  height: 100%;
+  position: relative;
+  z-index: 1;
 }
 .white:hover {
   background-color: rgb(240, 240, 240);
 }
 .black {
-  width: 60px;
-  height: 160px;
+  width: calc(100% / var(--white-key-count) * 0.6);
+  height: 60%;
   position: relative;
-  margin: 0 -30px;
   background-color: rgb(0, 0, 0);
   border: 2px solid black;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
   color: #fff;
-  z-index: 1;
+  z-index: 2;
   overflow: hidden;
   border-top: 1px solid black;
   font-size: 1.1em;
+  margin-left: calc(100% / var(--white-key-count) * -0.6);
+  left: calc(100% / var(--white-key-count) * 0.3);
 }
 .black:hover {
   background-color: rgb(20, 20, 20);
