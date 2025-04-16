@@ -21,7 +21,7 @@
 
         <div class="octave-select control">
 
-          <p class="octave-selector-label control-label">Octaves<br/>Displayed: {{ octaveAmount }}</p>
+          <p class="control-label">Octaves<br/>Displayed: {{ octaveAmount }}</p>
 
           <div class="octave-selector">
             <input v-model="octaveAmount" :class="{ active: octaveAmount === '1' }" type="radio" value="1" />
@@ -31,7 +31,9 @@
         </div>
 
         <div class="notes-labels control">
-          <p class="note-labels-title control-label">Note Labels</p>
+
+          <p class="control-label">Note Labels</p>
+
             <div class="notes-labels-checkboxes">
 
               <div class="notes-labels-checkbox">
@@ -131,7 +133,6 @@
     </div>
   </div>
 </template>
-
 
 <script setup>
 import { ref, onMounted, computed, watch } from 'vue';
@@ -395,9 +396,7 @@ function playChord(action) {
 
 </script>
 
-
 <style scoped> 
-
 /*--------GLOBAL---------*/
 * {
   margin: 0;
@@ -411,14 +410,12 @@ function playChord(action) {
   gap: 0.4em;
   width: fit-content;
   position: relative;
-  background-color: rgb(0, 0, 0, 0);
   justify-content: flex-start;
   font-family: "Orbitron";
 }
 input {
   font-family: "Ubuntu";
 }
-
 /*--------CONTROLS---------*/
 .controls {
   display: flex;
@@ -432,7 +429,6 @@ input {
   padding: 0 1em 1em;
   gap: 3em;
 }
-
 .control {
   height: 100%;
   display: flex;
@@ -441,6 +437,10 @@ input {
   flex-direction: column;
   gap: 0.5em;
   padding: 0.5em 0;
+}
+.control-label {
+  font-size: 1.2rem;
+  text-align: center;
 }
 /*--------STARTINGOCTAVE--------*/
 .starting-octave-selector {
@@ -540,7 +540,6 @@ input {
   justify-content: center;
 
 }
-
 /*--------KEYBOARD---------*/
 .keyboard {
   border: 1px solid black;
@@ -607,28 +606,21 @@ input {
   margin-left: calc(100% / var(--white-key-count) * -0.6);
   left: calc(100% / var(--white-key-count) * 0.3);
   padding-bottom: 0.4em;
+  box-shadow: -2px 0 1px rgba(0,0,0,0.5);
 }
 .black:hover {
   background-color: rgb(20, 20, 20);
 }
 .white.interval {
-  background-color: rgb(125, 162, 199);
-}
-.white.interval:hover {
-  background-color: rgb(97, 147, 196);
+  background-color: rgb(126, 145, 215);
 }
 .black.interval {
-  background-color: rgb(125, 162, 199);
+  background-color: rgb(126, 145, 215);
   color: black;
 }
-.black.interval:hover {
-  background-color: rgb(68, 117, 166);
-}
 .root-note {
-  background-color: rgb(197, 98, 98) !important;
-}
-.root-note:hover {
-  background-color: rgb(158, 44, 44) !important;
+  background-color: rgb(57, 82, 175) !important;
+  color: white
 }
 /*--------DISPLAY---------*/
 .chord-played-label {
