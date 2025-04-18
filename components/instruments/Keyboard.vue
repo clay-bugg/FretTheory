@@ -21,7 +21,7 @@
 
         <div class="octave-select control">
 
-          <p class="control-label">Octaves<br/>Displayed: {{ octaveAmount }}</p>
+          <p class="control-label">Octaves: {{ octaveAmount }}</p>
 
           <div class="octave-selector">
             <input v-model="octaveAmount" :class="{ active: octaveAmount === '1' }" type="radio" value="1" />
@@ -37,18 +37,18 @@
             <div class="notes-labels-checkboxes">
 
               <div class="notes-labels-checkbox">
-                <p class="notes-checkbox">All</p>
                 <input v-model="notesDisplayed" :class="['all-notes-checkbox', { active: notesDisplayed === 'all' }]" type="radio" value="all" />
+                <p class="notes-checkbox">All</p>
               </div>
 
-              <div class="notes-labels-checkbox">
-                <p class="notes-checkbox">Chord</p>
+              <div class="notes-labels-checkbox"> 
                 <input v-model="notesDisplayed" :class="['chord-notes-checkbox', { active: notesDisplayed === 'chord' }]" type="radio" value="chord" />
+                <p class="notes-checkbox">Chord</p>
               </div>
 
-              <div class="notes-labels-checkbox">
-                <p class="notes-checkbox">None</p>
+              <div class="notes-labels-checkbox">      
                 <input v-model="notesDisplayed" :class="['no-notes-checkbox', { active: notesDisplayed === 'none' }]" type="radio" value="none" />
+                <p class="notes-checkbox">None</p>
               </div>
 
             </div>
@@ -235,61 +235,67 @@ const chordTypes = ref([
     label: "Major",
     value: "maj",
     intervals: [0, 4, 7],
-    intervalNames: ["1", "3", "5"]  // Root, Major 3rd, Perfect 5th
+    formula: ["1", "3", "5"]  
   },
   {
     label: "Minor",
     value: "m",
     intervals: [0, 3, 7],
-    intervalNames: ["1", "♭3", "5"]  // Root, Minor 3rd, Perfect 5th
+    formula: ["1", "♭3", "5"]  
   },
   {
     label: "Augmented",
     value: "+",
     intervals: [0, 4, 8],
-    intervalNames: ["1", "3", "♯5"]  // Root, Major 3rd, Augmented 5th
+    formula: ["1", "3", "♯5"]  
   },
   {
     label: "Diminished",
     value: "°",
     intervals: [0, 3, 6],
-    intervalNames: ["1", "♭3", "♭5"]  // Root, Flat 3rd, Diminished 5th
+    formula: ["1", "♭3", "♭5"]  
   },
   {
     label: "Dominant 7th",
     value: "7",
     intervals: [0, 4, 7, 10],
-    intervalNames: ["1", "3", "5", "♭7"]  // Root, Major 3rd, Perfect 5th, Minor 7th
+    formula: ["1", "3", "5", "♭7"] 
   },
   {
     label: "Major 7th",
     value: "maj7",
     intervals: [0, 4, 7, 11],
-    intervalNames: ["1", "3", "5", "7"]  // Root, Major 3rd, Perfect 5th, Major 7th
+    formula: ["1", "3", "5", "7"]  
   },
   {
     label: "Minor 7th",
     value: "m7",
     intervals: [0, 3, 7, 10],
-    intervalNames: ["1", "♭3", "5", "♭7"]  // Root, Minor 3rd, Perfect 5th, Minor 7th
+    formula: ["1", "♭3", "5", "♭7"]  
   },
   {
     label: "Suspended 2nd",
     value: "sus2",
     intervals: [0, 2, 7],
-    intervalNames: ["1", "2", "5"]  // Root, Major 2nd, Perfect 5th
+    formula: ["1", "2", "5"]  
   },
   {
     label: "Suspended 4th",
     value: "sus4",
     intervals: [0, 5, 7],
-    intervalNames: ["1", "4", "5"]  // Root, Perfect 4th, Perfect 5th
+    formula: ["1", "4", "5"]  
   },
   {
     label: "Major 6th",
     value: "maj6",
     intervals: [0, 4, 7, 9],
-    intervalNames: ["1", "3", "5", "6"]  // Root, Major 3rd, Perfect 5th, Major 6th
+    formula: ["1", "3", "5", "6"] 
+  },
+  {
+    label: "Major 7♭5",
+    value: "maj7♭5",
+    intervals: [0, 4, 6, 11],
+    formula: ["1", "3", "♭5", "7"]
   }
 ]);
 
@@ -303,14 +309,14 @@ function updateChord() {
   const chord = chordTypes.value.find(c => c.value === chordType.value);
   if (!chord) return;
 
-  const { intervals, intervalNames } = chord;
+  const { intervals, formula } = chord;
   const rootIndex = notes.value.indexOf(rootNote.value);
 
   const updatedChordNotes = intervals.map(i => notes.value[(rootIndex + i) % 12]);
 
   chordNotes.value = Array.from(new Set(updatedChordNotes));
-  // Optional: store intervalNames too if you want to display them
-  console.log(`Chord: ${rootNote.value}${chordType.value}, Notes: ${chordNotes.value.join(", ")}, Intervals: ${intervalNames.join(", ")}`);
+  // Optional: store formula too if you want to display them
+  console.log(`Chord: ${rootNote.value}${chordType.value}, Notes: ${chordNotes.value.join(", ")}, Intervals: ${formula.join(", ")}`);
 }
 function assignChordOctaves(root, chordNotesArray) {
   let currentOctave = startingOctave.value;
@@ -407,7 +413,6 @@ function playChord(action) {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.4em;
   width: fit-content;
   position: relative;
   justify-content: flex-start;
@@ -428,6 +433,7 @@ input {
   color: rgb(215, 215, 215);
   padding: 0 1em 1em;
   gap: 3em;
+  margin-bottom: 0.5em;
 }
 .control {
   height: 100%;
@@ -495,8 +501,10 @@ input {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  gap: 0.2em;
+  gap: 0.4em;
   width: 2.5em;
+  position: relative;
+  top: 0.4em;
 }
 .notes-selector {
   display: flex;
@@ -561,7 +569,9 @@ input {
   overflow: hidden;
   margin-bottom: 1em;
   z-index: 0;
-  border-top: 5px solid black; 
+  border-top: 10px solid black;
+  border-left: 2px solid black; 
+  border-right: 2px solid black;
   position: relative;
 }
 .key {

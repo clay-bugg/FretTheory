@@ -1,11 +1,15 @@
 <template>
   <div class="page">
+
     <div class="instrument-selector">
+
       <p class="instrument-selector-label">Instrument: </p>
       <select v-model="selectedInstrument">
+
         <option v-for="instrument in instrumentOptions" :value="instrument.label">
           {{ instrument.label }}
         </option>
+        
       </select>
     </div>
 
@@ -37,6 +41,7 @@ const selectedInstrument = ref("Keyboard");
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
   height: 100vh;
   width: 100vw;
   margin-top: 3em;

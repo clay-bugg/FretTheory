@@ -1,39 +1,48 @@
 <template>
   <div class="component">
+
     <div class="guitar-neck">
 
       <div class="nut"></div>
 
       <div class="strings">
-        <div v-for="(string, index) in guitarStrings" :key="index" class="string" :id="string.name">
-          <div v-for="(fret, index) in frets" :key="index" class="fret" :id="`fret-${index + 1}`" @click="console.log(`fret-${index + 1} clicked`)"></div>
+
+        <div v-for="(container, containerIndex) in stringContainers" :key="containerIndex" class="string-container" :id="`Container-${container[index]}`">
+          <div v-for="(fret, fretIndex) in frets" :key="fretIndex" class="fret" :id="`string-${containerIndex + 1} fret-${fretIndex + 1}`" @click="fretClicked(containerIndex, fretIndex)"></div>
+          <div class="string"></div>
         </div>
+      
       </div>
 
-
     </div>
+    <p>{{ fretPlayed }}</p>
+
   </div>
+      
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref } from "vue";
 
 //----GUITAR----//
-const guitarStrings = ref([
-  { name: 'e' },
-  { name: 'B' },
-  { name: 'G' },
-  { name: 'D' },
-  { name: 'A' },
-  { name: 'E' }
-]);
+const stringContainers = ref(6);
 
-const frets = ref(Array.from({ length: 12 }, (_, i) => i + 1));
+const frets = ref(12);
+
+const fretPlayed = '';
+
+function fretClicked(container, fret) {
+  fretPlayed.value = `${container}${fret}`
+ }
+
+
+/*----DISPLAY----*/
+
 </script>
 
 <style scoped>
 /*----GLOBAL----*/
-*{
+* {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
@@ -51,51 +60,52 @@ const frets = ref(Array.from({ length: 12 }, (_, i) => i + 1));
 /*----GUITAR----*/
 .guitar-neck {
   width: 1200px;
-  height: 300px;
+  height: 250px;
   border: 1px solid black;
   display: grid;
-  grid-template-columns: 2% 98%;
+  grid-template-columns: 2.5% 97.5%;
   grid-template-rows: 1fr;
   grid-template-areas: "nut strings";
 }
 .nut {
   grid-area: nut;
   background-color: burlywood;
+  border-right: 1px solid black;
 }
 .strings {
   grid-area: strings;
-  background-color: rgb(118, 76, 22);
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-evenly;
-}
-.string {
   width: 100%;
-  height: 10px;
-  background-color: grey;
+  display: grid;
+  grid-template-rows: repeat(6, 1fr);
+}
+.string-container {
+  height: 100%;
   display: grid;
   grid-template-columns:
-    11.224%
-    10.590%
-    9.994%
-    9.434%
-    8.908%
-    8.412%
-    7.944%
-    7.504%
-    7.092%
-    6.702%
-    6.334%
-    5.986%;
-  grid-template-rows: 1fr
+    11.224% 10.59% 9.994% 9.434% 8.908% 8.412%
+    7.944% 7.504% 7.092% 6.702% 6.334% 5.986%;
+  background-color: rgb(156, 108, 45);
+  position: relative;
+}
+.string {
+  position: absolute;
+  height: 5px;
+  width: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-top: 1px solid black;
+  border-bottom: 1px solid rgb(0, 0, 0);
+  background-color: rgb(150, 150, 150);
+  pointer-events: none;
 }
 .fret {
-  border-left: 3px solid rgb(75, 75, 75);
+  border-left: 2px solid rgb(0, 0, 0);
+  border-right: 2px solid rgb(0, 0, 0);
+  background-color: rgb(156, 108, 45);
 }
 .fret:hover {
-  cursor: pointer;
   filter: brightness(95%);
 }
 </style>
