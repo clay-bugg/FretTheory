@@ -79,6 +79,17 @@
 
         </div>
 
+        <div class="tone-selector-box control">
+
+          <p>Tone</p>
+
+          <select v-model="currentTone" class="tone-selector">
+            <option name="piano" value="piano">Piano</option> 
+            <option name="synth" value="synth">Synth</option>
+          </select>
+
+        </div>
+
       </div>
 
       <div class="keys" :style="keyStyles">
@@ -445,8 +456,9 @@ input {
   padding: 0.5em 0;
 }
 .control-label {
-  font-size: 1.2rem;
+  font-size: 1rem;
   text-align: center;
+  text-wrap: nowrap;
 }
 /*--------STARTINGOCTAVE--------*/
 .starting-octave-selector {
@@ -546,7 +558,18 @@ input {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.tone-selector-box {
 
+}
+.tone-selector {
+  font-size: 1rem;
+  font-family: inherit;
+  border: 2px solid black;
+  border-radius: 0.3em;
+  text-align: center;
+  font-weight: 500;
+  padding: 0.1em;
 }
 /*--------KEYBOARD---------*/
 .keyboard {
@@ -555,7 +578,7 @@ input {
   border-top-left-radius: 40px;
   border-top-right-radius: 40px;
   background-color: rgb(42, 42, 42);
-  width: 1000px;
+  width: 1100px;
   height: fit-content;
   display: flex;
   align-items: center;
