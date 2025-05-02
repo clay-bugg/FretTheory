@@ -1,4 +1,5 @@
 <template>
+
   <div class="component">
 
     <div class="keyboard">
@@ -142,10 +143,13 @@
       </button>
 
     </div>
+
   </div>
+
 </template>
 
 <script setup>
+
 import { ref, onMounted, computed, watch } from 'vue';
 
 import * as Tone from "tone";
@@ -170,43 +174,43 @@ const pianoKeys = computed(() => {
   return keys;
 });
 
-const keyStyles = computed(() => { 
+const keyStyles = computed(() => {
 
-const whiteKeyCount = computed(() =>
-  pianoKeys.value.filter((k) => !k.sharp).length
-);
+  const whiteKeyCount = computed(() =>
+    pianoKeys.value.filter((k) => !k.sharp).length
+  );
 
-const keysHeight = computed(() => { 
-  if (octaveAmount.value === '1') {
-    return '350px'
-} else if (octaveAmount.value === '2') { 
+  const keysHeight = computed(() => {
+    if (octaveAmount.value === '1') {
+      return '350px'
+    } else if (octaveAmount.value === '2') {
       return '260px'
-    } else if (octaveAmount.value === '3') { 
-        return '180px'
-  }
-})
+    } else if (octaveAmount.value === '3') {
+      return '180px'
+    }
+  })
 
-  return {   
+  return {
     '--white-key-count': whiteKeyCount.value,
     'height': keysHeight.value
-}
-})
-
-const keyFontSize = computed(() => { 
-    if (octaveAmount.value === '1') {
-    return '1.6rem'
-} else if (octaveAmount.value === '2') { 
-      return '1rem'
-    } else if (octaveAmount.value === '3') { 
-        return '0.8rem'
   }
-})
+});
+
+const keyFontSize = computed(() => {
+  if (octaveAmount.value === '1') {
+    return '1.6rem'
+  } else if (octaveAmount.value === '2') {
+    return '1rem'
+  } else if (octaveAmount.value === '3') {
+    return '0.8rem'
+  }
+});
 
 
 //--------Octaves--------//
 const octaveAmount = ref('2');
 
-const startingOctave = ref(3)
+const startingOctave = ref(3);
 
 function changeStartingOctave(op) { 
   if (op === '+') {
@@ -224,7 +228,7 @@ function changeStartingOctave(op) {
     }
   }
 
-}
+};
 
 //--------Update Chord--------//
 const rootNote = ref("");
@@ -328,7 +332,8 @@ function updateChord() {
   chordNotes.value = Array.from(new Set(updatedChordNotes));
   // Optional: store formula too if you want to display them
   console.log(`Chord: ${rootNote.value}${chordType.value}, Notes: ${chordNotes.value.join(", ")}, Intervals: ${formula.join(", ")}`);
-}
+};
+
 function assignChordOctaves(root, chordNotesArray) {
   let currentOctave = startingOctave.value;
   let lastNoteIndex = notes.value.indexOf(root);
@@ -344,7 +349,7 @@ function assignChordOctaves(root, chordNotesArray) {
   });
 
   return chordWithOctaves;
-}
+};
 
 //--------SYNTH--------//
 
@@ -423,7 +428,7 @@ function playKey(note, octave) {
 
     console.log(`${playedNote} note played.`);
   }
-}
+};
 
 function stopKey(note, octave) {
 
@@ -447,8 +452,9 @@ function stopKey(note, octave) {
 
     sampler.triggerRelease();
 
-}
-}
+    }
+
+};
 
 const activeChord = new Set();
 
@@ -466,6 +472,12 @@ function playChord(action) {
 
     }
 
+    else if (currentTone.value === 'piano') { 
+
+      sampler.triggerAttack(notesWithOctaves);
+
+    }
+
       activeChord.add(notesWithOctaves);
 
       console.log(`${notesWithOctaves.join(", ")} chord played.`);
@@ -475,16 +487,24 @@ function playChord(action) {
     if (currentTone.value === 'synth') {
 
       polySynth.triggerRelease(notesWithOctaves);
+
+    }
+
+    else if (currentTone.value === 'piano') { 
+
+      sampler.triggerRelease();
+
     }
 
       activeChord.delete(notesWithOctaves)
 
     }
-  }
+};
 
 </script>
 
-<style scoped> 
+<style scoped>
+
 /*--------GLOBAL---------*/
 * {
   margin: 0;
@@ -503,6 +523,7 @@ function playChord(action) {
 input {
   font-family: "Ubuntu";
 }
+
 /*--------CONTROLS---------*/
 .controls {
   display: flex;
@@ -531,6 +552,7 @@ input {
   text-align: center;
   text-wrap: nowrap;
 }
+
 /*--------STARTINGOCTAVE--------*/
 .starting-octave-selector {
   display: flex;
@@ -545,6 +567,7 @@ input {
   width: 25px;
   height: 25px;
 }
+
 /*--------OCTAVESELECT--------*/
 .octave-selector {
   display: flex;
@@ -572,6 +595,7 @@ input {
 .octave-selector input:hover {
   cursor: pointer;
 }
+
 /*--------=NOTELABELS--------*/
 .notes-labels-checkboxes {
   display: flex;
@@ -615,6 +639,7 @@ input {
 .notes-checkbox {
   font-size: 0.8em
 }
+
 /*---------CHORDSELECT--------*/
 .chord-selector-box select {
   font-size: 1em;
@@ -630,9 +655,6 @@ input {
   align-items: center;
   justify-content: center;
 }
-.tone-selector-box {
-
-}
 .tone-selector {
   font-size: 1rem;
   font-family: inherit;
@@ -642,6 +664,7 @@ input {
   font-weight: 500;
   padding: 0.1em;
 }
+
 /*--------KEYBOARD---------*/
 .keyboard {
   border: 1px solid black;
@@ -683,6 +706,9 @@ input {
 }
 .key:hover {
   cursor: pointer;
+}
+.key:active {
+  
 }
 .white {
   background-color: rgb(255, 255, 255);
@@ -726,6 +752,7 @@ input {
   background-color: rgb(57, 82, 175) !important;
   color: white
 }
+
 /*--------DISPLAY---------*/
 .chord-played-label {
   font-size: 1.5rem;
@@ -762,4 +789,5 @@ input {
   cursor: pointer;
   transform: scale(1.1);
 }
+
 </style>
