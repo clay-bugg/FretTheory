@@ -3,7 +3,9 @@
 
     <div class="guitar-neck">
 
-      <div class="nut"></div>
+      <div class="nut">
+        <div v-for="(container, containerIndex) in stringContainers" :key="nutIndex" class="nut-container" :id="`nut-${containerIndex + 1}`"></div>
+      </div>
 
       <div class="strings">
 
@@ -71,6 +73,9 @@ function fretClicked(container, fret) {
   grid-area: nut;
   background-color: burlywood;
   border-right: 1px solid black;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(6, 1fr);
 }
 .strings {
   grid-area: strings;
@@ -91,9 +96,9 @@ function fretClicked(container, fret) {
 .string {
   position: absolute;
   height: 5px;
-  width: 100%;
+  width: 102.5%;
   top: 50%;
-  left: 50%;
+  left: 48.%;
   transform: translate(-50%, -50%);
   border-top: 1px solid black;
   border-bottom: 1px solid rgb(0, 0, 0);

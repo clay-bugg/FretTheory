@@ -352,6 +352,8 @@ const currentTone = ref('');
 
 let synth;
 
+let sampler;
+
 let polySynth;
 
 onMounted(() => { 
@@ -372,13 +374,33 @@ onMounted(() => {
       
     }).toDestination();
 
-  polySynth = new Tone.PolySynth(Tone.Synth).toDestination();
+    sampler = new Tone.Sampler({
+      urls: {
+        "A1": 'A1.mp3',
+        "A2": 'A2.mp3',
+        "A3": 'A3.mp3',
+        "A4": 'A4.mp3',
+        "A5": 'A5.mp3',
+        "A6": 'A6.mp3',
+        "A7": 'A7.mp3',
+      },
+      baseUrl: '/sounds/piano_samples/',
+      onload: () => { 
+        console.log('Sampler Loaded')
+      }
+    }).toDestination();
+
+    polySynth = new Tone.PolySynth(Tone.Synth).toDestination();
   }
 });
 
 const activeNotes = new Set();
 
 function playKey(note, octave) {
+
+  const playedNote = `${note}${octave}`;
+
+  activeNotes.add(playedNote);
 
   if (currentTone.value === 'synth') {
 
@@ -390,21 +412,42 @@ function playKey(note, octave) {
 
     console.log(`${playedNote} note played.`);
   }
+
+  else if (currentTone.value === 'piano') { 
+
+    const playedNote = `${note}${octave}`;
+
+    sampler.triggerAttack(playedNote);
+
+    activeNotes.add(playedNote);
+
+    console.log(`${playedNote} note played.`);
+  }
 }
 
 function stopKey(note, octave) {
 
-  if (!synth) return;
+  if (!synth || !sampler) return;
 
-  if (currentTone.value === 'synth') {
+    if (currentTone.value === 'synth') {
+
+      const playedNote = `${note}${octave}`;
+
+      activeNotes.delete(playedNote);
+
+      synth.triggerRelease();
+
+    }
+
+    else if (currentTone.value === 'piano') {
 
     const playedNote = `${note}${octave}`;
 
     activeNotes.delete(playedNote);
 
-    synth.triggerRelease();
+    sampler.triggerRelease();
 
-  }
+}
 }
 
 const activeChord = new Set();
