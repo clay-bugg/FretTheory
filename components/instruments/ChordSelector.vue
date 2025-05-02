@@ -23,7 +23,6 @@ const props = defineProps({
   chordTypes: Array
 })
 
-
 </script>
 
 <style scoped>

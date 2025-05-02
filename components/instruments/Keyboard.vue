@@ -346,7 +346,10 @@ function assignChordOctaves(root, chordNotesArray) {
   return chordWithOctaves;
 }
 
-//--------Synth--------//
+//--------SYNTH--------//
+
+const currentTone = ref('');
+
 let synth;
 
 let polySynth;
@@ -355,7 +358,19 @@ onMounted(() => {
 
   if (typeof window !== 'undefined') { 
 
-  synth = new Tone.Synth().toDestination();
+    synth = new Tone.Synth({
+    
+      oscillator: {
+        type: "sine"
+      },
+      envelope: {
+        attack: 0.05,
+        decay: 0.2,
+        sustain: 0.3,
+        release: 1
+      }
+      
+    }).toDestination();
 
   polySynth = new Tone.PolySynth(Tone.Synth).toDestination();
   }
@@ -365,25 +380,31 @@ const activeNotes = new Set();
 
 function playKey(note, octave) {
 
-  const playedNote = `${note}${octave}`;
+  if (currentTone.value === 'synth') {
 
-  synth.triggerAttack(playedNote);
+    const playedNote = `${note}${octave}`;
 
-  activeNotes.add(playedNote);
+    synth.triggerAttack(playedNote);
 
-  console.log(`${playedNote} note played.`);
+    activeNotes.add(playedNote);
+
+    console.log(`${playedNote} note played.`);
+  }
 }
 
 function stopKey(note, octave) {
 
   if (!synth) return;
 
-  const playedNote = `${note}${octave}`;
+  if (currentTone.value === 'synth') {
 
-  activeNotes.delete(playedNote);
+    const playedNote = `${note}${octave}`;
 
-  synth.triggerRelease();
+    activeNotes.delete(playedNote);
 
+    synth.triggerRelease();
+
+  }
 }
 
 const activeChord = new Set();
@@ -396,15 +417,22 @@ function playChord(action) {
 
   if (action === 'play') {
 
+    if (currentTone.value === 'synth') {
+
       polySynth.triggerAttack(notesWithOctaves);
+
+    }
 
       activeChord.add(notesWithOctaves);
 
       console.log(`${notesWithOctaves.join(", ")} chord played.`);
 
-    } else if (action === 'stop') {
+  } else if (action === 'stop') {
+
+    if (currentTone.value === 'synth') {
 
       polySynth.triggerRelease(notesWithOctaves);
+    }
 
       activeChord.delete(notesWithOctaves)
 
