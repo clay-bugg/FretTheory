@@ -89,6 +89,8 @@
             <option name="synth" value="synth">Synth</option>
           </select>
 
+          
+
         </div>
 
       </div>
@@ -112,7 +114,9 @@
           @mousedown="playKey(key.note, key.octave)"
           @mouseup="stopKey(key.note, key.octave)"
           @mouseleave="stopKey(key.note, key.octave)"
-        >
+          @keydown="playKeyboardKey(key.note, key.octave)"
+          @keyup="stopKeyboardKey(key.note, key.octave)">
+        
           <span v-if="notesDisplayed === 'all'">{{ key.note }}</span>
           <span
             v-if="notesDisplayed === 'chord' && chordNotes.includes(key.note)"
@@ -137,11 +141,10 @@
         :id="`chord-note-${index + 1}`">
         {{ note }}
       </p>
-
-      <button @mousedown="playChord('play')" @mouseup="playChord('stop')" class="play-button">
-        <Icon name="line-md:play-filled" class="play-icon" />
-      </button>
-
+      <div class="play-button">
+        <Icon name="line-md:play-filled" class="play-icon" @mousedown="playChord('play'); spacePressed('play')" @mouseup="playChord('stop'); spacePressed('stop')"/>
+        <p class="play-button-label">(space)</p>
+      </div>
     </div>
 
   </div>
@@ -155,7 +158,8 @@ import { ref, onMounted, computed, watch } from 'vue';
 import * as Tone from "tone";
 
 //--------Generate Keys--------//
-const notes = ref(["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B",]);
+
+const notes = ref(["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]);
 
 const pianoKeys = computed(() => {
   const octavesArray = Array.from({ length: octaveAmount.value }, (_, i) => startingOctave.value + i);
@@ -169,10 +173,10 @@ const pianoKeys = computed(() => {
         sharp: note.includes('#'),
       });
     });
-  }
+  };
 
   return keys;
-});
+});                                                                       
 
 const keyStyles = computed(() => {
 
@@ -188,7 +192,7 @@ const keyStyles = computed(() => {
     } else if (octaveAmount.value === '3') {
       return '180px'
     }
-  })
+  });
 
   return {
     '--white-key-count': whiteKeyCount.value,
@@ -208,6 +212,7 @@ const keyFontSize = computed(() => {
 
 
 //--------Octaves--------//
+
 const octaveAmount = ref('2');
 
 const startingOctave = ref(3);
@@ -230,7 +235,9 @@ function changeStartingOctave(op) {
 
 };
 
+
 //--------Update Chord--------//
+
 const rootNote = ref("");
 
 watch(rootNote, (newVal) => {
@@ -319,24 +326,30 @@ const chordNotes = ref([]);
 const notesDisplayed = ref("all");
 
 function updateChord() {
+
   if (!rootNote.value || !chordType.value) return;
 
   const chord = chordTypes.value.find(c => c.value === chordType.value);
   if (!chord) return;
 
   const { intervals, formula } = chord;
+
   const rootIndex = notes.value.indexOf(rootNote.value);
 
   const updatedChordNotes = intervals.map(i => notes.value[(rootIndex + i) % 12]);
 
   chordNotes.value = Array.from(new Set(updatedChordNotes));
-  // Optional: store formula too if you want to display them
+ 
   console.log(`Chord: ${rootNote.value}${chordType.value}, Notes: ${chordNotes.value.join(", ")}, Intervals: ${formula.join(", ")}`);
+
 };
 
 function assignChordOctaves(root, chordNotesArray) {
+
   let currentOctave = startingOctave.value;
+  
   let lastNoteIndex = notes.value.indexOf(root);
+
   const chordWithOctaves = [];
 
   chordNotesArray.forEach((note) => {
@@ -349,11 +362,11 @@ function assignChordOctaves(root, chordNotesArray) {
   });
 
   return chordWithOctaves;
+
 };
 
-//--------SYNTH--------//
 
-const currentTone = ref('');
+//--------SYNTH--------//
 
 let synth;
 
@@ -399,7 +412,11 @@ onMounted(() => {
   }
 });
 
+//-------PLAY KEYS------//
+
 const activeNotes = new Set();
+
+const currentTone = ref('piano');
 
 function playKey(note, octave) {
 
@@ -456,7 +473,45 @@ function stopKey(note, octave) {
 
 };
 
+function playKeyboardKey() {
+  // Function intentionally left blank or implement as needed
+}
+
+function stopKeyboardKey() {
+  // Function intentionally left blank or implement as needed
+}
+ 
 const activeChord = new Set();
+
+onMounted(() => {
+  window.addEventListener('keydown', spacePressed);
+  window.addEventListener('keyup', spaceReleased);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', spacePressed);
+  window.removeEventListener('keyup', spaceReleased);
+});
+
+
+function spacePressed(e) { 
+  if (!e) return;
+  if (e.code === 'Space' || e.key === ' ' || e.key === 'Spacebar') { 
+    e.preventDefault(); 
+    if (!e.repeat) {
+      playChord('play');
+    }
+  }
+}
+
+function spaceReleased(e) {
+  if (!e) return;
+  if (e.code === 'Space' || e.key === ' ' || e.key === 'Spacebar') {
+    e.preventDefault();
+    playChord('stop');
+    
+  }
+}
 
 function playChord(action) {
 
@@ -472,34 +527,39 @@ function playChord(action) {
 
     }
 
-    else if (currentTone.value === 'piano') { 
+    else if (currentTone.value === 'piano') {
 
       sampler.triggerAttack(notesWithOctaves);
 
     }
 
-      activeChord.add(notesWithOctaves);
+    activeChord.add(notesWithOctaves);
 
-      console.log(`${notesWithOctaves.join(", ")} chord played.`);
+    console.log(`${notesWithOctaves.join(", ")} chord played.`);
 
-  } else if (action === 'stop') {
+  }
+
+  else if (action === 'stop') {
 
     if (currentTone.value === 'synth') {
 
       polySynth.triggerRelease(notesWithOctaves);
 
     }
-
-    else if (currentTone.value === 'piano') { 
+    else if (currentTone.value === 'piano') {
 
       sampler.triggerRelease();
 
     }
 
-      activeChord.delete(notesWithOctaves)
+    activeChord.delete(notesWithOctaves);
 
-    }
-};
+  }
+
+}
+
+
+
 
 </script>
 
@@ -772,22 +832,35 @@ input {
   display: flex;
   align-items: center;
   width: fit-content;
-  
-  
 }
 .play-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: fit-content;
+  position: relative;
+  top: 0.4em;
+}
+.play-button-label {
+  font-size: 0.8rem;
+}
+.play-icon {
   font-family: inherit;
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   font-weight: 500;
   font-size: 2em;
   display: flex;
   justify-content: center;
   align-items: center;
+
 }
-.play-button:hover {
+.play-icon:hover {
   cursor: pointer;
-  transform: scale(1.1);
+  transform: scale(1.07);
+}
+.play-icon:active {
+  transform: scale(1);
 }
 
 </style>

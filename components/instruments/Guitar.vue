@@ -4,13 +4,13 @@
     <div class="guitar-neck">
 
       <div class="nut">
-        <div v-for="(container, containerIndex) in stringContainers" :key="nutIndex" class="nut-container" :id="`nut-${containerIndex + 1}`"></div>
+      <div v-for="(container, containerIndex) in stringContainers" :key="nutIndex" :class="['nut-container', `string-${containerIndex + 1}`]"></div>
       </div>
 
       <div class="strings">
 
         <div v-for="(container, containerIndex) in stringContainers" :key="containerIndex" class="string-container" :id="`Container-${container[index]}`">
-          <div v-for="(fret, fretIndex) in frets" :key="fretIndex" class="fret" :id="`string-${containerIndex + 1} fret-${fretIndex + 1}`" @click="fretClicked(containerIndex, fretIndex)"></div>
+          <div v-for="(fret, fretIndex) in frets" :key="fretIndex" class="fret" :class="['fret' `string-${containerIndex + 1} fret-${fretIndex + 1}`]" @click="fretClicked(containerIndex, fretIndex)"></div>
           <div class="string"></div>
         </div>
       

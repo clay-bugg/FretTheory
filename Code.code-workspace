@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../Media"
+		},
+		{
+			"path": "../tonejs-instruments-master"
+		}
+	]
+}
