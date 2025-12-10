@@ -7,12 +7,12 @@
       class="button"
     >
       {{ button.label }}
-  </NuxtLink>
+    </NuxtLink>
   </nav>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref } from "vue";
 
 const navButtons = ref([
   { label: "Instruments", link: "/instruments" },
@@ -35,14 +35,14 @@ nav {
 .button {
   appearance: none;
   border: 4px solid black;
-  background: url('public/images/backgrounds/nav-button-texture.png');
+  background: url("public/images/backgrounds/nav-button-texture.png");
   border-radius: 10px;
   color: white;
   font-size: 1.2rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: 'Orbitron';
+  font-family: "Orbitron";
   text-decoration: none;
   font-weight: 280;
   height: 1.3em;
@@ -62,5 +62,4 @@ nav {
   transform: scale(1);
   text-shadow: 0 0 1px rgb(233, 233, 233);
 }
-
 </style>
