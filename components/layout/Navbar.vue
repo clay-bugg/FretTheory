@@ -12,14 +12,12 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-
 const navButtons = ref([
   { label: "Instruments", link: "/instruments" },
   { label: "Tools", link: "/tools" },
   { label: "Theory", link: "/theory" },
   { label: "Practice", link: "/practice" },
-]);
+])
 </script>
 
 <style scoped>

@@ -15,12 +15,13 @@
 </template>
 
 <script setup>
-import { useRoute } from '#imports';
+import { useRoute } from '#imports'
 
-const route = useRoute();
+const route = useRoute()
 </script>
 
 <style scoped>
+
 header {
   width: 100%;
   height: 100px;
@@ -36,6 +37,7 @@ header {
   background-color: rgb(245, 245, 245);
   min-width: fit-content;
 }
+
 .heading {
   display: flex;
   justify-content: center;
@@ -45,28 +47,34 @@ header {
   z-index: 1;
   height: auto;
 }
+
 .heading:hover {
   cursor: pointer;
 }
+
 header img {
   width: auto;
   height: 5em;;
   z-index: 2;
 }
+
 .logo {
   z-index: 2;
 }
+
 h1 {
   font-size: 3rem;
   color: black;
   margin: 0;
 }
+
 nav {
   display: flex;
   justify-content: center;
   width: 100%;;
   align-items: center;
 }
+
 nav ul {
   display: flex;
   align-items: center;
@@ -75,6 +83,7 @@ nav ul {
   justify-content: space-evenly;
   padding: 0;
 }
+
 .button {
   appearance: none;
   border: 4px solid black;
@@ -92,15 +101,18 @@ nav ul {
   width: 7em;
   padding: 0.8em;
 }
+
 .button:focus {
   appearance: none;
 }
+
 .button:hover {
   cursor: pointer;
   transform: scale(1.01);
   text-shadow: 0 0 1px rgb(233, 233, 233);
   text-decoration: none;
 }
+
 .button:active {
   transform: scale(1);
   text-shadow: 0 0 1px rgb(233, 233, 233);
@@ -109,4 +121,5 @@ nav ul {
 nav {
   z-index: 2;
 }
+
 </style>

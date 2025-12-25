@@ -19,19 +19,18 @@
     </div>
     <p>{{ fretPlayed }}</p>
 
-  </div>
-      
+  </div>   
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref } from "vue"
 
 //----GUITAR----//
-const stringContainers = ref(6);
+const stringContainers = ref(6)
 
-const frets = ref(12);
+const frets = ref(12)
 
-const fretPlayed = '';
+const fretPlayed = ''
 
 function fretClicked(container, fret) {
   fretPlayed.value = `${container}${fret}`

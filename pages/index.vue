@@ -16,8 +16,8 @@ definePageMeta({
 
 </script>
 
-
 <style>
+  
 * {
   padding: 0;
   margin: 0;
@@ -53,4 +53,5 @@ main img {
   width: 100%;
   height: auto;
 }
+
 </style>

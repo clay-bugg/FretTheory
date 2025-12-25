@@ -1,13 +1,9 @@
 <template>
-
   <div class="component">
 
     <div class="keyboard">
-
       <div class="controls">
-        
         <div class="starting-octave control">
-
           <p class="control-label">Octave Range</p>
 
           <div class="starting-octave-selector">
@@ -17,11 +13,9 @@
             <p v-else-if="octaveAmount === '3'">{{ startingOctave }}-{{ startingOctave + 2 }}</p>
             <button class="starting-octave-button" @click="changeStartingOctave('+')">+</button>
           </div>
-
         </div>
 
         <div class="octave-select control">
-
           <p class="control-label">Octaves: {{ octaveAmount }}</p>
 
           <div class="octave-selector">
@@ -29,12 +23,11 @@
             <input v-model="octaveAmount" :class="{ active: octaveAmount === '2' }" type="radio" value="2" />
             <input v-model="octaveAmount" :class="{ active: octaveAmount === '3' }" type="radio" value="3" />
           </div>
+
         </div>
 
         <div class="notes-labels control">
-
           <p class="control-label">Note Labels</p>
-
             <div class="notes-labels-checkboxes">
 
               <div class="notes-labels-checkbox">
@@ -53,14 +46,12 @@
               </div>
 
             </div>
-
         </div>
 
         <div class="chord-selector-box control">
-
           <p class="control-label">Chord</p>
-
           <div class="chord-selector-inputs">
+
             <select class="root-note-selector" v-model="rootNote">
               <option v-for="note in notes" :key="note" :value="note">
                 {{ note }}
@@ -76,21 +67,17 @@
                 {{ type.label }}
               </option>
             </select>
-          </div>
 
+          </div>
         </div>
 
         <div class="tone-selector-box control">
-
           <p>Tone</p>
 
           <select v-model="currentTone" class="tone-selector">
             <option name="piano" value="piano">Piano</option> 
             <option name="synth" value="synth">Synth</option>
           </select>
-
-          
-
         </div>
 
       </div>
@@ -124,15 +111,12 @@
             {{ key.note }}
           </span>
         </div>
-        
       </div>
-
     </div>
 
     <p class="chord-played-label">Chord Played</p>
 
     <div class="chord-played">
-
       <p class="chord-notes-label">{{ rootNote }}{{ chordType }} | </p>
 
       <p v-for="(note, index) in chordNotes"
@@ -141,25 +125,24 @@
         :id="`chord-note-${index + 1}`">
         {{ note }}
       </p>
+
       <div class="play-button">
         <Icon name="line-md:play-filled" class="play-icon" @mousedown="playChord('play'); spacePressed('play')" @mouseup="playChord('stop'); spacePressed('stop')"/>
         <p class="play-button-label">(space)</p>
       </div>
+
     </div>
 
   </div>
-
 </template>
 
 <script setup>
 
-import { ref, onMounted, computed, watch } from 'vue';
-
-import * as Tone from "tone";
+import { ref, onMounted, computed, watch } from 'vue'
+import * as Tone from "tone"
 
 //--------Generate Keys--------//
-
-const notes = ref(["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]);
+const notes = ref(["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"])
 
 const pianoKeys = computed(() => {
   const octavesArray = Array.from({ length: octaveAmount.value }, (_, i) => startingOctave.value + i);
@@ -171,18 +154,18 @@ const pianoKeys = computed(() => {
         note,
         octave,
         sharp: note.includes('#'),
-      });
-    });
-  };
+      })
+    })
+  }
 
-  return keys;
-});                                                                       
+  return keys
+})                                                                  
 
 const keyStyles = computed(() => {
 
   const whiteKeyCount = computed(() =>
     pianoKeys.value.filter((k) => !k.sharp).length
-  );
+  )
 
   const keysHeight = computed(() => {
     if (octaveAmount.value === '1') {
@@ -192,13 +175,13 @@ const keyStyles = computed(() => {
     } else if (octaveAmount.value === '3') {
       return '180px'
     }
-  });
+  })
 
   return {
     '--white-key-count': whiteKeyCount.value,
     'height': keysHeight.value
   }
-});
+})
 
 const keyFontSize = computed(() => {
   if (octaveAmount.value === '1') {
@@ -208,48 +191,43 @@ const keyFontSize = computed(() => {
   } else if (octaveAmount.value === '3') {
     return '0.8rem'
   }
-});
-
+})
 
 //--------Octaves--------//
-
-const octaveAmount = ref('2');
-
-const startingOctave = ref(3);
+const octaveAmount = ref('2')
+const startingOctave = ref(3)
 
 function changeStartingOctave(op) { 
   if (op === '+') {
     if (startingOctave.value === 6) {
-      return;
+      return
     } else {
       startingOctave.value++
     }
 
   } else if (op === '-') {
     if (startingOctave.value === 1) {
-      return;
+      return
     } else {
       startingOctave.value--
     }
   }
 
-};
-
+}
 
 //--------Update Chord--------//
-
-const rootNote = ref("");
+const rootNote = ref("")
 
 watch(rootNote, (newVal) => {
-  console.log(`Root note changed to ${newVal}`);
-  updateChord();
-});
+  console.log(`Root note changed to ${newVal}`)
+  updateChord()
+})
 
-const chordType = ref("");
+const chordType = ref("")
 
 watch(chordType, (newVal) => {
-  console.log(`Chord type changed to ${newVal}`);
-  updateChord();
+  console.log(`Chord type changed to ${newVal}`)
+  updateChord()
 });
 
 const chordTypes = ref([
@@ -321,36 +299,27 @@ const chordTypes = ref([
   }
 ]);
 
-const chordNotes = ref([]);
-
-const notesDisplayed = ref("all");
+const chordNotes = ref([])
+const notesDisplayed = ref("all")
 
 function updateChord() {
+  if (!rootNote.value || !chordType.value) return
 
-  if (!rootNote.value || !chordType.value) return;
-
-  const chord = chordTypes.value.find(c => c.value === chordType.value);
-  if (!chord) return;
-
-  const { intervals, formula } = chord;
-
-  const rootIndex = notes.value.indexOf(rootNote.value);
-
-  const updatedChordNotes = intervals.map(i => notes.value[(rootIndex + i) % 12]);
-
-  chordNotes.value = Array.from(new Set(updatedChordNotes));
- 
-  console.log(`Chord: ${rootNote.value}${chordType.value}, Notes: ${chordNotes.value.join(", ")}, Intervals: ${formula.join(", ")}`);
-
+  const chord = chordTypes.value.find(c => c.value === chordType.value)
+  if (!chord) return
+  const { intervals, formula } = chord
+  const rootIndex = notes.value.indexOf(rootNote.value)
+  const updatedChordNotes = intervals.map(i => notes.value[(rootIndex + i) % 12])
+  chordNotes.value = Array.from(new Set(updatedChordNotes))
+  console.log(`Chord: ${rootNote.value}${chordType.value}, Notes: ${chordNotes.value.join(", ")}, Intervals: ${formula.join(", ")}`)
 };
 
 function assignChordOctaves(root, chordNotesArray) {
 
-  let currentOctave = startingOctave.value;
-  
-  let lastNoteIndex = notes.value.indexOf(root);
+  let currentOctave = startingOctave.value
+  let lastNoteIndex = notes.value.indexOf(root)
 
-  const chordWithOctaves = [];
+  const chordWithOctaves = []
 
   chordNotesArray.forEach((note) => {
     const noteIndex = notes.value.indexOf(note);
@@ -359,27 +328,19 @@ function assignChordOctaves(root, chordNotesArray) {
     }
     chordWithOctaves.push(`${note}${currentOctave}`);
     lastNoteIndex = noteIndex;
-  });
+  })
 
   return chordWithOctaves;
-
 };
 
-
 //--------SYNTH--------//
-
 let synth;
-
 let sampler;
-
 let polySynth;
 
 onMounted(() => { 
-
   if (typeof window !== 'undefined') { 
-
     synth = new Tone.Synth({
-    
       oscillator: {
         type: "sine"
       },
@@ -415,48 +376,33 @@ onMounted(() => {
 //-------PLAY KEYS------//
 
 const activeNotes = new Set();
-
 const currentTone = ref('piano');
 
 function playKey(note, octave) {
 
   const playedNote = `${note}${octave}`;
-
   activeNotes.add(playedNote);
 
   if (currentTone.value === 'synth') {
-
     const playedNote = `${note}${octave}`;
-
     synth.triggerAttack(playedNote);
-
     activeNotes.add(playedNote);
-
     console.log(`${playedNote} note played.`);
   }
 
   else if (currentTone.value === 'piano') { 
-
     const playedNote = `${note}${octave}`;
-
     sampler.triggerAttack(playedNote);
-
     activeNotes.add(playedNote);
-
     console.log(`${playedNote} note played.`);
   }
 };
 
 function stopKey(note, octave) {
-
   if (!synth || !sampler) return;
-
     if (currentTone.value === 'synth') {
-
       const playedNote = `${note}${octave}`;
-
       activeNotes.delete(playedNote);
-
       synth.triggerRelease();
 
     }
@@ -493,7 +439,6 @@ onUnmounted(() => {
   window.removeEventListener('keyup', spaceReleased);
 });
 
-
 function spacePressed(e) { 
   if (!e) return;
   if (e.code === 'Space' || e.key === ' ' || e.key === 'Spacebar') { 
@@ -514,23 +459,14 @@ function spaceReleased(e) {
 }
 
 function playChord(action) {
-
   const notesWithOctaves = assignChordOctaves(rootNote.value, chordNotes.value);
-
   if (!rootNote.value || !chordType.value) return;
-
   if (action === 'play') {
-
     if (currentTone.value === 'synth') {
-
       polySynth.triggerAttack(notesWithOctaves);
-
     }
-
     else if (currentTone.value === 'piano') {
-
       sampler.triggerAttack(notesWithOctaves);
-
     }
 
     activeChord.add(notesWithOctaves);
@@ -557,9 +493,6 @@ function playChord(action) {
   }
 
 }
-
-
-
 
 </script>
 
@@ -642,7 +575,7 @@ input {
 .octave-selector input {
   width: 25px;
   height: 25px;
-  appearance: none;;
+  appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
   border: 2px solid black;
@@ -683,7 +616,7 @@ input {
 .notes-labels-checkboxes input {
   width: 25px;
   height: 25px;
-  appearance: none;;
+  appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
   border: 2px solid black;
@@ -697,7 +630,7 @@ input {
   cursor: pointer;
 }
 .notes-checkbox {
-  font-size: 0.8em
+  font-size: 0.8em;
 }
 
 /*---------CHORDSELECT--------*/
@@ -766,9 +699,6 @@ input {
 }
 .key:hover {
   cursor: pointer;
-}
-.key:active {
-  
 }
 .white {
   background-color: rgb(255, 255, 255);
