@@ -9,6 +9,6 @@ import Header from '@/components/layout/Header.vue'
 
 <style>
   .header {
-    width: 100%;
+    width: 100vw;
   }
 </style>

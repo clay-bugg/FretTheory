@@ -1,21 +1,31 @@
 <template>
-
-      <select v-model="selectedInstrument">
-        <option v-for="instrument in instrumentOptions" :value="instrument.label">
-          {{ instrument.label }}
-        </option>
-      </select>
-
+  <select v-model="selectedInstrument">
+    <option
+      v-for="instrument in instrumentOptions"
+      :key="instrument.label"
+      :value="instrument.label"
+    >
+      {{ instrument.label }}
+    </option>
+  </select>
 </template>
 
 <script setup>
-
-const { selectedInstrument } = storeToRefs(useConstrolStore())
-
+const { selectedInstrument } = storeToRefs(useControlStore());
 const instrumentOptions = ref([
-  { label: "Keyboard", image: "public/images/backgrounds/nav-button-texture.png"},
-  { label: "Guitar", image: "public/images/backgrounds/nav-button-texture.png"},
-])
+  {
+    label: "Keyboard",
+    image: "public/images/backgrounds/nav-button-texture.png",
+  },
+  {
+    label: "Guitar",
+    image: "public/images/backgrounds/nav-button-texture.png",
+  },
+]);
+
+function capitalize(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
 </script>
 
 <style lang="scss" scoped>

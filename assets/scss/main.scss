@@ -13,8 +13,17 @@ html,
 body {
   background-color: rgb(236, 236, 236);
   width: 100vw;
+  min-height: 100vh;
+  display: block;
+  font-family: sans-serif;
+}
+.page {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  font-family: sans-serif;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+  width: 100vw;
+  margin-top: 3em;
+  font-family: "Ubuntu", sans-serif;
 }

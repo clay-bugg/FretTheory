@@ -8,4 +8,4 @@ module.exports = {
     '^@/(.*)$': '<rootDir>/$1',
   },
   testEnvironment: 'jsdom',
-};
+}

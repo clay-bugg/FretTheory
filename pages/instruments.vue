@@ -7,18 +7,11 @@
 </template>
 
 <script setup>
-  import { storeToRefs } from 'pinia'
-  const { selectedInstrument } = storeToRefs(control)
+import { storeToRefs } from "pinia";
+import Keyboard from "~/components/instruments/Keyboard.vue";
+import Guitar from "~/components/instruments/Guitar.vue";
+
+const { selectedInstrument } = storeToRefs(useControlStore());
 </script>
 
-<style scoped lang="scss">
-.page {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  height: 100vh;
-  width: 100vw;
-  margin-top: 3em;
-  font-family: "Ubuntu", sans-serif;
-}
-</style>
+<style scoped lang="scss"></style>

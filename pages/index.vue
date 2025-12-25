@@ -1,5 +1,5 @@
 <template>
-  <div id="page">
+  <div class="page">
     <main>
       <img src="/images/logo.png" />
       <Navbar />
@@ -12,28 +12,12 @@ import Navbar from '@/components/layout/Navbar.vue'
 
 definePageMeta({
   layout: 'no-layout'
-});
+})
 
 </script>
 
 <style>
   
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
-
-#page {
-  font-family: "Orbitron", sans-serif;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  width: 100vw;
-}
-
 main {
   width: 50em;
   height: fit-content;

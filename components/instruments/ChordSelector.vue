@@ -16,13 +16,9 @@
 </template>
 
 <script setup>
-import { defineProps } from 'vue'
+import { useChordCalculation } from "~/composables/useChordCalculation";
 
-const props = defineProps({
-  notes: Array,
-  chordTypes: Array
-})
-
+const { notes, chordTypes, rootNote, chordType } = useChordCalculation();
 </script>
 
 <style scoped>
