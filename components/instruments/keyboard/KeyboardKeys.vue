@@ -4,23 +4,28 @@
       v-for="(key, index) in pianoKeys"
       :key="`${key.note}${key.octave}`"
       :style="{ fontSize: keyFontSize }"
-      :id="`interval-${chordNotes.indexOf(key.note) + 1}`"
+      :id="`interval-${store.chordNotes.indexOf(key.note) + 1}`"
       :class="[
         'key',
         {
           black: key.sharp,
           white: !key.sharp,
-          'highlighted-note': chordNotes.includes(key.note),
-          interval: chordNotes.includes(key.note),
-          'root-note': key.note === rootNote,
+          'highlighted-note': store.chordNotes.includes(key.note),
+          interval: store.chordNotes.includes(key.note),
+          'root-note': key.note === store.rootNote,
         },
       ]"
       @mousedown="$emit('playKey', key.note, key.octave)"
       @mouseup="$emit('stopKey', key.note, key.octave)"
       @mouseleave="$emit('stopKey', key.note, key.octave)"
     >
-      <span v-if="notesDisplayed === 'all'">{{ key.note }}</span>
-      <span v-if="notesDisplayed === 'chord' && chordNotes.includes(key.note)">
+      <span v-if="store.notesDisplayed === 'all'">{{ key.note }}</span>
+      <span
+        v-if="
+          store.notesDisplayed === 'chord' &&
+          store.chordNotes.includes(key.note)
+        "
+      >
         {{ key.note }}
       </span>
     </div>
@@ -29,27 +34,21 @@
 
 <script setup>
 import { computed } from "vue";
+import { useKeyboardStore } from "~/stores/keyboardStore";
 
-const props = defineProps({
-  notes: { type: Array, required: true },
-  octaveAmount: { type: String, required: true },
-  startingOctave: { type: Number, required: true },
-  chordNotes: { type: Array, required: true },
-  rootNote: { type: String, required: true },
-  notesDisplayed: { type: String, required: true },
-});
+const store = useKeyboardStore();
 
 defineEmits(["playKey", "stopKey"]);
 
 const pianoKeys = computed(() => {
   const octavesArray = Array.from(
-    { length: parseInt(props.octaveAmount) },
-    (_, i) => props.startingOctave + i
+    { length: parseInt(store.octaveAmount) },
+    (_, i) => store.startingOctave + i
   );
 
   const keys = [];
   for (const octave of octavesArray) {
-    props.notes.forEach((note) => {
+    store.notes.forEach((note) => {
       keys.push({
         note,
         octave,
@@ -66,9 +65,9 @@ const whiteKeyCount = computed(
 );
 
 const keysHeight = computed(() => {
-  if (props.octaveAmount === "1") return "350px";
-  if (props.octaveAmount === "2") return "260px";
-  if (props.octaveAmount === "3") return "180px";
+  if (store.octaveAmount === "1") return "350px";
+  if (store.octaveAmount === "2") return "260px";
+  if (store.octaveAmount === "3") return "180px";
   return "260px";
 });
 
@@ -78,9 +77,9 @@ const keyStyles = computed(() => ({
 }));
 
 const keyFontSize = computed(() => {
-  if (props.octaveAmount === "1") return "1.6rem";
-  if (props.octaveAmount === "2") return "1rem";
-  if (props.octaveAmount === "3") return "0.8rem";
+  if (store.octaveAmount === "1") return "1.6rem";
+  if (store.octaveAmount === "2") return "1rem";
+  if (store.octaveAmount === "3") return "0.8rem";
   return "1rem";
 });
 </script>

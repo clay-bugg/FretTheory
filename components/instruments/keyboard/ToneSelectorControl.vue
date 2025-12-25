@@ -1,11 +1,7 @@
 <template>
   <div class="tone-selector-box control">
     <p>Tone</p>
-    <select
-      :value="modelValue"
-      class="tone-selector"
-      @change="$emit('update:modelValue', $event.target.value)"
-    >
+    <select v-model="store.currentTone" class="tone-selector">
       <option name="piano" value="piano">Piano</option>
       <option name="synth" value="synth">Synth</option>
     </select>
@@ -13,14 +9,9 @@
 </template>
 
 <script setup>
-defineProps({
-  modelValue: {
-    type: String,
-    required: true,
-  },
-});
+import { useKeyboardStore } from "~/stores/keyboardStore";
 
-defineEmits(["update:modelValue"]);
+const store = useKeyboardStore();
 </script>
 
 <style scoped>

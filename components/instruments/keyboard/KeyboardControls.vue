@@ -1,63 +1,19 @@
 <template>
   <div class="controls">
-    <OctaveRangeControl
-      :starting-octave="startingOctave"
-      :octave-amount="octaveAmount"
-      @update:starting-octave="$emit('update:startingOctave', $event)"
-    />
-
-    <OctaveAmountControl
-      :model-value="octaveAmount"
-      @update:model-value="$emit('update:octaveAmount', $event)"
-    />
-
-    <NoteLabelControl
-      :model-value="notesDisplayed"
-      @update:model-value="$emit('update:notesDisplayed', $event)"
-    />
-
-    <ChordSelectorControl
-      :root-note="rootNote"
-      :chord-type="chordType"
-      :notes="notes"
-      :chord-types="chordTypes"
-      @update:root-note="$emit('update:rootNote', $event)"
-      @update:chord-type="$emit('update:chordType', $event)"
-    />
-
-    <ToneSelectorControl
-      :model-value="currentTone"
-      @update:model-value="$emit('update:currentTone', $event)"
-    />
+    <OctaveRangeControl />
+    <OctaveAmountControl />
+    <NoteLabelControl />
+    <ChordSelectorControl />
+    <ToneSelectorControl />
   </div>
 </template>
 
 <script setup>
-import OctaveRangeControl from "./OctaveRangeControl.vue";
-import OctaveAmountControl from "./OctaveAmountControl.vue";
-import NoteLabelControl from "./NoteLabelControl.vue";
-import ChordSelectorControl from "./ChordSelectorControl.vue";
-import ToneSelectorControl from "./ToneSelectorControl.vue";
-
-defineProps({
-  startingOctave: { type: Number, required: true },
-  octaveAmount: { type: String, required: true },
-  notesDisplayed: { type: String, required: true },
-  rootNote: { type: String, required: true },
-  chordType: { type: String, required: true },
-  notes: { type: Array, required: true },
-  chordTypes: { type: Array, required: true },
-  currentTone: { type: String, required: true },
-});
-
-defineEmits([
-  "update:startingOctave",
-  "update:octaveAmount",
-  "update:notesDisplayed",
-  "update:rootNote",
-  "update:chordType",
-  "update:currentTone",
-]);
+import OctaveRangeControl from './OctaveRangeControl.vue'
+import OctaveAmountControl from './OctaveAmountControl.vue'
+import NoteLabelControl from './NoteLabelControl.vue'
+import ChordSelectorControl from './ChordSelectorControl.vue'
+import ToneSelectorControl from './ToneSelectorControl.vue'
 </script>
 
 <style scoped>

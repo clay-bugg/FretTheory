@@ -1,14 +1,18 @@
 <template>
   <div class="chord-selector-box">
     <label for="root-note-selector">Chord: </label>
-    <select class="root-note-selector" v-model="rootNote">
-      <option v-for="note in notes" :key="note" :value="note">
+    <select class="root-note-selector" v-model="store.rootNote">
+      <option v-for="note in store.notes" :key="note" :value="note">
         {{ note }}
       </option>
     </select>
 
-    <select class="chord-type-selector" v-model="chordType">
-      <option v-for="type in chordTypes" :key="type.value" :value="type.value">
+    <select class="chord-type-selector" v-model="store.chordType">
+      <option
+        v-for="type in store.chordTypes"
+        :key="type.value"
+        :value="type.value"
+      >
         {{ type.label }}
       </option>
     </select>
@@ -16,9 +20,9 @@
 </template>
 
 <script setup>
-import { useChordCalculation } from "~/composables/useChordCalculation";
+import { useKeyboardStore } from "~/stores/keyboardStore";
 
-const { notes, chordTypes, rootNote, chordType } = useChordCalculation();
+const store = useKeyboardStore();
 </script>
 
 <style scoped>

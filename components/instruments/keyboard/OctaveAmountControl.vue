@@ -1,41 +1,36 @@
 <template>
   <div class="octave-select control">
-    <p class="control-label">Octaves: {{ modelValue }}</p>
+    <p class="control-label">Octaves: {{ store.octaveAmount }}</p>
     <div class="octave-selector">
       <input
-        :checked="modelValue === '1'"
-        :class="{ active: modelValue === '1' }"
+        :checked="store.octaveAmount === '1'"
+        :class="{ active: store.octaveAmount === '1' }"
         type="radio"
         value="1"
-        @change="$emit('update:modelValue', '1')"
+        @change="store.octaveAmount = '1'"
       />
       <input
-        :checked="modelValue === '2'"
-        :class="{ active: modelValue === '2' }"
+        :checked="store.octaveAmount === '2'"
+        :class="{ active: store.octaveAmount === '2' }"
         type="radio"
         value="2"
-        @change="$emit('update:modelValue', '2')"
+        @change="store.octaveAmount = '2'"
       />
       <input
-        :checked="modelValue === '3'"
-        :class="{ active: modelValue === '3' }"
+        :checked="store.octaveAmount === '3'"
+        :class="{ active: store.octaveAmount === '3' }"
         type="radio"
         value="3"
-        @change="$emit('update:modelValue', '3')"
+        @change="store.octaveAmount = '3'"
       />
     </div>
   </div>
 </template>
 
 <script setup>
-defineProps({
-  modelValue: {
-    type: String,
-    required: true,
-  },
-});
+import { useKeyboardStore } from "~/stores/keyboardStore";
 
-defineEmits(["update:modelValue"]);
+const store = useKeyboardStore();
 </script>
 
 <style scoped>

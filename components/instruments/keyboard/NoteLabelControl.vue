@@ -4,33 +4,42 @@
     <div class="notes-labels-checkboxes">
       <div class="notes-labels-checkbox">
         <input
-          :checked="modelValue === 'all'"
-          :class="['all-notes-checkbox', { active: modelValue === 'all' }]"
+          :checked="store.notesDisplayed === 'all'"
+          :class="[
+            'all-notes-checkbox',
+            { active: store.notesDisplayed === 'all' },
+          ]"
           type="radio"
           value="all"
-          @change="$emit('update:modelValue', 'all')"
+          @change="store.notesDisplayed = 'all'"
         />
         <p class="notes-checkbox">All</p>
       </div>
 
       <div class="notes-labels-checkbox">
         <input
-          :checked="modelValue === 'chord'"
-          :class="['chord-notes-checkbox', { active: modelValue === 'chord' }]"
+          :checked="store.notesDisplayed === 'chord'"
+          :class="[
+            'chord-notes-checkbox',
+            { active: store.notesDisplayed === 'chord' },
+          ]"
           type="radio"
           value="chord"
-          @change="$emit('update:modelValue', 'chord')"
+          @change="store.notesDisplayed = 'chord'"
         />
         <p class="notes-checkbox">Chord</p>
       </div>
 
       <div class="notes-labels-checkbox">
         <input
-          :checked="modelValue === 'none'"
-          :class="['no-notes-checkbox', { active: modelValue === 'none' }]"
+          :checked="store.notesDisplayed === 'none'"
+          :class="[
+            'no-notes-checkbox',
+            { active: store.notesDisplayed === 'none' },
+          ]"
           type="radio"
           value="none"
-          @change="$emit('update:modelValue', 'none')"
+          @change="store.notesDisplayed = 'none'"
         />
         <p class="notes-checkbox">None</p>
       </div>
@@ -39,14 +48,9 @@
 </template>
 
 <script setup>
-defineProps({
-  modelValue: {
-    type: String,
-    required: true,
-  },
-});
+import { useKeyboardStore } from "~/stores/keyboardStore";
 
-defineEmits(["update:modelValue"]);
+const store = useKeyboardStore();
 </script>
 
 <style scoped>

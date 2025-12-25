@@ -1,77 +1,38 @@
 <template>
   <div class="component">
-    <InstrumentsChordSelector />
+    <div class="instrument-layout">
+      <ChordButtons />
 
-    <div class="keyboard">
-      <KeyboardControls
-        :starting-octave="startingOctave"
-        :octave-amount="octaveAmount"
-        :notes-displayed="notesDisplayed"
-        :root-note="rootNote"
-        :chord-type="chordType"
-        :notes="notes"
-        :chord-types="chordTypes"
-        :current-tone="currentTone"
-        @update:starting-octave="startingOctave = $event"
-        @update:octave-amount="octaveAmount = $event"
-        @update:notes-displayed="notesDisplayed = $event"
-        @update:root-note="rootNote = $event"
-        @update:chord-type="chordType = $event"
-        @update:current-tone="currentTone = $event"
-      />
+      <div class="keyboard-section">
+        <div class="keyboard">
+          <KeyboardControls />
+          <KeyboardKeys @play-key="playKey" @stop-key="stopKey" />
+        </div>
 
-      <KeyboardKeys
-        :notes="notes"
-        :octave-amount="octaveAmount"
-        :starting-octave="startingOctave"
-        :chord-notes="chordNotes"
-        :root-note="rootNote"
-        :notes-displayed="notesDisplayed"
-        @play-key="playKey"
-        @stop-key="stopKey"
-      />
+        <ChordDisplay @play="handleChordPlay" @stop="handleChordStop" />
+      </div>
     </div>
-
-    <ChordDisplay
-      :root-note="rootNote"
-      :chord-type="chordType"
-      :chord-notes="chordNotes"
-      @play="handleChordPlay"
-      @stop="handleChordStop"
-    />
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from "vue";
+import { onMounted, onUnmounted } from "vue";
 import KeyboardControls from "./keyboard/KeyboardControls.vue";
 import KeyboardKeys from "./keyboard/KeyboardKeys.vue";
 import ChordDisplay from "./keyboard/ChordDisplay.vue";
-import { useChordCalculation } from "~/composables/useChordCalculation";
+import ChordButtons from "./keyboard/ChordButtons.vue";
 import { useToneAudio } from "~/composables/useToneAudio";
 
-// Octave state
-const octaveAmount = ref("2");
-const startingOctave = ref(3);
-const notesDisplayed = ref("all");
-
-// Chord calculation composable
-const { notes, chordTypes, rootNote, chordType, chordNotes } =
-  useChordCalculation();
-
-// Audio composable
-const { currentTone, playKey, stopKey, playChord } = useToneAudio(
-  startingOctave,
-  notes
-);
+// Audio composable - uses store internally
+const { playKey, stopKey, playChord } = useToneAudio();
 
 // Chord play handlers
 function handleChordPlay() {
-  playChord("play", rootNote.value, chordType.value, chordNotes.value);
+  playChord("play");
 }
 
 function handleChordStop() {
-  playChord("stop", rootNote.value, chordType.value, chordNotes.value);
+  playChord("stop");
 }
 
 // Spacebar handlers
@@ -135,5 +96,15 @@ input {
   justify-content: flex-start;
   flex-direction: column;
   padding: 2em 4em 1em;
+}
+.instrument-layout {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5em;
+}
+.keyboard-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 </style>

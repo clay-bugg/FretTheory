@@ -2,23 +2,15 @@
   <div class="chord-selector-box control">
     <p class="control-label">Chord</p>
     <div class="chord-selector-inputs">
-      <select
-        class="root-note-selector"
-        :value="rootNote"
-        @change="$emit('update:rootNote', $event.target.value)"
-      >
-        <option v-for="note in notes" :key="note" :value="note">
+      <select class="root-note-selector" v-model="store.rootNote">
+        <option v-for="note in store.notes" :key="note" :value="note">
           {{ note }}
         </option>
       </select>
 
-      <select
-        class="chord-type-selector"
-        :value="chordType"
-        @change="$emit('update:chordType', $event.target.value)"
-      >
+      <select class="chord-type-selector" v-model="store.chordType">
         <option
-          v-for="type in chordTypes"
+          v-for="type in store.chordTypes"
           :key="type.value"
           :value="type.value"
         >
@@ -30,26 +22,9 @@
 </template>
 
 <script setup>
-defineProps({
-  rootNote: {
-    type: String,
-    required: true,
-  },
-  chordType: {
-    type: String,
-    required: true,
-  },
-  notes: {
-    type: Array,
-    required: true,
-  },
-  chordTypes: {
-    type: Array,
-    required: true,
-  },
-});
+import { useKeyboardStore } from "~/stores/keyboardStore";
 
-defineEmits(["update:rootNote", "update:chordType"]);
+const store = useKeyboardStore();
 </script>
 
 <style scoped>

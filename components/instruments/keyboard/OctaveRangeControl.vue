@@ -2,17 +2,23 @@
   <div class="starting-octave control">
     <p class="control-label">Octave Range</p>
     <div class="starting-octave-selector">
-      <button class="starting-octave-button" @click="changeOctave('-')">
+      <button
+        class="starting-octave-button"
+        @click="store.changeStartingOctave('-')"
+      >
         -
       </button>
-      <p v-if="octaveAmount === '1'">{{ startingOctave }}</p>
-      <p v-else-if="octaveAmount === '2'">
-        {{ startingOctave }}-{{ startingOctave + 1 }}
+      <p v-if="store.octaveAmount === '1'">{{ store.startingOctave }}</p>
+      <p v-else-if="store.octaveAmount === '2'">
+        {{ store.startingOctave }}-{{ store.startingOctave + 1 }}
       </p>
-      <p v-else-if="octaveAmount === '3'">
-        {{ startingOctave }}-{{ startingOctave + 2 }}
+      <p v-else-if="store.octaveAmount === '3'">
+        {{ store.startingOctave }}-{{ store.startingOctave + 2 }}
       </p>
-      <button class="starting-octave-button" @click="changeOctave('+')">
+      <button
+        class="starting-octave-button"
+        @click="store.changeStartingOctave('+')"
+      >
         +
       </button>
     </div>
@@ -20,30 +26,9 @@
 </template>
 
 <script setup>
-const props = defineProps({
-  startingOctave: {
-    type: Number,
-    required: true,
-  },
-  octaveAmount: {
-    type: String,
-    required: true,
-  },
-});
+import { useKeyboardStore } from "~/stores/keyboardStore";
 
-const emit = defineEmits(["update:startingOctave"]);
-
-function changeOctave(op) {
-  if (op === "+") {
-    if (props.startingOctave < 6) {
-      emit("update:startingOctave", props.startingOctave + 1);
-    }
-  } else if (op === "-") {
-    if (props.startingOctave > 1) {
-      emit("update:startingOctave", props.startingOctave - 1);
-    }
-  }
-}
+const store = useKeyboardStore();
 </script>
 
 <style scoped>

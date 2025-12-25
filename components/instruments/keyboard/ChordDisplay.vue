@@ -3,10 +3,12 @@
     <p class="chord-played-label">Chord Played</p>
 
     <div class="chord-played">
-      <p class="chord-notes-label">{{ rootNote }}{{ chordType }} |</p>
+      <p class="chord-notes-label">
+        {{ store.rootNote }}{{ store.chordType }} |
+      </p>
 
       <p
-        v-for="(note, index) in chordNotes"
+        v-for="(note, index) in store.chordNotes"
         :key="index"
         class="chord-note"
         :id="`chord-note-${index + 1}`"
@@ -28,11 +30,9 @@
 </template>
 
 <script setup>
-defineProps({
-  rootNote: { type: String, required: true },
-  chordType: { type: String, required: true },
-  chordNotes: { type: Array, required: true },
-});
+import { useKeyboardStore } from "~/stores/keyboardStore";
+
+const store = useKeyboardStore();
 
 defineEmits(["play", "stop"]);
 </script>
