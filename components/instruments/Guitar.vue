@@ -78,6 +78,9 @@
                 'root-note': stringNote.note === rootNote,
               },
             ]"
+            @mousedown="nutClicked(index)"
+            @mouseup="nutReleased(index)"
+            @mouseleave="nutReleased(index)"
           >
             <span v-if="notesDisplayed === 'all'">{{ stringNote.note }}</span>
             <span
@@ -130,7 +133,9 @@
                     'root-note': getNoteAtFret(stringIndex, fret) === rootNote,
                   },
                 ]"
-                @click="fretClicked(stringIndex, fret)"
+                @mousedown="fretClicked(stringIndex, fret)"
+                @mouseup="fretReleased(stringIndex, fret)"
+                @mouseleave="fretReleased(stringIndex, fret)"
               >
                 <span class="fret-note" v-if="notesDisplayed === 'all'">{{
                   getNoteAtFret(stringIndex, fret)
@@ -155,20 +160,52 @@
     </div>
 
     <!-- Chord display -->
-    <p class="chord-played-label">Selected Chord</p>
-    <div class="chord-played">
-      <p v-if="rootNote && chordType" class="chord-notes-label">
-        {{ rootNote }}{{ chordType }} |
-      </p>
-      <p v-for="(note, index) in chordNotes" :key="index" class="chord-note">
-        {{ note }}
-      </p>
+    <div class="chord-section">
+      <p class="chord-played-label">Selected Chord</p>
+      <div class="chord-played">
+        <p v-if="rootNote && chordType" class="chord-notes-label">
+          {{ rootNote }}{{ chordType }} |
+        </p>
+        <p v-for="(note, index) in chordNotes" :key="index" class="chord-note">
+          {{ note }}
+        </p>
+      </div>
+
+      <!-- Play chord button -->
+      <div class="play-chord-section">
+        <button
+          class="play-chord-btn"
+          :class="{ playing: isPlayingChord }"
+          @mousedown="handleChordPlay"
+          @mouseup="handleChordStop"
+          @mouseleave="handleChordStop"
+          :disabled="!isLoaded"
+        >
+          <span class="play-icon">🎸</span>
+          {{ isLoaded ? "Strum Chord" : "Loading..." }}
+        </button>
+        <p class="spacebar-hint">Press <kbd>Space</kbd> to strum</p>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, watch } from "vue";
+import { ref, computed, watch, onMounted, onUnmounted } from "vue";
+import { useGuitarAudio } from "~/composables/useGuitarAudio";
+
+// Audio composable
+const {
+  initAudio,
+  playFret,
+  stopFret,
+  playOpenString,
+  stopOpenString,
+  playChord,
+  stopAll,
+  dispose,
+  isLoaded,
+} = useGuitarAudio();
 
 //----NOTES & TUNING----//
 const notes = ref([
@@ -210,6 +247,14 @@ function getNoteAtFret(stringIndex, fret) {
   return notes.value[newNoteIndex];
 }
 
+// Get octave at a specific string and fret
+function getOctaveAtFret(stringIndex, fret) {
+  const openString = openStrings.value[stringIndex];
+  const openNoteIndex = notes.value.indexOf(openString.note);
+  const fretOctaveOffset = Math.floor((openNoteIndex + fret) / 12);
+  return openString.octave + fretOctaveOffset;
+}
+
 //----CHORD SELECTOR----//
 const rootNote = ref("C");
 const chordType = ref("maj");
@@ -247,14 +292,114 @@ function updateChord() {
 watch(rootNote, () => updateChord(), { immediate: true });
 watch(chordType, () => updateChord());
 
-//----FRET CLICK----//
+//----AUDIO PLAYBACK----//
 const fretPlayed = ref("");
+const isPlayingChord = ref(false);
 
+// Handle fret click - play sound
 function fretClicked(stringIndex, fret) {
   const note = getNoteAtFret(stringIndex, fret);
   fretPlayed.value = `String ${6 - stringIndex}: Fret ${fret} - ${note}`;
   console.log(fretPlayed.value);
+
+  // Play the note
+  playFret(stringIndex, fret, openStrings.value, notes.value);
 }
+
+// Handle fret release - stop sound
+function fretReleased(stringIndex, fret) {
+  stopFret(stringIndex, fret, openStrings.value, notes.value);
+}
+
+// Handle open string (nut) click - play sound
+function nutClicked(stringIndex) {
+  const openString = openStrings.value[stringIndex];
+  fretPlayed.value = `String ${6 - stringIndex}: Open - ${openString.note}`;
+  console.log(fretPlayed.value);
+
+  playOpenString(stringIndex, openStrings.value);
+}
+
+// Handle open string (nut) release - stop sound
+function nutReleased(stringIndex) {
+  stopOpenString(stringIndex, openStrings.value);
+}
+
+// Build chord voicing for guitar and play it
+function handleChordPlay() {
+  if (!rootNote.value || !chordType.value || chordNotes.value.length === 0)
+    return;
+
+  isPlayingChord.value = true;
+
+  // Build a guitar-appropriate voicing (from low to high strings)
+  const chordVoicing = [];
+
+  // Go through strings from low E (index 5) to high E (index 0)
+  for (let stringIndex = 5; stringIndex >= 0; stringIndex--) {
+    const openString = openStrings.value[stringIndex];
+
+    // Check open string first
+    if (chordNotes.value.includes(openString.note)) {
+      chordVoicing.push(`${openString.note}${openString.octave}`);
+      continue;
+    }
+
+    // Check first 5 frets for a chord note
+    for (let fret = 1; fret <= 5; fret++) {
+      const note = getNoteAtFret(stringIndex, fret);
+      if (chordNotes.value.includes(note)) {
+        const octave = getOctaveAtFret(stringIndex, fret);
+        chordVoicing.push(`${note}${octave}`);
+        break;
+      }
+    }
+  }
+
+  if (chordVoicing.length > 0) {
+    playChord(chordVoicing, 40);
+  }
+}
+
+// Stop chord
+function handleChordStop() {
+  isPlayingChord.value = false;
+  stopAll();
+}
+
+// Spacebar handlers for chord playback
+function spacePressed(e) {
+  if (!e) return;
+  if (e.code === "Space" || e.key === " " || e.key === "Spacebar") {
+    e.preventDefault();
+    if (!e.repeat) {
+      handleChordPlay();
+    }
+  }
+}
+
+function spaceReleased(e) {
+  if (!e) return;
+  if (e.code === "Space" || e.key === " " || e.key === "Spacebar") {
+    e.preventDefault();
+    handleChordStop();
+  }
+}
+
+onMounted(() => {
+  // Initialize guitar audio
+  initAudio();
+
+  window.addEventListener("keydown", spacePressed);
+  window.addEventListener("keyup", spaceReleased);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("keydown", spacePressed);
+  window.removeEventListener("keyup", spaceReleased);
+  stopAll();
+  dispose();
+});
 </script>
 
 <style scoped>
@@ -572,9 +717,16 @@ function fretClicked(stringIndex, fret) {
 }
 
 /*----CHORD DISPLAY----*/
+.chord-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1em;
+  margin-top: 1.5em;
+}
+
 .chord-played-label {
   font-size: 1.5rem;
-  margin-top: 2em;
 }
 
 .chord-played {
@@ -592,5 +744,95 @@ function fretClicked(stringIndex, fret) {
   display: flex;
   align-items: center;
   width: fit-content;
+}
+
+/*----PLAY CHORD SECTION----*/
+.play-chord-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5em;
+  margin-top: 0.5em;
+}
+
+.play-chord-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  padding: 0.8em 1.5em;
+  font-size: 1.1rem;
+  font-family: "Orbitron", sans-serif;
+  font-weight: 600;
+  background: linear-gradient(135deg, #4a90a4, #357a8f);
+  color: white;
+  border: 2px solid #255c6b;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 15px rgba(74, 144, 164, 0.3);
+}
+
+.play-chord-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #5aa0b4, #45899f);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(74, 144, 164, 0.4);
+}
+
+.play-chord-btn:active:not(:disabled),
+.play-chord-btn.playing {
+  background: linear-gradient(135deg, #3a7f94, #256a7f);
+  transform: translateY(1px);
+  box-shadow: 0 2px 10px rgba(74, 144, 164, 0.3);
+}
+
+.play-chord-btn:disabled {
+  background: linear-gradient(135deg, #666, #555);
+  border-color: #444;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.play-icon {
+  font-size: 1.2em;
+}
+
+.spacebar-hint {
+  font-size: 0.85rem;
+  color: #888;
+  font-family: "Ubuntu", sans-serif;
+}
+
+.spacebar-hint kbd {
+  display: inline-block;
+  padding: 0.2em 0.5em;
+  font-family: "Ubuntu Mono", monospace;
+  font-size: 0.9em;
+  background-color: #333;
+  color: #fff;
+  border: 1px solid #555;
+  border-radius: 4px;
+  box-shadow: 0 2px 0 #222;
+}
+
+/*----INTERACTIVE NUT NOTES----*/
+.nut-note {
+  cursor: pointer;
+  user-select: none;
+}
+
+.nut-note:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.nut-note:active {
+  background-color: rgba(74, 144, 164, 0.6);
+  transform: scale(0.98);
+}
+
+/*----INTERACTIVE FRETS----*/
+.fret:active {
+  background-color: rgba(74, 144, 164, 0.5) !important;
+  transform: scale(0.98);
 }
 </style>
