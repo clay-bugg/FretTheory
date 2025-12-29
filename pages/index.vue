@@ -1,48 +1,20 @@
 <template>
   <div class="page">
-    <main>
-      <img src="/images/logo.png" />
-      <Navbar />
-    </main>
-    <SVG />
+    <NuxtLink to="instruments" class="link">Instruments</NuxtLink>
+    <NuxtLink to="theory" class="link">Theory</NuxtLink>
+    <NuxtLink to="tools" class="link">Tools</NuxtLink>
   </div>
 </template>
 
 <script setup>
-import Navbar from '@/components/layout/Navbar.vue'
-import SVG from '@/components/SVG.vue'
-
 definePageMeta({
-  layout: 'no-layout'
-})
-
+  layout: "no-layout",
+});
 </script>
 
-<style>
-  
-main {
-  width: 50em;
-  height: fit-content;
-  display: flex;
-  justify-content: center;
-  gap: 1em;
-  align-items: center;
-  flex-direction: column;
-  box-shadow: -3px 3px 6px rgba(0, 0, 0, 0.5);
-  border-top: 1px solid rgba(0, 0, 0, 0.2);
-  border-right: 1px solid rgba(0, 0, 0, 0.2);
-  padding: 2em;
-  border-radius: 20px;
+<style scoped lang="scss">
+.link {
+  color: white;
+  text-decoration: none;
 }
-
-main img {
-  width: 100%;
-  height: auto;
-}
-
-svg {
-  width: 100px;
-  height: 100px;
-}
-
 </style>

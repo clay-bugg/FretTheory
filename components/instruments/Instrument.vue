@@ -48,6 +48,7 @@ function changeInstrument(direction) {
   width: 3em;
   height: 3em;
   flex-shrink: 0;
+  z-index: 2;
 
   .prev-icon,
   .next-icon {

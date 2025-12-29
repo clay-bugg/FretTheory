@@ -1,26 +1,14 @@
 <template>
-  <div class="component">
-    <div class="instrument-layout">
-      <ChordButtons />
-
-      <div class="keyboard-section">
-        <div class="keyboard">
-          <KeyboardControls />
-          <KeyboardKeys @play-key="playKey" @stop-key="stopKey" />
-        </div>
-
-        <ChordDisplay @play="handleChordPlay" @stop="handleChordStop" />
-      </div>
-    </div>
+  <div class="keyboard">
+    <KeyboardControls />
+    <KeyboardKeys @play-key="playKey" @stop-key="stopKey" />
   </div>
 </template>
 
 <script setup>
-import { onMounted, onUnmounted } from "vue";
-import KeyboardControls from "./keyboard/KeyboardControls.vue";
-import KeyboardKeys from "./keyboard/KeyboardKeys.vue";
-import ChordDisplay from "./keyboard/ChordDisplay.vue";
-import ChordButtons from "./keyboard/ChordButtons.vue";
+
+import KeyboardControls from "./KeyboardComponents/Controls";
+import KeyboardKeys from "./KeyboardComponents/Keys";
 import { useToneAudio } from "~/composables/useToneAudio";
 
 // Audio composable - uses store internally
@@ -78,10 +66,6 @@ onUnmounted(() => {
   width: fit-content;
   position: relative;
   justify-content: flex-start;
-  font-family: "Orbitron";
-}
-input {
-  font-family: "Ubuntu";
 }
 .keyboard {
   border: 1px solid black;
@@ -95,7 +79,6 @@ input {
   align-items: center;
   justify-content: flex-start;
   flex-direction: column;
-  padding: 2em 4em 1em;
 }
 .instrument-layout {
   display: flex;

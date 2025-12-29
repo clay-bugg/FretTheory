@@ -1,15 +1,9 @@
 <template>
   <header>
-    <h1>FretTheory</h1>
-    <nav>
-      <NuxtLink
-        v-for="button in ['Instruments', 'Theory']"
-        class="button"
-        :class="{ selected: buttonSelected === button }"
-        @click="selectButton(button)"
-        >{{ button }}</NuxtLink
-      >
-    </nav>
+    <NuxtLink to="/" class="link">
+      <h1>FretTheory</h1>
+    </NuxtLink>
+    <LayoutNavbar />
   </header>
 </template>
 
@@ -21,7 +15,7 @@ function selectButton(value) {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 header {
   width: 100%;
   height: 70px;
@@ -35,36 +29,23 @@ header {
   background-color: #1f1f1f;
   min-width: fit-content;
   font-family: "AR One Sans";
-  padding: 20px 30px 4px;
-}
+  padding: 30px 30px 4px;
 
-h1 {
-  font-size: 3rem;
-  font-weight: 700;
-  color: #ebebeb;
-  position: relative;
-  top: 5px;
-}
-
-nav {
-  display: flex;
-  height: 100%;
-  justify-content: center;
-  width: fit-content;
-  align-items: flex-end;
-  gap: 20px;
-  .button {
-    text-decoration: none;
+  h1 {
+    font-size: 3rem;
+    font-weight: 700;
     color: #ebebeb;
-    font-size: 1.4rem;
-    font-weight: 400;
+    position: relative;
+    top: 5px;
     &:hover {
       cursor: pointer;
       color: #ffffff;
-    }
-    &.selected {
-      font-weight: 600;
+      text-shadow: 0 0 1px #ffffff;
     }
   }
+}
+
+.link {
+  text-decoration: none;
 }
 </style>
