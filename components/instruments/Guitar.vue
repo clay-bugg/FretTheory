@@ -1,5 +1,5 @@
 <template>
-  <div class="component">
+  <div class="page">
     <div class="guitar-body">
       <div class="controls">
         <div class="notes-labels control">
@@ -403,24 +403,6 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-/*----GLOBAL----*/
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
-
-.component {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.4em;
-  width: fit-content;
-  position: relative;
-  justify-content: flex-start;
-  font-family: "Orbitron";
-}
-
 /*----CONTROLS----*/
 .controls {
   display: flex;
@@ -431,7 +413,7 @@ onUnmounted(() => {
   position: relative;
   z-index: 3;
   color: rgb(215, 215, 215);
-  padding: 0 1em 1em;
+  padding: 0 1em 0.5em;
   gap: 3em;
   margin-bottom: 0.5em;
 }
@@ -479,7 +461,7 @@ onUnmounted(() => {
   -moz-appearance: none;
   border: 2px solid black;
   background-color: rgb(152, 12, 12);
-  border-radius: 5px;
+  border-radius: 50px;
 }
 
 .notes-labels-checkboxes input.active {
@@ -513,18 +495,12 @@ onUnmounted(() => {
 
 /*----GUITAR BODY----*/
 .guitar-body {
-  border: 1px solid black;
-  border-radius: 15px;
-  border-top-left-radius: 40px;
-  border-top-right-radius: 40px;
-  background-color: rgb(42, 42, 42);
   width: 1100px;
   height: fit-content;
   display: flex;
   align-items: center;
   justify-content: flex-start;
   flex-direction: column;
-  padding: 2em 2em 1.5em;
 }
 
 /*----GUITAR NECK----*/
@@ -696,24 +672,26 @@ onUnmounted(() => {
   font-family: "Ubuntu", sans-serif;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
   z-index: 3;
-}
-
-.fret.highlighted-note {
-  background-color: rgba(126, 145, 215, 0.6);
+  border-radius: 50px;
 }
 
 .fret.highlighted-note .fret-note {
-  background-color: rgb(126, 145, 215);
+  background-color: rgb(58, 108, 216);
   color: #000;
-}
-
-.fret.root-note {
-  background-color: rgba(57, 82, 175, 0.7);
+  height: 40px;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.3rem;
+  font-weight: 400;
+  border: 3px solid black;
 }
 
 .fret.root-note .fret-note {
-  background-color: rgb(57, 82, 175);
-  color: white;
+  background-color: rgb(197, 46, 46);
+  color: rgb(0, 0, 0);
+  border: 3px solid black;
 }
 
 /*----CHORD DISPLAY----*/
@@ -806,7 +784,6 @@ onUnmounted(() => {
 .spacebar-hint kbd {
   display: inline-block;
   padding: 0.2em 0.5em;
-  font-family: "Ubuntu Mono", monospace;
   font-size: 0.9em;
   background-color: #333;
   color: #fff;
@@ -816,6 +793,9 @@ onUnmounted(() => {
 }
 
 /*----INTERACTIVE NUT NOTES----*/
+.nut {
+  width: 40x;
+}
 .nut-note {
   cursor: pointer;
   user-select: none;
@@ -827,12 +807,6 @@ onUnmounted(() => {
 
 .nut-note:active {
   background-color: rgba(74, 144, 164, 0.6);
-  transform: scale(0.98);
-}
-
-/*----INTERACTIVE FRETS----*/
-.fret:active {
-  background-color: rgba(74, 144, 164, 0.5) !important;
   transform: scale(0.98);
 }
 </style>

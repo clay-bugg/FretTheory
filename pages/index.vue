@@ -4,11 +4,13 @@
       <img src="/images/logo.png" />
       <Navbar />
     </main>
+    <SVG />
   </div>
 </template>
 
 <script setup>
 import Navbar from '@/components/layout/Navbar.vue'
+import SVG from '@/components/SVG.vue'
 
 definePageMeta({
   layout: 'no-layout'
@@ -36,6 +38,11 @@ main {
 main img {
   width: 100%;
   height: auto;
+}
+
+svg {
+  width: 100px;
+  height: 100px;
 }
 
 </style>

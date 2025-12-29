@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <h1>Practice</h1>
+    <Handle />
   </div>
 </template>
 

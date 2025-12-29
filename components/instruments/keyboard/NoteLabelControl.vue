@@ -67,7 +67,6 @@ const store = useKeyboardStore();
   flex-direction: column;
   gap: 0.4em;
   width: 2.5em;
-  position: relative;
   top: 0.4em;
 }
 .notes-labels-checkboxes input {

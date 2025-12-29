@@ -6,8 +6,7 @@ export default defineNuxtConfig({
   googleFonts: {
     families: {
       Orbitron: [100, 200, 300, 400, 500, 600, 700, 800, 900],
-      "Big Shoulders Stencil": [100, 200, 300, 400, 500, 600, 700, 800, 900],
-      Ubuntu: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      'AR One Sans': [100, 200, 300, 400, 500, 600, 700, 800, 900],
     },
   },
   compatibilityDate: "2025-12-10",
