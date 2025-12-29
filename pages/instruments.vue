@@ -1,8 +1,7 @@
 <template>
   <div class="page">
     <UIInstrumentSelector />
-    <Keyboard v-if="selectedInstrument === 'Keyboard'" />
-    <Guitar v-else-if="selectedInstrument === 'Guitar'" />
+    <Instrument />
   </div>
 </template>
 
