@@ -189,6 +189,7 @@ export const CHORD_TYPES = [
 ];
 
 export const useKeyboardStore = defineStore("keyboard", () => {
+
   // Current Pitch
   const currentPitch = ref(3);
 

@@ -4,12 +4,12 @@
       {{ props.label }}
     </button>
     <div class="LED-container">
-    <span
-      v-for="(LED, index) in props.ledAmount"
-      :key="index"
-      class="LED"
-      :class="{ active: index === activeIndex }"
-    ></span>
+      <span
+        v-for="index in props.ledAmount"
+        :key="index"
+        class="LED"
+        :class="{ active: index === activeIndex + 1 }"
+      ></span>
     </div>
   </div>
 </template>
@@ -19,8 +19,8 @@ import { ref } from "vue";
 import { storeToRefs } from "pinia";
 import { useKeyboardStore } from "~/stores/keyboardStore";
 
-const { changeLabels, changePitch } = useKeyboardStore();
-const { activeLEDIndex } = storeToRefs(useKeyboardStore());
+const store = useKeyboardStore();
+const { currentPitch, notesDisplayed } = storeToRefs(store);
 
 const props = defineProps({
   ledAmount: {
@@ -33,19 +33,27 @@ const props = defineProps({
   },
 });
 
-const activeIndex = ref(0);
+// Compute activeIndex based on which control this is
+const activeIndex = computed(() => {
+  if (props.label === "PITCH") {
+    return currentPitch.value;
+  } else if (props.label === "LABELS") {
+    // Map notesDisplayed to index: 'all' = 0, 'chord' = 1, 'none' = 2
+    const labelMap = { all: 0, chord: 1, none: 2 };
+    return labelMap[notesDisplayed.value] ?? 0;
+  }
+  return 0;
+});
 
 const changeLED = (label) => {
-  activeIndex.value = (activeIndex.value + 1) % props.ledAmount;
+  const nextIndex = (activeIndex.value + 1) % props.ledAmount;
 
   if (label === "LABELS") {
-    const index = activeIndex.value;
-    changeLabels(index);
+    store.changeLabels(nextIndex);
   }
 
   if (label === "PITCH") {
-    const index = activeIndex.value;
-    changePitch(index);
+    currentPitch.value = nextIndex;
   }
 };
 </script>
@@ -70,7 +78,7 @@ const changeLED = (label) => {
     padding: 6px;
     border-radius: 6px;
     font-size: 1rem;
-    font-family: 'Lexend', sans-serif;
+    font-family: "Lexend", sans-serif;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
     transition: all 0.2s ease;
     &:hover {

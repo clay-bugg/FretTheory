@@ -4,28 +4,23 @@
       v-for="(key, index) in pianoKeys"
       :key="`${key.note}${key.octave}`"
       :style="{ fontSize: keyFontSize }"
-      :id="`interval-${store.chordNotes.indexOf(key.note) + 1}`"
+      :id="`interval-${chordNotes.indexOf(key.note) + 1}`"
       :class="[
         'key',
         {
           black: key.sharp,
           white: !key.sharp,
-          'highlighted-note': store.chordNotes.includes(key.note),
-          interval: store.chordNotes.includes(key.note),
-          'root-note': key.note === store.rootNote,
+          'highlighted-note': chordNotes.includes(key.note),
+          interval: chordNotes.includes(key.note),
+          'root-note': key.note === rootNote,
         },
       ]"
       @mousedown="$emit('playKey', key.note, key.octave)"
       @mouseup="$emit('stopKey', key.note, key.octave)"
       @mouseleave="$emit('stopKey', key.note, key.octave)"
     >
-      <span v-if="store.notesDisplayed === 'all'">{{ key.note }}</span>
-      <span
-        v-if="
-          store.notesDisplayed === 'chord' &&
-          store.chordNotes.includes(key.note)
-        "
-      >
+      <span v-if="notesDisplayed === 'all'">{{ key.note }}</span>
+      <span v-if="notesDisplayed === 'chord' && chordNotes.includes(key.note)">
         {{ key.note }}
       </span>
     </div>
@@ -34,9 +29,12 @@
 
 <script setup>
 import { computed, ref } from "vue";
+import { storeToRefs } from "pinia";
 import { useKeyboardStore } from "~/stores/keyboardStore";
 
 const store = useKeyboardStore();
+const { currentPitch, chordNotes, rootNote, notesDisplayed, notes } =
+  storeToRefs(store);
 
 // Default octave amount (since it was removed from store)
 const octaveAmount = ref(2);
@@ -46,12 +44,12 @@ defineEmits(["playKey", "stopKey"]);
 const pianoKeys = computed(() => {
   const octavesArray = Array.from(
     { length: octaveAmount.value },
-    (_, i) => store.currentPitch + i
+    (_, i) => currentPitch.value + i
   );
 
   const keys = [];
   for (const octave of octavesArray) {
-    store.notes.forEach((note) => {
+    notes.value.forEach((note) => {
       keys.push({
         note,
         octave,
@@ -94,10 +92,11 @@ const keyFontSize = computed(() => {
   overflow: hidden;
   margin-bottom: 1em;
   z-index: 0;
-  border-top: 10px solid black;
+  border-top: 15px solid black;
   border-left: 2px solid black;
   border-right: 2px solid black;
   position: relative;
+  font-family: "Lexend";
 }
 .key {
   border: 1px solid black;
@@ -107,9 +106,6 @@ const keyFontSize = computed(() => {
   justify-content: flex-end;
   padding-bottom: 0.2em;
   font-weight: 600;
-  font-family: "Ubuntu";
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
   font-size: 0.9rem;
 }
 .key:hover {
@@ -122,13 +118,15 @@ const keyFontSize = computed(() => {
   height: 100%;
   position: relative;
   z-index: 1;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 .white:hover {
   background-color: rgb(240, 240, 240);
 }
 .black {
-  width: calc(100% / var(--white-key-count) * 0.6);
-  height: 60%;
+  width: calc(100% / var(--white-key-count) * 0.7);
+  height: 55%;
   position: relative;
   background-color: rgb(0, 0, 0);
   border: 2px solid black;
@@ -138,7 +136,7 @@ const keyFontSize = computed(() => {
   z-index: 2;
   overflow: hidden;
   border-top: 1px solid black;
-  margin-left: calc(100% / var(--white-key-count) * -0.6);
+  margin-left: calc(100% / var(--white-key-count) * -0.7);
   left: calc(100% / var(--white-key-count) * 0.3);
   padding-bottom: 0.4em;
   box-shadow: -2px 0 1px rgba(0, 0, 0, 0.5);

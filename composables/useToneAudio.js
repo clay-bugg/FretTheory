@@ -1,5 +1,4 @@
 import * as Tone from "tone";
-import { onMounted, onUnmounted } from "vue";
 import { useKeyboardStore } from "~/stores/keyboardStore";
 
 export function useToneAudio() {

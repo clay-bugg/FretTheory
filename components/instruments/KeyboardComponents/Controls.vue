@@ -1,7 +1,7 @@
 <template>
   <div class="controls">
-    <LEDControl :ledAmount="6" label="PITCH" />
     <LEDControl :ledAmount="3" label="LABELS" />
+    <LEDControl :ledAmount="6" label="PITCH" />
   </div>
 </template>
 
@@ -16,6 +16,6 @@ import LEDControl from "./LEDControl";
   justify-content: flex-start;
   width: 100%;
   gap: 2em;
-  padding: 20px 30px;
+  padding: 20px;
 }
 </style>

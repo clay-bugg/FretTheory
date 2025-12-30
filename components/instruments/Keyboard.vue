@@ -54,11 +54,6 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
 .component {
   display: flex;
   flex-direction: column;
@@ -78,6 +73,7 @@ onUnmounted(() => {
   justify-content: flex-start;
   flex-direction: column;
   box-shadow: 0 6px 2px rgba(0, 0, 0, 0.4);
+  padding: 0 20px
 }
 .instrument-layout {
   display: flex;
