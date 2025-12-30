@@ -161,7 +161,6 @@ const extendedChordTypes = [
   background-color: rgba(255, 255, 255, 0.2);
 }
 
-/* Scrollbar styling */
 .chord-type-buttons::-webkit-scrollbar {
   width: 6px;
 }

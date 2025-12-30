@@ -66,7 +66,7 @@ onUnmounted(() => {
   border: 3px solid black;
   border-radius: 10px;
   background-color: #222222;
-  width: 1100px;
+  width: 100%;
   height: fit-content;
   display: flex;
   align-items: center;

@@ -1,12 +1,12 @@
 <template>
   <div class="instrument">
     <button class="change-instrument" @click="changeInstrument('prev')">
-      <Icon name="eva:arrow-left-fill" class="prev-icon" />
+      <Icon name="eva:arrow-left-fill" class="prev icon" />
     </button>
     <InstrumentsKeyboard v-if="selectedInstrument === 'Keyboard'" />
     <InstrumentsGuitar v-else-if="selectedInstrument === 'Guitar'" />
     <button class="change-instrument" @click="changeInstrument('next')">
-      <Icon name="eva:arrow-right-fill" class="next-icon" />
+      <Icon name="eva:arrow-right-fill" class="next icon" />
     </button>
   </div>
 </template>
@@ -32,7 +32,7 @@ function changeInstrument(direction) {
 
 <style lang="scss" scoped>
 .instrument {
-  width: fit-content;
+  width: 76em;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -50,9 +50,9 @@ function changeInstrument(direction) {
   flex-shrink: 0;
   z-index: 2;
 
-  .prev-icon,
-  .next-icon {
-    font-size: 1.5em;
+  .icon,
+  .icon {
+    font-size: 3em;
   }
 }
 </style>
