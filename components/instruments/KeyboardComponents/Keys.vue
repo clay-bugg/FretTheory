@@ -33,17 +33,20 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { useKeyboardStore } from "~/stores/keyboardStore";
 
 const store = useKeyboardStore();
+
+// Default octave amount (since it was removed from store)
+const octaveAmount = ref(2);
 
 defineEmits(["playKey", "stopKey"]);
 
 const pianoKeys = computed(() => {
   const octavesArray = Array.from(
-    { length: parseInt(store.octaveAmount) },
-    (_, i) => store.startingOctave + i
+    { length: octaveAmount.value },
+    (_, i) => store.currentPitch + i
   );
 
   const keys = [];
@@ -65,9 +68,9 @@ const whiteKeyCount = computed(
 );
 
 const keysHeight = computed(() => {
-  if (store.octaveAmount === "1") return "350px";
-  if (store.octaveAmount === "2") return "260px";
-  if (store.octaveAmount === "3") return "180px";
+  if (octaveAmount.value === 1) return "350px";
+  if (octaveAmount.value === 2) return "260px";
+  if (octaveAmount.value === 3) return "180px";
   return "260px";
 });
 
@@ -77,9 +80,9 @@ const keyStyles = computed(() => ({
 }));
 
 const keyFontSize = computed(() => {
-  if (store.octaveAmount === "1") return "1.6rem";
-  if (store.octaveAmount === "2") return "1rem";
-  if (store.octaveAmount === "3") return "0.8rem";
+  if (octaveAmount.value === 1) return "1.6rem";
+  if (octaveAmount.value === 2) return "1rem";
+  if (octaveAmount.value === 3) return "0.8rem";
   return "1rem";
 });
 </script>

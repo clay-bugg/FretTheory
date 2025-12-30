@@ -6,8 +6,7 @@
 </template>
 
 <script setup>
-import OctaveRangeControl from './OctaveRangeControl'
-import LEDControl from './LEDControl'
+import LEDControl from "./LEDControl";
 </script>
 
 <style scoped>
@@ -16,5 +15,7 @@ import LEDControl from './LEDControl'
   align-items: center;
   justify-content: flex-start;
   width: 100%;
+  gap: 2em;
+  padding: 20px 30px;
 }
 </style>

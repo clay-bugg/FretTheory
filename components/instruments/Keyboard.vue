@@ -68,17 +68,16 @@ onUnmounted(() => {
   justify-content: flex-start;
 }
 .keyboard {
-  border: 1px solid black;
-  border-radius: 15px;
-  border-top-left-radius: 40px;
-  border-top-right-radius: 40px;
-  background-color: rgb(42, 42, 42);
+  border: 3px solid black;
+  border-radius: 10px;
+  background-color: #222222;
   width: 1100px;
   height: fit-content;
   display: flex;
   align-items: center;
   justify-content: flex-start;
   flex-direction: column;
+  box-shadow: 0 6px 2px rgba(0, 0, 0, 0.4);
 }
 .instrument-layout {
   display: flex;
