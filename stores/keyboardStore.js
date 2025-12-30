@@ -189,20 +189,14 @@ export const CHORD_TYPES = [
 ];
 
 export const useKeyboardStore = defineStore("keyboard", () => {
-  // Notes & chord constants
-  const notes = ref(NOTES);
-  const chordTypes = ref(CHORD_TYPES);
-
-  // Chord state
-  const rootNote = ref("");
-  const chordType = ref("");
-  const chordNotes = ref([]);
-
-  // Keyboard controls
+  // Current Pitch
   const currentPitch = ref(3);
 
-  // Notes Displayed
+  function changePitch(index) {
+    currentPitch.value = index + 1;
+  }
 
+  // Notes Displayed
   const notesDisplayed = ref("all");
 
   function changeLabels(index) {
@@ -222,9 +216,16 @@ export const useKeyboardStore = defineStore("keyboard", () => {
     }
   }
 
-  
+  // Notes & Chord Constants
+  const notes = ref(NOTES);
+  const chordTypes = ref(CHORD_TYPES);
 
-  // Computed chord notes
+  // Chord state
+  const rootNote = ref("");
+  const chordType = ref("");
+  const chordNotes = ref([]);
+
+  // Computed Chord Notes
   function updateChord() {
     if (!rootNote.value || !chordType.value) return;
 
@@ -247,7 +248,7 @@ export const useKeyboardStore = defineStore("keyboard", () => {
     );
   }
 
-  // Watchers for chord updates
+  // Watchers for Chord Updates
   watch(rootNote, (newVal) => {
     console.log(`Root note changed to ${newVal}`);
     updateChord();
@@ -258,7 +259,7 @@ export const useKeyboardStore = defineStore("keyboard", () => {
     updateChord();
   });
 
-  // Octave actions
+  // Pitch Controls
   function changePitch(op) {
     if (op === "+" && currentPitch.value < 6) {
       currentPitch.value++;
@@ -267,7 +268,7 @@ export const useKeyboardStore = defineStore("keyboard", () => {
     }
   }
 
-  // Assign octaves to chord notes for playback
+  // Assign Octaves to Chord Notes for Playback
   function assignChordOctaves(root, chordNotesArray) {
     let currentOctave = currentPitch.value;
     let lastNoteIndex = notes.value.indexOf(root);
@@ -295,6 +296,7 @@ export const useKeyboardStore = defineStore("keyboard", () => {
     chordNotes,
     currentPitch,
     notesDisplayed,
+
     // Actions
     updateChord,
     changePitch,
