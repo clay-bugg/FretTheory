@@ -59,6 +59,8 @@ const changeLED = (label) => {
 </script>
 
 <style scoped lang="scss">
+@use "~/assets/scss/main.scss" as *;
+
 .LED-switch {
   display: flex;
   align-items: center;
@@ -72,22 +74,24 @@ const changeLED = (label) => {
   }
 
   .LED-switch-button {
-    background: #303030;
-    color: #ebebeb;
     border: 2px solid black;
-    padding: 6px;
     border-radius: 6px;
-    font-size: 1rem;
+    padding: 6px;
+    background: $bg-button;
+    color: $text-light;
     font-family: "Lexend", sans-serif;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
+    font-size: 1rem;
     transition: all 0.2s ease;
+    box-shadow: 0 1px 2px $shadow-btn-drop;
+
     &:hover {
       filter: brightness(1.06);
     }
+
     &:active {
+      box-shadow: none;
       filter: brightness(1);
       transform: translateY(1px);
-      box-shadow: none;
     }
   }
 
@@ -97,16 +101,17 @@ const changeLED = (label) => {
     border-radius: 2px;
     background: linear-gradient(
       to top right,
-      #ffffff 5%,
-      #bcbcbc 5%,
-      #898989 60%
+      $led-bg-gradient-light 5%,
+      $led-bg-gradient-mid 5%,
+      $led-bg-gradient-dark 60%
     );
     transition: all 0.2s ease;
-    box-shadow: inset -3px 3px 6px rgba(47, 47, 47, 0.5);
+    box-shadow: inset -3px 3px 6px $led-shadow;
 
     &.active {
-      background: #21c400;
-      box-shadow: inset -3px 3px 3px rgb(20, 122, 0, 0.5), 0 0 6px #21c400;
+      background: $color-led-active;
+      box-shadow: inset -3px 3px 3px rgba($color-led-active-shadow, 0.5),
+        0 0 6px $color-led-active;
     }
   }
 }

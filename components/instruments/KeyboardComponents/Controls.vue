@@ -20,6 +20,7 @@ import VolumeSlider from "./VolumeSlider";
   justify-content: space-between;
   width: 100%;
   padding: 20px;
+
   .LED-controls {
     display: flex;
     align-items: center;
@@ -28,11 +29,11 @@ import VolumeSlider from "./VolumeSlider";
   }
 
   input[type="range"] {
-    -webkit-appearance: none;
-    appearance: none;
-    background: transparent;
     width: 100%;
+    background: transparent;
     cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
   }
 }
 </style>

@@ -82,12 +82,14 @@ const extendedChordTypes = [
 ];
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@use "~/assets/scss/main.scss" as *;
+
 .chord-buttons {
   display: flex;
   gap: 1em;
   padding: 1em;
-  background-color: rgb(42, 42, 42);
+  background-color: $bg-button-dark;
   border-radius: 12px;
   font-family: "Ubuntu", sans-serif;
 }
@@ -108,10 +110,10 @@ const extendedChordTypes = [
 
 .note-btn,
 .chord-btn {
-  background-color: rgb(60, 60, 60);
+  background-color: $bg-button-hover;
   border: none;
   border-radius: 6px;
-  color: rgb(220, 220, 220);
+  color: $text-light-muted;
   font-size: 0.9rem;
   font-weight: 500;
   cursor: pointer;
@@ -132,17 +134,17 @@ const extendedChordTypes = [
 
 .note-btn:hover,
 .chord-btn:hover {
-  background-color: rgb(80, 80, 80);
+  background-color: $bg-button-hover-light;
 }
 
 .note-btn.active {
-  background-color: rgb(57, 82, 175);
+  background-color: $chord-btn-active-note;
   color: white;
 }
 
 .chord-btn.active {
-  background-color: rgb(200, 170, 80);
-  color: rgb(30, 30, 30);
+  background-color: $chord-btn-active-type;
+  color: $chord-btn-active-type-text;
 }
 
 .note-pair {
@@ -152,13 +154,13 @@ const extendedChordTypes = [
 }
 
 .note-pair span {
-  background-color: rgb(50, 50, 50);
+  background-color: $bg-button-active;
   padding: 0.2em 0.4em;
   border-radius: 4px;
 }
 
 .note-btn.active .note-pair span {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: $overlay-white;
 }
 
 .chord-type-buttons::-webkit-scrollbar {
@@ -166,16 +168,16 @@ const extendedChordTypes = [
 }
 
 .chord-type-buttons::-webkit-scrollbar-track {
-  background: rgb(40, 40, 40);
+  background: $bg-scrollbar-track;
   border-radius: 3px;
 }
 
 .chord-type-buttons::-webkit-scrollbar-thumb {
-  background: rgb(80, 80, 80);
+  background: $bg-scrollbar-thumb;
   border-radius: 3px;
 }
 
 .chord-type-buttons::-webkit-scrollbar-thumb:hover {
-  background: rgb(100, 100, 100);
+  background: $bg-scrollbar-thumb-hover;
 }
 </style>

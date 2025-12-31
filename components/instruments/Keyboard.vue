@@ -6,7 +6,6 @@
 </template>
 
 <script setup>
-
 import KeyboardControls from "./KeyboardComponents/Controls";
 import KeyboardKeys from "./KeyboardComponents/Keys";
 import { useToneAudio } from "~/composables/useToneAudio";
@@ -53,36 +52,41 @@ onUnmounted(() => {
 });
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@use "~/assets/scss/main.scss" as *;
+
 .component {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
   width: fit-content;
   position: relative;
-  justify-content: flex-start;
 }
-.keyboard {
-  border: 3px solid black;
-  border-radius: 10px;
-  background-color: #222222;
-  width: 100%;
-  height: fit-content;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  flex-direction: column;
-  box-shadow: 0 6px 2px rgba(0, 0, 0, 0.4);
-  padding: 0 20px
-}
+
 .instrument-layout {
   display: flex;
   align-items: flex-start;
   gap: 1.5em;
 }
+
 .keyboard-section {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.keyboard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  height: fit-content;
+  padding: 0 20px;
+  background-color: $bg-keyboard;
+  border: 3px solid $border-black;
+  border-radius: 10px;
+  box-shadow: 0 6px 2px $shadow-medium;
 }
 </style>

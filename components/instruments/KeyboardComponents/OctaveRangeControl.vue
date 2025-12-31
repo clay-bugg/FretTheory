@@ -36,27 +36,30 @@ const store = useKeyboardStore();
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: fit-content;
   gap: 0.4em;
+  width: fit-content;
   font-size: 1.2rem;
   font-weight: 700;
 }
+
 .starting-octave-button {
   width: 25px;
   height: 25px;
 }
+
 .control {
-  height: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  flex-direction: column;
   gap: 0.5em;
+  height: 100%;
   padding: 0.5em 0;
 }
+
 .control-label {
-  font-size: 1rem;
   text-align: center;
   text-wrap: nowrap;
+  font-size: 1rem;
 }
 </style>

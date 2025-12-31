@@ -177,8 +177,9 @@ onUnmounted(() => {
 });
 </script>
 
-<style scoped>
-/*----CONTROLS----*/
+<style scoped lang="scss">
+@use "~/assets/scss/main.scss" as *;
+
 .controls {
   display: flex;
   align-items: flex-end;
@@ -187,88 +188,84 @@ onUnmounted(() => {
   height: 6em;
   position: relative;
   z-index: 3;
-  color: rgb(215, 215, 215);
+  color: $text-light-rgb;
   padding: 0 1em 0.5em;
   gap: 3em;
   margin-bottom: 0.5em;
+
+  .control {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 0.5em;
+    padding: 0.5em 0;
+
+    &-label {
+      font-size: 1rem;
+      text-align: center;
+      text-wrap: nowrap;
+    }
+  }
 }
 
-.control {
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-direction: column;
-  gap: 0.5em;
-  padding: 0.5em 0;
-}
-
-.control-label {
-  font-size: 1rem;
-  text-align: center;
-  text-wrap: nowrap;
-}
-
-/*----NOTE LABELS----*/
 .notes-labels-checkboxes {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 0.5em;
+
+  .notes-labels-checkbox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0.4em;
+    width: 2.5em;
+    position: relative;
+    top: 0.4em;
+  }
+
+  input {
+    width: 25px;
+    height: 25px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border: 2px solid black;
+    background-color: $color-inactive;
+    border-radius: 50px;
+    cursor: pointer;
+
+    &.active {
+      background-color: $color-active;
+    }
+  }
+
+  .notes-checkbox {
+    font-size: 0.8em;
+  }
 }
 
-.notes-labels-checkbox {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: 0.4em;
-  width: 2.5em;
-  position: relative;
-  top: 0.4em;
+.chord-selector {
+  &-box select {
+    font-size: 1em;
+    font-family: inherit;
+    border: 2px solid black;
+    border-radius: 0.3em;
+    text-align: center;
+    font-weight: 500;
+    padding: 0.1em;
+  }
+
+  &-inputs {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
-.notes-labels-checkboxes input {
-  width: 25px;
-  height: 25px;
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  border: 2px solid black;
-  background-color: rgb(152, 12, 12);
-  border-radius: 50px;
-}
-
-.notes-labels-checkboxes input.active {
-  background-color: rgb(133, 206, 23);
-}
-
-.notes-labels-checkboxes input:hover {
-  cursor: pointer;
-}
-
-.notes-checkbox {
-  font-size: 0.8em;
-}
-
-/*----CHORD SELECTOR----*/
-.chord-selector-box select {
-  font-size: 1em;
-  font-family: inherit;
-  border: 2px solid black;
-  border-radius: 0.3em;
-  text-align: center;
-  font-weight: 500;
-  padding: 0.1em;
-}
-
-.chord-selector-inputs {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/*----GUITAR BODY----*/
 .guitar-body {
   width: 1100px;
   height: fit-content;
@@ -278,101 +275,111 @@ onUnmounted(() => {
   flex-direction: column;
 }
 
-/*----CHORD DISPLAY----*/
 .chord-section {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1em;
   margin-top: 1.5em;
+
+  .chord-played {
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    justify-content: space-between;
+    font-size: 1.2em;
+    font-weight: 800;
+    font-family: "Ubuntu";
+    gap: 1em;
+
+    &-label {
+      font-size: 1.5rem;
+    }
+  }
+
+  .chord-notes-label {
+    display: flex;
+    align-items: center;
+    width: fit-content;
+  }
 }
 
-.chord-played-label {
-  font-size: 1.5rem;
-}
-
-.chord-played {
-  display: flex;
-  align-items: center;
-  width: fit-content;
-  justify-content: space-between;
-  font-size: 1.2em;
-  font-weight: 800;
-  font-family: "Ubuntu";
-  gap: 1em;
-}
-
-.chord-notes-label {
-  display: flex;
-  align-items: center;
-  width: fit-content;
-}
-
-/*----PLAY CHORD SECTION----*/
 .play-chord-section {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.5em;
   margin-top: 0.5em;
-}
 
-.play-chord-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5em;
-  padding: 0.8em 1.5em;
-  font-size: 1.1rem;
-  font-family: "Orbitron", sans-serif;
-  font-weight: 600;
-  background: linear-gradient(135deg, #4a90a4, #357a8f);
-  color: white;
-  border: 2px solid #255c6b;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 4px 15px rgba(74, 144, 164, 0.3);
-}
+  .play-chord-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
+    padding: 0.8em 1.5em;
+    font-size: 1.1rem;
+    font-family: "Orbitron", sans-serif;
+    font-weight: 600;
+    background: linear-gradient(135deg, $btn-accent-base, $btn-accent-dark);
+    color: white;
+    border: 2px solid $border-button;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 15px $btn-accent-shadow;
 
-.play-chord-btn:hover:not(:disabled) {
-  background: linear-gradient(135deg, #5aa0b4, #45899f);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(74, 144, 164, 0.4);
-}
+    &:hover:not(:disabled) {
+      background: linear-gradient(
+        135deg,
+        lighten($btn-accent-base, 5%),
+        lighten($btn-accent-dark, 5%)
+      );
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px $btn-accent-shadow-hover;
+    }
 
-.play-chord-btn:active:not(:disabled),
-.play-chord-btn.playing {
-  background: linear-gradient(135deg, #3a7f94, #256a7f);
-  transform: translateY(1px);
-  box-shadow: 0 2px 10px rgba(74, 144, 164, 0.3);
-}
+    &:active:not(:disabled),
+    &.playing {
+      background: linear-gradient(
+        135deg,
+        darken($btn-accent-base, 5%),
+        darken($btn-accent-dark, 5%)
+      );
+      transform: translateY(1px);
+      box-shadow: 0 2px 10px $btn-accent-shadow;
+    }
 
-.play-chord-btn:disabled {
-  background: linear-gradient(135deg, #666, #555);
-  border-color: #444;
-  cursor: not-allowed;
-  opacity: 0.7;
-}
+    &:disabled {
+      background: linear-gradient(
+        135deg,
+        $disabled-bg-light,
+        $disabled-bg-dark
+      );
+      border-color: $border-dark;
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+  }
 
-.play-icon {
-  font-size: 1.2em;
+  .play-icon {
+    font-size: 1.2em;
+  }
 }
 
 .spacebar-hint {
   font-size: 0.85rem;
-  color: #888;
+  color: $text-muted;
   font-family: "Ubuntu", sans-serif;
-}
 
-.spacebar-hint kbd {
-  display: inline-block;
-  padding: 0.2em 0.5em;
-  font-size: 0.9em;
-  background-color: #333;
-  color: #fff;
-  border: 1px solid #555;
-  border-radius: 4px;
-  box-shadow: 0 2px 0 #222;
+  kbd {
+    display: inline-block;
+    padding: 0.2em 0.5em;
+    font-size: 0.9em;
+    background-color: $text-dark;
+    color: $text-white;
+    border: 1px solid $border-medium;
+    border-radius: 4px;
+    box-shadow: 0 2px 0 $disabled-border;
+  }
 }
 </style>

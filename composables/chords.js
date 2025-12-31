@@ -358,57 +358,57 @@ export const chordLibrary = ref([
 ]);
 
 export const scaleLibrary = [
-  // --- Western Scales ---
+  // --- Standard Scales ---
   {
     label: "Major",
-    type: "Western",
+    type: "Standard",
     intervals: [0, 2, 4, 5, 7, 9, 11],
   },
   {
     label: "Natural Minor",
-    type: "Western",
+    type: "Standard",
     intervals: [0, 2, 3, 5, 7, 8, 10],
   },
   {
     label: "Harmonic Minor",
-    type: "Western",
+    type: "Standard",
     intervals: [0, 2, 3, 5, 7, 8, 11],
   },
   {
     label: "Melodic Minor",
-    type: "Western",
+    type: "Standard",
     intervals: [0, 2, 3, 5, 7, 9, 11],
   },
 
   // --- Modes ---
-  { label: "Ionian", type: "Modes", intervals: [0, 2, 4, 5, 7, 9, 11] },
-  { label: "Dorian", type: "Modes", intervals: [0, 2, 3, 5, 7, 9, 10] },
-  { label: "Phrygian", type: "Modes", intervals: [0, 1, 3, 5, 7, 8, 10] },
-  { label: "Lydian", type: "Modes", intervals: [0, 2, 4, 6, 7, 9, 11] },
-  { label: "Mixolydian", type: "Modes", intervals: [0, 2, 4, 5, 7, 9, 10] },
-  { label: "Aeolian", type: "Modes", intervals: [0, 2, 3, 5, 7, 8, 10] },
-  { label: "Locrian", type: "Modes", intervals: [0, 1, 3, 5, 6, 8, 10] },
+  { label: "Ionian", type: "Mode", intervals: [0, 2, 4, 5, 7, 9, 11] },
+  { label: "Dorian", type: "Mode", intervals: [0, 2, 3, 5, 7, 9, 10] },
+  { label: "Phrygian", type: "Mode", intervals: [0, 1, 3, 5, 7, 8, 10] },
+  { label: "Lydian", type: "Mode", intervals: [0, 2, 4, 6, 7, 9, 11] },
+  { label: "Mixolydian", type: "Mode", intervals: [0, 2, 4, 5, 7, 9, 10] },
+  { label: "Aeolian", type: "Mode", intervals: [0, 2, 3, 5, 7, 8, 10] },
+  { label: "Locrian", type: "Mode", intervals: [0, 1, 3, 5, 6, 8, 10] },
 
   // --- Pentatonic/Blues ---
   {
     label: "Pentatonic Major",
-    type: "Pentatonic/Blues",
+    type: "Pentatonic",
     intervals: [0, 2, 4, 7, 9],
   },
   {
     label: "Pentatonic Minor",
-    type: "Pentatonic/Blues",
+    type: "Pentatonic",
     intervals: [0, 3, 5, 7, 10],
   },
-  { label: "Blues", type: "Pentatonic/Blues", intervals: [0, 3, 5, 6, 7, 10] },
+
   {
     label: "Minor Blues",
-    type: "Pentatonic/Blues",
+    type: "Pentatonic",
     intervals: [0, 3, 5, 6, 7, 10],
   },
   {
     label: "Major Blues",
-    type: "Pentatonic/Blues",
+    type: "Pentatonic",
     intervals: [0, 2, 3, 4, 7, 9],
   },
 
@@ -436,20 +436,12 @@ export const scaleLibrary = [
 
   // --- Exotic Scales ---
   { label: "Arabic", type: "Exotic", intervals: [0, 2, 4, 5, 6, 8, 10] },
-  {
-    label: "Byzantine",
-    type: "Exotic",
-    intervals: [0, 1, 4, 5, 7, 8, 11],
-  },
+  { label: "Byzantine", type: "Exotic", intervals: [0, 1, 4, 5, 7, 8, 11] },
   { label: "Egyptian", type: "Exotic", intervals: [0, 2, 5, 7, 10] },
   { label: "Hirajoshi", type: "Exotic", intervals: [0, 2, 3, 7, 8] },
   { label: "Iwato", type: "Exotic", intervals: [0, 1, 5, 6, 10] },
   { label: "Japanese In", type: "Exotic", intervals: [0, 1, 5, 7, 8] },
-  {
-    label: "Japanese Insen",
-    type: "Exotic",
-    intervals: [0, 1, 5, 7, 10],
-  },
+  { label: "Japanese Insen", type: "Exotic", intervals: [0, 1, 5, 7, 10] },
   {
     label: "Hungarian Minor",
     type: "Exotic",
@@ -472,42 +464,18 @@ export const scaleLibrary = [
   },
   { label: "Balinese", type: "Exotic", intervals: [0, 1, 3, 7, 8] },
   { label: "Chinese", type: "Exotic", intervals: [0, 4, 6, 7, 11] },
-  {
-    label: "Chinese Mongolian",
-    type: "Exotic",
-    intervals: [0, 2, 4, 7, 9],
-  },
-  {
-    label: "Persian",
-    type: "Exotic",
-    intervals: [0, 1, 4, 5, 6, 8, 11],
-  },
-  {
-    label: "Arabian",
-    type: "Exotic",
-    intervals: [0, 2, 4, 5, 6, 8, 10],
-  },
+  { label: "Chinese Mongolian", type: "Exotic", intervals: [0, 2, 4, 7, 9] },
+  { label: "Persian", type: "Exotic", intervals: [0, 1, 4, 5, 6, 8, 11] },
+  { label: "Arabian", type: "Exotic", intervals: [0, 2, 4, 5, 6, 8, 10] },
   { label: "Jewish", type: "Exotic", intervals: [0, 1, 4, 5, 7, 8, 10] },
-  {
-    label: "Spanish Gypsy",
-    type: "Exotic",
-    intervals: [0, 1, 4, 5, 7, 8, 10],
-  },
+  { label: "Spanish Gypsy", type: "Exotic", intervals: [0, 1, 4, 5, 7, 8, 10] },
   {
     label: "Ukrainian Dorian",
     type: "Exotic",
     intervals: [0, 2, 3, 6, 7, 9, 10],
   },
-  {
-    label: "Prometheus",
-    type: "Exotic",
-    intervals: [0, 2, 4, 6, 9, 10],
-  },
-  {
-    label: "Enigmatic",
-    type: "Exotic",
-    intervals: [0, 1, 4, 6, 8, 10, 11],
-  },
+  { label: "Prometheus", type: "Exotic", intervals: [0, 2, 4, 6, 9, 10] },
+  { label: "Enigmatic", type: "Exotic", intervals: [0, 1, 4, 6, 8, 10, 11] },
   {
     label: "Double Harmonic",
     type: "Exotic",

@@ -14,21 +14,22 @@
 </template>
 
 <script setup>
-
 const navButtons = ref([
   { label: "Instruments", link: "/instruments" },
   { label: "Theory", link: "/theory" },
   { label: "Tools", link: "/tools" },
-])
+]);
 
-const buttonSelected = ref("Instruments")
+const buttonSelected = ref("Instruments");
 
 function selectButton(value) {
   buttonSelected.value = value;
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@use "~/assets/scss/main.scss" as *;
+
 nav {
   display: flex;
   height: 100%;
@@ -38,13 +39,13 @@ nav {
   gap: 20px;
   .button {
     text-decoration: none;
-    color: #ebebeb;
+    color: $text-light;
     font-size: 1.4rem;
     font-weight: 400;
     &:hover {
       cursor: pointer;
-      color: #ffffff;
-      text-shadow: 0 0 1px #ffffff;
+      color: $text-white;
+      text-shadow: 0 0 1px $text-white;
     }
     &.selected {
       font-weight: 600;

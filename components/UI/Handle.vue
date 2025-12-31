@@ -1,6 +1,5 @@
 <template>
-  <div class="handle-container" :class="{ 'is-open': isOpen }">
-    <!-- Handle button with SVG grip lines -->
+  <div class="handle-container" :class="{ open: isOpen }">
     <button class="handle-bar" @click="toggleMenu">
       <svg
         class="handle-icon"
@@ -8,37 +7,40 @@
         width="20"
         height="20"
         viewBox="0 0 10 10"
-        style="background-color: #2D2D2D";
+        :style="handleStyles"
       >
         <path
+          @mouseenter="hovered = true"
+          @mouseleave="hovered = false"
           d="M 1 1 H 9"
           stroke-width=".5"
           stroke-linecap="round"
-          stroke="#e0e0e0"
+          :stroke="hovered ? '#ffffff' : '#ebebeb'"
         />
         <path
-          d="M 1 2.5 H 9"
-          stroke-width=".3"
+          @mouseenter="hovered = true"
+          @mouseleave="hovered = false"
+          d="M 2 2.5 H 8"
+          stroke-width=".4"
           stroke-linecap="round"
-          stroke="#e0e0e0"
+          :stroke="hovered ? '#ffffff' : '#ebebeb'"
         />
       </svg>
     </button>
 
-    <!-- Dropdown menu panel -->
-    <div class="menu-panel">
-      <div class="menu-content">
-        <slot>
-          <!-- Default content if no slot provided -->
-          <p class="placeholder-text">Menu content goes here</p>
-        </slot>
-      </div>
-    </div>
+    <div class="menu-panel" :class="{ open: isOpen }"></div>
   </div>
 </template>
 
 <script setup>
 const isOpen = ref(false);
+
+const hovered = ref(false);
+
+const handleStyles = ref({
+  stroke: "red",
+  backgroundColor: "#2d2d2d",
+});
 
 const toggleMenu = () => {
   isOpen.value = !isOpen.value;
@@ -51,8 +53,7 @@ const toggleMenu = () => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: relative;
-  top: 10px;
+  overflow: hidden;
 }
 
 .handle-bar {
@@ -60,12 +61,19 @@ const toggleMenu = () => {
   height: auto;
   border: none;
   cursor: pointer;
-  transition: all 0.25s ease;
+  transition: all 0.5s ease;
 
   .handle-icon {
     width: 60px;
     height: 60px;
     display: block;
+  }
+}
+svg {
+  transition: all 0.2s ease;
+  transform: translateY(-2px);
+  &:hover {
+    transform: translateY(0);
   }
 }
 
@@ -74,7 +82,8 @@ const toggleMenu = () => {
   max-width: 76em;
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+  border: 1px solid #ebebeb;
+  transition: max-height 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .menu-content {
@@ -90,11 +99,10 @@ const toggleMenu = () => {
   font-family: "Ubuntu", sans-serif;
 }
 
-// Open state
-.handle-container.is-open {
-
+.handle-container.open {
   .menu-panel {
-    max-height: 500px;
+    min-height: 500px;
+    height: 500px;
     padding: 0;
   }
 

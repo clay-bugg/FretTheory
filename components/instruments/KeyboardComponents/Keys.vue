@@ -1,5 +1,5 @@
 <template>
-  <div class="keys" :style="keyStyles">
+  <div class="keys">
     <div
       v-for="(key, index) in pianoKeys"
       :key="`${key.note}${key.octave}`"
@@ -28,22 +28,17 @@
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
-import { storeToRefs } from "pinia";
 import { useKeyboardStore } from "~/stores/keyboardStore";
 
 const store = useKeyboardStore();
 const { currentPitch, chordNotes, rootNote, notesDisplayed, notes } =
   storeToRefs(store);
 
-// Default octave amount (since it was removed from store)
-const octaveAmount = ref(2);
-
 defineEmits(["playKey", "stopKey"]);
 
 const pianoKeys = computed(() => {
   const octavesArray = Array.from(
-    { length: octaveAmount.value },
+    { length: 2 },
     (_, i) => currentPitch.value + i
   );
 
@@ -60,99 +55,90 @@ const pianoKeys = computed(() => {
 
   return keys;
 });
-
-const whiteKeyCount = computed(
-  () => pianoKeys.value.filter((k) => !k.sharp).length
-);
-
-const keysHeight = computed(() => {
-  if (octaveAmount.value === 1) return "350px";
-  if (octaveAmount.value === 2) return "260px";
-  if (octaveAmount.value === 3) return "180px";
-  return "260px";
-});
-
-const keyStyles = computed(() => ({
-  "--white-key-count": whiteKeyCount.value,
-  height: keysHeight.value,
-}));
-
-const keyFontSize = computed(() => {
-  if (octaveAmount.value === 1) return "1.6rem";
-  if (octaveAmount.value === 2) return "1rem";
-  if (octaveAmount.value === 3) return "0.8rem";
-  return "1rem";
-});
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@use "~/assets/scss/main.scss" as *;
+
 .keys {
-  width: 100%;
-  display: flex;
-  overflow: hidden;
-  margin-bottom: 1em;
-  z-index: 0;
-  border-top: 15px solid black;
-  border-left: 2px solid black;
-  border-right: 2px solid black;
   position: relative;
+  display: flex;
+  width: 100%;
+  height: 240px;
+  overflow: hidden;
+  border-top: 15px solid black;
+  border-right: 2px solid black;
+  border-left: 2px solid black;
+  margin-bottom: 1em;
   font-family: "Lexend";
+  z-index: 0;
 }
+
 .key {
-  border: 1px solid black;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
+  border: 1px solid black;
   padding-bottom: 0.2em;
-  font-weight: 600;
   font-size: 0.9rem;
+  font-weight: 600;
 }
+
 .key:hover {
   cursor: pointer;
 }
+
 .white {
-  background-color: rgb(255, 255, 255);
-  color: black;
+  position: relative;
   flex: 1;
+  width: 100%;
   height: 100%;
-  position: relative;
-  z-index: 1;
-  border-bottom-left-radius: 10px;
+  border: 1px solid black;
   border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  padding: 0.6em;
+  background-color: $key-white;
+  color: black;
+  z-index: 1;
 }
+
 .white:hover {
-  background-color: rgb(240, 240, 240);
+  background-color: $key-white-hover;
 }
+
 .black {
-  width: calc(100% / var(--white-key-count) * 0.7);
-  height: 55%;
   position: relative;
-  background-color: rgb(0, 0, 0);
-  border: 2px solid black;
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
-  color: #fff;
-  z-index: 2;
+  left: 1.9em;
+  width: 3.6em;
+  height: 55%;
   overflow: hidden;
-  border-top: 1px solid black;
-  margin-left: calc(100% / var(--white-key-count) * -0.7);
-  left: calc(100% / var(--white-key-count) * 0.3);
-  padding-bottom: 0.4em;
-  box-shadow: -2px 0 1px rgba(0, 0, 0, 0.5);
+  border: 1px solid black;
+  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+  margin-left: -3.6em;
+  padding-bottom: 0.6em;
+  background-color: $key-black;
+  color: $text-white;
+  box-shadow: -2px 0 1px $key-shadow;
+  z-index: 2;
 }
+
 .black:hover {
-  background-color: rgb(20, 20, 20);
+  background-color: $key-black-hover;
 }
+
 .white.interval {
-  background-color: rgb(126, 145, 215);
+  background-color: $key-interval;
 }
+
 .black.interval {
-  background-color: rgb(126, 145, 215);
+  background-color: $key-interval;
   color: black;
 }
+
 .root-note {
-  background-color: rgb(57, 82, 175) !important;
+  background-color: $key-root !important;
   color: white;
 }
 </style>

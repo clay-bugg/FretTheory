@@ -16,6 +16,8 @@ function selectButton(value) {
 </script>
 
 <style scoped lang="scss">
+@use "~/assets/scss/main.scss" as *;
+
 header {
   width: 100%;
   height: 70px;
@@ -26,7 +28,7 @@ header {
   position: relative;
   z-index: 1;
   font-family: "Montaserif";
-  background-color: #1f1f1f;
+  background-color: $bg-header;
   min-width: fit-content;
   font-family: "AR One Sans";
   padding: 30px 30px 4px;
@@ -34,13 +36,13 @@ header {
   h1 {
     font-size: 3rem;
     font-weight: 700;
-    color: #ebebeb;
+    color: $text-light;
     position: relative;
     top: 5px;
     &:hover {
       cursor: pointer;
-      color: #ffffff;
-      text-shadow: 0 0 1px #ffffff;
+      color: $text-white;
+      text-shadow: 0 0 1px $text-white;
     }
   }
 }

@@ -31,6 +31,8 @@ function changeInstrument(direction) {
 </script>
 
 <style lang="scss" scoped>
+@use "~/assets/scss/main.scss" as *;
+
 .instrument {
   width: 76em;
   display: flex;
@@ -41,18 +43,34 @@ function changeInstrument(direction) {
 }
 
 .change-instrument {
-  background-color: #ababab;
+  background-color: $btn-bg-neutral;
   color: black;
-  border: 2px solid black;
+  border: 2px solid $border-black;
   border-radius: 50%;
   width: 3em;
   height: 3em;
   flex-shrink: 0;
   z-index: 2;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 
-  .icon,
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 2px 1px $shadow-dark;
+    filter: brightness(1.07);
+  }
+
+  &:active {
+    transform: translateY(2px);
+    box-shadow: none;
+    filter: brightness(1);
+  }
+
   .icon {
-    font-size: 3em;
+    font-size: 1.5em;
   }
 }
 </style>
