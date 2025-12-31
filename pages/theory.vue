@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <UiHandle />
+    <UiChordButtons />
   </div>
 </template>
 

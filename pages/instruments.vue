@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <InstrumentsInstrument />
-    <UiHandle />
+    <LayoutMenuPanel />
   </div>
 </template>
 
@@ -9,8 +9,4 @@
 import { ref } from "vue";
 </script>
 
-<style scoped lang="scss">
-.page {
-  justify-content: flex-start;
-}
-</style>
+<style scoped lang="scss"></style>

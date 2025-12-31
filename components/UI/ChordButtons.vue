@@ -1,37 +1,25 @@
 <template>
-  <div class="chord-buttons">
-    <!-- Note buttons on the left -->
-    <div class="note-buttons">
-      <button
-        v-for="note in noteButtons"
-        :key="note.display"
-        :class="['note-btn', { active: store.rootNote === note.value }]"
-        @click="store.rootNote = note.value"
-      >
-        <template v-if="note.alt">
-          <span class="note-pair">
-            <span>{{ note.display }}</span>
-            <span>{{ note.alt }}</span>
-          </span>
-        </template>
-        <template v-else>
-          {{ note.display }}
-        </template>
-      </button>
-    </div>
+<div class="chord-selector">
 
-    <!-- Chord type buttons on the right -->
-    <div class="chord-type-buttons">
-      <button
-        v-for="chord in extendedChordTypes"
-        :key="chord.value"
-        :class="['chord-btn', { active: store.chordType === chord.value }]"
-        @click="store.chordType = chord.value"
-      >
-        {{ chord.label }}
-      </button>
-    </div>
+  <div class="dropdown">
+    <select v-model="selectedScale">
+      <option v-for="scale in scales" :key="scale" :value="scale">
+        {{ scale }}
+      </option>
+    </select>
+    <button class="finder-button"></button>
+    <button class="player-button"></button>
   </div>
+
+  <div class="chord">
+    <h3>{{ selectedChord }}</h3>
+  </div>
+
+</div>
+
+<div class="chord-types">
+  
+</div>
 </template>
 
 <script setup>
@@ -39,47 +27,6 @@ import { useKeyboardStore } from "~/stores/keyboardStore";
 
 const store = useKeyboardStore();
 
-// Note buttons with enharmonic pairs
-const noteButtons = [
-  { display: "C", value: "C" },
-  { display: "C#", alt: "Db", value: "C#" },
-  { display: "D", value: "D" },
-  { display: "D#", alt: "Eb", value: "D#" },
-  { display: "E", value: "E" },
-  { display: "F", value: "F" },
-  { display: "F#", alt: "Gb", value: "F#" },
-  { display: "G", value: "G" },
-  { display: "G#", alt: "Ab", value: "G#" },
-  { display: "A", value: "A" },
-  { display: "A#", alt: "Bb", value: "A#" },
-  { display: "B", value: "B" },
-];
-
-// Extended chord types matching the image
-const extendedChordTypes = [
-  { label: "major", value: "maj" },
-  { label: "5", value: "5" },
-  { label: "add9", value: "add9" },
-  { label: "aug", value: "+" },
-  { label: "6", value: "maj6" },
-  { label: "6/9", value: "6/9" },
-  { label: "maj7", value: "maj7" },
-  { label: "maj9", value: "maj9" },
-  { label: "maj13", value: "maj13" },
-  { label: "maj7(#11)", value: "maj7#11" },
-  { label: "maj7(#5)", value: "maj7#5" },
-  { label: "7", value: "7" },
-  { label: "9", value: "9" },
-  { label: "13", value: "13" },
-  { label: "7(b9)", value: "7b9" },
-  { label: "13(b9)", value: "13b9" },
-  { label: "7(#9)", value: "7#9" },
-  { label: "7(b13)", value: "7b13" },
-  { label: "7(#5)", value: "7#5" },
-  { label: "7(b9,b13)", value: "7b9b13" },
-  { label: "7(#11)", value: "7#11" },
-  { label: "7(b5)", value: "7b5" },
-];
 </script>
 
 <style scoped lang="scss">

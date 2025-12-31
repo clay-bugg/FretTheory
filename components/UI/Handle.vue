@@ -1,5 +1,5 @@
 <template>
-  <div class="handle-container" :class="{ open: isOpen }">
+  <div class="handle-container">
     <button class="handle-bar" @click="toggleMenu">
       <svg
         class="handle-icon"
@@ -27,13 +27,11 @@
         />
       </svg>
     </button>
-
-    <div class="menu-panel" :class="{ open: isOpen }"></div>
   </div>
 </template>
 
 <script setup>
-const isOpen = ref(false);
+const { menuOpen } = storeToRefs(useControlStore());
 
 const hovered = ref(false);
 
@@ -43,7 +41,7 @@ const handleStyles = ref({
 });
 
 const toggleMenu = () => {
-  isOpen.value = !isOpen.value;
+  menuOpen.value = !menuOpen.value;
 };
 </script>
 
