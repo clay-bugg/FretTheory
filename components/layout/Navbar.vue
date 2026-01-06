@@ -39,13 +39,13 @@ nav {
   gap: 20px;
   .button {
     text-decoration: none;
-    color: $text-light;
+    color: black;
     font-size: 1.4rem;
     font-weight: 400;
     &:hover {
       cursor: pointer;
-      color: $text-white;
-      text-shadow: 0 0 1px $text-white;
+      color: black;
+      text-shadow: 0 0 1px black;
     }
     &.selected {
       font-weight: 600;

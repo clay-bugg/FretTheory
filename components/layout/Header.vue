@@ -28,7 +28,7 @@ header {
   position: relative;
   z-index: 1;
   font-family: "Montaserif";
-  background-color: $bg-header;
+  background-color: black;
   min-width: fit-content;
   font-family: "AR One Sans";
   padding: 30px 30px 4px;
@@ -36,13 +36,13 @@ header {
   h1 {
     font-size: 3rem;
     font-weight: 700;
-    color: $text-light;
+    color: black;
     position: relative;
     top: 5px;
     &:hover {
       cursor: pointer;
-      color: $text-white;
-      text-shadow: 0 0 1px $text-white;
+      color: black;
+      text-shadow: 0 0 1px black;
     }
   }
 }

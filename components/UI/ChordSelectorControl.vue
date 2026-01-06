@@ -2,6 +2,7 @@
   <div class="chord-selector-box control">
     <p class="control-label">Chord</p>
     <div class="chord-selector-inputs">
+  
       <select class="root-note-selector" v-model="store.rootNote">
         <option v-for="note in store.notes" :key="note" :value="note">
           {{ note }}
@@ -37,11 +38,13 @@ const store = useKeyboardStore();
   font-weight: 500;
   padding: 0.1em;
 }
+
 .chord-selector-inputs {
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
 .control {
   height: 100%;
   display: flex;
@@ -51,6 +54,7 @@ const store = useKeyboardStore();
   gap: 0.5em;
   padding: 0.5em 0;
 }
+
 .control-label {
   font-size: 1rem;
   text-align: center;

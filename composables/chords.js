@@ -3,7 +3,6 @@ import { usePianoStore } from "@/stores/pianoStore";
 import { storeToRefs } from "pinia";
 
 export const chordLibrary = ref([
-  // --- TRIADS ---
   {
     label: "Major",
     intervals: [0, 4, 7],
@@ -12,7 +11,6 @@ export const chordLibrary = ref([
     description:
       "Bright and stable sound. The major 3rd defines its happy, resolved quality.",
   },
-
   {
     label: "Minor",
     intervals: [0, 3, 7],
@@ -21,7 +19,6 @@ export const chordLibrary = ref([
     description:
       "Darker, sadder tone created by lowering the 3rd by a semitone.",
   },
-
   {
     label: "Diminished",
     intervals: [0, 3, 6],
@@ -30,7 +27,6 @@ export const chordLibrary = ref([
     description:
       "Tense and unstable. The flattened 5th creates a dissonant, unresolved sound.",
   },
-
   {
     label: "Augmented",
     intervals: [0, 4, 8],
@@ -39,7 +35,6 @@ export const chordLibrary = ref([
     description:
       "Dreamlike and bright. The raised 5th adds tension and ambiguity.",
   },
-
   {
     label: "Power Chord",
     intervals: [0, 7],
@@ -48,8 +43,6 @@ export const chordLibrary = ref([
     description:
       "No 3rd, so neither major nor minor. Strong, open, and harmonically neutral.",
   },
-
-  // --- SUSPENDED ---
   {
     label: "Suspended 2nd",
     intervals: [0, 2, 7],
@@ -89,8 +82,6 @@ export const chordLibrary = ref([
     description:
       "Extended suspended chord with a 9th. Smooth yet unresolved sound.",
   },
-
-  // --- SIXTH & ADDED TONE ---
   {
     label: "6th",
     intervals: [0, 4, 7, 9],
@@ -139,8 +130,6 @@ export const chordLibrary = ref([
     description:
       "Minor chord with an added 9th. Adds emotional depth and expressive color.",
   },
-
-  // --- SEVENTHS ---
   {
     label: "Dominant 7th",
     intervals: [0, 4, 7, 10],
@@ -189,8 +178,6 @@ export const chordLibrary = ref([
     description:
       "Fully symmetrical tension. Each note is a minor 3rd apart, creating total instability.",
   },
-
-  // --- EXTENDED CHORDS ---
   {
     label: "Dominant 9th",
     intervals: [0, 4, 7, 10, 14],
@@ -247,8 +234,6 @@ export const chordLibrary = ref([
     description:
       "Major 7th chord extended with all color tones up to 13. Smooth and luxurious.",
   },
-
-  // --- ALTERED DOMINANTS ---
   {
     label: "Dominant 7#5",
     intervals: [0, 4, 8, 10],
@@ -321,8 +306,6 @@ export const chordLibrary = ref([
     description:
       "Umbrella for all altered dominants. Extreme tension and dissonance for strong resolutions.",
   },
-
-  // --- EXOTIC / RARE ---
   {
     label: "Augmented 7th",
     intervals: [0, 4, 8, 10],
@@ -358,7 +341,6 @@ export const chordLibrary = ref([
 ]);
 
 export const scaleLibrary = [
-  // --- Standard Scales ---
   {
     label: "Major",
     type: "Standard",
@@ -379,8 +361,6 @@ export const scaleLibrary = [
     type: "Standard",
     intervals: [0, 2, 3, 5, 7, 9, 11],
   },
-
-  // --- Modes ---
   { label: "Ionian", type: "Mode", intervals: [0, 2, 4, 5, 7, 9, 11] },
   { label: "Dorian", type: "Mode", intervals: [0, 2, 3, 5, 7, 9, 10] },
   { label: "Phrygian", type: "Mode", intervals: [0, 1, 3, 5, 7, 8, 10] },
@@ -388,8 +368,6 @@ export const scaleLibrary = [
   { label: "Mixolydian", type: "Mode", intervals: [0, 2, 4, 5, 7, 9, 10] },
   { label: "Aeolian", type: "Mode", intervals: [0, 2, 3, 5, 7, 8, 10] },
   { label: "Locrian", type: "Mode", intervals: [0, 1, 3, 5, 6, 8, 10] },
-
-  // --- Pentatonic/Blues ---
   {
     label: "Pentatonic Major",
     type: "Pentatonic",
@@ -411,8 +389,6 @@ export const scaleLibrary = [
     type: "Pentatonic",
     intervals: [0, 2, 3, 4, 7, 9],
   },
-
-  // --- Whole/Halfstep ---
   {
     label: "Whole Tone",
     type: "Whole/Halfstep",
@@ -433,8 +409,6 @@ export const scaleLibrary = [
     type: "Whole/Halfstep",
     intervals: [0, 2, 3, 5, 6, 8, 9, 11],
   },
-
-  // --- Exotic Scales ---
   { label: "Arabic", type: "Exotic", intervals: [0, 2, 4, 5, 6, 8, 10] },
   { label: "Byzantine", type: "Exotic", intervals: [0, 1, 4, 5, 7, 8, 11] },
   { label: "Egyptian", type: "Exotic", intervals: [0, 2, 5, 7, 10] },
@@ -481,8 +455,6 @@ export const scaleLibrary = [
     type: "Exotic",
     intervals: [0, 1, 4, 5, 7, 8, 11],
   },
-
-  // --- Symmetrical/Synthetic ---
   {
     label: "Augmented",
     type: "Symmetrical/Synthetic",

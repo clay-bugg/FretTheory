@@ -188,7 +188,7 @@ onUnmounted(() => {
   height: 6em;
   position: relative;
   z-index: 3;
-  color: $text-light-rgb;
+  color: black;
   padding: 0 1em 0.5em;
   gap: 3em;
   margin-bottom: 0.5em;
@@ -234,12 +234,12 @@ onUnmounted(() => {
     -webkit-appearance: none;
     -moz-appearance: none;
     border: 2px solid black;
-    background-color: $color-inactive;
+    background-color: black;
     border-radius: 50px;
     cursor: pointer;
 
     &.active {
-      background-color: $color-active;
+      background-color: black;
     }
   }
 
@@ -320,42 +320,42 @@ onUnmounted(() => {
     font-size: 1.1rem;
     font-family: "Orbitron", sans-serif;
     font-weight: 600;
-    background: linear-gradient(135deg, $btn-accent-base, $btn-accent-dark);
+    background: linear-gradient(135deg, black, black);
     color: white;
-    border: 2px solid $border-button;
+    border: 2px solid black;
     border-radius: 12px;
     cursor: pointer;
     transition: all 0.2s ease;
-    box-shadow: 0 4px 15px $btn-accent-shadow;
+    box-shadow: 0 4px 15px black;
 
     &:hover:not(:disabled) {
       background: linear-gradient(
         135deg,
-        lighten($btn-accent-base, 5%),
-        lighten($btn-accent-dark, 5%)
+        lighten(white, 5%),
+        lighten(white, 5%)
       );
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px $btn-accent-shadow-hover;
+      box-shadow: 0 6px 20px black;
     }
 
     &:active:not(:disabled),
     &.playing {
       background: linear-gradient(
         135deg,
-        darken($btn-accent-base, 5%),
-        darken($btn-accent-dark, 5%)
+        darken(black, 5%),
+        darken(black, 5%)
       );
       transform: translateY(1px);
-      box-shadow: 0 2px 10px $btn-accent-shadow;
+      box-shadow: 0 2px 10px black;
     }
 
     &:disabled {
       background: linear-gradient(
         135deg,
-        $disabled-bg-light,
-        $disabled-bg-dark
+        rgb(171, 171, 171),
+        rgb(171, 171, 171)
       );
-      border-color: $border-dark;
+      border-color: black;
       cursor: not-allowed;
       opacity: 0.7;
     }
@@ -368,18 +368,18 @@ onUnmounted(() => {
 
 .spacebar-hint {
   font-size: 0.85rem;
-  color: $text-muted;
+  color: black;
   font-family: "Ubuntu", sans-serif;
 
   kbd {
     display: inline-block;
     padding: 0.2em 0.5em;
     font-size: 0.9em;
-    background-color: $text-dark;
-    color: $text-white;
-    border: 1px solid $border-medium;
+    background-color: black;
+    color: black;
+    border: 1px solid black;
     border-radius: 4px;
-    box-shadow: 0 2px 0 $disabled-border;
+    box-shadow: 0 2px 0 black;
   }
 }
 </style>

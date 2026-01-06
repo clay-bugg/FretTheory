@@ -84,9 +84,9 @@ onUnmounted(() => {
   width: 100%;
   height: fit-content;
   padding: 0 20px;
-  background-color: $bg-keyboard;
-  border: 3px solid $border-black;
+  background-color: $black-panel;
+  border: 3px solid black;
   border-radius: 10px;
-  box-shadow: 0 6px 2px $shadow-medium;
+  box-shadow: 0 6px 2px black;
 }
 </style>

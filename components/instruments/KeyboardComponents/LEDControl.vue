@@ -15,8 +15,6 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { storeToRefs } from "pinia";
 import { useKeyboardStore } from "~/stores/keyboardStore";
 
 const store = useKeyboardStore();
@@ -38,9 +36,10 @@ const activeIndex = computed(() => {
   if (props.label === "PITCH") {
     return currentPitch.value;
   } else if (props.label === "LABELS") {
-    // Map notesDisplayed to index: 'all' = 0, 'chord' = 1, 'none' = 2
+
     const labelMap = { all: 0, chord: 1, none: 2 };
     return labelMap[notesDisplayed.value] ?? 0;
+
   }
   return 0;
 });
@@ -59,7 +58,7 @@ const changeLED = (label) => {
 </script>
 
 <style scoped lang="scss">
-@use "~/assets/scss/main.scss" as *;
+@use "~/assets/scss/main";
 
 .LED-switch {
   display: flex;
@@ -77,12 +76,12 @@ const changeLED = (label) => {
     border: 2px solid black;
     border-radius: 6px;
     padding: 6px;
-    background: $bg-button;
-    color: $text-light;
+    background: #242424;
+    color: white;
     font-family: "Lexend", sans-serif;
     font-size: 1rem;
     transition: all 0.2s ease;
-    box-shadow: 0 1px 2px $shadow-btn-drop;
+    box-shadow: 0 1px 2px black;
 
     &:hover {
       filter: brightness(1.06);
@@ -101,17 +100,23 @@ const changeLED = (label) => {
     border-radius: 2px;
     background: linear-gradient(
       to top right,
-      $led-bg-gradient-light 5%,
-      $led-bg-gradient-mid 5%,
-      $led-bg-gradient-dark 60%
+      #4a4a4a,
+      #494949,
+      #343434,
     );
     transition: all 0.2s ease;
-    box-shadow: inset -3px 3px 6px $led-shadow;
+    box-shadow: inset -2px 2px 2px rgba(0,0,0,0.7);
 
     &.active {
-      background: $color-led-active;
-      box-shadow: inset -3px 3px 3px rgba($color-led-active-shadow, 0.5),
-        0 0 6px $color-led-active;
+      filter: brightness(1.1);
+      box-shadow: inset -3px 3px 3px rgba(0, 0, 0, 0.426),
+        0 0 4px #21C400;
+      background: linear-gradient(
+        to top right,
+        #21C400,
+        #168400,
+        #147700,
+      );
     }
   }
 }

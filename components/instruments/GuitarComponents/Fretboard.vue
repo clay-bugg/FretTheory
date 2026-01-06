@@ -126,8 +126,6 @@ function nutReleased(stringIndex) {
 </script>
 
 <style scoped lang="scss">
-@use "~/assets/scss/main.scss" as *;
-
 .guitar-neck {
   display: grid;
   grid-template-columns: 40px 1fr;
@@ -142,9 +140,9 @@ function nutReleased(stringIndex) {
   display: flex;
   flex-direction: column;
   grid-area: nut;
-  border-right: 4px solid $guitar-nut-border;
-  background: linear-gradient(to right, $guitar-nut, $guitar-nut-gradient);
-  box-shadow: 2px 0 4px $shadow-light;
+  border-right: 4px solid black;
+  background: rgb(162, 127, 82);
+  box-shadow: 2px 0 4px rgba(0, 0, 0, 0.4);
 }
 
 .nut-note {
@@ -153,8 +151,8 @@ function nutReleased(stringIndex) {
   align-items: center;
   justify-content: center;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  background-color: transparent; /* Implicit, helpful for transitions */
-  color: $text-dark;
+  background-color: transparent;
+  color: black;
   font-family: "Ubuntu", sans-serif;
   font-size: 0.85rem;
   font-weight: 600;
@@ -164,32 +162,31 @@ function nutReleased(stringIndex) {
 }
 
 .nut-note:last-child {
-  border-bottom: none;
+  filter: brightness(0.9);
 }
 
 .nut-note:hover {
-  background-color: $shadow-btn-inset-light;
+  background-color: black;
 }
 
 .nut-note:active {
-  background-color: $shadow-fret-click;
-  transform: scale(0.98);
+  background-color: black;
 }
 
 .nut-note.highlighted-note {
-  background-color: $key-interval;
-  color: $text-black;
+  background-color: black;
+  color: black;
 }
 
 .nut-note.root-note {
-  background-color: $key-root;
+  background-color: black;
   color: white;
 }
 
 .fretboard {
   position: relative;
   grid-area: fretboard;
-  background-color: $guitar-fretboard;
+  background-color: black;
 }
 
 .fret-markers {
@@ -225,12 +222,8 @@ function nutReleased(stringIndex) {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: radial-gradient(
-    circle at 30% 30%,
-    $guitar-marker-highlight,
-    $guitar-marker
-  );
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2), 0 2px 4px $shadow-light;
+  background: radial-gradient(circle at 30% 30%, black, black);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2), 0 2px 4px black;
 }
 
 .strings {
@@ -256,13 +249,8 @@ function nutReleased(stringIndex) {
   top: 50%;
   width: 100%;
   height: 3px;
-  background: linear-gradient(
-    to bottom,
-    $guitar-string-dark,
-    $guitar-string-light,
-    $guitar-string-dark
-  );
-  box-shadow: 0 1px 2px $key-shadow;
+  background: linear-gradient(to bottom, black, black, black);
+  box-shadow: 0 1px 2px black;
   transform: translateY(-50%);
   pointer-events: none;
 }
@@ -291,25 +279,25 @@ function nutReleased(stringIndex) {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-right: 3px solid $guitar-fret-wire;
+  border-right: 3px solid black;
   cursor: pointer;
   transition: all 0.15s ease;
   z-index: 2;
 }
 
 .fret:hover {
-  background-color: $overlay-hover;
+  filter: brightness(0.9);
 }
 
 .fret-note {
   border-radius: 50px;
   padding: 2px 6px;
-  background-color: $overlay-dark;
+  background-color: black;
   color: white;
   font-family: "Ubuntu", sans-serif;
   font-size: 0.75rem;
   font-weight: 600;
-  text-shadow: 0 1px 2px $key-shadow;
+  text-shadow: black;
   z-index: 3;
 }
 
@@ -320,15 +308,14 @@ function nutReleased(stringIndex) {
   width: 40px;
   height: 40px;
   border: 3px solid black;
-  background-color: $guitar-highlighted;
-  color: $text-black;
+  filter: brightness(0.9);
+  color: black;
   font-size: 1.3rem;
   font-weight: 400;
 }
 
 .fret.root-note .fret-note {
   border: 3px solid black;
-  background-color: $guitar-root;
-  color: $text-black;
+  color: black;
 }
 </style>

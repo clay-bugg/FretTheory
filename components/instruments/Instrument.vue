@@ -5,6 +5,7 @@
     </button>
     <InstrumentsKeyboard v-if="selectedInstrument === 'Keyboard'" />
     <InstrumentsGuitar v-else-if="selectedInstrument === 'Guitar'" />
+    <InstrumentsDrums v-else-if="selectedInstrument === 'Drums'" />
     <button class="change-instrument" @click="changeInstrument('next')">
       <Icon name="eva:arrow-right-fill" class="next icon" />
     </button>
@@ -43,9 +44,9 @@ function changeInstrument(direction) {
 }
 
 .change-instrument {
-  background-color: $btn-bg-neutral;
-  color: black;
-  border: 2px solid $border-black;
+  background-color: #222222;
+  color: #000000;
+  border: 2px solid #000000;
   border-radius: 50%;
   width: 3em;
   height: 3em;
@@ -59,7 +60,7 @@ function changeInstrument(direction) {
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 2px 2px 1px $shadow-dark;
+    box-shadow: 0 2px 2px 1px #000000;
     filter: brightness(1.07);
   }
 
@@ -71,6 +72,7 @@ function changeInstrument(direction) {
 
   .icon {
     font-size: 1.5em;
+    color: #ababab;
   }
 }
 </style>

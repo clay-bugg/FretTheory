@@ -1,6 +1,7 @@
 <template>
   <div class="chord-selector-box">
     <label for="root-note-selector">Chord: </label>
+    
     <select class="root-note-selector" v-model="store.rootNote">
       <option v-for="note in store.notes" :key="note" :value="note">
         {{ note }}

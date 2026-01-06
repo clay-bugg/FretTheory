@@ -1,11 +1,10 @@
 <template>
   <div class="menu-wrapper">
-
     <div class="menu-panel" :class="{ open: menuOpen }">
-
       <div class="menu-content">
         <InstrumentsScaleType />
-        <RootNoteButtons />
+        <InstrumentsKeyboardComponentsRootNoteSelector />
+        <UIChordButtons />
       </div>
     </div>
     <button class="handle-bar" @click="toggleMenu">
@@ -17,7 +16,7 @@
         height="16"
         viewBox="0 0 40 16"
       >
-        <!-- Grip lines -->
+        <!--Grip lines-->
         <path
           d="M 10 6 H 30"
           stroke-width="2"
@@ -48,34 +47,42 @@ const toggleMenu = () => {
 @use "~/assets/scss/main.scss" as *;
 
 .menu-wrapper {
-  width: 1024px;
-  max-width: 76em;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  width: 1024px;
+  max-width: 76em;
 }
 
 .menu-panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
   width: 100%;
   max-height: 0;
   overflow: hidden;
-  background-color: $bg-header;
-  border-left: 1px solid $border-dark;
-  border-right: 1px solid $border-dark;
+  background-color: black;
+  border-left: 3px solid black;
+  border-right: 3px solid black;
   transition: max-height 1s ease-in-out;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  background-color: #303030;
+  color: #cfcfcf;
 }
 
 .menu-panel.open {
   max-height: 400px;
-  border-bottom: 1px solid $border-dark;
+  border-bottom: 3px solid black;
   transition: max-height 1s ease-in-out;
 }
 
 .menu-content {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;  
+  justify-content: space-evenly;
+  gap: 40px;
   padding: 1.5em;
   opacity: 0;
   transform: translateY(-20px);
@@ -83,6 +90,9 @@ const toggleMenu = () => {
 }
 
 .menu-panel.open .menu-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   opacity: 1;
   transform: translateY(0);
 }
@@ -93,8 +103,8 @@ const toggleMenu = () => {
   border: none;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
-  background-color: $bg-header;
-  border: 1px solid $border-dark;
+  background-color: black;
+  border: 1px solid black;
   border-top: none;
   cursor: pointer;
   display: flex;
@@ -114,5 +124,4 @@ const toggleMenu = () => {
 .handle-icon {
   transition: transform 0.3s ease;
 }
-
 </style>

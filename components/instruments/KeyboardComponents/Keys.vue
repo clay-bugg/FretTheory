@@ -97,14 +97,15 @@ const pianoKeys = computed(() => {
   border: 1px solid black;
   border-bottom-right-radius: 10px;
   border-bottom-left-radius: 10px;
-  padding: 0.6em;
-  background-color: $key-white;
-  color: black;
+  padding: 0.4em;
+  background-color: $white-keyboard-key;
+  color: #242424;
   z-index: 1;
+  font-size: 1.1rem;
 }
 
 .white:hover {
-  background-color: $key-white-hover;
+  filter: brightness(0.9);
 }
 
 .black {
@@ -118,27 +119,26 @@ const pianoKeys = computed(() => {
   border-bottom-left-radius: 8px;
   margin-left: -3.6em;
   padding-bottom: 0.6em;
-  background-color: $key-black;
-  color: $text-white;
-  box-shadow: -2px 0 1px $key-shadow;
+  background-color: #101010;
+  color: $white-text;
+  box-shadow: -2px 0 1px black;
   z-index: 2;
-}
-
-.black:hover {
-  background-color: $key-black-hover;
+  &:hover {
+    background-color: #1a1a1a;
+  }
 }
 
 .white.interval {
-  background-color: $key-interval;
+  background-color: black;
 }
 
 .black.interval {
-  background-color: $key-interval;
+  background-color: $red-keyboard-key;
   color: black;
 }
 
 .root-note {
-  background-color: $key-root !important;
+  background-color: $red-keyboard-key;
   color: white;
 }
 </style>

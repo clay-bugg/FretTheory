@@ -1,25 +1,32 @@
 <template>
-<div class="chord-selector">
+  <div class="chord-selector">
+    <div class="dropdown">
+      <select v-model="selectedScale">
+        <option v-for="scale in scales" :key="scale" :value="scale">
+          {{ scale }}
+        </option>
+      </select>
 
-  <div class="dropdown">
-    <select v-model="selectedScale">
-      <option v-for="scale in scales" :key="scale" :value="scale">
-        {{ scale }}
-      </option>
-    </select>
-    <button class="finder-button"></button>
-    <button class="player-button"></button>
+      <div class="keyboard-type-buttons">
+        <button
+          v-for="button in buttons"
+          :key="button.name"
+          class="keyboard-type-button"
+        >
+          <img
+            :src="`/images/buttons/${button.name}.png`"
+            :style="button.style"
+          />
+        </button>
+      </div>
+    </div>
+
+    <div class="chord">
+      <h3>{{ selectedChord }}</h3>
+    </div>
   </div>
 
-  <div class="chord">
-    <h3>{{ selectedChord }}</h3>
-  </div>
-
-</div>
-
-<div class="chord-types">
-  
-</div>
+  <div class="chord-types"></div>
 </template>
 
 <script setup>
@@ -27,104 +34,50 @@ import { useKeyboardStore } from "~/stores/keyboardStore";
 
 const store = useKeyboardStore();
 
+const buttons = ref([
+  {
+    name: "player",
+    style: { width: "100%", height: "30px" },
+  },
+  {
+    name: "finder",
+    logo: "/images/buttons/finder.png",
+    style: { width: "100%", height: "auto" },
+  },
+  {
+    name: "MIDI",
+    logo: "/images/buttons/MIDI.png",
+    style: { width: "100%", height: "auto" },
+  },
+]);
 </script>
 
 <style scoped lang="scss">
 @use "~/assets/scss/main.scss" as *;
 
-.chord-buttons {
+.dropdown {
   display: flex;
-  gap: 1em;
-  padding: 1em;
-  background-color: $bg-button-dark;
-  border-radius: 12px;
-  font-family: "Ubuntu", sans-serif;
-}
-
-.note-buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4em;
-}
-
-.chord-type-buttons {
-  display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: fit-content;
   gap: 0.3em;
-  max-height: 500px;
-  overflow-y: auto;
-}
 
-.note-btn,
-.chord-btn {
-  background-color: $bg-button-hover;
-  border: none;
-  border-radius: 6px;
-  color: $text-light-muted;
-  font-size: 0.9rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.15s ease;
-  font-family: inherit;
-}
+  .keyboard-type-buttons {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.2em;
 
-.note-btn {
-  min-width: 70px;
-  padding: 0.5em 0.8em;
-}
-
-.chord-btn {
-  min-width: 90px;
-  padding: 0.4em 0.8em;
-  text-align: center;
-}
-
-.note-btn:hover,
-.chord-btn:hover {
-  background-color: $bg-button-hover-light;
-}
-
-.note-btn.active {
-  background-color: $chord-btn-active-note;
-  color: white;
-}
-
-.chord-btn.active {
-  background-color: $chord-btn-active-type;
-  color: $chord-btn-active-type-text;
-}
-
-.note-pair {
-  display: flex;
-  gap: 0.5em;
-  justify-content: center;
-}
-
-.note-pair span {
-  background-color: $bg-button-active;
-  padding: 0.2em 0.4em;
-  border-radius: 4px;
-}
-
-.note-btn.active .note-pair span {
-  background-color: $overlay-white;
-}
-
-.chord-type-buttons::-webkit-scrollbar {
-  width: 6px;
-}
-
-.chord-type-buttons::-webkit-scrollbar-track {
-  background: $bg-scrollbar-track;
-  border-radius: 3px;
-}
-
-.chord-type-buttons::-webkit-scrollbar-thumb {
-  background: $bg-scrollbar-thumb;
-  border-radius: 3px;
-}
-
-.chord-type-buttons::-webkit-scrollbar-thumb:hover {
-  background: $bg-scrollbar-thumb-hover;
+    .keyboard-type-button {
+      width: 100%;
+      height: 40px;
+      background: $black-panel;
+      border-radius: 10px;
+      border: 4px solid black;
+      padding: 0.5em 0;
+      color: white;
+    }
+  }
 }
 </style>

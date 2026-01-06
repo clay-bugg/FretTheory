@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { ref, computed, watch } from "vue";
+import { ref, watch } from "vue";
 
 export const NOTES = [
   "C",
@@ -189,7 +189,6 @@ export const CHORD_TYPES = [
 ];
 
 export const useKeyboardStore = defineStore("keyboard", () => {
-
   // Current Pitch
   const currentPitch = ref(3);
 
@@ -221,7 +220,7 @@ export const useKeyboardStore = defineStore("keyboard", () => {
   const notes = ref(NOTES);
   const chordTypes = ref(CHORD_TYPES);
 
-  // Chord state
+  // Chord State
   const rootNote = ref("");
   const chordType = ref("");
   const chordNotes = ref([]);
@@ -238,6 +237,7 @@ export const useKeyboardStore = defineStore("keyboard", () => {
     const updatedChordNotes = intervals.map(
       (i) => notes.value[(rootIndex + i) % 12]
     );
+
     chordNotes.value = Array.from(new Set(updatedChordNotes));
 
     console.log(
@@ -270,6 +270,7 @@ export const useKeyboardStore = defineStore("keyboard", () => {
   }
 
   // Assign Octaves to Chord Notes for Playback
+
   function assignChordOctaves(root, chordNotesArray) {
     let currentOctave = currentPitch.value;
     let lastNoteIndex = notes.value.indexOf(root);
@@ -281,11 +282,29 @@ export const useKeyboardStore = defineStore("keyboard", () => {
       if (noteIndex <= lastNoteIndex) {
         currentOctave++;
       }
+
       chordWithOctaves.push(`${note}${currentOctave}`);
       lastNoteIndex = noteIndex;
     });
 
     return chordWithOctaves;
+  }
+
+  // Map flat notes to their enharmonic sharp equivalents
+  const flatToSharpMap = {
+    "D♭": "C#",
+    "E♭": "D#",
+    "F♭": "E",
+    "G♭": "F#",
+    "A♭": "G#",
+    "B♭": "A#",
+    "C♭": "B",
+  };
+
+  function changeRootNote(note) {
+    // Convert flat notes to their sharp equivalents for internal use
+    const normalizedNote = flatToSharpMap[note] || note;
+    rootNote.value = normalizedNote;
   }
 
   return {
@@ -303,5 +322,6 @@ export const useKeyboardStore = defineStore("keyboard", () => {
     changePitch,
     changeLabels,
     assignChordOctaves,
+    changeRootNote,
   };
 });

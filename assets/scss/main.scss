@@ -1,122 +1,29 @@
+// Global Colors
+$black-header: #1F1F1F;
+$black-panel: #242424;
+$black-background: #2D2D2D;
+$light-grey-background: #303030;
+$white-background: #EFEFEF;
 
-// GLOBAL COLOR VARIABLES
+// Keyboard Colors
+$green-light: #21C400;
+$green-mid: #168400;
+$green-dark: #147700;
+$black-keyboard-key: #101010;
+$white-keyboard-key: #EFEFEF;
+$yellow-keyboard-key: #FFC552;
 
+// Fret Colors
+$red-keyboard-key: #b63939;
+$red-keyboard-key: #4e0000;
+$red-keyboard-key: #280000;
 
-// Original Theme Colors
-$deep-navy-blue: #112d46;
-$navy-blue: #286298;
-$sunflower-yellow: #daa520;
-$livid-grey: #b2bcc2;
+// Text
+$white-text: #CFCFCF;
+$grey-text: #ABABAB;
+$text-grey: #242424;
 
-// Background Colors
-$bg-page: #2d2d2d;
-$bg-header: #1f1f1f;
-$bg-keyboard: #222222;
-$bg-button: #303030;
-$bg-button-dark: rgb(42, 42, 42);
-$bg-button-hover: rgb(60, 60, 60);
-$bg-button-hover-light: rgb(80, 80, 80);
-$bg-button-active: rgb(50, 50, 50);
-$bg-scrollbar-track: rgb(40, 40, 40);
-$bg-scrollbar-thumb: rgb(80, 80, 80);
-$bg-scrollbar-thumb-hover: rgb(100, 100, 100);
-
-// Text Colors
-$text-light: #ebebeb;
-$text-white: #ffffff;
-$text-muted: #888;
-$text-dark: #333;
-$text-black: #000;
-$text-light-rgb: rgb(215, 215, 215);
-$text-light-muted: rgb(220, 220, 220);
-
-// Border Colors
-$border-black: #000;
-$border-dark: #444;
-$border-darker: #333;
-$border-medium: #555;
-$border-button: #255c6b;
-
-// Button/Accent Colors - Primary (Blue Theme)
-$btn-accent-base: #4a90a4;
-$btn-accent-dark: #357a8f;
-$btn-accent-shadow: rgba(74, 144, 164, 0.3);
-$btn-accent-shadow-hover: rgba(74, 144, 164, 0.4);
-$btn-bg-neutral: #ababab;
-
-// State/Status Colors
-$color-active: rgb(133, 206, 23);          // Green active state
-$color-inactive: rgb(152, 12, 12);         // Red inactive state
-$color-led-active: #21c400;                // LED green
-$color-led-active-shadow: rgb(20, 122, 0);
-
-// Keyboard/Piano Colors
-$key-white: rgb(255, 255, 255);
-$key-white-hover: rgb(240, 240, 240);
-$key-black: rgb(0, 0, 0);
-$key-black-hover: rgb(20, 20, 20);
-$key-interval: rgb(126, 145, 215);          // Highlighted chord notes
-$key-root: rgb(57, 82, 175);                // Root note highlight
-$key-shadow: rgba(0, 0, 0, 0.5);
-
-// Chord Button Colors
-$chord-btn-active-note: rgb(57, 82, 175);   // Active note button (blue)
-$chord-btn-active-type: rgb(200, 170, 80);  // Active chord type (gold)
-$chord-btn-active-type-text: rgb(30, 30, 30);
-
-// Guitar/Fretboard Colors
-$guitar-fretboard: rgb(101, 67, 33);        // Rosewood
-$guitar-nut: #f5f5dc;                       // Ivory/bone
-$guitar-nut-gradient: #e8e4c9;
-$guitar-nut-border: #1a1a1a;
-$guitar-fret-wire: #888;
-$guitar-string-light: #d4d4d4;
-$guitar-string-dark: #9a9a9a;
-$guitar-marker: #d4d4d4;
-$guitar-marker-highlight: #fff;
-$guitar-highlighted: rgb(58, 108, 216);
-$guitar-root: rgb(197, 46, 46);
-
-// LED Control Colors
-$led-bg-gradient-light: #ffffff;
-$led-bg-gradient-mid: #bcbcbc;
-$led-bg-gradient-dark: #898989;
-$led-shadow: rgba(47, 47, 47, 0.5);
-
-// Volume Slider Colors
-$slider-track: #000;
-$slider-thumb-border: #333;
-$slider-thumb-gradient-1: #9a9a9a;
-$slider-thumb-gradient-2: #808080;
-$slider-thumb-gradient-3: #6a6a6a;
-$slider-thumb-gradient-4: #5a5a5a;
-$slider-thumb-gradient-5: #4a4a4a;
-$slider-groove: rgba(0, 0, 0, 0.6);
-
-// Shadow Colors
-$shadow-dark: rgba(0, 0, 0, 0.8);
-$shadow-medium: rgba(0, 0, 0, 0.4);
-$shadow-light: rgba(0, 0, 0, 0.3);
-$shadow-btn-inset-light: rgba(255, 255, 255, 0.3);
-$shadow-btn-inset-dark: rgba(0, 0, 0, 0.4);
-$shadow-btn-drop: rgba(0, 0, 0, 0.7);
-$shadow-fret-click: rgba(74, 144, 164, 0.6);
-
-// Disabled/Muted States
-$disabled-bg-light: #666;
-$disabled-bg-dark: #555;
-$disabled-border: #222;
-
-// Misc/Handle Colors
-$handle-text-muted: rgba(200, 200, 200, 0.7);
-$overlay-white: rgba(255, 255, 255, 0.2);
-$overlay-hover: rgba(255, 255, 255, 0.15);
-$overlay-dark: rgba(0, 0, 0, 0.5);
-
-
-// GLOBAL STYLES
-
-
+// Global Reset
 * {
   box-sizing: border-box;
   margin: 0;
@@ -128,7 +35,7 @@ body {
   display: block;
   width: 100vw;
   min-height: 100vh;
-  background-color: $bg-page;
+  background-color: $black-background;
   font-family: 'Lexend', 'sans-serif';
 }
 
@@ -136,7 +43,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   width: 100vw;
   min-height: 100vh;
   padding: 4em;
