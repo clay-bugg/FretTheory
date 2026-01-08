@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <InstrumentsInstrument />
-    <LayoutMenuPanel />
+    <InstrumentsKeyboardComponentsMenuPanel />
   </div>
 </template>
 

@@ -37,7 +37,7 @@ const store = useKeyboardStore();
 const buttons = ref([
   {
     name: "player",
-    style: { width: "100%", height: "30px" },
+    style: { width: "30px", height: "26px" },
   },
   {
     name: "finder",
@@ -74,7 +74,7 @@ const buttons = ref([
       height: 40px;
       background: $black-panel;
       border-radius: 10px;
-      border: 4px solid black;
+      border: 3px solid black;
       padding: 0.5em 0;
       color: white;
     }

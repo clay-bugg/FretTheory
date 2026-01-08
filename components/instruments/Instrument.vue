@@ -52,7 +52,7 @@ function changeInstrument(direction) {
   height: 3em;
   flex-shrink: 0;
   z-index: 2;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -60,14 +60,15 @@ function changeInstrument(direction) {
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 2px 2px 1px #000000;
-    filter: brightness(1.07);
+    box-shadow: 0 2px 0 0 #000000;
+    filter: brightness(1.1);
   }
 
   &:active {
-    transform: translateY(2px);
+    transform: translateY(0);
     box-shadow: none;
-    filter: brightness(1);
+    filter: brightness(0.95);
+    color: #dadada;
   }
 
   .icon {

@@ -1,12 +1,12 @@
 <!----------GLOBAL------------>
-- Add local storage
+// Set SCSS global variables in main.scss and apply to all components   
 
-<!----------INSTRUMENETS---->     
-<!----------KEYBOARD---------->
-- Categorise and add more chord variations
-- Make keys playable with keyboard
-- Add different voicings/piano samples
-- Add oscillator variation for Synth
+```[[-----Keyboard-----]]
+[[                ]]
+
+-----Guitar----
+
+-----Drums-----
 
 
 

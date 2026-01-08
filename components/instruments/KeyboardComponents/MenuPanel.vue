@@ -2,9 +2,13 @@
   <div class="menu-wrapper">
     <div class="menu-panel" :class="{ open: menuOpen }">
       <div class="menu-content">
-        <InstrumentsScaleType />
-        <InstrumentsKeyboardComponentsRootNoteSelector />
-        <UIChordButtons />
+        <div class="chord-info">
+          <UIChordInfo />
+        </div>
+        <div class="chord-options">
+          <UIRootNoteSelector />
+          <UIChordGrid />
+        </div>
       </div>
     </div>
     <button class="handle-bar" @click="toggleMenu">
@@ -51,15 +55,12 @@ const toggleMenu = () => {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 1024px;
+  width: 100%;
   max-width: 76em;
 }
 
 .menu-panel {
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  width: 100%;
+  width: 1024px;
   max-height: 0;
   overflow: hidden;
   background-color: black;
@@ -68,7 +69,7 @@ const toggleMenu = () => {
   transition: max-height 1s ease-in-out;
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
-  background-color: #303030;
+  background-color: #333333;
   color: #cfcfcf;
 }
 
@@ -79,20 +80,29 @@ const toggleMenu = () => {
 }
 
 .menu-content {
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  gap: 40px;
+  display: grid;
+  grid-template-columns: 30% 70%;
+  grid-template-rows: 1fr;
+  grid-template-areas: "chord-info chord-options";
+  width: 100%;
   padding: 1.5em;
   opacity: 0;
   transform: translateY(-20px);
   transition: opacity 0.3s ease 0.1s, transform 0.3s ease 0.1s;
+  .chord-info {
+    grid-area: chord-info;
+  }
+  .chord-options {
+    grid-area: chord-options;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 0.5em;
+  }
 }
 
 .menu-panel.open .menu-content {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   opacity: 1;
   transform: translateY(0);
 }

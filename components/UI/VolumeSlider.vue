@@ -33,9 +33,9 @@ function volumeChange() {
   gap: 0.8em;
 
   .volume-label {
-    color: #242424;
     font-family: "Lexend", sans-serif;
     font-size: 1rem;
+    color: #cfcfcf;
   }
 
   input {
