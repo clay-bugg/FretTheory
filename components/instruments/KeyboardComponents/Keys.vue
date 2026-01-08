@@ -129,16 +129,21 @@ const pianoKeys = computed(() => {
 }
 
 .white.interval {
-  background-color: black;
+  background-color: #c2c2c2;
+  box-shadow: inset 0 0 0 4px rgb(246, 199, 44);
 }
 
 .black.interval {
-  background-color: $red-keyboard-key;
+  background-color: #c2c2c2;
   color: black;
+  box-shadow: inset 0 0 0 4px rgb(246, 199, 44);
 }
 
-.root-note {
-  background-color: $red-keyboard-key;
-  color: white;
+.root-note,
+.black.root-note,
+.white.root-note {
+  background-color: #c2c2c2;
+  color: black;
+  box-shadow: inset 0 0 0 4px rgb(255, 0, 0);
 }
 </style>
