@@ -1,7 +1,5 @@
 <template>
   <div class="chord-display-wrapper">
-    <p class="chord-played-label">Chord Played</p>
-
     <div class="chord-played">
       <p class="chord-notes-label">
         {{ store.rootNote }}{{ store.chordType }} |

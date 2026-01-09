@@ -39,12 +39,12 @@ nav {
   gap: 20px;
   .button {
     text-decoration: none;
-    color: black;
+    color: #cbcbcb;
     font-size: 1.4rem;
     font-weight: 400;
     &:hover {
       cursor: pointer;
-      color: black;
+      color: rgb(255, 255, 255);
       text-shadow: 0 0 1px black;
     }
     &.selected {

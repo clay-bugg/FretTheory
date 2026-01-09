@@ -1,14 +1,16 @@
 <template>
-  <div class="instrument">
-    <button class="change-instrument" @click="changeInstrument('prev')">
-      <Icon name="eva:arrow-left-fill" class="prev icon" />
-    </button>
-    <InstrumentsKeyboard v-if="selectedInstrument === 'Keyboard'" />
-    <InstrumentsGuitar v-else-if="selectedInstrument === 'Guitar'" />
-    <InstrumentsDrums v-else-if="selectedInstrument === 'Drums'" />
-    <button class="change-instrument" @click="changeInstrument('next')">
-      <Icon name="eva:arrow-right-fill" class="next icon" />
-    </button>
+  <div class="instruments">
+    <div class="instrument">
+      <button class="change-instrument" @click="changeInstrument('prev')">
+        <Icon name="eva:arrow-left-fill" class="prev icon" />
+      </button>
+      <InstrumentsKeyboard v-if="selectedInstrument === 'Keyboard'" />
+      <InstrumentsGuitar v-else-if="selectedInstrument === 'Guitar'" />
+      <InstrumentsDrums v-else-if="selectedInstrument === 'Drums'" />
+      <button class="change-instrument" @click="changeInstrument('next')">
+        <Icon name="eva:arrow-right-fill" class="next icon" />
+      </button>
+    </div>
   </div>
 </template>
 
@@ -34,13 +36,21 @@ function changeInstrument(direction) {
 <style lang="scss" scoped>
 @use "~/assets/scss/main.scss" as *;
 
-.instrument {
-  width: 76em;
+.instruments {
+  width: 100%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 3em;
+
+  .instrument {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 1400px;
+    gap: 2em;
+  }
 }
 
 .change-instrument {
@@ -48,8 +58,8 @@ function changeInstrument(direction) {
   color: #000000;
   border: 2px solid #000000;
   border-radius: 50%;
-  width: 3em;
-  height: 3em;
+  width: 4em;
+  height: 4em;
   flex-shrink: 0;
   z-index: 2;
   transition: all 0.15s ease;
@@ -72,7 +82,7 @@ function changeInstrument(direction) {
   }
 
   .icon {
-    font-size: 1.5em;
+    font-size: 2.5em;
     color: #ababab;
   }
 }

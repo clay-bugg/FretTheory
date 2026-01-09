@@ -1,17 +1,17 @@
 // Global Colors
-$black-header: #1F1F1F;
+$black-header: #1f1f1f;
 $black-panel: #242424;
-$black-background: #2D2D2D;
+$black-background: #2d2d2d;
 $light-grey-background: #303030;
-$white-background: #EFEFEF;
+$white-background: #efefef;
 
 // Keyboard Colors
-$green-light: #21C400;
+$green-light: #21c400;
 $green-mid: #168400;
 $green-dark: #147700;
 $black-keyboard-key: #101010;
-$white-keyboard-key: #EFEFEF;
-$yellow-keyboard-key: #FFC552;
+$white-keyboard-key: #efefef;
+$yellow-keyboard-key: #ffc552;
 
 // Fret Colors
 $red-keyboard-key: #b63939;
@@ -19,8 +19,8 @@ $red-keyboard-key: #4e0000;
 $red-keyboard-key: #280000;
 
 // Text
-$white-text: #CFCFCF;
-$grey-text: #ABABAB;
+$white-text: #cfcfcf;
+$grey-text: #ababab;
 $text-grey: #242424;
 
 // Global Reset
@@ -36,18 +36,18 @@ body {
   width: 100vw;
   min-height: 100vh;
   background-color: $black-background;
-  font-family: 'Lexend', 'sans-serif';
+  font-family: "Lexend", "sans-serif";
 }
 
 .page {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   width: 100vw;
   min-height: 100vh;
   padding: 4em;
-  font-family: 'Lexend', 'sans-serif';
+  font-family: "Lexend", "sans-serif";
 }
 
 button {

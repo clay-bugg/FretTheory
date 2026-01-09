@@ -9,4 +9,11 @@
 import { ref } from "vue";
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.page {
+  transform: scale(0.85);
+  transform-origin: top center;
+  height: 110vh;
+  overflow-y: hidden;
+}
+</style>

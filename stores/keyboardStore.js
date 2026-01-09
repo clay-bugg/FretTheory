@@ -224,6 +224,7 @@ export const useKeyboardStore = defineStore("keyboard", () => {
   const rootNote = ref("");
   const chordType = ref("");
   const chordNotes = ref([]);
+  const chordIntervals = ref({});
 
   // Computed Chord Notes
   function updateChord() {
@@ -234,10 +235,20 @@ export const useKeyboardStore = defineStore("keyboard", () => {
 
     const { intervals, formula } = chord;
     const rootIndex = notes.value.indexOf(rootNote.value);
-    const updatedChordNotes = intervals.map(
-      (i) => notes.value[(rootIndex + i) % 12]
-    );
 
+    // Reset intervals map
+    const newIntervalsMap = {};
+
+    const updatedChordNotes = intervals.map((i, index) => {
+      const note = notes.value[(rootIndex + i) % 12];
+      // Map scale degree formula to the note
+      // If a note appears multiple times (unlikely in this logic but possible in theory), latest one wins or we handle it.
+      // For basic chord display, 1:1 mapping is usually fine.
+      newIntervalsMap[note] = formula[index];
+      return note;
+    });
+
+    chordIntervals.value = newIntervalsMap;
     chordNotes.value = Array.from(new Set(updatedChordNotes));
 
     console.log(
@@ -314,6 +325,7 @@ export const useKeyboardStore = defineStore("keyboard", () => {
     rootNote,
     chordType,
     chordNotes,
+    chordIntervals,
     currentPitch,
     notesDisplayed,
 

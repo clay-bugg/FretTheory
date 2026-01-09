@@ -1,12 +1,6 @@
 <template>
   <div class="chord-selector">
     <div class="dropdown">
-      <select v-model="selectedScale">
-        <option v-for="scale in scales" :key="scale" :value="scale">
-          {{ scale }}
-        </option>
-      </select>
-
       <div class="keyboard-type-buttons">
         <button
           v-for="button in buttons"

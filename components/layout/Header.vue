@@ -36,12 +36,12 @@ header {
   h1 {
     font-size: 3rem;
     font-weight: 700;
-    color: black;
+    color: #cbcbcb;
     position: relative;
     top: 5px;
     &:hover {
       cursor: pointer;
-      color: black;
+      color: rgb(255, 255, 255);
       text-shadow: 0 0 1px black;
     }
   }

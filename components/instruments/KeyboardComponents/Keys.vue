@@ -5,16 +5,15 @@
       :key="`${key.note}${key.octave}`"
       :style="{ fontSize: keyFontSize }"
       :id="`interval-${chordNotes.indexOf(key.note) + 1}`"
-      :class="[
-        'key',
-        {
-          black: key.sharp,
-          white: !key.sharp,
-          'highlighted-note': chordNotes.includes(key.note),
-          interval: chordNotes.includes(key.note),
-          'root-note': key.note === rootNote,
-        },
-      ]"
+      class="key"
+      :class="{
+        black: key.sharp,
+        white: !key.sharp,
+        highlighted: chordNotes.includes(key.note),
+        interval: chordNotes.includes(key.note),
+        rootnote: key.note === rootNote,
+        extendednote: isExtended(key.note),
+      }"
       @mousedown="$emit('playKey', key.note, key.octave)"
       @mouseup="$emit('stopKey', key.note, key.octave)"
       @mouseleave="$emit('stopKey', key.note, key.octave)"
@@ -31,8 +30,14 @@
 import { useKeyboardStore } from "~/stores/keyboardStore";
 
 const store = useKeyboardStore();
-const { currentPitch, chordNotes, rootNote, notesDisplayed, notes } =
-  storeToRefs(store);
+const {
+  currentPitch,
+  chordNotes,
+  chordIntervals,
+  rootNote,
+  notesDisplayed,
+  notes,
+} = storeToRefs(store);
 
 defineEmits(["playKey", "stopKey"]);
 
@@ -55,6 +60,12 @@ const pianoKeys = computed(() => {
 
   return keys;
 });
+
+function isExtended(noteName) {
+  const interval = chordIntervals.value[noteName];
+  if (!interval) return false;
+  return ["9", "11", "13"].some((ext) => interval.includes(ext));
+}
 </script>
 
 <style scoped lang="scss">
@@ -114,36 +125,49 @@ const pianoKeys = computed(() => {
   width: 3.6em;
   height: 55%;
   overflow: hidden;
-  border: 1px solid black;
+  border: 2px solid black;
   border-bottom-right-radius: 8px;
   border-bottom-left-radius: 8px;
   margin-left: -3.6em;
   padding-bottom: 0.6em;
   background-color: #101010;
-  color: $white-text;
-  box-shadow: -2px 0 1px black;
+  color: #cbcbcb;
+  box-shadow: 0 2px 2px black;
   z-index: 2;
+  font-size: 1rem;
+
   &:hover {
     background-color: #1a1a1a;
   }
 }
 
 .white.interval {
-  background-color: #c2c2c2;
-  box-shadow: inset 0 0 0 4px rgb(246, 199, 44);
+  background-color: #ffc552;
+  color: black;
+  border: 3px solid black;
+  border-top: none;
+  font-weight: 800;
 }
 
 .black.interval {
-  background-color: #c2c2c2;
+  background-color: #ffc552;
   color: black;
-  box-shadow: inset 0 0 0 4px rgb(246, 199, 44);
+  border: 3px solid black;
+  border-top: none;
+  font-weight: 800;
 }
 
-.root-note,
-.black.root-note,
-.white.root-note {
-  background-color: #c2c2c2;
+.rootnote,
+.black.rootnote,
+.white.rootnote {
+  background-color: #b81f1f;
   color: black;
-  box-shadow: inset 0 0 0 4px rgb(255, 0, 0);
+  border: 3px solid black;
+  border-top: none;
+}
+
+.black.extendednote,
+.white.extendednote {
+  color: black;
 }
 </style>

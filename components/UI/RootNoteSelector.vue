@@ -27,11 +27,8 @@ const sharpToFlatMap = {
   "A#": "B♭",
 };
 
-// Format note to show both sharp and flat (e.g., "D#/E♭")
+// Format note to show just the note (sharps preferred based on image)
 function formatNote(note) {
-  if (sharpToFlatMap[note]) {
-    return `${note}/${sharpToFlatMap[note]}`;
-  }
   return note;
 }
 
@@ -56,60 +53,52 @@ function changeRootNote(note) {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: 44px;
-  height: 36px;
-  padding: 0.4em 0.6em;
-  border: none;
-  border-radius: 8px;
+  flex: 1;
+  min-width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 1px solid #000000;
+  border-radius: 4px;
   background: #242424;
   color: #c0c0c0;
+  font-family: inherit;
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   transition: all 0.15s ease;
 
   .note-label {
     text-align: center;
-    line-height: 1.2;
-    white-space: nowrap;
+    line-height: 1;
   }
 
   &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 2px 0 0 #000000;
-    filter: brightness(1.1);
+    background-color: #333333;
+    filter: brightness(1.2);
   }
 
   &:active {
-    transform: translateY(0);
-    box-shadow: none;
+    transform: translateY(1px);
     filter: brightness(0.95);
-    color: #dadada;
   }
 
   &.active {
-    background: #ffc552;
+    background: #b81f1f;
     color: #000000;
-    box-shadow: 0 2px 0 0 #000000;
+    font-weight: 700;
+    border-color: #b81f1f;
 
     &:hover {
-      filter: brightness(1.1);
-    }
-
-    &:active {
-      filter: brightness(0.95);
+      filter: brightness(1.05);
     }
   }
 
   &.accidental {
-    min-width: 52px;
-    font-size: 0.8rem;
-    font-weight: 700;
-    background: #171717;
+    background: #1f1f1f;
 
     &.active {
-      background: #ffc552;
-      color: #000000;
+      background: #b81f1f;
+      color: black;
     }
   }
 }

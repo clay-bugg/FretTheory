@@ -4,13 +4,12 @@
       <UILEDControl :ledAmount="3" label="LABELS" />
       <UILEDControl :ledAmount="6" label="PITCH" />
     </div>
+    <UIChordButtons />
     <UIVolumeSlider />
   </div>
 </template>
 
-<script setup>
-  
-</script>
+<script setup></script>
 
 <style scoped>
 .controls {
@@ -18,7 +17,7 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding: 20px;
+  padding: 10px 20px;
 
   .LED-controls {
     display: flex;

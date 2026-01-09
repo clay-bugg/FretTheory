@@ -63,42 +63,42 @@ const toggleMenu = () => {
   width: 1024px;
   max-height: 0;
   overflow: hidden;
-  background-color: black;
+  background-color: #0f0f0f;
   border-left: 3px solid black;
   border-right: 3px solid black;
-  transition: max-height 1s ease-in-out;
+  transition: max-height 0.4s ease-in-out;
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
-  background-color: #333333;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
   color: #cfcfcf;
 }
 
 .menu-panel.open {
-  max-height: 400px;
+  max-height: 500px;
   border-bottom: 3px solid black;
-  transition: max-height 1s ease-in-out;
+  transition: max-height 0.4s ease-in-out;
 }
 
 .menu-content {
-  display: grid;
-  grid-template-columns: 30% 70%;
-  grid-template-rows: 1fr;
-  grid-template-areas: "chord-info chord-options";
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
-  padding: 1.5em;
+  padding: 0.8em; // Reduced padding
   opacity: 0;
-  transform: translateY(-20px);
+  transform: translateY(-10px);
   transition: opacity 0.3s ease 0.1s, transform 0.3s ease 0.1s;
+
   .chord-info {
-    grid-area: chord-info;
+    display: none;
   }
+
   .chord-options {
-    grid-area: chord-options;
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 0.5em;
+    align-items: center;
+    gap: 0.5em; // Reduced gap
+    width: 100%;
   }
 }
 

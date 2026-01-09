@@ -30,9 +30,14 @@ const chordRows = computed(() => {
   // Row 1: Basic triads and simple chords
   rows.push(
     chords.filter((c) =>
-      ["Major", "Minor", "Diminished", "Augmented", "Suspended 4"].includes(
-        c.label
-      )
+      [
+        "Major",
+        "Minor",
+        "Diminished",
+        "Augmented",
+        "Suspended 2",
+        "Suspended 4",
+      ].includes(c.label)
     )
   );
 
@@ -113,6 +118,7 @@ function formatLabel(label) {
     "Minor Major 7": "mMaj7",
     "Minor Major 9": "mMaj9",
     "Minor Augmented": "m(#5)",
+    "Suspended 2": "sus2",
     "Suspended 4": "sus4",
     "7 Suspended 4": "7sus4",
     "7#9 (Hendrix)": "7#9",
@@ -166,43 +172,39 @@ function selectChord(chord) {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex: 1;
   min-width: 50px;
   height: 36px;
   padding: 0.4em 0.8em;
-  border: none;
-  border-radius: 8px;
+  border: 1px solid #1a1a1a;
+  border-radius: 4px;
   background: #242424;
   color: #c0c0c0;
+  font-family: inherit;
   font-size: 0.85rem;
-  font-weight: 600;
+  font-weight: 500;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all 0.1s ease;
   white-space: nowrap;
 
   &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 2px 0 0 #000000;
+    background-color: #333333;
     filter: brightness(1.1);
   }
 
   &:active {
-    transform: translateY(0);
-    box-shadow: none;
-    filter: brightness(0.95);
-    color: #dadada;
+    transform: translateY(1px);
+    filter: brightness(0.9);
   }
 
   &.active {
     background: #ffc552;
     color: #000000;
-    box-shadow: 0 2px 0 0 #000000;
+    font-weight: 700;
+    border-color: #ffc552;
 
     &:hover {
-      filter: brightness(1.1);
-    }
-
-    &:active {
-      filter: brightness(0.95);
+      filter: brightness(1.05);
     }
   }
 }
