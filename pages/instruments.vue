@@ -1,19 +1,20 @@
+°
 <template>
   <div class="page">
-    <InstrumentsInstrument />
-    <InstrumentsKeyboardComponentsMenuPanel />
+    <InstrumentsInstrumentSwitcher />
   </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
+const { keyboardType } = storeToRefs(useControlStore());
 </script>
 
 <style scoped lang="scss">
 .page {
   transform: scale(0.85);
   transform-origin: top center;
-  height: 110vh;
+  height: 100%;
   overflow-y: hidden;
 }
 </style>

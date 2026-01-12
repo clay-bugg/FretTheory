@@ -100,6 +100,12 @@ export const chordLibrary = ref([
     types: ["dominant", "altered"],
   },
   {
+    label: "7b13",
+    intervals: [0, 4, 7, 8, 10],
+    formula: ["1", "3", "5", "♭7", "♭13"],
+    types: ["dominant", "altered"],
+  },
+  {
     label: "Major 6/9",
     intervals: [0, 4, 7, 9, 14],
     formula: ["1", "3", "5", "6", "9"],
@@ -110,6 +116,12 @@ export const chordLibrary = ref([
     intervals: [0, 3, 6],
     formula: ["1", "♭3", "♭5"],
     types: ["triad", "diminished"],
+  },
+  {
+    label: "Diminished 7",
+    intervals: [0, 3, 6, 9],
+    formula: ["1", "♭3", "♭5", "°7"],
+    types: ["tetrad", "diminished", "seventh"],
   },
   {
     label: "Augmented",

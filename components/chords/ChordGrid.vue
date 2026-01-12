@@ -6,7 +6,9 @@
         :key="chord.label"
         class="chord-button"
         :class="{ active: selectedChordLabel === chord.label }"
+        draggable="true"
         @click="selectChord(chord)"
+        @dragstart="handleDragStart($event, chord)"
       >
         {{ formatLabel(chord.label) }}
       </button>
@@ -52,6 +54,7 @@ const chordRows = computed(() => {
         "Dominant 7",
         "Major 7",
         "Minor 7",
+        "Diminished 7",
       ].includes(c.label)
     )
   );
@@ -87,6 +90,7 @@ const chordRows = computed(() => {
         "7#5",
         "9#5",
         "7b9#5",
+        "7b13",
         "Minor 7b5",
         "Minor 7b9",
         "Minor Augmented",
@@ -124,6 +128,7 @@ function formatLabel(label) {
     "7#9 (Hendrix)": "7#9",
     Augmented: "aug",
     Diminished: "dim",
+    "Diminished 7": "°7",
   };
   return shortLabels[label] || label;
 }
@@ -132,13 +137,8 @@ function formatLabel(label) {
 function selectChord(chord) {
   selectedChordLabel.value = chord.label;
 
-  // Find matching chord type in keyboardStore
-  const store = useKeyboardStore();
-  const matchingType = store.chordTypes.find((t) => t.label === chord.label);
-
-  if (matchingType) {
-    chordType.value = matchingType.value;
-  }
+  // Set chord type directly to the label (chordLibrary uses label as identifier)
+  chordType.value = chord.label;
 
   // Calculate chord notes if root is selected
   if (rootNote.value) {
@@ -148,6 +148,20 @@ function selectChord(chord) {
     );
     chordNotes.value = calculatedNotes;
   }
+}
+
+// Handle drag start for chord progression builder
+function handleDragStart(e, chord) {
+  // First select the chord
+  selectChord(chord);
+
+  // Then set drag data
+  const dragData = {
+    root: rootNote.value || "C",
+    type: chord.label,
+  };
+  e.dataTransfer.setData("application/json", JSON.stringify(dragData));
+  e.dataTransfer.effectAllowed = "copy";
 }
 </script>
 

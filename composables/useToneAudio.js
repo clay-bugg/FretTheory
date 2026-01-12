@@ -45,10 +45,21 @@ export function useToneAudio() {
     activeNotes.add(playedNote);
 
     if (sampler) {
-      sampler.triggerAttackRelease(playedNote, "2n");
+      sampler.triggerAttack(playedNote);
     }
 
     console.log(`${playedNote} note played.`);
+  }
+
+  function stopKey(note, octave) {
+    const playedNote = `${note}${octave}`;
+    activeNotes.delete(playedNote);
+
+    if (sampler) {
+      sampler.triggerRelease(playedNote);
+    }
+
+    console.log(`${playedNote} note released.`);
   }
 
   function playChord(action) {
@@ -88,6 +99,7 @@ export function useToneAudio() {
 
   return {
     playKey,
+    stopKey,
     playChord,
     setVolume,
     activeNotes,

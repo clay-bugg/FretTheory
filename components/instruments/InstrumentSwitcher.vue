@@ -16,6 +16,7 @@
 
 <script setup>
 const { selectedInstrument } = storeToRefs(useControlStore());
+const { keyboardType } = storeToRefs(useKeyboardStore());
 
 const instruments = ref(["Keyboard", "Guitar", "Drums"]);
 

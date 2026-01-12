@@ -111,7 +111,7 @@ import { useGuitarStore } from "~/stores/guitarStore";
 import { useGuitarAudio } from "~/composables/useGuitarAudio";
 
 // Import the Fretboard component
-import Fretboard from "~/components/instruments/GuitarComponents/Fretboard.vue";
+import Fretboard from "./Fretboard.vue";
 
 // Store and audio
 const store = useGuitarStore();
@@ -340,11 +340,7 @@ onUnmounted(() => {
 
     &:active:not(:disabled),
     &.playing {
-      background: linear-gradient(
-        135deg,
-        darken(black, 5%),
-        darken(black, 5%)
-      );
+      background: linear-gradient(135deg, darken(black, 5%), darken(black, 5%));
       transform: translateY(1px);
       box-shadow: 0 2px 10px black;
     }

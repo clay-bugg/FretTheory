@@ -38,14 +38,15 @@ export const useGuitarStore = defineStore("guitar", () => {
 
   // Chord state
   const rootNote = ref("C");
-  const chordType = ref("maj");
+  const chordType = ref("Major");
   const chordNotes = ref([]);
 
   // Calculate chord notes based on root and type
   function updateChord() {
     if (!rootNote.value || !chordType.value) return;
 
-    const chord = chordTypes.value.find((c) => c.value === chordType.value);
+    // chordLibrary uses 'label' as the identifier
+    const chord = chordTypes.value.find((c) => c.label === chordType.value);
     if (!chord) return;
 
     const { intervals, formula } = chord;

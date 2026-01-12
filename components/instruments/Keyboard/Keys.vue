@@ -13,6 +13,7 @@
         interval: chordNotes.includes(key.note),
         rootnote: key.note === rootNote,
         extendednote: isExtended(key.note),
+        'midi-playing': isMidiActive(key.note, key.octave),
       }"
       @mousedown="$emit('playKey', key.note, key.octave)"
       @mouseup="$emit('stopKey', key.note, key.octave)"
@@ -40,6 +41,40 @@ const {
 } = storeToRefs(store);
 
 defineEmits(["playKey", "stopKey"]);
+
+const props = defineProps({
+  midiActiveNotes: {
+    type: Set,
+    default: () => new Set(),
+  },
+});
+
+// MIDI note conversion
+const NOTE_NAMES = [
+  "C",
+  "C#",
+  "D",
+  "D#",
+  "E",
+  "F",
+  "F#",
+  "G",
+  "G#",
+  "A",
+  "A#",
+  "B",
+];
+
+function noteToMidi(note, octave) {
+  const noteIndex = NOTE_NAMES.indexOf(note);
+  if (noteIndex === -1) return -1;
+  return (octave + 1) * 12 + noteIndex;
+}
+
+function isMidiActive(note, octave) {
+  const midiNumber = noteToMidi(note, octave);
+  return props.midiActiveNotes?.has?.(midiNumber) || false;
+}
 
 const pianoKeys = computed(() => {
   const octavesArray = Array.from(
@@ -169,5 +204,22 @@ function isExtended(noteName) {
 .black.extendednote,
 .white.extendednote {
   color: black;
+}
+
+// MIDI visual feedback
+.white.midi-playing {
+  background-color: #22d3ee;
+  color: black;
+  border: 3px solid #0891b2;
+  border-top: none;
+  font-weight: 700;
+}
+
+.black.midi-playing {
+  background-color: #22d3ee;
+  color: black;
+  border: 3px solid #0891b2;
+  border-top: none;
+  font-weight: 700;
 }
 </style>

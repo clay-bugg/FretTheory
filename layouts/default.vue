@@ -4,11 +4,11 @@
 </template>
 
 <script setup>
-import Header from '@/components/layout/Header.vue'
+import Header from "@/components/layout/Header.vue";
 </script>
 
 <style>
-  .header {
-    width: 100vw;
-  }
+.header {
+  width: 100vw;
+}
 </style>

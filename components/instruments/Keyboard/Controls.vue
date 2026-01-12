@@ -1,15 +1,22 @@
 <template>
   <div class="controls">
     <div class="LED-controls">
-      <UILEDControl :ledAmount="3" label="LABELS" />
-      <UILEDControl :ledAmount="6" label="PITCH" />
+      <ControlsLEDControl :ledAmount="3" label="LABELS" />
+      <ControlsLEDControl :ledAmount="6" label="PITCH" />
     </div>
-    <UIChordButtons />
-    <UIVolumeSlider />
+    <ChordsChordButtons :midi="midi" />
+    <ControlsVolumeSlider />
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+defineProps({
+  midi: {
+    type: Object,
+    default: null,
+  },
+});
+</script>
 
 <style scoped>
 .controls {
