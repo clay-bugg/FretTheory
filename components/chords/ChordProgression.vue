@@ -77,6 +77,85 @@
         <span class="duration-value">{{ chordDurationDisplay }}</span>
         <span class="duration-label">per chord</span>
       </div>
+
+      <!-- Arpeggiator Controls -->
+      <div class="arpeggiator-group">
+        <div class="arp-toggle-wrapper">
+          <button
+            class="arp-toggle-btn"
+            :class="{ active: arpeggiatorEnabled }"
+            @click="arpeggiatorEnabled = !arpeggiatorEnabled"
+          >
+            ARP
+          </button>
+        </div>
+        <div v-if="arpeggiatorEnabled" class="arp-options">
+          <div class="arp-pattern-group">
+            <label class="control-label">Pattern</label>
+            <select v-model="arpPattern" class="arp-select">
+              <option value="up">Up ↑</option>
+              <option value="down">Down ↓</option>
+              <option value="upDown">Up-Down ↕</option>
+              <option value="downUp">Down-Up ↕</option>
+              <option value="random">Random ⚡</option>
+            </select>
+          </div>
+          <div class="arp-rate-group">
+            <label class="control-label">Rate</label>
+            <div class="arp-rate-control">
+              <input
+                type="range"
+                v-model.number="arpNoteRate"
+                min="1"
+                max="8"
+                step="1"
+                class="arp-rate-slider"
+              />
+              <span class="arp-rate-value">1/{{ arpNoteRate }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Metronome Controls -->
+      <div class="metronome-group">
+        <div class="metronome-toggle-wrapper">
+          <button
+            class="metronome-toggle-btn"
+            :class="{ active: metronomeEnabled }"
+            @click="metronomeEnabled = !metronomeEnabled"
+            title="Toggle Metronome"
+          >
+            <span class="metronome-icon">🔔</span>
+          </button>
+        </div>
+        <div v-if="metronomeEnabled" class="metronome-options">
+          <div class="beat-style-group">
+            <label class="control-label">Style</label>
+            <select v-model="beatStyle" class="beat-style-select">
+              <option value="straight">Straight</option>
+              <option value="swing">Swing</option>
+              <option value="shuffle">Shuffle</option>
+              <option value="reggae">Reggae</option>
+              <option value="bossa">Bossa Nova</option>
+            </select>
+          </div>
+          <div class="metronome-volume-group">
+            <label class="control-label">Vol</label>
+            <div class="metronome-volume-control">
+              <input
+                type="range"
+                v-model.number="metronomeVolume"
+                min="0"
+                max="100"
+                step="5"
+                class="metronome-volume-slider"
+              />
+              <span class="metronome-volume-value">{{ metronomeVolume }}%</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Drop Zone for Progression -->
@@ -161,7 +240,8 @@
 import { useToneAudio } from "~/composables/useToneAudio";
 import { chordLibrary } from "~/composables/chords";
 
-const { playChord, stopAllNotes } = useToneAudio();
+const { playChord, arpeggiate, stopAllNotes, playMetronomeClick } =
+  useToneAudio();
 const keyboardStore = useKeyboardStore();
 const {
   rootNote: storeRootNote,
@@ -193,6 +273,108 @@ const tapTimes = ref([]);
 const tapCount = ref(0);
 const showTapFeedback = ref(false);
 let tapResetTimeout = null;
+
+// Arpeggiator state
+const arpeggiatorEnabled = ref(false);
+const arpPattern = ref("up"); // up, down, upDown, downUp, random
+const arpNoteRate = ref(4); // Note subdivision: 1 = whole, 2 = half, 4 = quarter, 8 = eighth
+
+// Calculate arpeggio note delay in ms based on tempo and rate
+const arpNoteDelay = computed(() => {
+  const msPerBeat = (60 / tempo.value) * 1000;
+  // Divide beat duration by rate to get time per note
+  return msPerBeat / (arpNoteRate.value / 4); // normalized to quarter notes
+});
+
+// Metronome state
+const metronomeEnabled = ref(false);
+const metronomeVolume = ref(70); // 0-100
+const beatStyle = ref("straight"); // straight, swing, shuffle, reggae, bossa
+let metronomeInterval = null;
+let metronomeTimeouts = []; // For complex patterns with multiple sounds per beat
+let currentBeat = 0;
+
+// Beat style patterns define timing and accent for each subdivision
+// Timing is relative offset (0-1) within a beat, accent is volume multiplier
+const beatPatterns = {
+  straight: {
+    // Simple on-beat clicks, accent on beat 1
+    subdivisions: 1,
+    getPattern: (beat, beatsPerBar) => [
+      {
+        offset: 0,
+        isAccent: beat === 0,
+        muted: false,
+      },
+    ],
+  },
+  swing: {
+    // Triplet feel - main beat + delayed offbeat
+    subdivisions: 2,
+    swingAmount: 0.66, // Offbeat delayed to 2/3 of the beat
+    getPattern: (beat, beatsPerBar) => [
+      {
+        offset: 0,
+        isAccent: beat === 0,
+        muted: false,
+      },
+      {
+        offset: 0.66, // Swung offbeat
+        isAccent: false,
+        muted: false,
+        softer: true,
+      },
+    ],
+  },
+  shuffle: {
+    // Heavier swing with emphasis
+    subdivisions: 2,
+    getPattern: (beat, beatsPerBar) => [
+      {
+        offset: 0,
+        isAccent: beat === 0 || beat === 2,
+        muted: false,
+      },
+      {
+        offset: 0.66,
+        isAccent: false,
+        muted: false,
+        softer: true,
+      },
+    ],
+  },
+  reggae: {
+    // One-drop: emphasis on beats 2 and 4, beat 1 is quiet
+    subdivisions: 1,
+    getPattern: (beat, beatsPerBar) => [
+      {
+        offset: 0,
+        isAccent: beat === 1 || beat === 3, // Accent on 2 and 4
+        muted: beat === 0, // Beat 1 is very quiet (one-drop)
+        softer: beat === 2,
+      },
+    ],
+  },
+  bossa: {
+    // Bossa nova pattern: syncopated feel
+    subdivisions: 2,
+    getPattern: (beat, beatsPerBar) => {
+      // Pattern: 1-and, 2, and-of-3, 4
+      if (beat === 0) {
+        return [
+          { offset: 0, isAccent: true, muted: false },
+          { offset: 0.5, isAccent: false, muted: false, softer: true },
+        ];
+      } else if (beat === 1) {
+        return [{ offset: 0, isAccent: false, muted: false }];
+      } else if (beat === 2) {
+        return [{ offset: 0.5, isAccent: false, muted: false, softer: true }];
+      } else {
+        return [{ offset: 0, isAccent: false, muted: false }];
+      }
+    },
+  },
+};
 
 // Calculate beats per bar from time signature
 const beatsPerBar = computed(() => {
@@ -401,6 +583,11 @@ function startPlayback() {
     }
     playCurrentChord();
   }, chordDuration.value);
+
+  // Start metronome if enabled
+  if (metronomeEnabled.value) {
+    startMetronome();
+  }
 }
 
 function stopPlayback() {
@@ -410,7 +597,71 @@ function stopPlayback() {
     clearInterval(playbackInterval);
     playbackInterval = null;
   }
+  stopMetronome();
   if (stopAllNotes) stopAllNotes();
+}
+
+// Metronome functions
+function startMetronome() {
+  stopMetronome(); // Clear any existing
+
+  const msPerBeat = (60 / tempo.value) * 1000;
+  currentBeat = 0;
+
+  // Play first beat pattern immediately
+  playBeatPattern(0, msPerBeat);
+  currentBeat = 1;
+
+  // Set up interval for subsequent beats
+  metronomeInterval = setInterval(() => {
+    const beatInBar = currentBeat % beatsPerBar.value;
+    playBeatPattern(beatInBar, msPerBeat);
+    currentBeat++;
+  }, msPerBeat);
+}
+
+function playBeatPattern(beatInBar, msPerBeat) {
+  const pattern = beatPatterns[beatStyle.value] || beatPatterns.straight;
+  const clicks = pattern.getPattern(beatInBar, beatsPerBar.value);
+
+  clicks.forEach((click) => {
+    const delay = click.offset * msPerBeat;
+
+    if (delay === 0) {
+      // Play immediately
+      playClick(click);
+    } else {
+      // Schedule for later in the beat
+      const timeout = setTimeout(() => {
+        playClick(click);
+      }, delay);
+      metronomeTimeouts.push(timeout);
+    }
+  });
+}
+
+function playClick(click) {
+  if (click.muted) {
+    // Very quiet click for muted beats (like reggae beat 1)
+    playMetronomeClick(false, metronomeVolume.value * 0.2);
+  } else if (click.softer) {
+    // Softer click for offbeats
+    playMetronomeClick(false, metronomeVolume.value * 0.6);
+  } else {
+    // Normal or accent click
+    playMetronomeClick(click.isAccent, metronomeVolume.value);
+  }
+}
+
+function stopMetronome() {
+  if (metronomeInterval) {
+    clearInterval(metronomeInterval);
+    metronomeInterval = null;
+  }
+  // Clear any pending timeouts
+  metronomeTimeouts.forEach((t) => clearTimeout(t));
+  metronomeTimeouts = [];
+  currentBeat = 0;
 }
 
 function playCurrentChord() {
@@ -423,29 +674,66 @@ function playCurrentChord() {
 
   // Wait for store to update chord notes, then play
   nextTick(() => {
-    if (playChord) playChord("play");
+    if (arpeggiatorEnabled.value) {
+      // Use arpeggiator
+      arpeggiate("play", {
+        pattern: arpPattern.value,
+        noteDelay: arpNoteDelay.value,
+        noteDuration: arpNoteDelay.value * 0.9, // Slight overlap prevention
+      });
+    } else {
+      // Play chord normally
+      if (playChord) playChord("play");
+    }
+
     // Stop slightly before next chord
     const stopDelay = Math.max(
       chordDuration.value - 100,
       chordDuration.value * 0.9
     );
     setTimeout(() => {
-      if (playChord) playChord("stop");
+      if (arpeggiatorEnabled.value) {
+        arpeggiate("stop");
+      } else {
+        if (playChord) playChord("stop");
+      }
     }, stopDelay);
   });
 }
 
-// Watch for tempo/timing changes during playback - restart if playing
-watch([tempo, timeSignature, barsPerChord], () => {
+// Watch for tempo/timing/arpeggiator changes during playback - restart if playing
+watch(
+  [
+    tempo,
+    timeSignature,
+    barsPerChord,
+    arpeggiatorEnabled,
+    arpPattern,
+    arpNoteRate,
+  ],
+  () => {
+    if (isPlaying.value) {
+      stopPlayback();
+      startPlayback();
+    }
+  }
+);
+
+// Watch for metronome toggle or style change during playback
+watch([metronomeEnabled, beatStyle], ([enabled]) => {
   if (isPlaying.value) {
-    stopPlayback();
-    startPlayback();
+    if (enabled) {
+      startMetronome(); // Restart with new style
+    } else {
+      stopMetronome();
+    }
   }
 });
 
 // Cleanup on unmount
 onUnmounted(() => {
   stopPlayback();
+  stopMetronome();
   clearTimeout(tapResetTimeout);
 });
 </script>
@@ -591,6 +879,7 @@ onUnmounted(() => {
     -webkit-appearance: none;
     margin: 0;
   }
+  appearance: textfield;
   -moz-appearance: textfield;
 }
 
@@ -689,6 +978,279 @@ onUnmounted(() => {
   font-size: 0.65rem;
   color: #555;
   text-transform: uppercase;
+}
+
+// Arpeggiator styles
+.arpeggiator-group {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  padding-left: 1em;
+  border-left: 1px solid #333;
+  margin-left: 0.5em;
+}
+
+.arp-toggle-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.arp-toggle-btn {
+  width: 50px;
+  height: 36px;
+  padding: 0;
+  border: 2px solid #444;
+  border-radius: 6px;
+  background: linear-gradient(180deg, #2a2a2a 0%, #1a1a1a 100%);
+  color: #888;
+  font-family: inherit;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.15s ease;
+
+  &:hover {
+    background: linear-gradient(180deg, #333 0%, #222 100%);
+    color: #aaa;
+  }
+
+  &.active {
+    background: linear-gradient(180deg, #7c3aed 0%, #5b21b6 100%);
+    border-color: #7c3aed;
+    color: white;
+    box-shadow: 0 0 12px rgba(124, 58, 237, 0.4);
+  }
+}
+
+.arp-options {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.arp-pattern-group,
+.arp-rate-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.arp-select {
+  height: 28px;
+  padding: 0 0.5em;
+  border: 1px solid #333;
+  border-radius: 4px;
+  background: #1a1a1a;
+  color: #ccc;
+  font-family: inherit;
+  font-size: 0.8rem;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+    border-color: #7c3aed;
+  }
+}
+
+.arp-rate-control {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.arp-rate-slider {
+  width: 70px;
+  height: 6px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: #333;
+  border-radius: 3px;
+  outline: none;
+  cursor: pointer;
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: linear-gradient(180deg, #7c3aed 0%, #5b21b6 100%);
+    cursor: pointer;
+    border: 2px solid #fff;
+    box-shadow: 0 0 6px rgba(124, 58, 237, 0.5);
+  }
+
+  &::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: linear-gradient(180deg, #7c3aed 0%, #5b21b6 100%);
+    cursor: pointer;
+    border: 2px solid #fff;
+    box-shadow: 0 0 6px rgba(124, 58, 237, 0.5);
+  }
+}
+
+.arp-rate-value {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #7c3aed;
+  min-width: 30px;
+}
+
+// Metronome styles
+.metronome-group {
+  display: flex;
+  align-items: center;
+  gap: 0.8em;
+  padding-left: 1em;
+  border-left: 1px solid #333;
+  margin-left: 0.5em;
+}
+
+.metronome-toggle-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.metronome-toggle-btn {
+  width: 44px;
+  height: 36px;
+  padding: 0;
+  border: 2px solid #444;
+  border-radius: 6px;
+  background: linear-gradient(180deg, #2a2a2a 0%, #1a1a1a 100%);
+  color: #888;
+  font-family: inherit;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background: linear-gradient(180deg, #333 0%, #222 100%);
+  }
+
+  &.active {
+    background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%);
+    border-color: #f59e0b;
+    box-shadow: 0 0 12px rgba(245, 158, 11, 0.4);
+
+    .metronome-icon {
+      animation: metronomePulse 0.5s ease-in-out infinite;
+    }
+  }
+}
+
+.metronome-icon {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+@keyframes metronomePulse {
+  0%,
+  100% {
+    transform: rotate(-5deg);
+  }
+  50% {
+    transform: rotate(5deg);
+  }
+}
+
+.metronome-options {
+  display: flex;
+  align-items: center;
+  gap: 0.8em;
+  animation: fadeIn 0.2s ease;
+}
+
+.beat-style-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.beat-style-select {
+  height: 28px;
+  padding: 0 0.5em;
+  border: 1px solid #333;
+  border-radius: 4px;
+  background: #1a1a1a;
+  color: #ccc;
+  font-family: inherit;
+  font-size: 0.8rem;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+    border-color: #f59e0b;
+  }
+}
+
+.metronome-volume-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.metronome-volume-control {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+}
+
+.metronome-volume-slider {
+  width: 60px;
+  height: 6px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: #333;
+  border-radius: 3px;
+  outline: none;
+  cursor: pointer;
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%);
+    cursor: pointer;
+    border: 2px solid #fff;
+    box-shadow: 0 0 6px rgba(245, 158, 11, 0.5);
+  }
+
+  &::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%);
+    cursor: pointer;
+    border: 2px solid #fff;
+    box-shadow: 0 0 6px rgba(245, 158, 11, 0.5);
+  }
+}
+
+.metronome-volume-value {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #f59e0b;
+  min-width: 35px;
 }
 
 .progression-timeline {

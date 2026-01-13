@@ -1,0 +1,1781 @@
+Chord Theory
+The following is a study of all of the chords up to 4 notes that are possible within the
+12TET equal temperament system. Theoretically in nature there are an infinite amount of
+chords because there are an infinite amount of pitches between one octave, but in our system
+of 12 notes there are mathematical restraints to how many combinations of notes we can make
+between the fixed pitches. There are systems of music, such as serialism or twelve-tone music,
+that classify each of the 12 notes as a fixed set of equally spaced pitches labeled 1 to 12. The
+relationships between all these notes are simple, you can tell the distance between two notes by
+comparing their numbers. A major triad has a label of [1,5,8] and a minor chord [1,4,8]. These
+systems have their own powerful uses and effects, but this way of thinking is a hindrance to truly
+understanding how we perceive the world of harmony. For a short example, in twelve-tone
+music, two notes a tritone apart are represented as [1,7], where in other systems we can
+differentiate this interval as being a bright lydian augmented fourth, or a dark locrian diminished
+fifth interval because even though they are the same pitch in equal temperament, our
+ear/brain/heart has the ability to hear the difference between the #4 and b5 notes in the right
+context. In the same way that just intonation offers a perspective that is lacking in 12TET music,
+the magical symmetry of 12TET has some really interesting and illusory qualities to it that are
+not available in justly tuned music. There are a lot of theories based on the symmetry of equal
+temperament, such as the works of jazz pianist Barry Harris around the diminished seventh
+chord or the work of theorist Dmitri Tymoczko around the symmetry of the augmented triad.
+When I first put together this document I feel that the approach was a little narrow
+minded and didn’t always take into account what the pitches of equal temperament even
+represent. This time I want to make sure and incorporate the lens of just intonation and the
+subconscious perception of harmony as well as the symmetrical nature of equal temperament.
+Sometimes in music, the most common name of certain chords seems more intuitive, but is not
+accurately representative of the harmonic relationships that are taking place. I will take into
+account the common naming shortcuts of things but will also try to label the chords with their
+most accurate spelling. We will start with 2-note chords or intervals, still classifying all of the
+possible mathematical combinations of 2 pitches within the fixed 12 note system, but also
+making sure to acknowledge everything that these pitches can represent. After that we will
+explore the possible triad and tetrad combinations and what they can represent before venturing
+to some of the chords with 5 notes or more.
+There is a lot of information here that can be extensively explored but it can also be
+skimmed over in one sitting. I wouldn’t get too caught up in the nitty gritty of everything being
+listed in this document. If you just want to know all of the different types of chords then you can
+skip ahead and it is all color coded to read through easier. There are also a lot of different
+examples of interesting chords and some conclusions I have put together about chords at the
+end of this document. If you are confused about some of the principles of harmony that are
+discussed throughout this document, this document on visualizing the network of musical
+harmony might help to clear some things up.
+- Nomenclature
+- Dyads (2-note chords)
+- Triads (3-note chords)
+- Tetrads (4-note chords)
+- List of Popular Seventh Chords
+- Pentads and Above
+- Examples
+- Conclusions
+Nomenclature -
+First off, there’s a lot of different symbols and different nomenclature used when it comes
+to describing chords. Some of the different naming systems conflict with each other and not all
+of them are technically accurate. This makes learning chord names at the beginning very
+frustrating for some people because it doesn’t always make sense. Over the years people have
+come up with quick names and shortcuts to describe musical phenomena and nobody really got
+to choose what stuck, which is how we got here today in a world with ten thousand different
+ways to describe the same thing. Like the English language, there are a lot of conflicting rules
+and classifications of music theory. There are also many different symbols used to write out
+certain chords so first I will clarify some of the symbols that will be used in this paper.
+C- = C minor
+Cº = C diminished
+C+ = C augmented
+C∆7 = C major triad with an added major seventh
+C(x) = C major triad with an added note ‘x’
+Some triads with an added note can be written as “Caddx” or C(x), x being the added
+note. Parentheses are used to clean up the names of chords a little bit so they are easier to
+read. Any note that is found in parentheses just means it is added to that chord (except for
+C(b5) chords which usually mean that the perfect fifth is diminished, not that the b5 is added on
+top of the 5 that is already in the chord; in this case the parentheses are used because a Cb5
+chord is presumed to be a Cb chord with no 3). That means that the chord C(b3) for example
+would mean a C major chord with an added b3, not a C minor chord. This chord is usually
+spelled as a C(#9) as to not confuse people with that issue, though technically the ‘#9’ is really a
+‘b3’ or ‘b10’ as I prefer to label it as. This brings up another topic with the popular way of naming
+chords these days because as a shortcut we write (b3) in a chord to specify an added minor
+third interval, the b (flat) in b3 stands for minor third, not flattened third. Flats (b) and sharps (#)
+are used to describe notes and pitches (like C# or Gb), not intervals. Minor, major, perfect,
+augmented, diminished, etc. are used to describe intervals.
+For the purposes of the chords included here, 2, 4, and 6 can be interchanged with 9, 11,
+and 13 respectively, though the higher numbers usually signify that it is an octave higher. The
+voicing of a chord can make a big difference to how we hear the chord, but for our study, Cadd4
+and C(11) are the same chord. Sometimes #8 is used to indicate an augmented unison and b10
+as we have seen represents a minor third. Parentheses are usually used for b9, #9, #11, and
+b13 chords, while 9, 11, and 13 chords are sometimes written as add2, add4, and 6 chords. If a
+note is in parentheses it means that only that note is added to the chord. For example, C(13) is
+a C6 chord, but C13 chord without parentheses implies that there is also an 11, 9 and 7 included
+in the chord. Parentheses are also handy to specify the difference between those two chords.
+Also I have never really seen anyone write an augmented unison interval as a #8 (or a 3rd as a
+10th, a 7th as a 14th, or a 5th as a 12th) when naming a chord but I have seen other people
+mention them here and there when analyzing.
+As I mentioned in the intro, sometimes the way a chord is named is not always an
+accurate representation of the true nature of that chord. We saw that the ‘#9’ in a chord such as
+C7(#9) is technically a b3 or b10, not a #2 or #9. The differences in enharmonic equivalents
+(such as F and E#, or Db and C#) might not seem important because in our equal tempered
+tuning system they have the same exact tuning, but in our ear and mind there is a perceivable
+difference harmonically that is worth identifying. Our modern symmetrical tuning system blurs a
+lot of the lines of how we perceive music and our naming system isn’t exactly scientifically
+accurate either, so because of this, some names we use can actually stand for multiple
+collections of tones. For example the name C7 is used to represent a C major chord with an
+added minor seventh interval, but it is also often incorrectly used to describe a major triad with
+an added augmented sixth interval (I am guilty). Chords like these are generally very ambiguous
+and can be used for a lot of different purposes. Examples of chord names that have this
+property are augmented chords, diminished seventh chords, dominant chords, and chords with
+added notes. We will explore this more in depth later on.
+Dyads -
+Dyads, two-note chords, or intervals, are different names to describe the relationship
+between two pitches. Within the 12TET system there are mathematically 11 different possible
+combinations of two notes with a fixed root within an octave (this doesn't include a unison or
+octave interval). You could express these as [1,2] [1,3] [1,4] [1,5] [1,6] [1,7] [1,8] [1,9] [1,10]
+[1,11] and [1,12]. These intervals would usually be described as the minor second, major
+second, minor third, major third, perfect fourth, augmented fourth/diminished fifth, perfect fifth,
+minor sixth, major sixth, minor seventh, and major seventh. It may seem like these are the only
+possible intervals that can be created within the 12 notes, but in the right conditions, realistically
+the 12 notes of an equal tempered keyboard can be used to stand for around 30 different
+individual tones of just intonation. As mentioned in the intro, the interval [1,7], the tritone, can be
+used to invoke the feeling of the ‘bright’ augmented fourth or a ‘dark’ diminished fifth. Some
+intervals like [1,11] can stand for even more intervals like the minor seventh 2 fifths below the
+tonic, the minor seventh two fifths above and a major third down from the tonic, the augmented
+sixth two fifths plus two major thirds above the tonic, or even the seventh harmonic or
+‘barbershop’ seventh interval though that one does push the boundaries a little bit and is less
+commonly evoked in popular music. The exploration of intervals in just intonation goes way
+deeper than I want to get in this document so if you want to explore more then checkout the
+xenharmonic wikipedia. Below is a chart of the 11 possible intervals within an octave, what
+those intervals might be named and what they can stand for, but first I need to clarify some
+more specific problems with the naming system.
+The shorthand for signaling an additional interval in a chord is to use #’s and b’s, which isn’t
+technically accurate and has a few confusing problems with it. Think of it this way, perfect
+intervals (fifths/fourths/unisons/octaves) have only one version of themselves whereas the other
+intervals have two versions of themselves, major and minor. We will use fifths and thirds as
+examples. The diminished fifth is written as b5, the augmented 5 as #5, a theoretical double
+diminished fifth would be bb5. A major third is written as 3 and an augmented third as #3, where
+now a minor third is written as b3, and a diminished third as bb3. A theoretical double
+diminished third interval would then be bbb3. The diminished fourth or fifth intervals, as well as
+the unison/octave, are one semitone below the interval, whereas the diminished second, third,
+sixth, or seventh intervals are one semitone below the minor version of itself. So a diminished
+seventh is not a diminished major seventh interval, it is a diminished minor seventh interval. This
+is why a diminished third is written as a bb3, but a diminished fourth is a b4.
+12tone Root C Common Interval Names Chord Shorthand Semitones
+[1,2] [C,C#] [C,Db] augmented unison, minor second (semitone) (#1/#8), (b2/b9) 1
+[1,3] [C,D] [C,Ebb] major second, diminished third (whole tone) (2/9), (bb3/bb10) 2
+[1,4] [C,D#] [C,Eb] augmented second, minor third (#2/#9), (b3/b10) 3
+[1,5] [C,E] [C,Fb] major third, diminished fourth (3/10), (b4/b11) 4
+[1,6] [C,E#] [C,F] augmented third, perfect fourth (#3/#10), (4/11) 5
+[1,7] [C,F#] [C,Gb] augmented fourth, diminished fifth (tritone) (#4/#11), (b5/b12) 6
+[1,8] [C,G] [C,Abb] perfect fifth, diminished sixth (5/12), (bb6/bb13) 7
+[1,9] [C,G#] [C,Ab] augmented fifth, minor sixth (#5/#12), (b6/b13) 8
+[1,10] [C,A] [C,Bbb] major sixth, diminished seventh (6/13), (bb7/bb14) 9
+[1,11] [C,A#] [C,Bb] augmented sixth, minor seventh (#6/#13), (b7/b14) 10
+[1,12] [C,B] [C,Cb] major seventh, diminished unison (7/14), (b1/b8) 11
+You could really look at each pair of notes as two intervals in one because each interval has an
+inverse version of itself. For example, C to F is a perfect fourth; the inverse of this would be F to
+C which is a perfect fifth. The fifth and fourth are the only two ‘perfect’ intervals meaning their
+inverse intervals are also perfect, while the inverse of all major intervals is a minor interval and
+the inverse of all augmented intervals is a diminished interval. The inverse of every second is a
+seventh, the inverse of every third is a sixth, and the inverse of every fourth is a fifth.
+Of all the interval names listed above, twelve of them (highlighted purple) can be found with the
+major scale or any of its modes. The harmonic minor scale gives us the four intervals
+highlighted in green and the neapolitan minor scale gives us the two intervals in red. These 18
+highlighted interval names are what occurs in the vast majority of music that people listen to.
+The four intervals left unhighlighted are not as popular but still worth mentioning because they
+are fully possible in our 12TET system. The augmented third and diminished sixth intervals are
+usually only found in scales with a b2 and a #4 which aren't very popular in western music, but
+the raga Todi in classical Hindustani music contains these two intervals which are inverses of
+each other.
+The twenty intervals that have been mentioned so far can all be found within the Hindustani
+system of 32 Thaats or Modes. In short, in the Hindustani classical system there are 7 main
+notes, sa re ga ma pa dha ni (1 2 3 4 5 6 7). The sa and pa notes (1 and 5) are fixed, but the
+other 5 notes each have 2 versions of itself creating 12 notes in total, the 1, b2, 2, b3, 3, 4, #4,
+5, b6, 6, b7, and 7 which can be represented really well by the 12 notes in equal temperament.
+In addition to this, with the sa and pa (1 and 5) still remaining fixed, the remaining 10 notes split
+into even more specific intervals each separated by the distance of a ‘syntonic comma’. (In just
+intonation, there is a ‘smaller major third’ and a ‘larger major third’). This creates the foundation
+for the 22 pitches of the ‘shruti’ system in Hindustani classical music. If the differences between
+some of these intervals are confusing to you or seem arbitrary, check out this document on
+visualizing the network of harmony which might help clear up some confusion.
+Lastly the diminished unison and augmented unison intervals can’t really be found in any
+traditional scales, but they do show up in some popular music. The diminished unison note is
+one step in the ‘darker’ direction than the locrian b5 and sometimes considered a part of the
+‘super locrian’ scale. Similarly, the augmented unison is one step brighter than the lydian #4 and
+sometimes referred to in the ‘super lydian’ scale. Examples of both of these intervals will be
+shown in the example section below.
+As you can see in the chart above, each of the 11 possible mathematical intervals can stand for
+at least two different note relationships or intervals, and each of the intervals has two versions of
+itself (split by the syntonic comma), so that means that each of the 11 intervals possible in
+12TET music can really stand for at least 4 different intervals, and that is just within a 5-limit just
+intonation tuning system. These intervals can arguably stand for even more if you add the
+dimension of the seventh harmonic, and maybe even some higher prime harmonics (that is
+probably pushing it in 12TET but is much easier in 24TET). You can see how it would be easy to
+get confused between all of these note relationships, which is why we have the C7(#9) chord
+which is really a C7(b10) and many other examples.
+Another thing to note is that all of the intervals shown above are written in relation to the 1, in
+this case C, but in reality these intervals dont always occur between a note and the tonic. For
+example, 12tone theory shows [1,4] for the augmented second interval but it isn’t very likely that
+would occur between the 1 and the #2 in a key. It would more likely occur between the b6 and 7,
+[9,12] (in the harmonic minor scale), or the b2 and 3, [2,5] (in the double harmonic scale).
+Similarly, a Cm7(b9) chord wouldn't likely occur as the tonic chord in the key of C, but it is
+diatonic to the key of Ab major as the III-7 chord. Context is crucial in how we interpret the
+collection of different pitches.
+Lastly, you may have noticed that the unison (octave) interval was not included which also
+allows for a possible diminished second and augmented seventh interval. The unison or octave
+is obviously very popular but the diminished second and augmented seventh (the size of the
+diaschisma comma) intervals are not easy to invoke in equal temperament for a few different
+reasons.
+[1,1] unison (octave), diminished second, augmented seventh [C,C] [C,Dbb] [C,B#] 0
+Now we will move on to the exploration of triads.
+Triads -
+Within one octave in 12TET, there are 55 total 3-note combinations from a single fixed
+root. For us, the ordering of these notes is not important. [1,2,3] and [1,3,2] are the same in this
+case. These 55 triads can be shown as:
+[1,2,3] [1,2,4] [1,2,5] [1,2,6] [1,2,7] [1,2,8] [1,2,9] [1,2,10] [1,2,11] [1,2,12]
+[1,3,4] [1,3,5] [1,3,6] [1,3,7] [1,3,8] [1,3,9] [1,3,10] [1,3,11] [1,3,12]
+[1,4,5] [1,4,6] [1,4,7] [1,4,8] [1,4,9] [1,4,10] [1,4,11] [1,4,12]
+[1,5,6] [1,5,7] [1,5,8] [1,5,9] [1,5,10] [1,5,11] [1,5,12]
+[1,6,7] [1,6,8] [1,6,9] [1,6,10] [1,6,11] [1,6,12]
+[1,7,8] [1,7,9] [1,7,10] [1,7,11] [1,7,12]
+[1,8,9] [1,8,10] [1,8,11] [1,8,12]
+[1,9,10] [1,9,11] [1,9,12]
+[1,10,11] [1,10,12]
+[1,11,12]
+Just like the dyad had one inversion, the triad has two inversions. For example, [1,5,8]
+creates a C major chord, [1,6,10] creates an inverted F major chord, and [1,4,9] creates an
+inverted Ab major chord. Since these are all major triads, to make things a little easier we will
+consolidate all three inversions into one chord type. Out of these 55 combinations, 1 of them,
+the augmented triad [1,5,9], is symmetrical, meaning all of its inversions are the same type of
+chord. The remaining 54 combinations can be divided by the number of notes in the chord, 3, to
+create 18 unique triads not regarding the order of notes. These 18 triads plus the augmented
+triad makes 19 unique triads. In the first version of this document I named and categorized all
+19 triads but I want to take a slightly different approach this time because there are really a lot of
+different ways that three different notes could be interpreted or perceived. I’m not really sure
+how useful it is to attach a single name to everything when it can stand for different harmonic
+content within varying contexts. This time I will start by naming the most popular triads by their
+12tone representation and then try to include all the different ways those specific pitches can be
+heard as. After that I will move through the triads that are easiest to attach a name to until we
+classify all 19 unique triad types.
+For another quick reminder, every example is written in respect to one root, represented
+here as 1 or as C. For our purposes of classifying the triads, this specific root has no
+significance to the nature of the chords. When we’re talking about each chord, it can be
+transposed to any other root. The only reason everything is in respect to one root is so we can
+convert the notes to inversions more clearly. So just because it is written with C as the root,
+doesn't mean we are talking about C chords specifically. C is just our common placeholder. We
+are only analyzing the type of chord on its own, not that chord's function in a key. For our
+purposes, [1,4,9] is simply a major triad. If C happens to equal 1 then it is an inverted Ab major
+triad (Ab/C), but right now we are not analyzing this chord as the bVI chord of the key of C.
+C [1,5,8] is the first triad that comes to mind, plain and simple with no additions.
+There are three major triads in a major key, the I, IV, and V. Most of the time, inversions
+of this chord are written as ‘slash chords’. For example, the first inversion would be
+written C/E and the second as C/G, however it is also interesting to think of these chords
+in respect to their new root, where C/G might be thought of as a G6sus4 chord with no 5,
+or C/E as Em(b13) with no 5. We will get more into inversions with 4-part chords later on,
+but right now we mostly want to classify the categories of triads before we can look at
+tetrads. In almost all cases [1,5,8] would represent [C,E,G] though in rare cases this
+could stand for [C,Fb,G] as well, all notes found in Ab harmonic major, or with a stretch
+[C,Fb,Abb] around the key of Gb.
+C- [1,4,8] is the second most popular triad, or maybe tied first with the major
+triad. Just like major chords, there are also three minor chords in a major key. These are
+the II-, III-, and VI-. Like the major triad, [1,4,8] would almost always be representing
+[C,Eb,G], but it is possible in certain circumstances that it would stand for [C,D#,G] all
+notes in E harmonic minor, or with a stretch [C,Eb,Abb] around the key of Gb.
+Cº [1,4,7] is seldom used on its own as a triad and more often used with an
+additional note such as Cº7 or Cº/Ab which is an Ab7 chord. The VIIº chord is the only
+diminished triad in a major key. These three fixed pitches can actually stand for a couple
+other note relationships as well. A Cº chord is [C,Eb,Gb] but in other contexts, [1,4,7] can
+also represent the notes [C,Eb,F#] (the last three notes of an Ab augmented sixth chord
+in G harmonic minor), or possibly in rarer circumstances might stand for [C,D#,F#] (like
+the three notes besides B in a B(b9) chord in E harmonic minor). I don’t see a strong
+case for [C,D#,Gb] because the note relationships are too far apart. Keep in mind though
+that even with the subtle differences between these notes, this triad would probably
+always be spelled as a Cº chord.
+These three triads make up all of the 7 main triads in a major key.
+C+ [1,5,9] is the only symmetrical triad meaning all inversions of this chord are
+the same type of chord in equal temperament. This would usually be spelled as C+
+might also be spelled as E+,G#+, Ab+, or maybe B#+ or Fb+. These three notes in an
+equal tempered system can stand for a lot of different note relationships. There aren’t
+any augmented triads within a major scale, however there is one augmented chord, the
+bIII+, in harmonic minor. Technically these notes are the b3, 5, and 7 of the key which
+would make it a bIII+ chord only, but the symmetry of this triad could bring about the V+
+or VII+ chords as well. In an equal tempered system, the bIII+, V+, and VII+ all look like
+the same chord with different roots, but our ears are able to perceive a difference
+between them and in most cases would probably identify the notes as the b3, 5, and 7 of
+a key. In a lot of cases (I’ve been very guilty of this) a chord might be labeled as a V+
+chord when really it is a V(b13) with no 5. Similarly, a VII+ chord would really be a
+VII(b11,b13) with no 3 or 5, or possibly just a VII(b13) with no 5. With that being said
+[1,5,9] could stand for [C,E,G#], [C,E,Ab] or [C,Fb,Ab] depending on the context.
+The first three plus the augmented triad makeup all of the main triads in harmonic minor.
+When people talk about triads, most of the time they are talking about these four. The triads
+below are mostly considered variations of the four above triads. Now we will look at some
+suspended chords, a chord where the 3rd of the chord is neither major or minor but ‘suspended’
+above or below. Most of the time people only mention sus4 or sus2 chords but a sus#4 chord is
+definitely useful to know, and you could technically create a susb2 chord as well.
+Csus4 [1,6,8] is a very versatile triad as there are 5 different possible sus4
+chords in every major key. These are the Isus4, IIsus4, IIIsus4, Vsus4, and VIsus4
+chords. Every sus4 chord can also be analyzed as an inverted sus2 chord, so the
+previous 5 triads could also stand for IVsus2, Vsus2, VIsus2, Isus2, and IIsus2. You can
+see that the roots of the diatonic sus4 and sus2 triads include those typical of the
+diatonic major and minor chords, showing that this chord can be perceived as major or
+minor in quality depending on the context of the music. Although sus4 and sus2 triads
+essentially have the same notes in them, sus2 chords do seem to be more stable than
+sus4 chords which shows that whichever note is in the root has an effect on how we
+perceive the chord. Csus4 sounds like it has to resolve somewhere while Csus2 could
+serve as a better final tonic chord. All of this is just to say that sus4/sus2 chords have a
+wide variety of uses. They can be perceived as a major or minor chord, as well as a
+tonic, subdominant, or dominant chord depending on the context. These notes could be
+used as Csus4, Fsus2, or G7sus4 with no 5, the only thing separating them being the
+root note. It’s hard to see [1,6,8] standing for anything other than [C,F,G], but I guess it
+would be possible for them to represent [C,F,Abb] around the key of Gb, or possibly
+[C,E#,G] around the key of B.
+Csus#4 [1,7,8] is a lesser known suspended chord but still a useful triad to know.
+Every major key has one possible sus#4 chord, the IVsus#4 chord. Generally when
+people talk about suspended chords, this chord is not included although it is still used
+and sometimes written down. Csus#4 has the notes [C,F#,G] but the three fixed pitches
+could also stand for [C,Gb,G]. I don’t see a very strong case for these notes representing
+[C,Gb,G] but I suppose it could be possible, more likely in the keys around Ab, Eb or Bb.
+Lastly, these four pitches might be able to represent [C,Gb,Abb] around the key of Gb
+but that might be pushing it.
+Csusb2 [1,2,8] is a chord I definitely haven't seen written down or even really
+used at all. If it were written down it might even just be seen as C(b9) with no 3. Because
+of its sharp bite, it is hard to justify the use of this chord. Even if it were played, it might
+be better thought of as an inverted Db∆7sus#4 chord without a 5th. Nevertheless, a
+susb2 chord could be diatonic to a major key as the IIIsusb2 chord. These three fixed
+pitches would most likely be [C,Db,G], but it is possible they could represent [C,C#,G] in
+certain circumstances, maybe in the key of E or A. It is also possible for them to
+represent [C,Db,Abb] around the key of Gb, but this would be harder to convince the ear
+of. Since susb2 chords aren't very practical and often better represented as a different
+chord, we will not be using susb2 to describe any more chords from here on out.
+These are all of the main triads that are written down in music (minus sus#4 or susb2
+chords). After these 8 triads, there are still 11 unique triads to explore. The last 11 can all be
+thought of as ‘no 5’ chords, or extended triads without a 5th. This tactic only works for major,
+minor, and suspended chords because they are the only ones with the 5. All of the suspended
+no 5 chords can be represented as other chords except for one which we will see later.
+Theoretically no 5 chords could also stand for diminished or augmented chords. All of the no 5
+triads here will be explored later on with the 5 included in the tetrad chapter. There isn't much
+use to know these unless you are restricted to only playing three notes. Again some of these
+chords could be spelled in other ways but we will get into all of the inversions later on. Mostly
+this is just to show all of the 3 note possibilities and how they could be categorized. One way to
+do this is to go through all major and minor chords with an added note in place of the 5 since the
+5 isn't super important to the function of the chord and hopefully we will cover most of the
+possibilities.
+I have seen some chords written down as ‘no 3’ chords, however all ‘no 3’ chords can be
+classified as inverted ‘no 5’ chords. For example C∆7 no 3 can be seen as an inverted Gadd4
+no 5. Because a perfect 5th is strongly implied by the root, when the 5th is removed it hardly
+affects the function of the chord but ‘no 3’ chords are tricky because they don’t imply major or
+minor function. To avoid confusion, I won't add any ‘no 3’ chords to the list although some of the
+following chords might be better expressed as ‘no 3’ chords.
+Triads with no 5
+Major no 5
+C∆7no5 [1,5,12] can be found as the I∆7no5 and IV∆7no5 chords in the major
+key. I imagine these three pitches would almost always be used as [C,E,B] but I think
+another possibility could be [C,Fb,Cb], closest to the keys of Db or Ab. It might be
+possible for [C,E,Cb] around the key of Bb but this would be rare.
+C7no5 [1,5,11] is diatonic to the major key as the V7no5 chord. C7no5 implies
+[C,E,Bb], which would probably be the most popular use of these three fixed pitches, but
+[1,5,11] could also be used to represent [C,Fb,Bb] in Db harmonic minor, or [C,E,A#] in B
+neapolitan minor.
+C6no5 is A-.
+C(b13)no5 is enharmonically equivalent to C+.
+C(#11)no5 [1,5,7] might be written as C(b5) though this is a shortcut because in
+most circumstances the notes would probably be [C,E,F#] not [C,E,Gb], in this case it
+would be a C(#11) with no 5. On its own this is not a super popular triad. In fact I don’t
+think I’ve ever seen it written by itself, though in the major scale it can be found as a
+IV(#11) chord. As you will see later on, this triad does come in handy when talking about
+4-note chords. [C,E,Gb] (C(b5)) could also be represented by these 3 fixed pitches, most
+probably in something like F neapolitan minor or some Bb hybrid key, but this would be
+more rare. Lastly, I could also possibly see a case for this representing [C,Fb,Gb]
+perhaps in Db harmonic minor.
+Cadd4no5 [1,5,6] is diatonic to the major key as the Iadd4no5 and Vadd4no5.
+This implies the notes [C,E,F] but these three pitches could also possibly represent
+[C,Fb,F] around the keys of Db or Ab, and possibly [C,E,E#] around the key of B but that
+would probably be pushing it.
+C(b10)no5 [1,4,5] might usually be spelled as C(#9)no5, but these notes would
+usually represent [C,Eb,E] which is technically a C(b10)no5 chord. This type of triad can
+not be found within the major scale, but is found as the bVI(#9)no5 and VII(#9)no5
+chords in harmonic minor. C(#9)no5 is still a valid name in some circumstances like in E
+harmonic minor where the notes would be [C,D#,E]. [C,Eb,Fb] is also a possibility like in
+the scales of Db harmonic minor or Ab harmonic major.
+Cadd2no5 [1,3,5] can be used as the Iadd2no5, IVadd2no5, or Vadd2no5 in a
+major key. Cadd2no5 implies the notes [C,D,E] which would probably be the most
+popular representation of [1,3,5], but these notes can also stand for the notes [C,D,Fb]
+perhaps in Eb neapolitan major, or [C,Ebb,Fb] in Db neapolitan major, but these would
+be a lot more uncommon.
+C(b9)no5 is enharmonically equivalent to Db-∆7no5.
+Minor no 5
+C-∆7no5 [1,4,12] would have the notes [C,Eb,B] which can’t be found in any
+major keys but can be used as the I-∆7no5 and bVI-∆7no5 in harmonic minor. There is a
+good case for [1,4,12] also representing the notes [C,D#,B] from E harmonic minor, or
+less likely [C,Eb,Cb] around the keys of Db, Ab, or Eb.
+C-7no5 [1,4,11] can be used as the II-7no5, III-7no5, VI-7no5, or even VII-7no5 in
+the major key. This triad implies the notes [C,Eb,Bb] specifically, but these three fixed
+pitches could also be used to represent the notes [C,D#,A#] which can all be found
+within the B double harmonic scale, but this would probably be a rare occurrence. In
+much rarer cases it is also possible for these pitches to represent [C,D#,Bb] around the
+key of A.
+C-6no5 is enharmonically equivalent to Aº.
+C-add4no5 [1,4,6] is possible as the II-add4no5, III-add4no5, IV-add4no5, or
+VII-add4no5 in the major key. Most of the time [1,4,6] would probably represent [C,Eb,F],
+but it could also represent the notes [C,D#,F] in the E neapolitan minor scale. This
+wouldn't happen often, but these three pitches might also be able to represent the notes
+[C,D#,E#] around the key of B.
+C-add2no5 [1,3,4] is represented by the notes [C,D,Eb] and can be used as the
+II-add2no5 or VI-add2no5 in the major key. There is a slight possibility that [1,3,4] could
+stand for [C,D,D#] most likely somewhere around the key of E, or possibly the notes
+[C,Ebb,Eb] around the key of Db.
+C-(b9)no5 [1,2,4] is possible as the III-(b9)no5 or VII-(b9)no5 in the major key. It
+is a pretty tense chord and probably wouldn't be used often. It might have a better use or
+naming as a Db∆7sus2no5 chord. C-(b9)no5 implies the notes of [C,Db,Eb], but [1,2,4]
+could also represent [C,C#,D#] somewhere around the key of E, or also possibly
+[C,C#,Eb] around the key of D, though these two uses would be a lot more rare.
+So far we have all but one of the 19 triads named. The last one is 3 semitones in a row
+so it is the hardest to name and also can’t be found in the major scale, harmonic minor or
+melodic minor scale. For this last chord we will use a Csus2 chord and trade a note for the 5th
+to help name it.
+Csus2(b9)no5 [1,2,3] is a fancy way to say three semitones in a row if you really
+had to put a name to it (you don’t). This name implies the notes [C,Db,D], which might be
+able to represent notes around the keys of C or F, but would probably be heard as just a
+cluster of notes. A more believable representation of these 3 pitches might be
+[C,Db,Ebb] within the Db neapolitan minor scale, or less probably [C,C#,D] around the
+keys of A or E.
+These are all of the 19 unique triad combinations possible within a 12TET system with their
+possible uses in the world of harmonic relationships. Admittedly this was a bit of a weird and
+slightly arbitrary way of classifying these triads but it got us there in the end. What to do with this
+information is up to you, it might not have any uses other than making you think a little deeper
+about note and chord relationships. With this foundation of triads we can move on to the more
+intricate 4-note chords.
+Tetrads -
+As we have seen, the way a chord is voiced plays a very important role in how we
+perceive the notes as a whole, but it is interesting to imagine that each note of a chord expands
+in octaves upward and downward infinitely so it is relatively above and below each of the other
+notes. In other words, imagine a sequence of frequencies that starts with 4 different notes, C,
+Eb, G, and Bb, or [1,4,8,11]. Each of these 4 frequencies can be doubled or halved infinitely. In
+the end you get an endless sequence of frequencies that repeats infinitely upward and
+downward like this: 1/∞……. C, Eb, G, Bb, C, Eb, G, Bb, C, Eb, G, Bb……∞. From this
+sequence, we can make a C-7 chord, and Eb6 chord, a C-/Bb chord, or a C-7/G chord
+depending on what note we choose as the root. This is true for every sequence of 4 different
+notes though some are more complicated to analyze than others. In addition to this, because we
+are dealing with approximated harmonic relationships using a 12TET system, in certain
+circumstances the fixed pitches [1,4,8,11] can also be used to represent the notes [C,D#,G,A#],
+a C(#6,#9) chord with no 3, the notes [C,D#,G,Bb], a C7(#9) chord with no 3, or the notes
+[C,Eb,Abb,Bb], a C-7(bb6) chord with no 5. Obviously these other chords are a lot less popular
+than a C-7 chord, but theoretically they are possible given the right harmonic context and an
+attuned ear.
+Even though I said to picture the chords with no beginning or end, in real life, the way
+the chord is voiced can have a major impact on how the function of the chord is perceived. The
+root is important because it persuades the ear to hear the upper notes in relation to the root.
+There are many different ways to voice a tetrad that can highlight or reduce certain qualities that
+the intervals involved carry. Each tetrad has 6 different interval relationships involved, and each
+of those relationships has a separate inverse interval except for the tritone. Each interval in a
+chord can be inverted or separated by multiple octaves to vary the effects of the harmony. There
+are some tetrads, such as Cadd#4, where it's possible for any of the 11 unique intervals to be
+used (but only 6 at a time) depending on how you voice the chord. On the other hand, there are
+some tetrads, such as Cº7, that only have a few different intervals involved. Generally, if a chord
+contains a tritone interval it is most likely somewhat unstable, and most chords without a tritone
+interval are usually fairly stable. This certainly isn't the case all of the time and is all dependent
+on the musical context. The velocity or volume of each note involved also plays a huge part in
+the overall energy of the chord. There are many possibilities when it comes to changing a chord
+around without changing the notes as we will explore below.
+Below, the chords are split into chord groups based on identical 4 note sequences. With
+12 different notes in an octave, there are 165 total 4 note combinations that all contain one fixed
+note, in this case C. There is 1 fully symmetrical chord, Cº7 or [1,4,7,10], meaning all 4 notes
+are equally spaced out making all of the inversions (Ebº7, Gbº7 and Aº7) enharmonically
+equivalent chords. There are also two pairs of partly symmetrical chords, meaning each partly
+symmetrical chord has 1 other inversion that is also the same chord. These two pairs are C7b5
+(F#7b5) and Csus#4(b9) (F#sus#4(b9)). This leaves 160 combinations that can be divided by 4
+to simplify them into 40 ‘chord groups’. These 40 groups plus the 3 different symmetrical chords
+give us 43 unique tetrads not regarding the order of the notes. Though just like with triads, these
+43 unique combinations can be used to bring about a lot more than 43 chords as we will explore
+below. In fact, each of the 43 chord types can be used to stand for 4 different note combinations
+like we saw just before with the C-7 chord.
+One way to search for all of the 43 unique combinations is to start with the triads we
+mentioned earlier and add every other available note to that triad. This method will end up with
+many repeated chords, but hopefully by the end we will have written out every single
+combination. The chords in red each represent a single unique chord group, so there are 43
+chords in red. The purple chords are inversions of chords that have been mentioned in red but
+also are worth writing out. All purple and red chords are from the perspective of the root C. A lot
+of the chords or their inversions can be expressed as slash chords, which can be used to
+simplify tetrads like E/C representing C+∆7, or they can be used to specify an inversion of a
+chord like an inverted C-7 chord being written as C-/Bb. The reason the chords are color
+coordinated is so it is easy to skip through and identify them without having to read everything in
+depth if you don't want to.
+To start naming the tetrads, we will start with the main triads we named earlier and add
+every other available note one by one. There are a few things to note about adding notes to
+triads and how they can be named in our modern system. Aa a general observation, all triads
+can add the ∆7, 7, or 6 although most 6th chords could be viewed as inverted seventh chords,
+for example C6 is Am7/C. Chords with an added b6 (b13) are sometimes better expressed as
+inversions of more popular chords, for example Cm(b6) would usually be written out as Ab∆7/C,
+but they are still possible with all triads except for augmented chords. The 5 of a chord is usually
+implied therefore not added. The #4 (#11 or sometimes a b5) can be added to all triads except
+for diminished triads, major b5 chords, and of course sus#4. The 4 (11) can be added to all
+chords except sus4 chords obviously. The 3 is implied with major chords, and isn’t often added
+to other chords, at least without confusing the major/minor function of the chord. The #9 (really
+b10) can be added to major chords only and the b9 (sometimes a #8) can be added to any triad.
+Below are all of the notes I think can be added to a major triad and which ones you can add to a
+minor triad. In this case, the augmented triad fits into the major category while the diminished
+triad fits into the minor category, suspended chords are somewhere in between.
+- Major: #1, b2, 2, #2, b3, 4, #4, #5, b6, 6, #6, b7, 7
+- Minor: b1, b2, 2, 3, b4, 4, #4, b5, b6, 6, bb7, b7, 7
+The right context and voice leading has to be provided to hear a chord in a certain way,
+you can't just play the notes and call it a chord, you have to convince the listener that that is
+what they're hearing. For example, in the key of C, if you play a C major chord and add the note
+a semitone above the tonic, it would sound like a C(b9) chord with an added Db, but if you
+played the same notes in the key of D maybe, that chord would probably sound more like a
+C(#8) chord with an added C#. It is also possible for the #8 to be sounded in the key of C, but
+you’d probably have to set it up with an additional F# or A note to properly convince the ear. As
+another point, some chords are hard to convince the listener that they are hearing the right
+intervals. For example with a Cm(b4) chord, it is hard to sound the b4 interval without the ear
+picking it out as a major third interval, the same goes for the Cm(bb7) sounding like a Cm(6).
+And on top of all that, everyone has their own unique way of perceiving harmonic relationships
+subconsciously based on their own musical experience so some people might not interpret
+these in the way that you do.
+You could probably get more notes involved in a chord if you have the support notes. For
+example, you might be able to convince someone of a #3 in a major chord if you supported it
+with notes like the #8,#6, or #4. With that being said, I believe that all of the notes listed above
+can be added to a triad by itself convincingly with the right harmonic setup. Another question is,
+which notes can convincingly be added to the same triad? For example, you can add a b2 to a
+major triad and you can add a #6 to a major triad, but can you add them both to the same major
+triad at the same time? Obviously you can physically add them both, but at that point I doubt
+that anyone would be able to clearly discern that it is a b2 and #6 together and not a b2 and b7
+or a #1 and #6 which would make more harmonic sense. This is obviously a very deep study
+that we won’t be getting into in this document.
+Most of these note relationships we are talking about are based off of the third and fifth
+harmonics, but remember that there are higher prime harmonics, especially the seventh, that
+can give us even more interval relationships, though these are definitely more subtle to the ear.
+Also, if you remember from the harmonic lattice, there are actually two versions of each note
+separated by a syntonic comma. This causes a few other harmonic illusions and makes this
+system a little bit more complicated. This problem has been addressed partially by the ‘shruti’
+system in Indian classical music, though this is a complex issue with modern tuning systems
+that is hard to quantify exactly.
+Major [1,5,8]
+C∆7 [1,5,8,12] is found in a major key as an I∆7 or IV∆7 chord. I’m willing to say
+that in pretty much all cases the notes [1,5,8,12] would represent [C,E,G,B]. All the notes
+of this chord are so close together harmonically that I don’t think they would be
+perceived as anything other than C∆7. With that being said, it is probably possible for
+these four fixed pitches to also represent the notes [C,Fb,G,Cb] most likely around the
+key of Ab, or maybe even [C,E,G,Cb] possibly around the key of F or Ab, and lastly but
+probably the least likely, [C,Fb,Abb,Cb] around the key of Gb. All inversions of this chord
+would probably just be written as inverted C∆7 chords like C∆7/G or C∆7/E and
+sometimes C/B. Because major seventh chords are so versatile, the bIII∆7 and bVI∆7
+are sometimes borrowed from the minor key as well as bVII∆7 from mixolydian and bII∆7
+from phrygian minor. An in-depth exploration of major seventh chords can be found here.
+C7 [1,5,8,11], the dominant seventh chord, is a chord that can be used in so
+many different ways and would take too long to explore here. More information on
+dominant chords and how they can be used can be found here. A dominant seventh
+chord would usually be used as the diatonic V7 chord, but a lot of times it is used as
+another secondary V7 chord. Inversions of this chord would probably be written as an
+inverted C7 chord like C7/G, C7/E or C/Bb (C/Bb could even be used as a sort of lydian
+tonic chord in the key of Bb major). It is also possible it could be written as Eº(b13) but
+probably not very often as it would most likely be written as a dominant seventh chord. In
+most cases, I would think that these four fixed pitches would stand for the notes
+[C,E,G,Bb], but the augmented sixth chord [C,E,G,A#] also shows up from time to time,
+especially as the bII(#6) chord (found in neapolitan minor) and the bVI(#6) in jazz and
+classical music. These four pitches could also be used as [C,Fb,G,Bb], a C7(b4) chord
+with no 3 found in Ab harmonic major and close to the key of Eb as well. Lastly, these
+pitches might even represent [C,Fb,Abb,Bb] around the key of Gb. The dominant
+seventh chord (and other chords on this list) can also be powerful in that it can invoke
+the sound of the seventh harmonic and open up another harmonic dimension that is too
+deep for this short exploration.
+C6 [1,5,8,10] is interesting because it is sometimes analyzed as an Am7 chord
+bridging the worlds of major and minor. In a major key the three possible major sixth
+chords are I6, IV6, and V6, but similar to the G dominant 7th chords, major sixth chords
+can be borrowed from many different places. The sixth chord is a popular chord but its
+minor 7th inversion is more popular so this particular configuration of four notes is
+explored in more depth under the ‘C-7’ example further below.
+C(b13) [1,5,8,9] is not a super popular chord and would most likely be
+interpreted as an inverted Ab+∆7 which will be explored under ‘C+∆7’ further below.
+Cadd#4 [1,5,7,8] is not as popular but still has a nice sound especially if the
+notes are voiced in a suitable way. In a major key this chord would only be diatonic as a
+IVadd#4 chord. Because of the tritone interval, this chord can be pretty ambiguous and
+interpreted in a number of ways. I would think that most inversions of this chord would be
+written as inverted Cadd#4 chords, but this could be written as C/F# that might
+interpreted as a F#7b5(b9,no3), or maybe C(b5)/G which might be interpreted as
+G∆7sus4(13,no3). In most cases, these four notes would probably be used as
+[C,E,F#,G], but they could also be used as [C,E,Gb,G] around the key of F, or possibly
+[C,Fb,Gb,G] around the key of Ab or Eb. Lastly, it is also possible for these pitches to
+represent the notes [C,Fb,Gb,Abb] surrounding the key of Gb.
+Cadd4 [1,5,6,8] is a really nice sounding and versatile group of notes. In most
+cases these four fixed pitches would be used as [C,E,F,G] which can be written as
+Cadd4, C/F (F∆7sus2 or F∆9 with no 5), Fsus2/E or Csus4/E, or maybe G7sus4(13) with
+no 5. In a major key, an add4 chord is only diatonic as a Iadd4 or Vadd4. Another group
+of notes that could possibly be represented by these pitches is [C,Fb,F,G] most likely
+around the keys of Ab or Eb. It is even possible, but not very probable, that these pitches
+represent the notes [C,Fb,F,Abb] around the key of Gb, or maybe [C,E,E#,G] around the
+key of B.
+C(#9/b10) [1,4,5,8] is usually called a C(#9) chord though in a lot of cases the
+notes are actually [C,Eb,E,G] surrounding the key of Ab major or F minor (or possibly
+around the keys of C or G), making it a C(b10) chord. In other occasions these notes
+could also make a C(#9) chord [C,D#,E,G] diatonic to the E harmonic minor scale, or
+they could represent [C,Eb,Fb,G], a Cm(b4) chord diatonic to the Ab harmonic major
+scale. Lastly, and this is pushing it, these pitches could also represent [C,Eb,Fb,Abb] in
+the right circumstances around the key of Gb. On it’s own, C(#9/b10) is not usually a
+popular chord because of the conflicting major and minor thirds confusing the function of
+the chord. C#7(#9/b10), also known as the ‘hendrix chord’, is a somewhat popular chord
+however, so C(#9/b10) with no 7th could maybe stand for the dominant chord if voiced
+suitably. With an added dominant seventh, it is more likely to be a b10, and with an
+augmented sixth it is more likely to be a #9. Depending on where the 3 and the #9 are
+placed in the chord can change the major or minor feel of the chord. For example if the
+#9 is voiced above the major 3 then it feels more like a C(#9/b10) chord, but if the 3 is
+voiced above the #9 then it might start to sound like a minor chord with an added 10th
+above it, C-(10). All are very interesting ways to use these 4 notes which we will explore
+a little more later on.
+Cadd2 [1,3,5,8] is another versatile chord that can be used in a number of
+interesting ways. In most cases, these four fixed notes would be used to represent
+[C,D,E,G] which might also be interpreted as G6sus4. This could be written as Gsus4/E
+or Csus2/E, or it could be written as C/D and used as a D9sus4 with no 5. In a major key
+these notes are diatonic as the Iadd2, IVadd2 and Vadd2. In some rarer cases, these
+four pitches might also be used to bring about the notes [C,D,Fb,G] most likely around
+the key of Eb. Lastly, and more uncommon, these pitches could possibly even represent
+the notes [C,Ebb,Fb,G] around the key of Db, or maybe [C,Ebb,Fb,Abb] around the key
+of Gb.
+C(b9) [1,2,5,8] is a somewhat popular chord but more so when the dominant 7th
+note is included. This chord implies the notes [C,Db,E,G], diatonic to the F harmonic
+minor scale though this isn’t always the case. An inversion of these notes might be seen
+as a Db∆7(#9,#11) with no 3 or 5. These four fixed pitches could also be used as
+[C,Db,Fb,G], all notes diatonic to the Ab harmonic major scale. An inversion of these
+notes could be seen as a Db-∆7(#11) with no 5. These pitches might also represent the
+notes [C,C#,E,G] (C#º/C) a C(#8) chord somewhere around the key of E or A, or
+perhaps used to resolve to the key of F major. An inversion of this chord could be seen
+as a C#º(b8) chord (C/C#), though this would probably be mistakenly spelled as a C#º∆7
+chord. An example of this is seen later on in the section on interesting chords. Lastly, it
+might be possible for these pitches to represent the notes [C,Db,Fb,Abb] maybe around
+the keys of Db or Gb. This could be written as Dbº/C and an inversion of this would be a
+Dbº∆7 chord, though this would be more rare. This means that in most cases, a Cº∆7
+chord is more accurately a Cº(b8) chord.
+Minor [1,4,8]
+C-∆7 [1,4,8,12] is the tonic chord of C harmonic/melodic minor, though it is a
+pretty ambiguous chord because it contains an augmented triad, Eb+. In most cases, the
+notes of this chord are [C,Eb,G,B] which would make it an Eb+/C chord, however,
+though technically incorrect, it might be written as D#+/C, G+/C, or B+/C. As I said
+earlier, this chord is diatonic as the I-∆7. It also looks like it is diatonic as the bVI-∆7 and
+although the pitches fit, this would technically not be a true minor chord because the
+distance between the the first two notes of the bVI-∆7 chord is an augmented second,
+not a minor third. In the key of C this would most accurately be spelled as an Eb+/Ab,
+not Ab-∆7. I don’t think there is much of a case to be made for the existence of a D#+/C
+or B+/C chord but there is for a G+/C chord (C∆7(#9) with no 3) with the notes
+[C,D#,G,B] all found in the E harmonic minor scale. An inversion of this chord might be
+written as G+add4 or maybe B(b9,b13) with no 5. Another rarer possibility with these
+four fixed pitches is the notes [C,Eb,G,Cb], a Cm(b8) chord (Cb+/C) perhaps somewhere
+around the keys of Eb or Ab. These notes could also be arranged as an Cb+(#8) chord.
+Lastly, it is possible that these pitches might represent the notes [C,Eb,Abb,Cb] (Abb+/C)
+around the key of Gb but this would be hard to do convincingly. With all of this being
+said, there are a lot of easy shortcuts to name this collection of notes that you would
+probably see over the technically correct spellings. All of these different variations of the
+same four pitches might most easily be expressed as a C-∆7 chord, but this isn’t always
+an accurate representation of what is happening harmonically.
+C-7 [1,4,8,11] is a very popular chord as there are three minor seventh chords
+found in a major key: II-7, III-7 and VI-7. Minor seventh chords could also be analyzed as
+inverted major 6th chords. For example, C-7 could be seen as an inverted Eb6 chord.
+C-7 can also be written as Eb/C, another way to write C-7, or possibly C-/Bb, an inverted
+C-7 chord that might also be thought of as a Bb6sus4(9,no5) chord. In almost all cases I
+would imagine that these pitches would represent [C,Eb,G,Bb], but I suppose it could be
+possible for them to represent the notes [C,D#,G,A#], a C(#6,#9) chord with no 3 or an
+inverted D#(bb7,b11) chord with no 3 with all notes found in the B double harmonic
+scale. In rare cases, these pitches might also be able to represent the notes [C,D#,G,Bb]
+a C7(#9) chord with no 3 around the key of A, or maybe [C,Eb,Abb,Bb], an inverted
+Eb6(b11) chord with no 3 around the key of Gb.
+C-6 [1,4,8,10] can also be interpreted as A-7b5. Although minor sixth chords are
+popular, these 4 notes will be explored under the C-7b5 chord below to highlight that
+most add6 chords are seventh chords in disguise.
+C-(b13) [1,4,8,9] would probably never be written down because it is an inverted
+Ab∆7 chord which has already been explored above.
+C-add#4 [1,4,7,8] is not a very popular chord but could still have its own unique
+uses. This chord title implies the notes [C,Eb,F#,G] which are all notes found in the G
+harmonic minor scale, in this case as the IV-add#4 chord. An inversion of those notes
+might be seen as an Eb(#9,13) chord with no 5. It is also very possible that these fixed
+pitches could be used to represent [C,Eb,Gb,G], a C minor chord with an added b5.
+These notes can be found in the C minor blues scale, but could also be used
+somewhere near the keys of Eb or Bb. In different circumstances, some inversions of
+these chords might be seen as an Eb(b10,13) chord with no 5, a C-/F#, kinda like an
+F#º7(b9) without the b3, or a Cº/G which might sound closer to a diminished chord than
+a minor chord. Lastly, these four pitches could also possibly stand for [C,D#,F#,G], all
+notes found within the E harmonic minor scale, or in rare cases maybe even
+[C,Eb,Gb,Abb], a Cº(bb6) chord around the key of Gb.
+C-add4 [1,4,6,8] is a versatile chord that is diatonic to the major scale as II-add4,
+III-add4, and VI-add4. The notes of this chord are [C,Eb,F,G] which could also be
+arranged as an F7sus2 chord (or F9 with no 3) and might be written as C-/F. Additionally
+these 4 notes could be arranged and written as Eb6/9 with no 5, which might be spelled
+Fsus2/Eb or Csus4/Eb. In some rare cases these four fixed pitches might also represent
+the notes [C,D#,F,G] which are all found in the E neapolitan minor scale. In rarer cases,
+these pitches might also be able to represent the notes [C,D#,E#,G] around the key of B,
+or maybe even [C,Eb,F,Abb] around the key of Gb.
+C-(10) [1,4,5,8] is the same as C(b10) (C(#9)) which was explored earlier.
+C-add2 [1,3,4,8] is a very nice sounding chord, especially when used as a minor
+tonic chord. In a major key there are only 2 diatonic minor add2 chords, the II-add2 and
+the VI-add2. This group of notes could also be used as a D7sus4(b9,no5) chord which
+might be spelled C-/D, or an Eb∆7(13,no5) chord which might be spelled Csus2/Eb or
+Gsus4/Eb. In almost all cases these 4 pitches would be used to represent the notes
+[C,D,Eb,G] though I suppose it could be possible for them to represent [C,D,D#,G]
+perhaps surrounding the keys of E or B, though this wouldn’t be very probable. Lastly, in
+rare cases, these pitches might be able to represent the notes [C,Ebb,Eb,G] around the
+key of Db, or maybe [C,Ebb,Eb,Abb] around the key of Gb.
+C-(b9) [1,2,4,8] is a less popular chord but definitely not unused. There is one
+diatonic minor b9 chord in a major key, the III-(b9). This chord is seldom written like this
+because most of the time when it is used, it is written as a regular III- chord while the
+melody passes through the b9 note briefly. An inversion of this chord could be
+interpreted as an Eb7(13,no5) although it probably wouldn't be written C-(b9)/Eb.
+Additionally, another inversion of this chord could be seen as a sort of Db∆9(#11) chord
+with no 3 or 5 (and possibly spelled C-/Db), which might even be the most practical use
+of this chord. The spelling of these chords infer the notes [C,Db,Eb,G] but on rare
+occasions it is also possible that these pitches might represent the notes [C,C#,D#,G]
+surrounding the keys of E or B. On even more rare occasions, these pitches might be
+able to represent the notes [C,C#,Eb,G] around the key of G, or maybe [C,Db,Eb,Abb]
+around the key of Gb.
+Diminished [1,4,7]
+Cº∆7 [1,4,7,12] as discussed under the C(b9) chord above is more often than not
+a Cº(b8) chord and was explored earlier on.
+C-7b5 [1,4,7,11] sometimes written Cø7(C half diminished 7) or possibly Eb-/C,
+is a very useful chord that can be found as the VII-7b5 in the major key. In certain
+circumstances an inversion of this chord might also be spelled Cº/Bb which would most
+likely be analyzed as an inverted C-7b5 chord. This spelling implies the notes
+[C,Eb,Gb,Bb] which could also be turned into an Eb-6 chord. Minor sixth chords are
+popular when used as the IV-6 chord in a minor key. These four pitches could also be
+perceived as the notes [C,Eb,F#,Bb], a Cm7(#11) chord with no 5 or Eb6(#9) with no 3
+found in the G harmonic minor scale, or maybe [C,D#,F#,A#] (D#-/C or possibly
+C(#6,#9,#11) with no 3 or 5) found in the B double harmonic scale. An inversion of those
+four notes would make an F#6b5 chord or maybe a D#m(bb7) chord. Lastly, these
+pitches could also represent the notes [C,D#,F#,Bb] a C7(#9,#11) with no 3 or 5 around
+the key of A.
+Cº7 [1,4,7,10] is a very unique and ambiguous chord that can be used in a
+number of different ways. Don’t let the naming of the last two chords confuse you,
+remember that the diminished seventh interval is a bb7 [1,10] which is enharmonically
+equivalent to the major sixth. In 12TET this chord is fully symmetrical, meaning all
+inversions are the same type of chord. The other three inversions would be Ebº7, Gbº7,
+and Aº7 though these spellings would technically be incorrect. A fully diminished seventh
+chord cannot be found in a major key but it can be found as the VIIº7 chord in harmonic
+minor, so Cº7 or [C,Eb,Gb,Bbb] is diatonic to the Db harmonic minor scale. These four
+fixed pitches could also represent [C,Eb,Gb,A], technically Aº7/C or Cº(13) found in Bb
+harmonic minor, [C,Eb,F#,A] a Cm6(#11) chord with no 5 or F#º7/C found in G harmonic
+minor, or [C,D#,F#,A], C6(#9,#11) with no 3 or 5, or an inverted D#º7 in E harmonic
+minor, though with C in the root they would probably all be spelled Cº7.
+Cº(b13) [1,4,7,9] would most likely just be referred to as an inverted Ab7 chord
+which was explored earlier.
+Cºadd4 [1,4,6,7] is diatonic to the major key as a VIIºadd4 chord. With the notes
+[C,Eb,F,Gb] it could be arranged as an F7b9 chord with no 3 and possibly spelled Cº/F,
+though the most practical use of this chord might be as an Eb-6/9 chord with no 5. In
+rarer cases, these four pitches could also be used to represent the notes [C,Eb,F,F#]
+perhaps around the key of G, [C,D#,F,F#] possibly surrounding the keys of E, B, or A, or
+maybe even [C,D#,E#,F#] somewhere around the key of B but this one might be pushing
+it.
+Cº(10) [1,4,5,7] is a chord that you will probably never see written anywhere, in
+fact it might even be more likely to be a Cº(b4). This can also be spelled as a C(b5,b10)
+which will be explored later on with the major b5 chords.
+Cºadd2 [1,3,4,7] implies the notes [C,D,Eb,Gb] which is not diatonic to the major
+scale, but can be found in the Eb melodic minor scale or the Bb harmonic major scale.
+There is another popular use for these four fixed pitches as the notes [C,D,Eb,F#] which
+is found within the G harmonic minor scale. An inversion of this chord could be seen as a
+D7b9(no5) chord which might be incorrectly labeled as Cº/D. It could also be possible for
+the notes [C,D,D#,F#] to be represented by these four fixed pitches, most likely
+somewhere around the keys of E or B. This would be a D7(#8) chord with no 5, but I’ve
+never seen anything like that written down. The last possibility is with the notes
+[C,Ebb,Eb,Gb] around the key of Gb.
+Cº(b9) [1,2,4,7] is a useful chord as it can be found as the VIIº(b9) in a major key,
+but I have never seen one written down like this. It can also be interpreted as F#6sus#4,
+so this particular chord will be explored later on under ‘C6sus#4’.
+Augmented [1,5,9]
+C+∆7 [1,5,9,12] sometimes written E/C, is diatonic to harmonic minor as the
+bIII+∆7 chord. It is somewhat of an ambiguous chord because of the symmetrical nature
+of augmented triads. This specific title implies the notes [C,E,G#,B] which might also be
+arranged as a B6sus4(b9) with no 5 (C+/B), or as an E(b13). It is also very possible that
+these pitches could represent the notes [C,E,Ab,B] diatonic to the C harmonic major
+scale as a C∆7(b13) with no 5 or an Ab+(#9) chord, or maybe even [C,Fb,Ab,Cb] (Fb/C)
+surrounding the keys of Db, Fb or Ab. This is a weird chord from the perspective of Fb in
+that it has a regular perfect fifth and an augmented fifth. This might be thought of as
+Fb(#12) or Fb+(12) but it probably wouldn’t be written anywhere. This last example is
+theoretically possible but not as probable, but the notes [C,E,Ab,Cb] could appear most
+likely around the key of Bb. An inversion of this could be seen as an Ab+(b10) chord.
+C+7 [1,5,9,11] implies the notes [C,E,G#,Bb] which are diatonic to the A
+neapolitan minor scale. It's possible that this chord might be spelled E(b5)/C although it
+would more likely be spelled C+7. These notes could also be arranged as an E(b5,b13)
+chord or a C+/Bb which could be thought of as a Bb(#6,9,#11) with no 3 or 5 (or
+Bbsus#4(#6,9)). In most cases when these four fixed pitches are used, they would
+probably represent the notes [C,E,Ab,Bb] which are diatonic to the F harmonic minor
+scale. It may look like this chord is the V+7 chord of F harmonic minor, but it is actually
+an Ab+add2, the bIII+(9) chord. This could be analyzed as a C7(b13) chord with no 5,
+but it is technically not a C+7 in this case. Lastly, these pitches might also represent
+[C,E,G#,A#], a C+(#6) chord diatonic to the B neapolitan major scale that can also be
+inverted into an E(#11,b13) chord with no 5, or possibly the notes [C,Fb,Ab,Bb], a
+C7(b11,b13) chord with no 3 or 5 diatonic to Ab harmonic major or Eb neapolitan major.
+These notes could be arranged into an an Fb+(#11) chord, or an Ab(9,b13) with no 5.
+C+6 [1,5,9,10] is an inverted A-∆7 chord which was explored earlier.
+C+add#4 [1,5,7,9] is an enharmonically equivalent inversion of Ab+7.
+C+add4 [1,5,6,9] is an enharmonically equivalent inversion of Ab+6 or F-∆7.
+C+(#9) [1,4,5,9] is an enharmonically equivalent inversion of an E+∆7 chord. In
+this case, the added note is actually more likely to be a #9, the 5 of the #5, instead of a
+b10.
+C+add2 [1,3,5,9] is an enharmonically equivalent inversion of E+7.
+C+(#8) [1,2,5,9] is an enharmonically equivalent inversion of E+6 or Db-∆7. In
+this case, it makes more sense that the added note would be a #8, the 4 of the #5,
+instead of a b9.
+Sus4 [1,6,8]
+C∆7sus4 [1,6,8,12] is a nice sounding chord that mixes the mysterious sound of
+a tritone against the sound of a major seventh. This chord is only diatonic to the major
+key as the I∆7sus4. In most cases, I feel like in most cases these four fixed pitches
+would represent the notes [C,F,G,B] as the name suggests. Inversions of this could be
+written as Csus4/B or Fsus2/B. They also might be interpreted as an Fsus2(#11) chord
+or possibly a G7(11) chord with no 5, which could be spelled Fsus#4/G. In some modern
+music I have seen the C∆7sus4 voicing on top of a D note in the bass creating an
+interesting D-7(11,13) with no 5. In rarer contexts, these four fixed pitches might also be
+used to represent the notes [C,F,G,Cb] around the keys of Ab or Eb, [C,F,Abb,Cb]
+around the key of Gb, and [C,E#,G,B] around the key of B.
+C7sus4 [1,6,8,11] is a cool chord because it can be disguised as a major chord or
+a minor chord. Additionally, there are four 7sus4 chords in a major key, II7sus4, III7sus4,
+V7sus4, and VI7sus4. The V7sus4 chord would still be interpreted as a dominant chord,
+but the other three chords might be interpreted as minor seventh chords because of their
+presumed functions. This is an interesting way to highlight how our brain tricks us into
+assuming major/minor quality depending on how that chord relates to the other chords in
+context. This group of notes could also be inverted and used as what I like to call an F
+”double sus” chord. F “double sus” is just another way of saying Fsus4add2 or
+Fsus2add4. This could also be written Fsus4/G, which might be seen as G-7(11,no5)
+and could be voiced by stacking four perfect fourths from G. It could also be written
+Csus4/Bb which would be seen as a Bb6sus2 chord and can be voiced by stacking four
+perfect fifths from Bb. This might just be the most versatile chord on this list as there are
+many ways these notes can be related to each other plus many different voicings and
+uses of these different note relationships. In most cases, these four pitches would
+probably be used to represent the notes [C,F,G,Bb], but there are a few other ways they
+could be used as well. The most convincing might be [C,F,G,A#], a Csus4(#6) chord or
+an inverted G7sus4(#9) with no 5 most likely around the keys of E or B, but the notes
+[C,F,Abb,Bb] around the key of Gb or [C,E#,G,A#] around the key of B are also a rare
+possibility.
+C6sus4 [1,6,8,10] is neat enough that it might be written this way, however the
+inversion of this chord, Fadd2, is probably more popular and was explored above.
+Csus4(b13) [1,6,8,19] is probably not written this way often. It would more likely
+be written as an inverted F-add2 chord which was explored above.
+Csus4(#11/b12) [1,6,7,8] is a pretty dissonant chord because of the group of
+three semitones in a row. The Csus4(#11) title here implies the notes [C,F,F#,G] but
+there is also a case for the notes [C,F,Gb,G] as in a Csus4(b12) chord. The reason it is
+Csus4(b12) instead of Csus4(b5) is because there is also a regular 5 present in the
+chord that isn’t flattened. I can’t imagine there would be much use for this chord,
+however it is found within the C minor blues scale so it could be played as an interesting
+Isus4(#11/b12) cluster chord. Inversions of this chord could include an Fsus2(#8/b9)
+chord, which could be spelled Csus#4/F, and maybe a possible Csus4/F# or Fsus2/Gb
+spelling although I doubt it has ever been written like that. Because of the three
+semitones in a row, this chord is not found in most other popular scales (not even the
+neapolitan scales) but the notes [C,F,F#,G] could be used around the keys of D or G and
+the notes [C,F,Gb,G] surround the keys of Ab or Eb. The next two examples would be
+scarce but still technically possible, the notes [C,E#,F#,G] could exist around the key of
+B, and similarly the notes of [C,F,Gb,Abb] could exist around the key of Gb.
+Csus4add2, [1,3,6,8] would more likely be seen as an inverted G7sus4 chord.
+Csus4(b9) [1,2,6,8] is an inverted Db∆7(#11) with no 5 which was explored
+earlier.
+Sus2 [1,3,8]
+C∆7sus2 [1,3,8,12] is a really nice sounding chord although it would probably be
+written as G/C and might just be interpreted as an incomplete C∆9 chord. This chord is
+also an inverted Gadd4 chord and was explored earlier under the major chords.
+C7sus2 [1,3,8,11] is a similar story to the previous chord in that it would probably
+be written as G-/C and might just be interpreted as an incomplete C9 chord. These notes
+also make up a G-add4 chord and were explored earlier under the minor chords.
+C6sus2 [1,3,8,10] is a less commonly seen chord although it does sound nice, it
+is more likely to be interpreted as an inverted D7sus4 chord which was explored just
+before.
+Csus2(b13) [1,3,8,9] has a very unique sound but it would probably never be
+written out like this. It would more likely be read as an inverted Ab∆7b5 chord which was
+explored earlier under b5 chords.
+Csus2add#4 [1,3,7,8] has a really cool suspended sound. I have seen it used
+before but I haven't seen it written down like this. I’m not sure how else it would be
+written with the C as the root, but it could be written as an inverted G∆7sus4 chord which
+was explored just before.
+Csus2add4 [1,3,6,8] would probably be written as Csus4add2 before it would be
+written this way but they are both the same. As we saw before, this chord, or C “double
+sus”, would more likely be seen as an inverted G7sus4 chord.
+Csus2(#8/b9) [1,2,3,8] is very dissonant and would probably not be written down
+let alone used. Inverted it is a Gsus4(#11) which was explored just before.
+Sus#4 [1,7,8]
+C∆7sus#4 [1,7,8,12] is a useful chord that is diatonic to the major scale as the
+IV∆7sus#4 chord. This chord, which might just be thought of as a C∆7(#11) with no 3
+has the notes [C,F#,G,B] which are all closely related even though melodically the note
+relationships look and sound fairly dissonant. With the right voicing, this chord can be
+made to sound reasonably consonant. An inversion of these notes can create a
+G∆7add4 chord without the 5 and can also be rearranged and spelled Csus#4/B which
+could be interpreted as a sort of B phrygian minor chord. In most circumstances, these
+four fixed pitches would represent the notes and chords listed above, but can also be
+used to represent the notes [C,Gb,G,Cb] around the keys of Eb or Ab. Additionally,
+though this would be rare, it might be possible for these pitches to represent the notes
+[C,Gb,G,B] around the key of F or the notes [C,Gb,Abb,Cb] around the key of Gb.
+C7sus#4 [1,7,8,11] cannot be found in the major scale but it can be found as the
+IV7sus#4 in the harmonic minor scale. The name of this chord suggests the notes
+[C,F#,G,Bb] and most people would probably write or analyze this chord as a C7(#11)
+with no 3. This is a very unique sounding dominant chord that can be used in a number
+of ways. It is possible that an inversion of this chord might be written as Csus#4/Bb but
+would probably still be seen as an inverted C7sus#4 chord. Another inversion of these
+notes could be seen as a G-∆7add4 chord with no 5. It is also quite possible that these
+four pitches would be used to represent the notes [C,F#,G,A#], a Csus#4(#6) chord
+diatonic to the B neapolitan minor scale. Inversions of this group of notes could also be
+interpreted as an F#(b5,b9) chord or possibly a G∆7sus4(#9) with no 5 possibly spelled
+as F#(b5)/G. The previous two interpretations are probably the most probable though I
+suppose in the right circumstances these pitches could represent the notes [C,Gb,G,Bb]
+around the keys of Ab or Eb, or possibly the notes [C,Gb,Abb,Bb] around the key of Gb.
+C6sus#4 [1,7,8,10] is found within the major scale as the IV6sus#4 chord. This
+spelling would imply the notes [C,F#,G,A] which can be inverted into an F#º(b9) chord
+which was briefly mentioned above under the diminished chords, or maybe a
+G∆9sus4(9) chord with no 5 which could be spelled F#º/G. The last inversion could be
+spelled Csus#4/A which might be used as an A-7(13) chord with no 5. I think in most
+cases, these four fixed pitches would be used to represent the notes and chords already
+listed, but there are other potential note combinations that could be made as well. It is
+possible for the notes [C,Gb,G,A] to occur, probably around the keys of Bb and Eb, as
+well as the notes [C,Gb,G,Bbb] around the keys of Db or Ab, and lastly [C,Gb,Abb,Bbb]
+around the key of Gb.
+Csus#4(b13) [1,7,8,9] is the only unique b13 chord on this list because every
+other b13 chord is more likely interpreted as an inversion of a different chord. It doesn’t
+really matter though because this chord would probably never be written down or used
+due to the three subsequent semitone intervals. The notes implied by the spelling of the
+chord include [C,F#,G,Ab] which are found within the G neapolitan minor scale. It is
+possible this group of notes could be arranged and analyzed as a G∆7sus4(b9) with no
+5 but all other inversions and their analyses are hard to justify writing out. The following
+representations of these four pitches are technically possible but not very probable. The
+notes [C,F#,G,G#] surround the keys of B and E, the notes [C,Gb,Ab,G] are possible
+around the keys of Ab, Eb, or Bb, and lastly the notes [C,Gb,Ab,Abb] are possible
+around the key of Gb.
+The rest of sus#4 chords are easier seen as other chords except for:
+Csus#4(b9) [1,2,7,8] is a unique and ambiguous chord for a number of reasons.
+It is the second partly symmetrical chord on this list meaning one of its inversions is the
+same type of chord. The inversion of Csus#4(b9) would create what looks like a
+F#sus#4(b9), though the shared notes here are only enharmonic equivalents as a
+F#sus#4(b9) chord doesn’t technically contain the same notes as Csus#4(b9). There are
+a few different note combinations that could be represented with these four pitches and I
+feel like they are all equally plausible but neither of them are particularly probable. The
+four four-note possibilities are [C,Db,F#,G], as the title would suggest, around the key of
+C, [C,C#,F#,G] around the keys of D, A, or E, and [C,Db,Gb,G] around the keys of Ab,
+Eb, or Bb. I could see this last example being used as a sort of Gb(#8,#11) chord with no
+3. Lastly, the notes [C,Db,Gb,Abb], a possible Gb(b9,#11) with no 3, are theoretically
+possible most likely around the key of Gb. None of these cords really fit into any
+conventional scales, but they could technically be found in the diminished scales.
+Inversions of these chords could possibly be written Csus#4/Db or F#sus#4/G (or any of
+the enharmonic equivalents). As you can see this is a pretty mystical chord, it seems to
+have a pair of perfect fifth intervals, a pair of tritone intervals, and a pair of half step
+intervals, which all creates some interesting symmetries and aural illusions. It might not
+have much use in practice, but any of the four possible inversions, if voiced satisfyingly,
+could be used as a mystical sounding diminished chord, although the number of
+satisfying voicings for this chord are probably few.
+(#11)no5/Major b5 [1,5,7]
+C∆7(#11)no5 [1,5,7,12] is a handy chord but not regularly seen written down, and
+if it was it would probably be spelled as a C∆7b5 which, although it has a much cleaner
+label, is not usually the most accurate spelling of this chord. C∆7(#11), which could also
+be spelled Esus2/C or Bsus4/C, has the notes [C,E,F#,B] which is diatonic to the G
+major scale as the IV∆7b5 chord. These notes could also be arranged into a Bsus4(b9)
+chord, (this might be spelled C(b5)/B) or an Esus2(b13). Though not very probable, a
+C∆7b5 chord is still possible with the notes [C,E,Gb,B] around the key of F. Other
+possibilities with these four fixed pitches include the notes [C,E,Gb,Cb] around the key of
+Bb and [C,Fb,Gb,Cb], which could be spelled Fbsus2/C or Cbsus4/C, around the keys of
+Db or Ab, though neither of these are very probable in most musical situations.
+C7b5 [1,5,7,11] is another very interesting and ambiguous chord that can be
+used in a number of ways. For one, there are a few different ways that this chord might
+be represented in practice, first as a C7b5 with the notes [C,E,Gb,Bb], the V7b5 chord
+diatonic to the F neapolitan minor scale. An inversion of this might be seen as a
+Gb(#6,#11) with no 5, and another one might be spelled C(b5)/Bb. A C7(#11) chord, with
+the notes [C,E,F#,Bb] of the G melodic minor scale, is also a likely possibility with these
+four fixed pitches. There are two other possibilities that are also somewhat likely in the
+right circumstances. The notes [C,E,F#,A#] make a C(#6,#11) chord with no 5 (an
+inversion might be seen as F#7(b5) or another spelled as F#(b5)/E) which is diatonic to
+the B neapolitan minor scale, and lastly the notes [C,Fb,Gb,Bb], which makes an
+inverted Gb7(#11) chord with no 5, are diatonic to the Db melodic minor scale. As you
+may have already noticed, these chords are partly symmetrical meaning one of its
+inversions is the same type of chord (enharmonically). For example, the inversion of
+C7b5 is Gb(#6,#11). This makes the melodic minor and neapolitan minor scales
+interesting because it looks like there are two of the same type of chord but really the
+note relationships are different. For example, in the neapolitan minor scale there is a
+V7b5 chord and a bII(#6,#11) chord which look like the same type of chord but
+technically are not. In the melodic minor scale, there is a IV7(#11) chord, and a
+VII7b5(b4) chord with no 3. This unique and mysterious chord is somewhat similar to the
+fully symmetrical Cº7 chord in that it contains two different tritone intervals, however,
+unlike Cº7, the two separate tritone intervals are not spaced evenly between each other.
+C6(#11)no5 [1,5,7,10] would most likely be written as F#-7b5 or A-6, both of
+which have been explored already.
+C(b5,b13) [1,5,7,9] would be C+add#4 which was shown before to be an inverted
+Ab+7 chord.
+Cadd4(b5) [1,5,6,7] is quite the dissonant chord as it contains three semitones in
+a row. Because of this it is hard to imagine this chord being written down let alone used.
+The notes suggested by the spelling would be [C,E,F,Gb] which are diatonic to the F
+neapolitan scale. An inversion of this might be seen as an F∆7(b9, no3) and maybe
+written as C(b5)/F, but again not probable that it would be written at all. More possibilities
+with these four fixed pitches include the notes [C,E,F,F#] around the keys of G, D, or A,
+the notes [C,E,E#,F#] around the key of B, or the notes [C,Fb,F,Gb] most likely around
+the keys of Db or Ab, but these would be even less likely than the Cadd4(b5) chord.
+C(b5,b10) [1,4,5,7] is another strange chord that could be analyzed in many
+different ways. The spelling of the chord implies the notes [C,Eb,E,Gb] which contains
+both a Cº triad and a C(b5) triad meaning it could also be interpreted or spelled as
+Cº(10) (10 being the major 3). This group of notes together is probably not very likely but
+they could possibly occur somewhere around the key of F. The most likely occurrences
+of these four fixed pitches is probably as the notes [C,D#,E,F#] diatonic to the E
+harmonic minor scale. This might be called or thought of as a C(#9,#11) chord with no 5,
+the bVI(#9,#11) in E harmonic minor, but that isn’t a very pretty name so I’m not sure
+how many people would write it as such. The other likely representation is of the notes
+[C,Eb,Fb,Gb], also diatonic to the harmonic minor scale, but this time as the VIIº(b4)
+chord in Db harmonic minor, so harmonic minor is another scale that has two
+enharmonically equivalent chords that are technically different. An inversion of these four
+notes might be interpreted as an Ebm6(b9) with no 5 or even a Fb+∆7(9,no3) chord, or
+Cº/Fb. Lastly, the notes [C,Eb,E,F#] are also possible, they might be interpreted as a
+C(b10,#11) chord with no 5, most likely around the keys of C or G.
+Cadd2(b5) [1,3,5,7] would most likely be interpreted as D9(no5) which will be
+explored later on.
+C(b5,b9) [1,2,5,7] is an inverted F#7sus#4 chord which was explored earlier
+although neither chords are very popular.
+Extended 9th no 5 chords
+So far we have named 32 unique tetrads out of 43. To name the last 11 tetrads, we will
+use some of the ‘no 5’ triads that were named earlier. Since there are quite a few ‘no 5’ triads
+that we named, we will start with the 4 most common ones and see how many tetrads that
+covers and go from there.
+Because the 5 is the first fundamental overtone of the root, it is the easiest note to take
+out without altering the function of the chord. Because of this, it is not necessary to write ‘no5’
+when writing a chord without the 5 unless you are trying to be ultra specific about the chord. The
+reason I have specified the no5 chords is to highlight the fact that it is strictly a four note chord.
+Technically you could swap the 5 for 11 or 13 chords as well but in order not to complicate
+things further we will stop at add 9 chords.
+Major seventh no 5 [1,5,12]
+C∆7(#9)no5 [1,4,5,12] is not a popular chord but still has a unique sound of its
+own. It can be found in the E harmonic minor scale as the bVI∆7(#9) chord with the
+notes [C,D#,E,B]. With the E as the root, these notes might be used as an E∆7(b13)
+chord with no 3, or maybe a B(b9,11) with no 5. There is also a possibility for these four
+pitches to represent the notes [C,Eb,E,B] perhaps around the keys of C or G. This could
+be thought of as a C∆7(b10) with no 5, or as a C-∆7(10) with no 5. The analysis of this
+chord would probably depend most on which type of third is placed lower in the chord. I
+personally really appreciate the minor version of this chord (with the right voicing)
+although minor add 10 chords are never really written down in that way. There is an
+example of a -∆7(10) chord below. There is obviously a bit of tension between the major
+third and minor third which confuses the major/minor feeling of this chord. The other two
+possible representations with these pitches are the notes [C,Eb,E,Cb] perhaps
+somewhere around the keys of F or Ab, and the notes [C,Eb,Cb,Fb] near the keys of Db
+or Ab.
+C∆7(9)no5 [1,3,5,12] would most likely just be spelled as C∆9. This is a very
+pretty chord that could serve as a nice tonic chord in a major key, in most cases I would
+imagine that this is the chord being represented by these four pitches. Other than I∆9,
+this chord could also be used as the IV∆9 chord. This chord contains the notes [C,D,E,B]
+which could also be passed off as an E7(b13) with no 3, a chord that might be used as
+an E7 chord or an E-7 chord. There are other possible representations that are
+theoretically possible but not super likely. The notes [C,D,E,Cb] are possible around the
+key of Bb, the notes [C,D,Fb,Cb] around the keys of Eb or Ab, and the notes
+[C,Ebb,Fb,Cb] around the keys of Gb or Db.
+C∆7(b9)no5 [1,2,5,12] is another tricky chord to analyze or use because of the 3
+semitones in a row. This chord title would suggest the notes [C,Db,E,B] which are found
+within the C double harmonic scale. Another possible representation is of the notes
+[C,C#,E,B] which are all found in the F# minor blues scale. These notes might be spelled
+as a C∆7(#8) chord with no 5 which actually isn’t such a crazy concept. In the section on
+interesting chords below there is an example of a C∆9(#11,#8,13) chord and C∆7(#8)
+just has a few less notes. With the three semitones in a row, It might be used as a cluster
+chord in a blues tune but it probably wouldn't be written down often if at all. Other
+possibilities with these pitches include the notes [C,Db,E,Cb] around the key of Bb and
+the notes [C,Db,Fb,Cb] perhaps around the keys of Ab or Db. It is tricky to spell any of
+these chords from the perspective of any other root than C. It is also seemingly
+impossible to represent these notes as some sort of slash chord.
+Dominant seventh no 5 [1,5,11]
+C7(#9/b10)no5 [1,4,5,11] is a little bit of a tense chord but not too terribly when
+voiced in suitable ways. Dominant seventh chords with a #9/b10 (the ‘hendrix chord’) are
+fairly popular in jazz-inspired music. Again, when people write down this chord they
+usually spell it C7(#9) even though in most cases it would probably be a b10. C7(b10)
+with no 5 implies the notes [C,Eb,E,Bb] which would occur most likely around the keys of
+F, C, or Ab, where C7(#9) with no 5 implies the notes [C,D#,E,Bb] which probably isn't as
+likely but still possible around the key of A. The notes [C,Eb,Fb,Bb], which form a
+Cm7(b4) with no 5 diatonic to the Db melodic minor scale, are also a possible
+representation of these pitches. An inversion of these notes might be seen as an
+Fb+∆7(#11) chord with no 3, or maybe an Eb(b9,13) with no 3. Lastly, these fixed pitches
+could also be used to represent the notes [C,E,D#,A#], a C(#6,#9) chord with no 5
+diatonic to the B neapolitan minor scale.
+C7(9)no5 [1,3,5,11] would most likely just be written as C9 and is found in the
+major scale as the V9 chord. This chord contains the notes [C,D,E,Bb] which could also
+be rearranged and spelled as Bb(9,#11) with no 5, E7b5(b13) with no 3, and maybe a
+D9(b13) with no 3 or 5. These four fixed pitches could also be used to represent the
+notes [C,D,E,A#], found in the B neapolitan minor scale, which could be written as a
+C(#6,9) with no 5. Other possible representations include the notes [C,D,Fb,Bb] which
+might be written Bb(b5)/C or an inversion as Bb(b5)add2, diatonic to the Eb neapolitan
+major scale, or the notes [C,Ebb,Fb,Bb] which could create an Fb+7(#11) chord with no
+3 or an Ebb+(#6,9) chord with no 3 diatonic to the Db neapolitan major scale.
+C7(b9/#8)no5 [1,2,5,11] is a somewhat popular chord mostly used in jazz music.
+These pitches can also be arranged as a Bbºadd2 chord (with enharmonic equivalents)
+which was explored earlier under diminished chords.
+Minor major seventh no 5 [1,4,12]
+C-∆7(9)no5 [1,3,4,12] would most likely just be written as C-∆9 and can be used
+as a very pretty tonic chord in C harmonic minor. The spelling suggests the notes
+involved are [C,D,Eb,B] which could also be arranged and thought of as an Eb+∆7(13)
+chord with no 3, or maybe a D7(b9,13) chord with no 3 or 5. In less likely conditions,
+these four fixed pitches could also be used to represent the notes [C,D,D#,B] which
+might be thought of as a B(b9,b10) with no 5 likely surrounding the key of E, the notes
+[C,D,Eb,Cb] around the key of Eb, and lastly the notes [C,Ebb,Eb,Cb] probably around
+the keys of Gb or Db.
+C-∆7(b9)no5 [1,2,4,12] is a very dissonant chord and would probably not be used
+in most circumstances. These notes, which are assumed to be [C,Db,Eb,B] could fit as
+the I-∆7(b9) in the C neapolitan minor scale or possibly be arranged and thought of as
+an Eb+7(13) chord with no 3. This is probably the most likely representation of these four
+pitches though it is also possible for them to represent the notes [C,C#,D#,B] around the
+key of E, [C,C#,Eb,B] around the keys of D or G, and the notes [C,Db,Eb,Cb] around the
+keys of Db, Ab, or Eb. It is tough to spell these notes as a chord with a root other than C.
+Minor seventh no 5 [1,4,11]
+C-7(9)no5 [1,3,4,11] would most likely be written as a C-9 which is a popular
+chord and can be found as a II-9 or VI-9 in a major key. This chord has the notes
+[C,D,Eb,Bb] which could also be arranged and used as a Bb(9,11) chord with no 5 or an
+Eb∆7(13) with no 3. These would probably be the most likely representations, but there
+are other possibilities with the notes [C,D,D#,A#] around key of B, [C,D,D#,Bb] around
+the key of A, and the notes [C,Ebb,Eb,Bb] around the key of Db.
+C-7(b9)no5 [1,2,4,11] is a somewhat dissonant but nice sounding chord that can
+be found in the major scale as the III-7(b9) chord. This is probably the easiest way to
+spell out these four notes, [C,Db,Eb,Bb], however, inversions of these notes could also
+be thought of as a Bbm(9,11) chord with no 5, or an Eb7(13) chord with no 3. Again,
+these chords are probably the most likely to be represented by these four fixed pitches,
+but the other possibilities include the notes [C,C#,Eb,Bb] around the key of D,
+[C,C#,D#,Bb] around the key of A, and the notes [C,C#,D#,A#] around the keys of E or
+B.
+At this point we have named 40 unique chords which means there are only 3 left. C6no5
+is an inverted A- chord and C-6no5 is an inverted Aº chord so they have been discussed already
+under their respective inversions. Augmented, diminished and major b5 chords don’t have a 5 in
+the first place so they are excluded. Extended sus4 and sus#4 chords with no 5 are also better
+expressed as other inverted chords which leaves us with sus2no5 chords. Obviously, sus2
+chords can’t have an added 9 because it already has the 2, and they can’t have the #9(b10)
+because it would be considered a minor add2 chord. So with all of that being said, the last 3
+unique chords are all sus2(b9)no5 chords.
+Sus2(b9) no5
+C∆7sus2(b9)no5 [1,2,3,12] is basically just a fancy way of saying four semitones
+in a row [1,2,3,4]. I’m not sure if it has ever been written out in this way, it’s possible it
+might have been written as something like ‘four semitones in a row from B’ or ‘make a
+fist with your hand and strike the piano’. There aren’t many popular scales other than the
+chromatic scale that have four semitones in a row so I don’t really see the point of
+exploring the ins and outs of the specific harmonies of this chord but I will just to be
+consistent. The title spelling suggests the notes [C,Db,D,B] which would probably be
+closest to the key of C. Other possible representations include the notes [C,C#,B,D]
+which you might be able to call a B-add2(b9) chord with no 5, around the keys of D, A or
+E. This might be the most probable representation although I really don’t think you’d be
+able to gather much information from four semitones in a row. Lastly, the notes
+[C,Db,Cb,D] could be represented by these pitches around the key of Eb, and the notes
+[C,Db,Ebb,Cb] could possibly be represented around the key of Db.
+C7sus2(b9)no5 [1,2,3,11] is another tense chord that could be useful with the
+right voicing and right context though you probably wouldn't ever see it written down.
+The notes of this chord would be [C,Db,D,Bb] which might work around the keys of Eb,
+Bb, or F. Technically, all of these notes could be also found in the G minor blues scale. It
+might also be possible for an inversion of these notes to be thought of as a Bbadd2(b10)
+chord with no 5. The most likely representation of these pitches might be with the notes
+[C,Db,Ebb,Bb] which are actually all found within the Db neapolitan major scale. Other
+possibilities include the notes [C,C#,D,Bb] somewhere around the key of D, which might
+be thought of as a Bbadd2(#9)no5, and the notes [C,C#,D,A#] around the key of B.
+C6sus2(b9)no5 [1,2,3,10] is also a fairly dissonant chord with three semitones in
+a row. The notes suggested by the spelling would be [C,Db,D,A] close to the keys of C,
+F, or Bb, but this probably wouldn't be the most likely occurrence of these pitches. I’m
+not sure that any of them are that likely in a regular musical scenario, but the most likely
+representation of these four pitches might be with the notes [C,Db,Ebb,Bbb] which are
+diatonic to the Db neapolitan minor scale. An inversion of these notes might be seen as
+a Bbbadd4(#9) chord with no 5. These pitches could also represent the notes [C,C#,D,A]
+around the keys of D, A, or E, and could be arranged into an Aadd4(b10) chord with no
+5. Lastly, the notes [C,Db,D,Bbb] around the key of Ab are another possible
+representation. Again, most of the recent examples would probably never need to be
+written down.
+List of Popular Seventh ChordsThe last chapter had a lot of information and it is hard to know what to do with it all, so
+below is a much simpler chart showing the more popular types of tetrads (sixth and seventh
+chords) and what scales they can fit into. Keep in mind that a lot of these chords exist in multiple
+scales but they are only listed once under the more popular scale, which is why the melodic minor scale isn't included in any of the examples below. Most of the chords in the harmonic minor scale can also be found in the melodic minor scale. Also, the Locrian scale is the only
+scale listed below that contains a b5 note. For more information on these scales, check out my
+document on the 32 modes. With that being said, here is the order of scale importance I used
+for the chart below.
+Ionian
+Aeolian Mixolydian/Dorian/Lydian/Phrygian/Locrian
+Harmonic Minor/Phrygian Major Melodic Minor/Lydian Dominant
+Harmonic Major/Lydian b3/Mixolydian b2
+Neapolitan Minor
+Neapolitan Major/Lydian Minor
+Hungarian Minor
+Todi
+The scales that share the same color are modes of each other, except for the Ionian and
+Aeolian scales which are in their own category here. Notice there is a column for both bV chords
+and #IV chords which are enharmonically equivalent but harmonically different. Similarly, there
+is also a row for two pairs of enharmonically equivalent chords, the 7 and #6 chords, and the +7
+and +(#6) chords.
+I bII II bIII III IV bV #IV V bVI VI bVII VII
+∆7 Ionian Phrygian Aeolian Ionian Locrian Lydian Aeolian Mixolydian
+7 Mixolydian Lydian Phrygian Dorian Ionian Locrian Aeolian
+#6 Neapolitan Minor
+Hungarian Minor
+6 Ionian Phrygian Lydian Aeolian Ionian Locrian Ionian Aeolian Aeolian
+-∆7 Harmonic Minor
+Harmonic Major
+Lydian Dominant
+Mixolydian
+b2
+-7 Aeolian Ionian Locrian Ionian Aeolian Aeolian Ionian Phrygian Lydian
+-6 Dorian Ionian Locrian Aeolian Mixolydian Lydian Phrygian
+º∆7 Todi
+-7b5 Locrian Aeolian Mixolydian Lydian Phrygian Dorian Ionian
+º7 Phrygian Major
+Lydian b3 Harmonic Minor
++∆7 Neapolitan Major
+Harmonic Minor
+Harmonic Major
+Lydian Dominant
++7 Neapolitan Minor
+Lydian Minor
++(#6) Neapolitan Major
+Lydian Minor
+7b5 Lydian Minor
+Neapolitan Minor
+There are still a few more interesting things to point out about the chart above:
+- You can see that diminished chords (except for -7b5) and augmented chords are
+not as harmonically available as other chords above which contributes to why
+they aren’t as popular in mainstream music. -∆7 chords, containing an
+augmented triad, are also not as popular.
+- In this system 7b5 chords are only possible with II and V as the root, the rest are
+either not possible or are 7(#11) chords with no 5.
+- º∆7 chords are special in that they have an augmented third interval between the
+b5 and 7, the only scales in this system that have an augmented third interval are
+the scales that contain both a b2 and #4. Traditionally these types of scales are
+not very popular, although there is a somewhat popular raga in classical Indian music, Raag Todi, that does mix the b2 and #4.
+- I think it is interesting to point out that there is a possible bVI7 chord possible in
+the locrian scale and also a possible bVI(#6) chord in the hungarian minor scale.
+Again, these two chords are enharmonically equivalent, but harmonically
+different.
+- Remember that this doesn’t mean that these are the only good chords to use.
+This chart does not include extended scales like the super locrian scale which
+gives you a b1 note and chords like the bII7, bI∆7 and bVI-7, or the super lydian
+scale which gives you the #1 note and chords like II∆7, VI7 and #IV-7. This chart
+also doesn’t include a lot of ‘secondary’ or ‘relative’ chords borrowed from nearby
+scales or keys which give you other somewhat common chords like III7 (V7/VI) or
+VI∆7 (I∆7/VI).
+Pentads and Above -
+Pentads (Extended 9th Chords) -
+There are 330 different 5-note chord combinations and none of them are symmetrical,
+therefore all 330 combinations can be divided by 5 to make 66 unique pentad groups. I won't get
+into all of the different ones because a lot of them have multiple notes close together and are
+hard to make sense of. One way to think of pentads is as extended 9th chords. All of the ‘no5’
+tetrads mentioned above can add the 5 back in to give you a list of some of the more popular
+extended 9th chords. Most of the time these are written as something like C9, C∆9, or C-9 and
+usually imply that the 7 is involved. However, 9th chords can also apply to the #9/b10 and the
+b9/#8. To refresh, some of the possible extended 9th chords mentioned earlier as no 5 chords
+are C∆7(#9/b10), C∆7(9), C∆7(b9/#8), C7(#9/b10), C7(9), C7(b9/#8), C-∆7(9), C-∆7(b9/#8),
+C-7(9), and C-7(b9/#8). 9ths can also be added to any other seventh chord that has the room
+for that particular 9th.
+In addition to 9ths, the 11, #11, b13/#5, and 13 notes can also be added to seventh
+chords or any other tetrad to give us different pentads. Again it is also possible to trade the 3 or
+5 for an additional upper structure tone to give us other usable pentads. Once you get to this
+point the different pentads start blending into each other as each chord has 5 different
+inversions. One last way to think of pentads is to think of a tetrad played over an additional bass
+note. For me, this is the easiest way to think of 5-note chords because it makes it easier to
+remember what notes to play. Examples of this can be found in the next chapter.
+Chords with more than 5 notes -
+Chords with more than 5 notes start getting harder and harder to analyze. Chords with 6
+notes or 7 notes are still used but the overall quality or feeling of every different chord can
+mostly be accomplished with 5 notes at the most. Extended 11th chords have 6 notes in them
+and extended 13th chords have 7 notes in them assuming that all the notes in the chords are
+included, which means that most extended 13th chords can be matched with their respective
+7-note scale. There are a lot of different combinations of extended chords because of the many
+different triads themselves, and the ∆7, 7, b9/#8, 9, #9/b10, 11, #11/b5, b13/#5, and 13 to
+choose from to add to the chord. I won't get into all of the different combinations of upper
+structure chords here but they are worth exploring on your own time if you are interested. Once
+again, the main feeling of most chords can be explained with the chords we have already
+discussed.
+Sometimes, chords with 6 or 7 notes are written as ‘polychords’ which look like slash
+chords but are a bit different. For example, an extended C13 chord could be written as Dm/C∆7
+(usually styled ) which means a D minor chord in the right hand and a C7 chord in the left
+𝐷𝑚
+𝐶∆7
+hand. Chords with more than 7 distinct notes are hard to analyze harmonically because they
+require using a scale with more than 7 different notes. An 8 or more note chord could exist but
+chords with too many notes risk sounding like more of a cluster of sound than anything
+harmonic. There is an example of an 8 note chord below and I have even tried to pull off a
+12-note chord before and it doesn't sound too bad with the right voice leading, in my case it was
+[C,E,G,B,D,F#,A,C#,G#,D#,A#,E#] and it spans almost 4 and a half octaves. One person who
+writes a lot of really dense and beautiful chords with a bunch of different notes in them is Louis
+Cole.
+Examples of interesting chords used in songs -
+From all of the chords that have been mentioned so far, I have seen most of them written
+down or being used in some way or another. Here are a few examples of some of the more
+interesting and rarer chords found in some popular songs.
+The first example is from the song “Sincerity is Scary” by The 1975. There is also a
+representation of this chord loop on the harmonic lattice in the extra examples chapter of this
+document. This loop repeats basically the entire song. The progression has a lot of layers to it
+and is a little more complex than it might seem. The reason this is called E/E# instead of E/F,
+Eºmaj7 or Fºmaj7, is because of the nature of the relationship between all of the notes. The
+simplest way to think of it in my opinion is that E is the bVII of the upcoming F#m7 chord and E#
+is the leading tone in the bass. You could also possibly perceive this as an E/F chord where the
+E major triad is a whole step above the previous Dmaj9 chord and F is the b3 in relation to
+Dmaj9.
+(A major) (F# minor) (D major)
+I∆7 #Vº III-7 IV7
+bVI∆7 VIIº I-7 SubV7
+IV∆7 bVIº VI-7 bVII7
+| Dmaj9 | E/E# | F#m7 | G9 |
+This example comes from the song “Cinderella” by Mac Miller. The F/Db is really a
+Db+∆7 chord borrowed from the harmonic minor scale, and works as an embellishment chord to
+the Dbmaj7 chord. Just like the last example, this chord is usually easier to read as a slash
+chord rather than an augmented major seventh chord which is why I chose to write it as F/Db.
+F/Db is not a bad way to think of the chord either, the F chord being the III or V/VI chord while
+the tonic note remains in the bass. In this part of the song the guitar adds a 13 to the first
+Dbmaj7 and a 9 to the last one. Another interesting example of a bIII+∆7 chord can be found in
+the song “Everytime” by Louis Cole
+(Bb major) (Db major)
+I∆7 I+∆7 I∆7
+bIII∆7 bIII+∆7 bIII∆7
+Dbmaj7 F/Db Dbmaj7
+It's only right that right after love, I write my name
+These three chords from Queen’s “We are the Champions” are a combination of
+interesting dominant sounding chords used to modulate up a whole step to the chorus. Firstly
+from the perspective of Eb major, the first three chords with Bb in the bass seem to mostly feel
+like Bb dominant chords, Ab/Bb being a Bb9sus4 with no 5, Ab+/Bb could maybe be seen as a
+Bb9(#11) with no 3 or 5, and Fm/Bb is basically Bb7sus2 or Bb9 with no 3. These chords are
+fairly ambiguous and I think there are a lot of ways you could analyze this passage. The Ab+/Bb
+chord is a good chromatic passing chord between Ab/Bb and Fm/Bb, it also has the same notes
+as a C+/Bb or C+7 with the 7 in the bass which prepares us for the upcoming C7 chord. Without
+considering the Bb in the bass, Ab and Fm are the IV and II- of Eb major and the bIII and I- from
+the parallel minor of the upcoming key F major. It is also worth noting that each of these four
+chords shares a C note and a Bb note. The last chord C7 resolves down a fifth to an F major
+chord for the chorus a whole step above the original key.
+(Eb major) (F major)
+IV7sus2 V7
+V7sus4 V7sus2 V7sus2 V7/II
+Ab/Bb Ab+/Bb Fm/Bb C7
+And we mean to go on and on and on and on
+This is one of the weirder examples on the list from the song “ Unluck” by James Blake.
+There are probably a few different ways to analyze the Gm/F# chord, but first we should
+recognize that it seems to be a dominant type chord that resolves up to the Eb chord. Without
+the bass, Gm is simply the VI- chord in the key of the song. The interesting part is the F# in the
+bass. The reason I am calling this an F# instead of a Gb is because to me it feels more like the
+major third of the D chord or the leading tone of the Gm (VI-) chord. Instead of resolving to Gm
+though it resolves to the similar Eb chord. Within the Gm/F# chord is a Bb+ chord which could
+be confused with a D+, F#+, and a Gb+ chord creating a decent amount of ambiguity and room
+for movement. You could try to call this an F#+(b9) chord but technically the notes in this chord
+aren’t the right ones to call it a F#+(b9). You could also call it a Bb+(13)/F# (the V of Eb) which
+is technically correct but seems a little messy. I think Gm/F# is the best representation of this
+chord as it seems most likely that the Gm is the VI- chord and the F# seems most like the
+leading tone of G. This could also be thought of as an inverted G-∆7 chord with the major
+seventh in the bass. Lastly, there is also a case to be made that this is a D+7(11) chord (the 7,
+C, is sung in the bass), the V7/VI that resolves to the Eb. This would mean that the Bb note is
+actually an A#. Either way, this chord carries a bit of all of these energies and simply is just used
+as a bit of tension which dissolves into the next Eb chord.
+(Bb major)
+III- V+/IV IV I VII- VIDm Gm/F# Eb Bb Am Gm
+Only child take good care I wouldn't like you playing, falling there
+This example from “She Works Out Too Much ” by MGMT is a good example of a few
+more interesting slash chords. In this phrase the Bb note is used as a pedal point in the bass.
+The triads could be analyzed on their own without the Bb in mind, but the root note does have
+its own effect on the chord. The chords are interesting on their own (F is the V chord, Gb and Ab
+are the bVI and bVII borrowed from the parallel minor key) is the bVII) but the way they are used
+in context with the tonic is what makes these chords even more interesting. F/Bb sounds most
+like a Bbmaj9 (with no 3, also could be called Bb∆7sus2), Gb/Bb is an inverted Gb triad, and
+Ab/Bb is like a Bb9sus4 chord with no 5 or an inverted Abadd2 chord.
+(Bb major)
+I∆7 bVI bVII I∆7
+F/Bb Gb/Bb Ab/Bb F/Bb
+Don't take it the wrong way… I can never keep up
+This example from the cover of “Fly Me to the Moon” played by Charles Cornell has an
+A7b5 chord which works to resolve down a fifth to the Dm7 chord. Most of the time, a chord like
+this will be written as A7(b5) indicating that there is not a perfect fifth but instead the note
+located a semitone below the perfect fifth. More often than not with a chord like this, the b5 (in
+this case Eb) is actually a #4 (D#), making the chord an A7(#11) with no 5. In this phrase, I
+believe there is a strong case for both ways of naming the chord. The added note could be an
+Eb located a major third below the G note of the chord (the bIII in the key of C), or it could be
+seen as the D#, the #11 of A located 2 fifths and a major third above the A note. (the #2 of the
+key).
+(C major)
+IV∆7 V7sus4 V7 I∆7 V7/II II-7 V7 I∆7
+Fmaj7 Fmaj7/G G7(13) Cmaj7 A7b5 Dm7 G7(13) Cmaj7
+With music and words I've been playing… For you I’ve written a song
+This is a great example of what I feel like a sus#4 chord sounds like. Technically, this
+chord from “Lullabye (Goodnight, My Angel)“ by Billy Joel could be thought of as a Csus#4(9,13)
+chord or a Csus2(#11,13) chord, but the melody sings the #4 note which makes the chord sound
+more like a sus#4 chord. This chord can be accomplished just as a D/C (the V chord with the IV
+in the bass) which is interesting because that is an inverted D7 chord whereas in this context to
+me it doesn’t sound like a regular dominant chord would, maybe because of the G note
+solidifying the C chord. This shows that two identical chords can sound completely different
+depending on the context of the surrounding chords.
+(G major)
+I IV-6 I IV- I
+G Cm6/G G Cm/G G
+Goodnight my angel time to close your eyes
+V7sus4 V7 VI- IVsus2 IV
+D7sus4 D7 Em Dadd4/C C
+And save these questions for another day
+This next example from “Same Smile Different Face” by Knower is a little bit ambiguous
+but worth mentioning. This chord will probably always be written as a Cmmaj7 chord (VI-∆7) and
+that is probably the most valid interpretation, but I feel like the movement of these chords
+sounds somewhat like a VI note (C) moving to the bVI (Cb) much like a IV chord moving to a IVchord, but it also sounds like a VI note (C) moving to a #V (B) note, much like a III7sus4 chord
+moving to a III7 chord. The bVI note is closer to the key center but with the context of the Cm
+chord, it could also be interpreted as the leading tone of Cm, a B note, which is the #V of Eb.
+Because of the ambiguity that comes with 12-tet it is impossible to say which one it is.
+(Eb major)
+I Vsus4 V
+Eb Gsus4/D G
+One guess I know is true
+VI- VI-(b8) II7sus4 V7/V
+Cm Cm(b8) F7sus4 F7
+Not the only life that we've been through
+This example comes from the piano interlude in the song “God is Fair, Sexy Nasty” by
+Mac Miller. This chord is sometimes referred to as the ‘Hendrix chord’ though this isn’t the
+greatest example of how this chord would normally be used. This makes it an even more
+interesting sounding chord in this specific example. I think the strongest case for this chord its
+that it is an Eb augmented 6th chord with a #9 [Eb G Bb C# F#] where Eb is the bV of A. This
+chord. This chord is representative of the notes in their closest harmonic relationship to the key
+of A major, it shares two notes, the C# and F#, with the A6 chord. You could also possibly make
+the case that this chord is a D#7 chord with an added b3 or b10 [D# F## A# C# F#] where the
+C# and F# in the A6 chord are the 7 and b3 in the D#7(b10) chord. As we discussed earlier,
+most of the time, when a chord that is written as a 7(#9) chord, the #9 is really a b3 or b10 but
+here there is a strong case that it is actually a #9. D#7(#9) or Eb7(#9) is probably the easiest
+and most common way to write this chord but neither are harmonically accurate, this is either a
+D#7(b10) or an Eb(#6,#9).
+(A major)
+II-7 IV∆7 I∆7 V∆7 I6 bV(#6) I6 I∆7 II∆7
+| Bm7 | Dmaj7 | Amaj7 | Emaj7 | A6 Eb7(#9) | A6 | Amaj7 | Bmaj7 |
+The first chord in the song “Too Late” by Mat Zo is not only an interesting voicing for a
+dominant seventh chord, but also a unique way of using that chord in context with the song. The
+chord is played on the guitar with the B and C (3 and 11) played right next to each other creating
+some unique dissonance. This chord could be thought of as an inverted Cmaj9sus4 chord or
+maybe even a F6sus#4/G. This chord definitely has some tension and feels like it sort of needs
+to move somewhere, but I also think it feels somewhat like a tonic chord, especially with Eb and
+F setting it up as a [bVI bVII I] resolution.
+(Eb Major) (G major/minor) (Bb major)
+V7/II bVII6 IV V V7/II
+I7 bII6 bVI bVII I7
+V7/VI IV6 Isus2 V/V V7/VI
+G7add11 Ab6 Ebsus2 F G7add11
+Look out the window… All I see is rain
+This example and the next one are both from the song “I Can't Help It” by Michael
+Jackson. This progression was actually written by Stevie Wonder who is a great person to study
+if you want to learn practical uses of interesting chords. The first chord in this example is written
+as A13(#11) because that is probably the easiest way for most people to recognize those
+particular notes. The easiest way for me to think of this chord when I’m playing is as a
+Gmaj7b5/A (with the A and E (1 and 5) in the left hand with a G, B, C#, D#, and F# (7, 9, 3, #11,
+and 13) in the right hand) which doesn’t actually include the 5 of the A chord. This name is only
+a shortcut however and to remain true to the key of Ab major, this chord should really be seen
+as a Bbb chord (Bbb, Db, Fb) with an added augmented sixth interval (G) as well as the 9 (Cb),
+#11 (Eb), and 13 (Gb). This is the bII(#6) chord of Ab major, in jazz harmony this chord is
+usually referred to as the tritone substitute dominant chord.
+(Ab major)
+SubV7/I I∆7 SubV7/I I∆7
+A13(#11) Abmaj9 A13(#11) Abmaj9
+Looking in my mirror… Took me by surprise
+The Eb+7(#9) chord from the same song is a very similar chord to A13(#11). In fact the
+only difference is that they have different bass notes. While A13(#11) could be thought of as
+G∆7b5/A, Eb+7(#9) could be thought of as G∆7b5/E. Again, this might be the most common
+label for this chord, but it is not truly representative of the actual notes in the chord. If these are
+the same notes used in the A13(#11) chord, then this chord is really an Eb7(b10, b13) chord
+with no 5 [Eb, G, Cb, Db, Gb]. The label of Eb+7(#9) would technically indicate the notes [Eb, G,
+B, Db, F#]. I would say that this chord leans more towards being an Eb7(b10, b13) but Eb+7(#9)
+is still a valid label. Since the true nature of this chord is clouded by equal temperament, there is
+no way to say what it really is. My guess would be somewhere on the spectrum between these
+two different labels but different ears might perceive the notes differently.
+(Ab major) (Fb major)
+I∆7 II-7 III-7 IV∆7
+IV7sus2 V7+ bVI∆7 bVII-7 I-7 bII∆7
+Db7sus2 Eb+7(#9) Fbmaj7 Gbm7 Abm7 Bbbmaj7
+Running often through my mind
+This example from Kanye West’s “Violent Crimes” is pretty similar to the previous
+example. The second chord of this phrase, A7(9,13), is pretty ambiguous as to what specific
+notes are being represented. It seems clear that the notes of the chord are [A(1), C#(3), E(5),
+G(7), B(9), F#(13)] but the ambiguous part is how those relate to the key of B major. Specifically,
+is the A (bVII) two fifths below B or two fifths up and a major third down? A similar concept also
+applies to the C# and F# notes. The next chord, labeled as D#+7(b9), is very similar to the
+previous chord, in fact really the only difference is the change in the bass note from A to D# and
+the disappearance of the F# note. First off, the reason it is called a D#+7(b9) is for the
+convenience of a simpler name, but technically this is not really a D#+ chord. Being an
+augmented chord, this chord by its nature is rather ambiguous. The question here is whether
+this chord has a G note or an F## note, or maybe a mixture of both. Going into the chord from
+the previous A7 chord might suggest that this note is a G carried from the A7 chord, G is also
+the b6 in relation to B major. However, coming out of this chord to the G#m7 chord would
+suggest that it has an F## note which is the major third of D# and the leading tone of G#m7. It
+seems like it starts as a G note and morphs into an F## note with the added context of the
+G#m7 chord, but there is no way to be definitive as different people might hear different things.
+This is a glimpse of the beauty of ambiguity in symmetrical chords. With all of this being said, as
+a shortcut when I am playing these two chords, I tend to think of them as Gmaj7b5/A and
+G6b5/D# respectively, though this is not an accurate representation of the harmonic movement.
+Thinking about the chords in this way makes them easier to play, two chords that seem distant
+now only look like slightly different chords.
+(B major)
+IV∆7 bVII7 V7/VI VI-7
+Emaj7 A7(9,13) D#+7(b9) G#-7
+It was all part of the story even the scary nights
+This example comes from a Stevie Wonder song, “All in Love is Fair”. The chord Am6(9)
+is not necessarily that interesting on its own but is really nice in the context of this progression.
+The way I like to voice this on the piano is similar to the previous few examples, I usually think of
+it as a Cmaj7(b5)/A chord though technically it is a Cmaj7(#11,no5). As you can see in these
+examples, a maj7(b5) shape is a great chord voicing to have in the toolbelt as it has a lot of
+different uses with different bass notes. In this case it is used as a minor chord which then
+moves to D13 which I usually play as Cmaj7(b5)/D. Even though this is technically a
+D7(9,13,no5) chord, it is easier to write it as D13 because in essence it is a D13 chord. This
+also gives each musician the room to use their own favorite 13th chord voicings.
+(E major)
+V7/VI VI- VI-7 #IV-7b5 IV-6
+G#7/C C#m C#m/B A#m7b5 Am6(9)
+But all is fair in love…. I had to go away
+bVII7 I V7/II V7/V V7sus2 I
+D13 E/B C#9 F#13 B7sus2 E
+A writer takes his pen to write the words again, that all in love is fair
+The last few examples are from songs that I haven’t written an analysis for, partly
+because they get pretty complicated at certain parts and I haven’t yet felt like digging into all of
+that. With that being said the few lines that I have analyzed below each provide a lot of
+interesting chords to unpack and analyze.
+This first example comes from the ending of “New York State of Mind” by Billy Joel. The
+second chord in this phrase is another example of the ‘Hendrix Chord’, technically an E7 with an
+added b10. The last three chords of the song are the more interesting chords in this section.
+The piano actually plays them as D-7, Db∆7(13), and then C∆7(9,#11,13). The violin plays a G
+note over the last three chords giving the D-7 chord it’s 11 and the Db∆7 chord its #11. The b9
+written in the Db∆7 chord is technically a #8 note in respect to Db, as it is the D note (the 2 in C)
+and actually comes from the saxophone so the separation of instruments eases some tension
+between the C, Db and D notes. The last chord can be thought of as a polychord with a C triad
+in the left hand and a B-7 chord in the right. When the last chord is played it almost feels as if
+we’ve shifted the tonic up a whole step.
+(C major)
+I V7/VI VI-7 bVII7 bIII6 bVI∆7 II-7 bII∆7 I∆7
+| C | E7(#9) | Am7 | Bb9 | Eb6 Abmaj7 | D-7(11) Db∆7(b9,#11,13) |
+C∆7(9,#11,13) |
+This next progression from the song “Too High” by Stevie Wonder really has a lot of
+layers to it and it benefits us to look at it from multiple perspectives. In the song, the chords
+written below are all played on one keyboard. It might look complicated at first glance, but there
+is a fairly simple underlying pattern being followed here. As a keyboard player, I do appreciate
+the clear and concise way these chords are written, but as a theorist I have to remind myself
+that this is only a naming shortcut and not necessarily harmonically accurate. As I said earlier,
+this progression has many layers. One of them is the constant chord structure of a ∆7b5 shape
+descending down the whole tone scale. This constant structure shape along with the symmetry
+of the whole tone scale creates the illusion that these chords are simply moving down by whole
+step jumps, (two fifths at a time). This would suggest that there's a lot of harmonic distance
+being covered, however, there is one note that ties each of these chords to the key of A minor.
+The E note in the bass, being the V of the key of A minor, also gives us the perspective that
+each of these ∆7b5 chord shapes is part of an E dominant chord that builds up interesting
+tensions before resolving to the Am chord. Each of the 6 E chords analyzed on their own are all
+interesting in their own way. All in the respect to the key of A minor, I think the most technically
+correct spelling of these 6 chords would be: Esus2(b9,#11,b13), E∆7(#11), E7(9,13),
+Esus2(b13), E7sus4(#11), and E7(b10,b13), though the 4th chord is the only chord that contains
+the fifth note B. The first chord is definitely the hardest one to analyze and name because it has
+an E, F, and F# note. The second chord is pretty simple, it technically has the #11 not the b5.
+The third chord is the E13 voicing we talked about earlier, the fourth and fifth chords are pretty
+straightforward and the last chord technically has the b10 and b13 (the b7 and b3 of A) but
+would normally be spelled E+7(#9) which resolves perfectly into an Am9 chord.
+(A minor)
+V7alt I-7
+F#∆7b5/E E∆7b5 D∆7b5/E C∆7b5/E Bb∆7b5/E Ab∆7b5/E Am9
+I'm too high, I'm too high, but I ain’t touched the sky
+This example is one of the more unconventional ones on the list. We saw earlier how
+you can add a minor third interval to a major third chord in what's usually referred to as the 7(#9)
+chord. This example explores the idea of adding a major third interval to a minor chord. The
+original song that this comes from is “As The World Caves In” by Matt Maltese which has a less
+complicated harmony than the one listed above. This particular harmony that I wrote down
+actually comes from a video that stirred up some discourse on Tik Tok. Adam Neely does a
+pretty in depth video about it which can be watched here:
+https://www.youtube.com/watch?v=mqsnqIw--RU&t=528s. In other contexts, this group of notes
+might be called a C∆7(#9) chord, but the main difference is that in this context the chord is
+usually just a play Cm∆7 chord. In this specific example, the girl sings the E note as a harmony
+to the B note, the major seventh of C. The note she sings is a semitone above the Eb(b3) that
+the piano is playing, creating some more spice in the harmony. As Adam Neely explains it in his
+video, although the added 10 creates tension with the b3, the 10 harmonizes well with the ∆7
+sung in the melody which is why this chord could work. The melody is singing the B which is a
+fifth above the E note sung in the harmony. The piano just plays a C to Cm while the strings play
+an Eb an octave higher than the harmony. Personally I really like this chord especially when
+used in this way. Analyzed on its own it’s hard to classify as a major or minor chord, it seems
+most like a mixture of both to me but it could be guided in any direction. Chords or harmony like
+this blur the lines between the concepts of major and minor which is why there are many
+different schools of thought when it comes to defining major chords and minor chords. We will
+explore this concept a little more later on in the conclusions.
+(G major)
+IV∆7 IV-∆7 IV-6 I6 V7/VI
+C∆7 C-∆7(10) C-6(9) G6 B+ B7
+Oh girl it’s you that I lie with as the atom bomb locks in
+This last progression is a cadence I came across while messing around on the piano. It
+is somewhat similar to the last 3 chords of “New York State of Mind” that we looked at earlier
+only with a few added notes. Because it is a little difficult to read, I included 4 different ways of
+analyzing the two 7-note chords and one 8-note chord. The first shows the chords written out
+normally, just below that is the notes used in each chord in order, below that is the chords
+expressed as polychords, and lastly what scale each chord fits into. The last chord is really the
+main chord I wanted to highlight because it is a pretty strange chord especially when written
+down. The obvious note that sticks out is the C#, especially since there is already a C note and
+a D note. The C# is the augmented unison interval or the #8, which is the fifth of the lydian #4
+note. These harmonies conflict with the root chord, but they still provide some interesting and
+even satisfying harmonies that resonate against the other main harmonies of the chord. Like the
+example from “New York State of Mind” the tonic note is a little more fragile with the last chord
+as it almost seems to shift up a whole step.
+(C major)
+II-7 V7 I∆7
+| Dm7(9,11,13) | G7(b9,11,13) | C∆7(9,#11,13) +#8 |
+(D,A,F,C,E,G,B) (G,D,F,B,E,Ab,C) (C,G,E,B,D,F#,A,C#)
+C∆7/Dm Ab+/G7 D∆7/C∆7
+C major scale C harmonic major C Lydian with added #8 (Super-Lydian)
+More full song analyses can be found here.
+Conclusions - Here are a few extra thoughts and statements I have surrounding the nature of
+chords.
+• A lot of the weirder chords listed above are theoretically possible in the right
+circumstances, but with that being said, it always depends on the context of the music
+and the specific listener's ear.
+• A lot of this information seems useless and overcomplicated, and I can’t say
+that I disagree. If anything, I really wanted to create an exhaustive list of different
+harmonic possibilities and the hole was even deeper than I imagined. I don’t expect
+anyone to go as deep as I did on some of these subjects, but I hope if anything it
+introduces people to some different concepts surrounding the world of harmony.
+• There is still a lot more to explore when it comes to chords and how they can
+be used. There were a lot of tangents I wanted to go down, but didn’t to avoid things
+becoming too overwhelming. Hopefully this sparks your interest in different chords and
+you continue exploring them on your own and make your own theories. This is by no
+means a one size fits all theory and may not be helpful for you to think about music in
+this way. For me, it has always been easiest to analyze music from the perspective of
+chord theory, but for some it might be easier to think about it differently. Whatever theory
+helps you to understand your favorite music is the theory you should explore. With that
+being said, at the very least I hope you were able to learn a few different things about the
+nature of chords. I definitely learned a lot from taking the time to write out all of the
+different combinations. Knowing which chords are inversions of each other can be really
+helpful in writing or reharmonizing chord progressions. Also being able to know all of the
+different possibilities or types of major chords, minor chords, etc., and how they can be
+used can really add color to your chord progressions and keep them in the sweet spot
+between being too mundane and being overcomplicated.
+• One of the reasons I focused so much on tetrads is because I play the ukulele
+which only has four strings. I wanted to see if each type of chord can be expressed with
+only four notes and it ended up with me trying to find every single possible 4-part chord.
+In the end I ended up writing out the positions of 30 different tetrads, out of the 43
+possible tetrads, for all of the 12 roots in the chromatic scale. This comes out to 360
+different unique tetrads (with no repeating notes) on the ukulele that in my opinion are
+definitely worth looking into, and that doesn’t count the tetrads that have multiple ways of
+fingering the chord. Because the ukulele is limited with the positions of each note, the
+voicings of each type of tetrad are different with each root. Because there are many
+different voicings, it might be worth looking into all 360+ of them and finding which ones
+speak to you.
+• In some cases changing the order of the notes can persuade the ear to
+perceive the chord as having a different function. For example, the notes G, Bb, D, and
+F# are perceived as a G-∆7 chord while if you move the F# to the bottom it might sound
+more like a F#+(b9) chord. With this information you could find a way to replace a minor
+chord with an augmented chord. This shows how two chords that appear to have
+different functions could also be somewhat interchangeable. All chords are each other in
+disguise
+• Chords that get really complicated or have a lot of notes can always be
+simplified into seventh chords or even triads if you had to. If you see an A9 chord for
+example and only had four notes to use, you could choose to remove any of the notes
+and still have a chord with a similar effect. Removing the 5 is easiest and we discussed
+this as the A9(no5). Removing the 7 gives you an Aadd2 and removes the dominant
+quality. Removing the 3 gives you an A9(no3) or E-add4 and also removes the dominant
+quality, removing the 1 shifts the perspective of the chord a little more but would give you
+a C#-7b5 chord. Obviously this gets more complex with 6 and 7 note chords but a tetrad
+can still be found that conveys the essence of most of these chords. One tetrad can
+represent multiple other chords with more notes in them which is another thing to think
+about if you get stuck with a particular progression.
+• It can sometimes get overwhelming when deciding how to spell certain chords
+out, especially as the chords get more complicated. One of the more important aspects
+of spelling a chord is to be specific about the root. Decide whether the root is going to be
+written as the chord itself or as a slash chord. Think of the context of the surrounding
+chords and try to make the chord as readable as possible. For example E/C is probably
+easier for most people to think of rather than C+∆7. Also keep in mind the type of voice
+leading you want to suggest in the chord, for example, C∆7sus2 and G/C both suggest
+different voicings of the same chord, and you could even say C∆9(no3) or Gadd4/C
+depending on what voicing you want to suggest. There are many different ways to write
+chords so pick whichever one best suits the song or whichever one is easiest to
+understand. When deciding to use add2 vs add9, again think of the context and what the
+voice leading is. Even though add2 and add9 are technically the same chord, they might
+suggest different voice leadings, and that should be kept in mind when writing them out.
+This is where learning sheet music comes in handy from being able to be specific about
+each note and inversion, however a lot of new artists are learning on their own and don’t
+have the practice of reading sheet music and are turning to learning chords instead. This
+is awesome and I myself prefer reading chords to sheet music, however it does lack a lot
+of the nuance of sheet music, not to mention the lack of dynamics. Regardless, it is for a
+lot of people a much easier way of picking up an instrument and actually playing songs
+without having to painstakingly read sheet music and then practice that sheet music. I
+think unfortunately more modern music suffers in musical diversity. To make up for the
+lack of diversity, it is worth learning all the extra little chords and then how to use each
+chord to add color and depth to songs.
+• There are many different ways to categorize the quality of chords. The best
+way to understand the quality of a chord is to relate it to the root or tonic/key of the song.
+If there is no context other than the one chord playing then there are many different ways
+that chord could be interpreted. The way your brain interprets a chord comes down to
+what you are used to hearing, whatever music is stuck in your head, and/or the last
+piece of music you have listened to. Our brain seems to choose a tonic to relate the
+chord to based off of those three things, unless the song is atonal or the listener isn’t
+processing the actual tones of the chord. Most people who actively listen to music tend
+to gravitate towards one tonic note in order to relate the rest of the song to one home
+base. Within a song or piece of music, the tonality can be expanded out into different
+regions as Arnold Schoenberg talks about in his book ‘Structural Functions of Harmony’.
+The tonic can also be completely abandoned and shifted to a new tonality, although our
+ears will relate the new tonic to the previous tonic, it is unknown and different for each
+person how long the ear holds on to the old tonic. If a song or chord progression is
+playing, one listener might hear it from the perspective of one tonic while another listener
+could be listening from the perspective of a different tonic. The same progression can
+even be heard from two different perspectives of tonality by the same listener if they are
+able to shift their perspective. This auditory illusion is similar to the optical illusion of a
+3-D cube drawn on paper and being able to picture the cube as facing two different
+directions. All this to say that tonality is an illusion that can be manipulated in a way to
+perform auditory magic tricks that enhance the listeners musical experience. You might
+be able to think of a song you know that sounds like it starts off in a certain key only to
+shift to a different key once more harmonic context is given.
+In the Tao Te Ching, Lao Tzu said, “From the Way comes One, from One comes
+Two, from Two comes Three, and from Three comes 10,000 things”. I like to think of
+harmony in a similar way especially when it comes to categorizing chords. If you had to
+put a chord into one harmonic category, it would be by the tonic, key, or root of the
+particular chord. The ‘one’ split into ’two’ categories could be by something like
+major/minor as a theorist such as Ernst Levy might argue, or it could be categorized
+based off of brightness and darkness, like the relationship of lydian/locrian, as a theorist
+such as George Russel might suggest. Hugo Riemann is famous for exploring the theory
+of harmonic dualism in depth alongside the well explored ideas of “Neo-Riemannian
+Theory”. Most songs today can be described as either in a major key or a minor key but
+there are a lot of discussions on what ‘major’ and ‘minor’ actually are. Jacob Collier has
+some interesting theories on what chords are ‘major’ in quality or ‘minor’ in quality as
+well as many other theorists. One interesting thing that Jacob Collier has brought up is
+the relationship between fourths, which he describes as ‘minor’ in quality, and fifths,
+which he describes as ‘major’ in quality. Obviously this subject goes a lot deeper than
+what I have laid out here so if you are interested more in these ideas I encourage you to
+look into works of the theorists mentioned above.
+Harmony split into three categories might look like something similar to the
+relationship between Tonic, Subdominant, and Dominant chords. Another interesting
+way to categorize chords into three is by relating them to one of the three fully
+diminished seventh chords of the chromatic scale. Each one of the three diminished
+seventh chords has its own relationship to the tonic and every chord could be related to
+one of the three diminished chords. I’m not sure if this is exactly what Barry Harris was
+talking about, but his theories of harmony persuaded me to sometimes picture chords in
+this way.
+With all of this being said, there are 10,000 different ways to categorize chords
+(so to speak, not exactly 10,000), but at the end of the day they can all be simplified into
+at most 3 categories. The way you categorize chords is entirely up to you and as you
+search deeper into the quality of chords you’ll start to see how they all start to blend into
+each other. If you had to create a sort of harmony spectrum where every chord ever
+could be placed on this spectrum, what would be the poles or extremes of your harmony
+spectrum. For me it has been useful to try and categorize chords into major/minor chords
+or tonic/subdominant/dominant chords, although many people might prefer their own
+categorizations. I encourage you to explore whichever theory interests you the most, but
+not to get attached to any specific theory. Everyone seems to have their own feelings on
+what harmony even is so there really isn’t a set way to categorize or describe harmony.
+• When a chord is played, depending on the timbre of the instrument, the
+overtone of a perfect 5th might also be created by the root note, regardless if it is
+included in the chord or not. This means that chords with a b5 or +5 in them have the
+risk of sounding more like an added #11 or b13 chord because the 5th is being
+generated by the root note. This would change C∆7b5 to C∆7(#11) or C+7 to C7(b13).
+The next note you might be able to hear is the major 3rd, but since it is the fifth overtone
+in the series it probably won’t be audible enough to affect the chord. The same goes for
+the higher overtones.
+• All naturally produced sounds have their own unique mixture of overtones that
+occur among each different pitch. For example, if a piano strikes a low C1 note, the
+harmonics of that C1
+(C2
+-G2
+-C3
+-E3
+-G3
+-Bb3
+) are also produced (at a much lower volume),
+so in a sense, every note is really a small chord and every chord is a really a bunch of
+mini chords within the chord itself. Instruments like the flute, whistles, and some bird
+sounds usually contain very little harmonic material though there are now electronic
+synthesizers that can produce a pure sine wave with no overtones.
+• Playing chords in a lower register might make them sound “muddy” while
+chords played in a higher register might sound more “tinny”. Because of this, there is a
+sort of sweet spot for certain chord voicings, which might just come down to personal
+preference. Some voicings suit certain roots over others even though the essence of the
+chord is still the same. You might find that a G∆7b5/A chord sounds nice while the same
+voicing with an E root, D∆7b5/E, is either too low and muddy at one octave or too high
+and tinny at the next octave. Of course this also comes down to the context of the song
+that the chord is being used in and your preference.
+• As you have seen by now and probably heard before, any of the 12 notes of
+equal temperament can go with any chord and there really aren't many if any exceptions.
+Although once you get to a certain point the chord becomes more of an atonal glob of
+sound rather than a discernible harmony. With that being said, there are many pairs of
+added notes that usually don’t exist in the same chord together. I haven't really seen any
+chords with both a major seventh and a seventh or a perfect fourth and a sharp fourth,
+etc. One because it confuses the function of some of the chords, but also because they
+are all a semitone away from each other. All that to say, given the proper voicing, a
+C∆7(#13) and a C7(b8) can both be pulled off and made to sound like a pretty intriguing
+chord.
+• We explored earlier in a few of the examples how two identical chords can
+sound completely different depending on the context of the surrounding chords. Because
+the 12TET tuning system that most instruments use today only approximates ‘just’ tones,
+and doesn't actually play the exact mathematical harmonics, each note on a piano
+actually represents more than one tone. There are actually over 50 tones within 1 octave
+that are recognized and can even be learned to sing. These tones are calculated with
+various tuning systems including pythagorean tuning, tuning from the overtone series,
+and equal tempered tuning. 12TET does an amazing job of representing all of these just
+tones but this means that one note on a piano can represent two different tones in the
+same key. This subject gets very deep and interesting so if you want to explore more you
+can read about it in the book “Harmonic Experience” by William A. Mathieu. My point for
+bringing this up is to briefly explain that different notes and chords can be used to
+represent many different tones or ‘harmonic energies’ that transcend the 12 note scale.
+There is more to the way we feel and interact with harmony than most people realize.
+The surroundings that a chord finds itself in affect that chord just as much as the
+individual notes in the chord do. These surroundings can provide melodic, harmonic, or
+even rhythmic context that can have a massive effect on the way we perceive that chord.
+• The way we hear and process harmony is first based on the mathematical
+patterns of frequencies and overtones found in nature, and second based on our
+personal preferences that have been picked up from the music we have listened to. I talk
+about it more in this document so I won’t go into it deeply here, but basically it is the
+mathematical pattern behind resonance or harmony. For example, two frequencies with
+a ratio of 2:3 will create a simple pattern that our brains will recognize as harmonious.
+This pattern is represented on the piano as a perfect fifth. 3:4 is a perfect fourth, 4:5 is a
+major third, 5:6 is a minor third, and there are an infinite amount of interval relationships.
+The tuning system that most music uses today has 12 equally tempered notes in an
+octave which actually do a really good job at approximating the more simple and crucial
+interval relationships that exist. The down side to 12TET is that it sacrifices true
+resonance in order to simplify the number of interval relationships. However, the sacrifice
+is pretty small and our ears compensate for the difference so the 12 notes and their
+intervals still sound harmonious to us. The great thing about 12 TET tuning is that it
+gives us a fixed number of interval relationships to work with and allows us to move
+through different tonalities in a more precise way that doesn’t get super complicated as it
+would with mathematically resonant intervals. Without 12TET tuning, every instrument
+would have to be tuned to one root note or tonic and changing keys would have a lot of
+issues. With 12TET we are able to pull off some interesting harmonic illusions that would
+be difficult with other tuning systems.
+• This may seem like a ton of information all slapped down in one place and it
+kinda is but hopefully it sparks your own interest in all the different possibilities of
+writing/playing chords. A lot of people shy away from music theory because it seems
+complicated or unnecessary. But the good thing about it is that there are many different
+theories and you can choose whichever one works best for you or just invent your own.
+Don’t let people gatekeeping the rules of music theory get in the way of your
+understanding of your favorite music. Of course it is great to learn the theories of the
+masters who came before us, but take it all with a grain of salt and don’t let theory keep
+you in a box. I’m sure you’ve heard it many times but really there aren't any rules of
+music theory that don't have any exceptions. The theory is only used as a guide to aid in
+our understanding of the music.
+Additional documents by me.
