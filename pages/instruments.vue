@@ -1,14 +1,10 @@
-°
 <template>
   <div class="page">
     <InstrumentsInstrumentSwitcher />
   </div>
 </template>
 
-<script setup>
-import { ref } from "vue";
-const { keyboardType } = storeToRefs(useControlStore());
-</script>
+<script setup></script>
 
 <style scoped lang="scss">
 .page {

@@ -17,8 +17,10 @@ export const NOTES = [
   "B",
 ];
 
-// Re-export chordLibrary as CHORD_TYPES for backward compatibility
-export const CHORD_TYPES = chordLibrary.value;
+// Re-export chordLibrary as CHORD_TYPES_DATA for external use
+export const CHORD_TYPES_DATA = chordLibrary.value;
+// Alias for backwards compatibility
+export const CHORD_TYPES = CHORD_TYPES_DATA;
 
 export const useKeyboardStore = defineStore("keyboard", () => {
   // Current Pitch
@@ -50,7 +52,7 @@ export const useKeyboardStore = defineStore("keyboard", () => {
 
   // Notes & Chord Constants
   const notes = ref(NOTES);
-  const chordTypes = ref(CHORD_TYPES);
+  const chordTypes = ref(CHORD_TYPES_DATA);
 
   // Chord State
   const rootNote = ref("");

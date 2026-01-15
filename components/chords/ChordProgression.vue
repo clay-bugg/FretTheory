@@ -2,6 +2,14 @@
   <div class="chord-progression">
     <div class="progression-header">
       <h3 class="progression-title">Chord Progression</h3>
+      <div class="key-selector">
+        <label class="control-label">Key</label>
+        <select v-model="progressionKey" class="key-select">
+          <option v-for="note in notes" :key="note" :value="note">
+            {{ note }}
+          </option>
+        </select>
+      </div>
       <div class="progression-controls">
         <button
           class="control-btn play-btn"
@@ -175,11 +183,14 @@
           v-for="(chord, index) in progression"
           :key="chord.id"
           class="chord-slot"
-          :class="{
-            active: currentChordIndex === index && isPlaying,
-            dragging: draggedIndex === index,
-            editing: editingIndex === index,
-          }"
+          :class="[
+            `degree-${getScaleDegree(chord.root)}`,
+            {
+              active: currentChordIndex === index && isPlaying,
+              dragging: draggedIndex === index,
+              editing: editingIndex === index,
+            },
+          ]"
           draggable="true"
           @dragstart="handleSlotDragStart($event, index)"
           @dragend="handleSlotDragEnd"
@@ -262,6 +273,52 @@ const currentChordIndex = ref(-1);
 const editingIndex = ref(null);
 let playbackInterval = null;
 let chordIdCounter = 0;
+
+// Progression key for scale degree coloring
+const progressionKey = ref("C");
+
+// Calculate scale degree (1-7) based on progression key
+function getScaleDegree(chordRoot) {
+  const noteOrder = [
+    "C",
+    "C#",
+    "D",
+    "D#",
+    "E",
+    "F",
+    "F#",
+    "G",
+    "G#",
+    "A",
+    "A#",
+    "B",
+  ];
+  const keyIndex = noteOrder.indexOf(progressionKey.value);
+  const chordIndex = noteOrder.indexOf(chordRoot);
+  if (keyIndex === -1 || chordIndex === -1) return 1;
+
+  // Major scale intervals: 0, 2, 4, 5, 7, 9, 11 (semitones)
+  const majorScaleIntervals = [0, 2, 4, 5, 7, 9, 11];
+  const interval = (chordIndex - keyIndex + 12) % 12;
+
+  // Find closest scale degree
+  for (let i = 0; i < majorScaleIntervals.length; i++) {
+    if (majorScaleIntervals[i] === interval) {
+      return i + 1; // 1-indexed scale degree
+    }
+  }
+  // If not exact match, find closest
+  let closest = 1;
+  let minDiff = 12;
+  for (let i = 0; i < majorScaleIntervals.length; i++) {
+    const diff = Math.abs(majorScaleIntervals[i] - interval);
+    if (diff < minDiff) {
+      minDiff = diff;
+      closest = i + 1;
+    }
+  }
+  return closest;
+}
 
 // Tempo & timing controls
 const tempo = ref(120); // BPM
@@ -1333,6 +1390,90 @@ onUnmounted(() => {
     border-color: #ffc552;
     background: linear-gradient(180deg, #2a2a2a 0%, #1a1a1a 100%);
     padding: 0.3em;
+  }
+
+  // Scale degree colors (I through vii°)
+  &.degree-1 {
+    background: linear-gradient(180deg, #8b1a1a 0%, #6a1414 100%);
+    border-color: #8b1a1a;
+    .chord-root,
+    .chord-type {
+      color: #fff;
+    }
+  }
+  &.degree-2 {
+    background: linear-gradient(180deg, #a4a424 0%, #7d7d1c 100%);
+    border-color: #a4a424;
+    .chord-root,
+    .chord-type {
+      color: #fff;
+    }
+  }
+  &.degree-3 {
+    background: linear-gradient(180deg, #d44488 0%, #a33569 100%);
+    border-color: #d44488;
+    .chord-root,
+    .chord-type {
+      color: #fff;
+    }
+  }
+  &.degree-4 {
+    background: linear-gradient(180deg, #1a8b8b 0%, #146969 100%);
+    border-color: #1a8b8b;
+    .chord-root,
+    .chord-type {
+      color: #fff;
+    }
+  }
+  &.degree-5 {
+    background: linear-gradient(180deg, #3366aa 0%, #274f82 100%);
+    border-color: #3366aa;
+    .chord-root,
+    .chord-type {
+      color: #fff;
+    }
+  }
+  &.degree-6 {
+    background: linear-gradient(180deg, #dd8844 0%, #aa6633 100%);
+    border-color: #dd8844;
+    .chord-root,
+    .chord-type {
+      color: #fff;
+    }
+  }
+  &.degree-7 {
+    background: linear-gradient(180deg, #9944cc 0%, #73339a 100%);
+    border-color: #9944cc;
+    .chord-root,
+    .chord-type {
+      color: #fff;
+    }
+  }
+}
+
+// Key selector styles
+.key-selector {
+  display: flex;
+  flex-direction: column;
+  margin-right: auto;
+  margin-left: 1em;
+}
+
+.key-select {
+  height: 28px;
+  padding: 0 0.5em;
+  border: 1px solid #333;
+  border-radius: 4px;
+  background: #1a1a1a;
+  color: #ffc552;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+    border-color: #ffc552;
   }
 }
 

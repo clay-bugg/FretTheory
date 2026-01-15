@@ -28,8 +28,7 @@
 
     <!-- Chord Selector Panel - styled like finder's chord display -->
     <div class="chord-panel" v-if="controlStore.keyboardType === 'player'">
-      <SelectorsRootNoteSelector />
-      <ChordsChordGrid />
+      <ChordsChordSelector />
       <ChordsChordProgression />
     </div>
   </div>
