@@ -31,6 +31,8 @@
         class="variant-btn"
         :class="{ active: store.chordType === chord.label }"
         @click="selectChord(chord.label)"
+        draggable="true"
+        @dragstart="dragStart($event, chord.label)"
       >
         {{ formatLabel(chord.label) }}
       </button>
@@ -125,6 +127,16 @@ watch(selectedCategory, () => {
     store.chordType = filteredChords.value[0].label;
   }
 });
+
+function dragStart(event, label) {
+  // ChordProgression expects JSON with { root, type } using application/json
+  const chordData = {
+    root: store.rootNote,
+    type: label,
+  };
+  event.dataTransfer.setData("application/json", JSON.stringify(chordData));
+  event.dataTransfer.effectAllowed = "move";
+}
 </script>
 
 <style scoped>

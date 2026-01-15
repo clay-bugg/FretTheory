@@ -1,11 +1,9 @@
 <template>
   <div class="page">
-    <UiChordButtons />
+    <DragDrop />
   </div>
 </template>
 
 <script setup></script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

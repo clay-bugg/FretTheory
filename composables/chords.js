@@ -1,5 +1,4 @@
 import { ref, computed } from "vue";
-import { useKeyboardStore } from "@/stores/keyboardStore";
 import { storeToRefs } from "pinia";
 
 export const chordLibrary = ref([
