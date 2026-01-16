@@ -7,8 +7,8 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
 
   runtimeConfig: {
-    // Temporarily hardcoded for testing - will move back to env var
-    geminiApiKey: "AIzaSyAqBRRfIDouBgfaj5umGtU9m-3922A4gvU",
+    // Server-only API key - reads from NUXT_GEMINI_API_KEY env variable
+    geminiApiKey: process.env.NUXT_GEMINI_API_KEY || "",
   },
 
   modules: ["@nuxt/icon", "@nuxtjs/google-fonts", "@pinia/nuxt"],
