@@ -143,21 +143,21 @@ function dragStart(event, label) {
 .chord-selector {
   display: flex;
   flex-direction: column;
-  gap: 0.5em;
+  align-items: center;
+  gap: 1em;
   padding: 0.5em;
-  background: #1a1a1a;
   border-radius: 8px;
 }
 
 .selector-row {
   display: flex;
   align-items: center;
-  gap: 0.5em;
+  gap: 0.8em;
 }
 
 .category-dropdown {
   padding: 0.4em 0.6em;
-  font-size: 0.85rem;
+  font-size: 1rem;
   font-family: inherit;
   background: #2a2a2a;
   color: #fff;
@@ -178,13 +178,13 @@ function dragStart(event, label) {
 
 .root-notes {
   display: flex;
-  gap: 0.25em;
+  gap: 0.5em;
   flex-wrap: wrap;
 }
 
 .root-btn {
   padding: 0.35em 0.6em;
-  font-size: 0.85rem;
+  font-size: 1rem;
   font-family: inherit;
   background: #2a2a2a;
   color: #ccc;
@@ -209,15 +209,17 @@ function dragStart(event, label) {
 
 .variants-row {
   display: flex;
-  gap: 0.25em;
   flex-wrap: wrap;
   justify-content: space-evenly;
+  width: fit-content;
+  margin: 0 auto;
+  gap: 1em;
 }
 
 .variant-btn {
   padding: 0.35em 0.6em;
-  width: 50px;
-  font-size: 0.85rem;
+  width: 70px;
+  font-size: 1rem;
   font-family: inherit;
   background: #2a2a2a;
   color: #ccc;

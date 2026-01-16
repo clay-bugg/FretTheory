@@ -1,37 +1,53 @@
 <template>
   <div class="chord-progression">
-    <div class="progression-header">
-      <h3 class="progression-title">Chord Progression</h3>
-      <div class="key-selector">
-        <label class="control-label">Key</label>
+    <!-- Beat Grid Controls -->
+    <div class="grid-controls">
+      <div class="grid-control-group">
+        <label class="control-label">Total Bars</label>
+        <select v-model.number="totalBars" class="grid-select">
+          <option :value="2">2</option>
+          <option :value="4">4</option>
+          <option :value="8">8</option>
+          <option :value="16">16</option>
+        </select>
+      </div>
+
+      <div class="grid-control-group">
+        <label class="control-label">Drop Duration</label>
+        <select v-model.number="dropDuration" class="grid-select">
+          <option :value="1">1 beat</option>
+          <option :value="2">2 beats</option>
+          <option :value="4">4 beats (1 bar)</option>
+          <option :value="8">8 beats (2 bars)</option>
+        </select>
+      </div>
+
+      <div class="grid-control-group">
         <select v-model="progressionKey" class="key-select">
           <option v-for="note in notes" :key="note" :value="note">
             {{ note }}
           </option>
         </select>
       </div>
-      <div class="progression-controls">
-        <button
-          class="control-btn play-btn"
-          :class="{ playing: isPlaying }"
-          @click="togglePlay"
-          :disabled="!hasChords"
-        >
-          <span v-if="!isPlaying">▶</span>
-          <span v-else>⏸</span>
-        </button>
-        <button
-          class="control-btn clear-btn"
-          @click="clearProgression"
-          :disabled="!hasChords"
-        >
-          Clear
-        </button>
-      </div>
-    </div>
 
-    <!-- Tempo & Time Controls -->
-    <div class="tempo-controls">
+      <button
+        class="control-btn play-btn"
+        :class="{ playing: isPlaying }"
+        @click="togglePlay"
+        :disabled="!hasChords"
+      >
+        <span v-if="!isPlaying">▶</span>
+        <span v-else>⏸</span>
+      </button>
+
+      <button
+        class="control-btn clear-btn"
+        @click="clearProgression"
+        :disabled="!hasChords"
+      >
+        Clear
+      </button>
+
       <div class="tempo-group">
         <label class="control-label">BPM</label>
         <div class="tempo-input-group">
@@ -47,7 +63,6 @@
         </div>
       </div>
 
-      <!-- Tap Tempo -->
       <div class="tap-tempo-group">
         <button
           class="tap-tempo-btn"
@@ -68,122 +83,6 @@
           <option value="2/4">2/4</option>
           <option value="5/4">5/4</option>
           <option value="7/8">7/8</option>
-        </select>
-      </div>
-
-      <div class="bars-group">
-        <label class="control-label">Bars</label>
-        <select v-model.number="barsPerChord" class="bars-select">
-          <option :value="1">1</option>
-          <option :value="2">2</option>
-          <option :value="4">4</option>
-          <option :value="8">8</option>
-        </select>
-      </div>
-
-      <div class="duration-display">
-        <span class="duration-value">{{ chordDurationDisplay }}</span>
-        <span class="duration-label">per chord</span>
-      </div>
-
-      <!-- Arpeggiator Controls -->
-      <div class="arpeggiator-group">
-        <div class="arp-toggle-wrapper">
-          <button
-            class="arp-toggle-btn"
-            :class="{ active: arpeggiatorEnabled }"
-            @click="arpeggiatorEnabled = !arpeggiatorEnabled"
-          >
-            ARP
-          </button>
-        </div>
-        <div v-if="arpeggiatorEnabled" class="arp-options">
-          <div class="arp-pattern-group">
-            <label class="control-label">Pattern</label>
-            <select v-model="arpPattern" class="arp-select">
-              <option value="up">Up ↑</option>
-              <option value="down">Down ↓</option>
-              <option value="upDown">Up-Down ↕</option>
-              <option value="downUp">Down-Up ↕</option>
-              <option value="random">Random ⚡</option>
-            </select>
-          </div>
-          <div class="arp-rate-group">
-            <label class="control-label">Rate</label>
-            <div class="arp-rate-control">
-              <input
-                type="range"
-                v-model.number="arpNoteRate"
-                min="1"
-                max="8"
-                step="1"
-                class="arp-rate-slider"
-              />
-              <span class="arp-rate-value">1/{{ arpNoteRate }}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Metronome Controls -->
-      <div class="metronome-group">
-        <div class="metronome-toggle-wrapper">
-          <button
-            class="metronome-toggle-btn"
-            :class="{ active: metronomeEnabled }"
-            @click="metronomeEnabled = !metronomeEnabled"
-            title="Toggle Metronome"
-          >
-            <span class="metronome-icon">🔔</span>
-          </button>
-        </div>
-        <div v-if="metronomeEnabled" class="metronome-options">
-          <div class="beat-style-group">
-            <label class="control-label">Style</label>
-            <select v-model="beatStyle" class="beat-style-select">
-              <option value="straight">Straight</option>
-              <option value="swing">Swing</option>
-              <option value="shuffle">Shuffle</option>
-              <option value="reggae">Reggae</option>
-              <option value="bossa">Bossa Nova</option>
-            </select>
-          </div>
-          <div class="metronome-volume-group">
-            <label class="control-label">Vol</label>
-            <div class="metronome-volume-control">
-              <input
-                type="range"
-                v-model.number="metronomeVolume"
-                min="0"
-                max="100"
-                step="5"
-                class="metronome-volume-slider"
-              />
-              <span class="metronome-volume-value">{{ metronomeVolume }}%</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Beat Grid Controls -->
-    <div class="grid-controls">
-      <div class="grid-control-group">
-        <label class="control-label">Total Bars</label>
-        <select v-model.number="totalBars" class="grid-select">
-          <option :value="2">2</option>
-          <option :value="4">4</option>
-          <option :value="8">8</option>
-          <option :value="16">16</option>
-        </select>
-      </div>
-      <div class="grid-control-group">
-        <label class="control-label">Drop Duration</label>
-        <select v-model.number="dropDuration" class="grid-select">
-          <option :value="1">1 beat</option>
-          <option :value="2">2 beats</option>
-          <option :value="4">4 beats (1 bar)</option>
-          <option :value="8">8 beats (2 bars)</option>
         </select>
       </div>
     </div>
@@ -1023,6 +922,7 @@ onUnmounted(() => {
 // Grid controls
 .grid-controls {
   display: flex;
+  align-items: flex-end;
   gap: 1em;
   margin-bottom: 0.8em;
   padding: 0.5em;
