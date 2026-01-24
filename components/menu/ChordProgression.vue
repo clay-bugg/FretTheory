@@ -39,16 +39,11 @@
           </button>
           <button
             class="transport-btn metronome-btn"
-            :class="{ active: metronomeRunning }"
-            @click="toggleMetronome"
-            title="Play Metronome"
+            :class="{ active: metronomeEnabled }"
+            @click="metronomeEnabled = !metronomeEnabled"
+            title="Toggle Metronome (plays with chord progression)"
           >
-            <Icon
-              v-if="!metronomeRunning"
-              name="fa6-solid:play"
-              class="metronome-icon"
-            />
-            <Icon v-else name="fa6-solid:stop" class="metronome-icon" />
+            <Icon name="mdi:metronome" class="metronome-icon" />
           </button>
         </div>
       </div>
