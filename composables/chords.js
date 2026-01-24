@@ -9,6 +9,12 @@ export const chordLibrary = ref([
     types: ["triad", "major", "tonic"],
   },
   {
+    label: "5",
+    intervals: [0, 4],
+    formula: ["1", "3", "5"],
+    types: ["triad", "major", "tonic"],
+  },
+  {
     label: "Major 6",
     intervals: [0, 4, 7, 9],
     formula: ["1", "3", "5", "6"],
@@ -346,7 +352,7 @@ export function useChordInfo() {
 
   const chordInfo = computed(() => {
     const chord = chordLibrary.value.find(
-      (c) => c.label === selectedChordType.value
+      (c) => c.label === selectedChordType.value,
     );
     if (!chord || !rootNote.value) return null;
 

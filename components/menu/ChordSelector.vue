@@ -9,7 +9,7 @@
         <option value="altered">Altered</option>
         <option value="susdim">Sus/Dim</option>
       </select>
-
+      <!-- Root Notes Row -->
       <div class="root-notes">
         <button
           v-for="note in notes"
@@ -20,6 +20,20 @@
         >
           {{ note }}
         </button>
+        <!-- Drop Duration Row -->
+        <div class="setting-group">
+          <label class="setting-label">Drop Duration</label>
+          <select v-model.number="dropDuration" class="setting-select">
+            <option :value="1">1 beat</option>
+            <option :value="2">2 beats</option>
+            <option :value="3">3 beats</option>
+            <option :value="4">4 beats</option>
+            <option :value="5">5 beats</option>
+            <option :value="6">6 beats</option>
+            <option :value="7">7 beats</option>
+            <option :value="8">8 beats</option>
+          </select>
+        </div>
       </div>
     </div>
 

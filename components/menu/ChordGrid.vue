@@ -39,8 +39,8 @@ const chordRows = computed(() => {
         "Augmented",
         "Suspended 2",
         "Suspended 4",
-      ].includes(c.label)
-    )
+      ].includes(c.label),
+    ),
   );
 
   // Row 2: 6th and 7th chords
@@ -55,8 +55,8 @@ const chordRows = computed(() => {
         "Major 7",
         "Minor 7",
         "Diminished 7",
-      ].includes(c.label)
-    )
+      ].includes(c.label),
+    ),
   );
 
   // Row 3: 9th chords
@@ -69,15 +69,15 @@ const chordRows = computed(() => {
         "7 Suspended 4",
         "Minor Major 7",
         "Minor Major 9",
-      ].includes(c.label)
-    )
+      ].includes(c.label),
+    ),
   );
 
   // Row 4: Extended chords
   rows.push(
     chords.filter((c) =>
-      ["Dominant 11", "Major 11", "Dominant 13", "7#11"].includes(c.label)
-    )
+      ["Dominant 11", "Major 11", "Dominant 13", "7#11"].includes(c.label),
+    ),
   );
 
   // Row 5: Altered chords
@@ -94,8 +94,8 @@ const chordRows = computed(() => {
         "Minor 7b5",
         "Minor 7b9",
         "Minor Augmented",
-      ].includes(c.label)
-    )
+      ].includes(c.label),
+    ),
   );
 
   return rows.filter((row) => row.length > 0);
@@ -144,7 +144,7 @@ function selectChord(chord) {
   if (rootNote.value) {
     const rootIndex = notes.indexOf(rootNote.value);
     const calculatedNotes = chord.intervals.map(
-      (interval) => notes[(rootIndex + interval) % 12]
+      (interval) => notes[(rootIndex + interval) % 12],
     );
     chordNotes.value = calculatedNotes;
   }
@@ -200,6 +200,7 @@ function handleDragStart(e, chord) {
   cursor: pointer;
   transition: all 0.1s ease;
   white-space: nowrap;
+  text-wrap: nowrap;
 
   &:hover {
     background-color: #333333;

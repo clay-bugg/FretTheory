@@ -22,6 +22,8 @@ function initAudio() {
       A7: "A7.mp3",
     },
     baseUrl: "/sounds/piano_samples/",
+    // Add release envelope for smoother chord transitions
+    release: 0.8, // Notes fade out over 0.8 seconds for natural piano sound
     onload: () => {
       console.log("Sampler Loaded");
     },
@@ -99,7 +101,7 @@ export function useToneAudio() {
   function playChord(action) {
     const notesWithOctaves = store.assignChordOctaves(
       store.rootNote,
-      store.chordNotes
+      store.chordNotes,
     );
     if (!store.rootNote || !store.chordType) return;
 
@@ -135,7 +137,7 @@ export function useToneAudio() {
 
     const notesWithOctaves = store.assignChordOctaves(
       store.rootNote,
-      store.chordNotes
+      store.chordNotes,
     );
     if (!store.rootNote || !store.chordType) return;
 

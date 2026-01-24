@@ -1,7 +1,7 @@
 <template>
   <Header class="header" />
   <slot />
-  <MusicInstructor />
+  <!-- <MusicInstructor /> need to finish hooking up to API -->
 </template>
 
 <script setup>

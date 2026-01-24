@@ -101,6 +101,7 @@ const buttons = ref([
       cursor: pointer;
       transition: all 0.1s ease;
       white-space: nowrap;
+      text-wrap: nowrap;
 
       &:hover {
         background-color: #333333;

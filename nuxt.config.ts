@@ -6,7 +6,13 @@ export default defineNuxtConfig({
 
   devtools: { enabled: true },
 
-  modules: ["@nuxt/icon", "@nuxtjs/google-fonts", "@pinia/nuxt"],
+  modules: ["@nuxt/icon", "@nuxtjs/google-fonts", "@nuxt/ui", "@pinia/nuxt"],
+
+  // Runtime config for API keys
+  runtimeConfig: {
+    // Server-only (private) - reads from NUXT_GEMINI_API_KEY env var
+    geminiApiKey: "",
+  },
 
   css: ["~/assets/scss/main.scss"],
 

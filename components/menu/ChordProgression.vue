@@ -1,81 +1,54 @@
 <template>
   <div class="chord-progression">
-    <!-- Beat Grid Controls -->
-    <div class="grid-controls">
-      <div class="grid-control-group">
-        <label class="control-label">Total Bars</label>
-        <select v-model.number="totalBars" class="grid-select">
+    <div class="settings-panel">
+      <div class="setting-group" id="total-bars">
+        <label class="setting-label">Total Bars</label>
+        <select v-model.number="totalBars" class="setting-select">
           <option :value="2">2</option>
           <option :value="4">4</option>
           <option :value="8">8</option>
+          <option :value="12">12</option>
           <option :value="16">16</option>
         </select>
       </div>
 
-      <div class="grid-control-group">
-        <label class="control-label">Drop Duration</label>
-        <select v-model.number="dropDuration" class="grid-select">
-          <option :value="1">1 beat</option>
-          <option :value="2">2 beats</option>
-          <option :value="4">4 beats (1 bar)</option>
-          <option :value="8">8 beats (2 bars)</option>
-        </select>
-      </div>
+      <div class="setting-group">
+        <span class="tempo-label">BPM</span>
+        <div class="tempo-controls">
+          <button class="tempo-adjust" @click="adjustTempo(-5)">−</button>
 
-      <div class="grid-control-group">
-        <select v-model="progressionKey" class="key-select">
-          <option v-for="note in notes" :key="note" :value="note">
-            {{ note }}
-          </option>
-        </select>
-      </div>
+          <div class="tempo-display">
+            <input
+              type="number"
+              v-model.number="tempo"
+              min="40"
+              max="240"
+              class="tempo-input"
+            />
+          </div>
 
-      <button
-        class="control-btn play-btn"
-        :class="{ playing: isPlaying }"
-        @click="togglePlay"
-        :disabled="!hasChords"
-      >
-        <span v-if="!isPlaying">▶</span>
-        <span v-else>⏸</span>
-      </button>
-
-      <button
-        class="control-btn clear-btn"
-        @click="clearProgression"
-        :disabled="!hasChords"
-      >
-        Clear
-      </button>
-
-      <div class="tempo-group">
-        <label class="control-label">BPM</label>
-        <div class="tempo-input-group">
-          <button class="tempo-btn" @click="adjustTempo(-5)">-</button>
-          <input
-            type="number"
-            v-model.number="tempo"
-            min="40"
-            max="240"
-            class="tempo-input"
-          />
-          <button class="tempo-btn" @click="adjustTempo(5)">+</button>
+          <button class="tempo-adjust" @click="adjustTempo(5)">+</button>
+          <button
+            class="transport-btn tap-btn"
+            :class="{ tapped: showTapFeedback }"
+            @click="handleTapTempo"
+            title="Tap Tempo"
+          >
+            TAP
+            <span v-if="tapCount > 0" class="tap-badge">{{ tapCount }}</span>
+          </button>
+          <button
+            class="transport-btn metronome-toggle"
+            :class="{ active: metronomeEnabled }"
+            @click="metronomeEnabled = !metronomeEnabled"
+            title="Toggle Metronome"
+          >
+            <Icon name="mdi:metronome" class="metronome-icon" />
+          </button>
         </div>
       </div>
 
-      <div class="tap-tempo-group">
-        <button
-          class="tap-tempo-btn"
-          :class="{ tapped: showTapFeedback }"
-          @click="handleTapTempo"
-        >
-          TAP
-        </button>
-        <span v-if="tapCount > 0" class="tap-count">{{ tapCount }}</span>
-      </div>
-
-      <div class="time-sig-group">
-        <label class="control-label">Time</label>
+      <div class="time-signature-control">
         <select v-model="timeSignature" class="time-select">
           <option value="4/4">4/4</option>
           <option value="3/4">3/4</option>
@@ -85,78 +58,203 @@
           <option value="7/8">7/8</option>
         </select>
       </div>
+
+      <div class="key-selector">
+        <label class="mini-label">Key</label>
+        <select v-model="progressionKey" class="key-select">
+          <option v-for="note in notes" :key="note" :value="note">
+            {{ note }}
+          </option>
+        </select>
+      </div>
     </div>
 
-    <!-- Beat Grid -->
-    <div class="beat-grid-container">
-      <!-- Bar numbers -->
-      <div class="bar-labels">
+    <div class="timeline-container" :class="{ 'multi-row': totalBars > 4 }">
+      <template v-if="totalBars > 4">
         <div
-          v-for="bar in totalBars"
-          :key="'bar-' + bar"
-          class="bar-label"
-          :style="{ width: `${(beatsPerBar / totalBeats) * 100}%` }"
+          v-for="rowIndex in Math.ceil(totalBars / 4)"
+          :key="'row-' + rowIndex"
+          class="timeline-row"
         >
-          Bar {{ bar }}
-        </div>
-      </div>
-
-      <!-- Beat grid -->
-      <div
-        class="beat-grid"
-        :style="{ gridTemplateColumns: `repeat(${totalBeats}, 1fr)` }"
-      >
-        <div
-          v-for="beat in totalBeats"
-          :key="'beat-' + beat"
-          class="beat-cell"
-          :class="{
-            'bar-start': (beat - 1) % beatsPerBar === 0,
-            'drag-over': dragOverBeat === beat,
-            'has-chord': getBeatChord(beat),
-            'chord-start': isChordStart(beat),
-            playing: isPlaying && currentBeatIndex === beat,
-          }"
-          @dragover.prevent="handleBeatDragOver($event, beat)"
-          @dragleave="handleBeatDragLeave"
-          @drop.prevent="handleBeatDrop($event, beat)"
-          @click="handleBeatClick(beat)"
-        >
-          <template v-if="isChordStart(beat)">
+          <!-- Bar markers for this row -->
+          <div class="bar-markers">
             <div
-              class="chord-block"
-              :class="[`degree-${getScaleDegree(getBeatChord(beat).root)}`]"
-              :style="{
-                width: `calc(${getBeatChord(beat).duration * 100}% + ${
-                  (getBeatChord(beat).duration - 1) * 2
-                }px)`,
-              }"
+              v-for="bar in getBarsForRow(rowIndex)"
+              :key="'marker-' + bar"
+              class="bar-marker"
+              :style="{ width: `${100 / Math.min(4, totalBars)}%` }"
             >
-              <span class="chord-name">
-                {{ getBeatChord(beat).root
-                }}{{ formatType(getBeatChord(beat).type) }}
-              </span>
-              <button
-                class="remove-chord-btn"
-                @click.stop="removeChordAtBeat(beat)"
-              >
-                ×
-              </button>
+              <span class="bar-number">{{ bar }}</span>
             </div>
-          </template>
+          </div>
+
+          <!-- Beat grid track for this row -->
+          <div
+            class="timeline-track"
+            :style="{
+              gridTemplateColumns: `repeat(${getBeatsForRow(rowIndex).length}, 1fr)`,
+            }"
+          >
+            <div
+              v-for="beat in getBeatsForRow(rowIndex)"
+              :key="'beat-' + beat"
+              class="beat-cell"
+              :class="{
+                'bar-start': (beat - 1) % beatsPerBar === 0,
+                'drag-over': dragOverBeat === beat,
+                'has-chord': getBeatChord(beat),
+                'chord-start': isChordStart(beat),
+                playing: isPlaying && currentBeatIndex === beat,
+              }"
+              @dragover.prevent="handleBeatDragOver($event, beat)"
+              @dragleave="handleBeatDragLeave"
+              @drop.prevent="handleBeatDrop($event, beat)"
+              @click="handleBeatClick($event, beat)"
+            >
+              <!-- Empty slot indicator -->
+              <span v-if="!getBeatChord(beat)" class="add-indicator">+</span>
+
+              <template v-if="isChordStart(beat)">
+                <div
+                  class="chord-block"
+                  :class="[`degree-${getScaleDegree(getBeatChord(beat).root)}`]"
+                  :style="{
+                    width: getChordBlockWidth(beat, rowIndex),
+                  }"
+                >
+                  <span class="chord-name">
+                    {{ getBeatChord(beat).root
+                    }}{{ formatType(getBeatChord(beat).type) }}
+                  </span>
+                  <button
+                    class="remove-chord-btn"
+                    @click.stop="removeChordAtBeat(beat)"
+                    title="Remove"
+                  >
+                    ×
+                  </button>
+                </div>
+              </template>
+            </div>
+          </div>
         </div>
+      </template>
+
+      <template v-else>
+        <!-- Bar markers -->
+        <div class="bar-markers">
+          <div
+            v-for="bar in totalBars"
+            :key="'marker-' + bar"
+            class="bar-marker"
+            :style="{ width: `${(beatsPerBar / totalBeats) * 100}%` }"
+          >
+            <span class="bar-number">{{ bar }}</span>
+          </div>
+        </div>
+
+        <!-- Beat grid track -->
+        <div
+          class="timeline-track"
+          :style="{ gridTemplateColumns: `repeat(${totalBeats}, 1fr)` }"
+        >
+          <div
+            v-for="beat in totalBeats"
+            :key="'beat-' + beat"
+            class="beat-cell"
+            :class="{
+              'bar-start': (beat - 1) % beatsPerBar === 0,
+              'drag-over': dragOverBeat === beat,
+              'has-chord': getBeatChord(beat),
+              'chord-start': isChordStart(beat),
+              playing: isPlaying && currentBeatIndex === beat,
+            }"
+            @dragover.prevent="handleBeatDragOver($event, beat)"
+            @dragleave="handleBeatDragLeave"
+            @drop.prevent="handleBeatDrop($event, beat)"
+            @click="handleBeatClick($event, beat)"
+          >
+            <!-- Empty slot indicator -->
+            <span v-if="!getBeatChord(beat)" class="add-indicator">+</span>
+
+            <template v-if="isChordStart(beat)">
+              <div
+                class="chord-block"
+                :class="[`degree-${getScaleDegree(getBeatChord(beat).root)}`]"
+                :style="{
+                  width: `calc(${getBeatChord(beat).duration * 100}% + ${
+                    (getBeatChord(beat).duration - 1) * 2
+                  }px)`,
+                }"
+              >
+                <span class="chord-name">
+                  {{ getBeatChord(beat).root
+                  }}{{ formatType(getBeatChord(beat).type) }}
+                </span>
+                <button
+                  class="remove-chord-btn"
+                  @click.stop="removeChordAtBeat(beat)"
+                  title="Remove"
+                >
+                  ×
+                </button>
+              </div>
+            </template>
+          </div>
+        </div>
+      </template>
+
+      <!-- Playback progress -->
+      <div
+        v-if="isPlaying"
+        class="playback-indicator"
+        :class="{ 'multi-row': totalBars > 8 }"
+      >
+        <div class="playback-head" :style="getPlaybackHeadStyle()"></div>
       </div>
     </div>
 
-    <!-- Playback indicator -->
-    <div v-if="isPlaying" class="playback-bar">
-      <div
-        class="playback-progress"
-        :style="{
-          width: `${(currentBeatIndex / totalBeats) * 100}%`,
-        }"
-      ></div>
+    <div class="playback-controls">
+      <button
+        class="transport-btn play-btn"
+        :class="{ playing: isPlaying }"
+        @click="togglePlay"
+        :disabled="!hasChords"
+        :title="isPlaying ? 'Pause' : 'Play'"
+      >
+        <span v-if="!isPlaying"
+          ><Icon name="fa6-solid:play" class="playback-icon"
+        /></span>
+        <span v-else>⏸</span>
+      </button>
+      <button
+        class="transport-btn stop-btn"
+        @click="stopPlayback"
+        :disabled="!isPlaying && !hasChords"
+        title="Stop"
+      >
+        <Icon name="fa6-solid:stop" class="playback-icon" />
+      </button>
+      <button
+        class="transport-btn clear-btn"
+        @click="clearProgression"
+        :disabled="!hasChords"
+        title="Clear All"
+      >
+        <Icon name="fa6-solid:ban" class="playback-icon" />
+      </button>
     </div>
+
+    <MenuChordCreatorPopover
+      :visible="popoverVisible"
+      :beat="popoverBeat"
+      :x="popoverX"
+      :y="popoverY"
+      :existing-chord="popoverExistingChord"
+      @confirm="handlePopoverConfirm"
+      @close="closePopover"
+      @preview="handleChordPreview"
+    />
   </div>
 </template>
 
@@ -186,6 +284,13 @@ const currentChordIndex = ref(-1);
 const editingIndex = ref(null);
 let playbackInterval = null;
 let chordIdCounter = 0;
+
+// Popover state for chord creation
+const popoverVisible = ref(false);
+const popoverBeat = ref(1);
+const popoverX = ref(0);
+const popoverY = ref(0);
+const popoverExistingChord = ref(null);
 
 // Progression key for scale degree coloring
 const progressionKey = ref("C");
@@ -266,6 +371,73 @@ function isChordStart(beat) {
   return !!beatChords.value[beat];
 }
 
+// Multi-row helper: Get bars for a specific row (4 bars per row)
+function getBarsForRow(rowIndex) {
+  const startBar = (rowIndex - 1) * 4 + 1;
+  const endBar = Math.min(rowIndex * 4, totalBars.value);
+  const bars = [];
+  for (let bar = startBar; bar <= endBar; bar++) {
+    bars.push(bar);
+  }
+  return bars;
+}
+
+// Multi-row helper: Get beats for a specific row
+function getBeatsForRow(rowIndex) {
+  const barsInRow = getBarsForRow(rowIndex);
+  const startBeat = (barsInRow[0] - 1) * beatsPerBar.value + 1;
+  const endBeat = barsInRow[barsInRow.length - 1] * beatsPerBar.value;
+  const beats = [];
+  for (let beat = startBeat; beat <= endBeat; beat++) {
+    beats.push(beat);
+  }
+  return beats;
+}
+
+// Multi-row helper: Calculate chord block width, clipping at row boundaries
+function getChordBlockWidth(beat, rowIndex) {
+  const chord = beatChords.value[beat];
+  if (!chord) return "100%";
+
+  // Calculate the end beat of this row
+  const rowBeats = getBeatsForRow(rowIndex);
+  const rowEndBeat = rowBeats[rowBeats.length - 1];
+
+  // Clip the chord duration to not extend past the current row
+  const effectiveDuration = Math.min(chord.duration, rowEndBeat - beat + 1);
+
+  return `calc(${effectiveDuration * 100}% + ${(effectiveDuration - 1) * 2}px)`;
+}
+
+// Multi-row helper: Get playback head style (position within row)
+function getPlaybackHeadStyle() {
+  if (totalBars.value <= 4) {
+    // Single row - original logic
+    return {
+      left: `${((currentBeatIndex.value - 0.5) / totalBeats.value) * 100}%`,
+    };
+  }
+
+  // Multi-row: determine which row and position within that row
+  const beatsPerRow = 4 * beatsPerBar.value;
+  const currentRow = Math.ceil(currentBeatIndex.value / beatsPerRow);
+  const beatWithinRow = ((currentBeatIndex.value - 1) % beatsPerRow) + 1;
+
+  // Position within the row
+  const leftPercent = ((beatWithinRow - 0.5) / beatsPerRow) * 100;
+
+  // Calculate vertical position based on row (approximate row height)
+  // Each row is roughly the same height
+  const rowHeight = 100 / Math.ceil(totalBars.value / 4);
+  const topPercent = (currentRow - 1) * rowHeight;
+
+  return {
+    left: `${leftPercent}%`,
+    top: `${topPercent}%`,
+    height: `${rowHeight}%`,
+  };
+}
+
 // Handle drag over a beat cell
 function handleBeatDragOver(e, beat) {
   dragOverBeat.value = beat;
@@ -319,9 +491,37 @@ function removeChordAtBeat(beat) {
   delete beatChords.value[beat];
 }
 
-// Handle clicking on a beat (for future: could open edit modal)
-function handleBeatClick(beat) {
-  // Could be used to select/edit the beat
+// Handle clicking on a beat - open popover
+function handleBeatClick(event, beat) {
+  // If there's an existing chord, we're editing it
+  const existingChord = beatChords.value[beat];
+
+  // Get position for popover (near the clicked element)
+  const rect = event.target.getBoundingClientRect();
+  popoverX.value = rect.left + rect.width / 2;
+  popoverY.value = rect.bottom + 10;
+
+  popoverBeat.value = beat;
+  popoverExistingChord.value = existingChord || null;
+  popoverVisible.value = true;
+}
+
+// Handle popover confirm - add chord to beat
+function handlePopoverConfirm(data) {
+  addChordAtBeat(data.beat, data.root, data.type, data.duration);
+  closePopover();
+}
+
+// Close the popover
+function closePopover() {
+  popoverVisible.value = false;
+  popoverExistingChord.value = null;
+}
+
+// Handle chord preview - nothing special needed, store updates trigger piano highlight
+function handleChordPreview() {
+  // The ChordCreatorPopover already updates the store
+  // The piano keyboard will highlight based on store state
 }
 
 // Check if progression has any chords
@@ -354,11 +554,12 @@ const arpNoteDelay = computed(() => {
 
 // Metronome state
 const metronomeEnabled = ref(false);
+const metronomeRunning = ref(false);
 const metronomeVolume = ref(70); // 0-100
 const beatStyle = ref("straight"); // straight, swing, shuffle, reggae, bossa
 let metronomeInterval = null;
 let metronomeTimeouts = []; // For complex patterns with multiple sounds per beat
-let currentBeat = 0;
+let currentMetronomeBeat = 0;
 
 // Beat style patterns define timing and accent for each subdivision
 // Timing is relative offset (0-1) within a beat, accent is volume multiplier
@@ -738,7 +939,7 @@ function playCurrentChord() {
 
     const stopDelay = Math.max(
       chordDuration.value - 100,
-      chordDuration.value * 0.9
+      chordDuration.value * 0.9,
     );
     setTimeout(() => {
       if (arpeggiatorEnabled.value) {
@@ -753,6 +954,7 @@ function playCurrentChord() {
 // Metronome functions
 function startMetronome() {
   stopMetronome(); // Clear any existing
+  metronomeRunning.value = true;
 
   const msPerBeat = (60 / tempo.value) * 1000;
   let metronomeBeat = 0;
@@ -798,6 +1000,7 @@ function playClick(click) {
 }
 
 function stopMetronome() {
+  metronomeRunning.value = false;
   if (metronomeInterval) {
     clearInterval(metronomeInterval);
     metronomeInterval = null;
@@ -821,7 +1024,7 @@ watch(
       stopPlayback();
       startPlayback();
     }
-  }
+  },
 );
 
 // Watch for metronome toggle or style change during playback
@@ -844,101 +1047,326 @@ onUnmounted(() => {
 </script>
 
 <style scoped lang="scss">
+// Main container
 .chord-progression {
-  width: 100%;
-  padding: 1em;
-  background: linear-gradient(180deg, #1a1a1a 0%, #121212 100%);
-  border-radius: 12px;
-  border: 2px solid #2a2a2a;
-  margin-top: 1em;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75em;
 }
 
-.progression-header {
+.tempo-controls {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.8em;
+  justify-content: center;
+
+  .tempo-display {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
+  }
 }
 
-.progression-title {
-  font-size: 1rem;
-  font-weight: 600;
-  color: #888;
-  margin: 0;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.progression-controls {
+.playback-controls {
+  width: 100%;
   display: flex;
-  gap: 0.5em;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75em;
 }
 
-.control-btn {
-  padding: 0.4em 0.8em;
-  border: 2px solid #333;
+.transport-center,
+.transport-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75em;
+}
+
+.transport-btn {
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #444;
   border-radius: 6px;
-  background: #252525;
-  color: #ccc;
+  background: linear-gradient(180deg, #2a2a2a 0%, #1f1f1f 100%);
+  color: #aaa;
   font-family: inherit;
-  font-size: 0.85rem;
+  font-size: 1rem;
+  padding: 0.2em;
   cursor: pointer;
   transition: all 0.2s ease;
 
   &:hover:not(:disabled) {
-    background: #333;
-    border-color: #444;
+    background: linear-gradient(180deg, #333 0%, #252525 100%);
+    border-color: #555;
+    color: #fff;
   }
 
   &:disabled {
-    opacity: 0.4;
+    opacity: 0.35;
     cursor: not-allowed;
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.96);
   }
 }
 
 .play-btn {
-  min-width: 40px;
-
-  &.playing {
-    background: #b81f1f;
-    border-color: #b81f1f;
-    color: white;
+  &:hover:not(:disabled) {
+    color: #49a943;
+    border-color: #49a943;
   }
 }
 
-// Tempo controls
-.tempo-controls {
+.stop-btn {
+  &:hover:not(:disabled) {
+    color: #f43f5e;
+    border-color: #f43f5e;
+  }
+}
+
+.clear-btn {
+  color: #888;
+
+  &:hover:not(:disabled) {
+    color: #ce9c27;
+    border-color: #ce9c27;
+  }
+}
+
+// Tempo control
+.tempo-control {
   display: flex;
   align-items: center;
-  gap: 1.5em;
-  padding: 0.8em;
-  margin-bottom: 0.8em;
-  background: #0f0f0f;
-  border-radius: 8px;
-  border: 1px solid #2a2a2a;
-  flex-wrap: wrap;
 }
 
-// Grid controls
-.grid-controls {
-  display: flex;
-  align-items: flex-end;
-  gap: 1em;
-  margin-bottom: 0.8em;
-  padding: 0.5em;
-  background: #0f0f0f;
+.tempo-adjust {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid #444;
   border-radius: 6px;
-  border: 1px solid #2a2a2a;
+  background: #252525;
+  color: #aaa;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+
+  &:hover {
+    background: #333;
+    color: #fff;
+  }
+
+  &:active {
+    transform: scale(0.92);
+  }
 }
 
-.grid-control-group {
+.tempo-display {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  min-width: 60px;
 }
 
-.grid-select {
+.tempo-input {
+  width: 56px;
   height: 28px;
-  padding: 0 0.5em;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #00d4aa;
+  font-family: inherit;
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-align: center;
+  -moz-appearance: textfield;
+  appearance: textfield;
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.tempo-label {
+  font-size: 0.6rem;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+// Tap tempo button
+.tap-btn {
+  position: relative;
+  left: 0.8em;
+  height: 30px;
+  width: 35px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+
+  &.tapped {
+    background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%) !important;
+    border-color: #f59e0b !important;
+    color: #000 !important;
+  }
+}
+
+.tap-badge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  background: #f43f5e;
+  border-radius: 9px;
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Metronome toggle button
+.metronome-toggle {
+  position: relative;
+  left: 0.8em;
+  height: 30px;
+  width: 35px;
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 6px;
+  color: #666;
+  padding: 0.2em;
+  transition: all 0.2s ease;
+
+  .metronome-icon {
+    width: 80%;
+    height: 80%;
+  }
+
+  &:hover {
+    background: #252525;
+    color: #888;
+    border-color: #444;
+  }
+
+  &.active {
+    background: linear-gradient(180deg, #10b981 0%, #059669 100%);
+    border-color: #10b981;
+    color: #fff;
+    box-shadow: 0 0 8px rgba(16, 185, 129, 0.4);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+// Time signature
+.time-signature-control {
+  display: flex;
+  align-items: center;
+}
+
+.time-select {
+  height: 36px;
+  padding: 0 0.75em;
+  border: 1px solid #444;
+  border-radius: 6px;
+  background: #1a1a1a;
+  color: #ccc;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+    border-color: #00d4aa;
+  }
+}
+
+// Key selector
+.key-selector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2em;
+}
+
+.mini-label {
+  font-size: 0.6rem;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.key-select {
+  height: 36px;
+  padding: 0 0.75em;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background: linear-gradient(180deg, #2a2a2a 0%, #1f1f1f 100%);
+  color: #f59e0b;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+    border-color: #f59e0b;
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.3);
+  }
+}
+
+// ============================================
+// SETTINGS PANEL - Bar options
+// ============================================
+.settings-panel {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5em;
+  padding: 0.6em 1em;
+  background: #0f0f0f;
+  border-radius: 8px;
+  border: 1px solid #252525;
+}
+
+.setting-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.setting-label {
+  font-size: 0.7rem;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.setting-select {
+  width: 100%;
+  height: 28px;
+  padding: 0 0.6em;
   border: 1px solid #333;
   border-radius: 4px;
   background: #1a1a1a;
@@ -949,73 +1377,119 @@ onUnmounted(() => {
 
   &:focus {
     outline: none;
-    border-color: #ffc552;
+    border-color: #00d4aa;
   }
 }
 
-// Beat grid container
-.beat-grid-container {
-  background: #0a0a0a;
-  border-radius: 8px;
-  padding: 0.5em;
-  border: 1px solid #2a2a2a;
+.info-value {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #00d4aa;
 }
 
-.bar-labels {
-  display: flex;
-  margin-bottom: 0.3em;
-}
-
-.bar-label {
-  text-align: center;
+.info-label {
   font-size: 0.65rem;
   color: #666;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  border-left: 1px solid #333;
-  padding-left: 0.3em;
+  text-transform: lowercase;
+}
+
+// ============================================
+// TIMELINE - Continuous track
+// ============================================
+.timeline-container {
+  position: relative;
+  background: linear-gradient(180deg, #0a0a0a 0%, #0f0f0f 100%);
+  border-radius: 12px;
+  padding: 0.75em;
+  border: 1px solid #252525;
+
+  &.multi-row {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+  }
+}
+
+// Timeline row for multi-row layout
+.timeline-row {
+  position: relative;
+  padding-bottom: 0.5em;
+  border-bottom: 1px solid #1a1a1a;
+
+  &:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+}
+
+.bar-markers {
+  display: flex;
+  margin-bottom: 0.4em;
+}
+
+.bar-marker {
+  display: flex;
+  align-items: center;
+  padding-left: 0.5em;
+  border-left: 2px solid #333;
 
   &:first-child {
-    border-left: none;
+    border-left: 2px solid #555;
   }
+}
+
+.bar-number {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #555;
+  letter-spacing: 0.05em;
+}
+
+.timeline-track {
+  display: grid;
+  gap: 2px;
+  min-height: 36px;
 }
 
 .beat-grid {
   display: grid;
   gap: 2px;
-  min-height: 60px;
+  min-height: 30px;
 }
 
 .beat-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
-  min-height: 50px;
-  background: #1a1a1a;
-  border: 1px solid #333;
-  border-radius: 4px;
+  height: 30px;
+  background: #151515;
+  border: 1px solid #2a2a2a;
+  border-radius: 6px;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all 0.2s ease;
   overflow: visible;
 
   &.bar-start {
-    border-left: 2px solid #555;
+    border-left: 2px solid #444;
   }
 
   &:hover:not(.chord-start) {
-    background: #252525;
-    border-color: #444;
+    background: #1f1f1f;
+    border-color: #3a3a3a;
   }
 
   &.drag-over {
-    background: rgba(255, 197, 82, 0.2);
-    border-color: #ffc552;
+    background: rgba(0, 212, 170, 0.15);
+    border-color: #00d4aa;
+    box-shadow: inset 0 0 10px rgba(0, 212, 170, 0.2);
   }
 
   &.playing {
-    background: rgba(255, 197, 82, 0.3);
-    border-color: #ffc552;
+    background: rgba(0, 212, 170, 0.2);
+    border-color: #00d4aa;
   }
 
-  // Hide border when covered by a chord
   &.chord-start {
     z-index: 2;
   }
@@ -1023,39 +1497,53 @@ onUnmounted(() => {
 
 .chord-block {
   position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
+  top: 2px;
+  left: 2px;
+  height: calc(100% - 4px);
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 4px;
-  padding: 0.3em 0.5em;
+  padding: 0.2em 0.4em;
   z-index: 10;
   box-sizing: border-box;
-  border: 2px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  transition: all 0.2s ease;
+  cursor: grab;
 
-  // Scale degree colors
+  &:hover {
+    filter: brightness(1.1);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+  }
+
+  // Modern scale degree colors with better palette
   &.degree-1 {
-    background: linear-gradient(180deg, #8b1a1a 0%, #6a1414 100%);
+    background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);
+    border-color: rgba(244, 63, 94, 0.5);
   }
   &.degree-2 {
-    background: linear-gradient(180deg, #a4a424 0%, #7d7d1c 100%);
+    background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%);
+    border-color: rgba(234, 179, 8, 0.5);
   }
   &.degree-3 {
-    background: linear-gradient(180deg, #d44488 0%, #a33569 100%);
+    background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+    border-color: rgba(236, 72, 153, 0.5);
   }
   &.degree-4 {
-    background: linear-gradient(180deg, #1a8b8b 0%, #146969 100%);
+    background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
+    border-color: rgba(20, 184, 166, 0.5);
   }
   &.degree-5 {
-    background: linear-gradient(180deg, #3366aa 0%, #274f82 100%);
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    border-color: rgba(59, 130, 246, 0.5);
   }
   &.degree-6 {
-    background: linear-gradient(180deg, #dd8844 0%, #aa6633 100%);
+    background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+    border-color: rgba(249, 115, 22, 0.5);
   }
   &.degree-7 {
-    background: linear-gradient(180deg, #9944cc 0%, #73339a 100%);
+    background: linear-gradient(135deg, #a855f7 0%, #9333ea 100%);
+    border-color: rgba(168, 85, 247, 0.5);
   }
 }
 
@@ -1069,27 +1557,86 @@ onUnmounted(() => {
 
 .remove-chord-btn {
   position: absolute;
-  top: 2px;
-  right: 2px;
-  width: 16px;
-  height: 16px;
+  top: 4px;
+  right: 4px;
+  width: 18px;
+  height: 18px;
   padding: 0;
   border: none;
   border-radius: 50%;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.6);
   color: #fff;
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   line-height: 1;
   cursor: pointer;
   opacity: 0;
-  transition: opacity 0.15s ease;
+  transition: all 0.15s ease;
 
   .chord-block:hover & {
     opacity: 1;
   }
 
   &:hover {
-    background: #ff4444;
+    background: #f43f5e;
+    transform: scale(1.1);
+  }
+}
+
+// Playback indicator
+.playback-indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 20;
+}
+
+.playback-head {
+  position: absolute;
+  top: 0;
+  width: 3px;
+  height: 100%;
+  background: linear-gradient(180deg, #00d4aa 0%, #00a88a 100%);
+  box-shadow:
+    0 0 12px rgba(0, 212, 170, 0.6),
+    0 0 24px rgba(0, 212, 170, 0.3);
+  border-radius: 2px;
+  transition: left 0.05s linear;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #00d4aa;
+  }
+}
+
+// Add indicator for empty slots
+.add-indicator {
+  font-size: 1.5rem;
+  color: #444;
+  font-weight: 400;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  .beat-cell:hover & {
+    color: #00d4aa;
+    transform: scale(1.2);
   }
 }
 
@@ -1435,11 +1982,6 @@ onUnmounted(() => {
       animation: metronomePulse 0.5s ease-in-out infinite;
     }
   }
-}
-
-.metronome-icon {
-  font-size: 1.1rem;
-  line-height: 1;
 }
 
 @keyframes metronomePulse {

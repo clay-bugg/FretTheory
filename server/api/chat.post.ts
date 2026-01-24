@@ -189,11 +189,18 @@ export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig();
   const apiKey = config.geminiApiKey;
 
+  // Debug logging
+  console.log("Chat API called");
+  console.log("API key present:", !!apiKey);
+  console.log("API key length:", apiKey?.length || 0);
+
   if (!apiKey) {
     console.error("No API key found in runtime config");
+    console.error("Available config keys:", Object.keys(config));
     throw createError({
       statusCode: 500,
-      message: "Gemini API key not configured",
+      message:
+        "Gemini API key not configured. Please add NUXT_GEMINI_API_KEY to your .env file and restart the server.",
     });
   }
 
@@ -220,8 +227,9 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
+    console.log("Making Gemini API request...");
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
       {
         method: "POST",
         headers: {
@@ -244,7 +252,7 @@ export default defineEventHandler(async (event) => {
             maxOutputTokens: 1024,
           },
         }),
-      }
+      },
     );
 
     if (!response.ok) {
@@ -307,7 +315,11 @@ export default defineEventHandler(async (event) => {
       actions,
     };
   } catch (error: any) {
-    console.error("Chat API error:", error);
+    console.error("=== Chat API Error ===");
+    console.error("Error name:", error.name);
+    console.error("Error message:", error.message);
+    console.error("Error cause:", error.cause);
+    console.error("Full error:", JSON.stringify(error, null, 2));
     throw createError({
       statusCode: 500,
       message: error.message || "Failed to get response from AI",
