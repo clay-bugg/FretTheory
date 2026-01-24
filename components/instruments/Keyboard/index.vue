@@ -30,10 +30,9 @@
 <script setup>
 import { ref } from "vue";
 import { useControlStore } from "~/stores/controlStore";
-import KeyboardControls from "./Controls";
-import KeyboardKeys from "./Keys";
-import FinderKeys from "./FinderKeys";
-import PlayingDisplay from "./PlayingDisplay";
+import KeyboardControls from "./KeyboardControls.vue";
+import KeyboardKeys from "./Keys.vue";
+import FinderKeys from "./FinderKeys.vue";
 import { useToneAudio } from "~/composables/useToneAudio";
 import { useMIDI } from "~/composables/useMIDI";
 
@@ -154,9 +153,10 @@ onUnmounted(() => {
   justify-content: center;
   gap: 1em;
   width: 100%;
-  padding: 1em;
+  padding: 1.2em 1em;
   background: linear-gradient(180deg, #151515 0%, #070707 100%);
   border-top: 2px solid #333;
   border-radius: 0 0 8px 8px;
+  margin-bottom: 0.5em;
 }
 </style>

@@ -38,12 +38,17 @@
             <span v-if="tapCount > 0" class="tap-badge">{{ tapCount }}</span>
           </button>
           <button
-            class="transport-btn metronome-toggle"
-            :class="{ active: metronomeEnabled }"
-            @click="metronomeEnabled = !metronomeEnabled"
-            title="Toggle Metronome"
+            class="transport-btn metronome-btn"
+            :class="{ active: metronomeRunning }"
+            @click="toggleMetronome"
+            title="Play Metronome"
           >
-            <Icon name="mdi:metronome" class="metronome-icon" />
+            <Icon
+              v-if="!metronomeRunning"
+              name="fa6-solid:play"
+              class="metronome-icon"
+            />
+            <Icon v-else name="fa6-solid:stop" class="metronome-icon" />
           </button>
         </div>
       </div>
@@ -720,6 +725,15 @@ function handleTapTempo() {
   }, 3000);
 }
 
+// Metronome controls
+function toggleMetronome() {
+  if (metronomeRunning.value) {
+    stopMetronome();
+  } else {
+    startMetronome();
+  }
+}
+
 // Chord editing
 function startEditing(index) {
   editingIndex.value = index;
@@ -1239,39 +1253,38 @@ onUnmounted(() => {
   justify-content: center;
 }
 
-// Metronome toggle button
-.metronome-toggle {
+// Metronome button
+.metronome-btn {
   position: relative;
   left: 0.8em;
   height: 30px;
   width: 35px;
-  background: #1a1a1a;
-  border: 1px solid #333;
-  border-radius: 6px;
-  color: #666;
+  background: none;
+  border: none;
+  color: #fff;
   padding: 0.2em;
-  transition: all 0.2s ease;
 
   .metronome-icon {
-    width: 80%;
-    height: 80%;
-  }
+    width: 90%;
+    height: 90%;
 
-  &:hover {
-    background: #252525;
-    color: #888;
-    border-color: #444;
-  }
+    &:hover {
+      transform: scale(1.1);
+    }
 
-  &.active {
-    background: linear-gradient(180deg, #10b981 0%, #059669 100%);
-    border-color: #10b981;
-    color: #fff;
-    box-shadow: 0 0 8px rgba(16, 185, 129, 0.4);
+    &:active P {
+      transform: scale(0.9);
+    }
   }
+}
 
-  &:active {
-    transform: scale(0.95);
+@keyframes metronomePulse {
+  0%,
+  100% {
+    box-shadow: 0 0 8px rgba(16, 185, 129, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 16px rgba(16, 185, 129, 0.6);
   }
 }
 
@@ -2166,8 +2179,8 @@ onUnmounted(() => {
     }
   }
   &.degree-2 {
-    background: linear-gradient(180deg, #a4a424 0%, #7d7d1c 100%);
-    border-color: #a4a424;
+    background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%);
+    border-color: #f59e0b;
     .chord-root,
     .chord-type {
       color: #fff;
@@ -2338,7 +2351,7 @@ onUnmounted(() => {
 
 .playback-progress {
   height: 100%;
-  background: linear-gradient(90deg, #b81f1f, #ffc552);
+  background: linear-gradient(90deg, #b81f1f, #d97706);
   transition: width 0.3s ease;
 }
 

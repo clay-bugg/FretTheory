@@ -79,7 +79,7 @@ function isMidiActive(note, octave) {
 const pianoKeys = computed(() => {
   const octavesArray = Array.from(
     { length: 2 },
-    (_, i) => currentPitch.value + i
+    (_, i) => currentPitch.value + i,
   );
 
   const keys = [];
@@ -177,7 +177,7 @@ function isExtended(noteName) {
 }
 
 .white.interval {
-  background-color: #ffc552;
+  background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%);
   color: black;
   border: 3px solid black;
   border-top: none;
@@ -185,7 +185,7 @@ function isExtended(noteName) {
 }
 
 .black.interval {
-  background-color: #ffc552;
+  background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%);
   color: black;
   border: 3px solid black;
   border-top: none;

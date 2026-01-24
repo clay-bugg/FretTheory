@@ -59,7 +59,6 @@
               :key="chord.label"
               class="type-btn"
               :class="{ active: selectedType === chord.label }"
-              :style="{ borderColor: getChordType(chord.types) }"
               @click="selectType(chord)"
               @mouseenter="previewChord(chord)"
             >
@@ -70,7 +69,7 @@
 
         <!-- Duration Selector -->
         <div class="section">
-          <label class="section-label">Duration</label>
+          <label class="section-label">Beat Duration</label>
           <div class="duration-grid">
             <button
               v-for="dur in durations"
@@ -79,7 +78,7 @@
               :class="{ active: selectedDuration === dur }"
               @click="selectedDuration = dur"
             >
-              {{ dur }} {{ dur === 1 ? "beat" : "beats" }}
+              {{ dur }}
             </button>
           </div>
         </div>
@@ -91,6 +90,13 @@
           </span>
           <span v-else>Select chord to add</span>
         </button>
+
+        <!-- Resize Handle -->
+        <div
+          class="resize-handle"
+          @mousedown.stop="startResize"
+          title="Drag to resize"
+        ></div>
       </div>
     </div>
   </Teleport>
@@ -134,6 +140,12 @@ const dragOffset = ref({ x: 0, y: 0 });
 const savedPosition = ref(null);
 const currentPosition = ref({ x: 0, y: 0 });
 
+// Resize state
+const isResizing = ref(false);
+const popoverSize = ref({ width: 320, height: 500 });
+const minSize = { width: 280, height: 400 };
+const maxSize = { width: 600, height: 800 };
+
 // Categories for chord types
 const categories = [
   { id: "triads", label: "Triads" },
@@ -143,7 +155,7 @@ const categories = [
 ];
 
 // Duration options
-const durations = [1, 2, 4, 8];
+const durations = [1, 2, 3, 4, 5, 6, 7, 8];
 
 // Chord type mappings to categories
 const chordCategories = {
@@ -217,7 +229,7 @@ const filteredChords = computed(() => {
 // Can confirm?
 const canConfirm = computed(() => selectedRoot.value && selectedType.value);
 
-// Position the popover - use saved position if available
+// Position and size the popover - use saved position if available
 const popoverStyle = computed(() => {
   const pos = savedPosition.value || {
     x: Math.min(props.x, window.innerWidth - 350),
@@ -226,6 +238,8 @@ const popoverStyle = computed(() => {
   return {
     left: `${pos.x}px`,
     top: `${pos.y}px`,
+    width: `${popoverSize.value.width}px`,
+    height: `${popoverSize.value.height}px`,
   };
 });
 
@@ -305,10 +319,51 @@ function stopDrag() {
   window.removeEventListener("mouseup", stopDrag);
 }
 
+// Start resizing
+function startResize(e) {
+  isResizing.value = true;
+
+  // Add global listeners
+  window.addEventListener("mousemove", onResize);
+  window.addEventListener("mouseup", stopResize);
+}
+
+// Handle resizing
+function onResize(e) {
+  if (!isResizing.value || !popoverRef.value) return;
+
+  const rect = popoverRef.value.getBoundingClientRect();
+
+  // Calculate new size based on mouse position
+  const newWidth = Math.max(
+    minSize.width,
+    Math.min(maxSize.width, e.clientX - rect.left),
+  );
+  const newHeight = Math.max(
+    minSize.height,
+    Math.min(maxSize.height, e.clientY - rect.top),
+  );
+
+  popoverSize.value = { width: newWidth, height: newHeight };
+}
+
+// Stop resizing
+let justResized = false;
+function stopResize() {
+  isResizing.value = false;
+  justResized = true;
+  // Prevent the click event on overlay from closing the popover
+  setTimeout(() => {
+    justResized = false;
+  }, 100);
+  window.removeEventListener("mousemove", onResize);
+  window.removeEventListener("mouseup", stopResize);
+}
+
 // Format chord label for display
 function formatLabel(label) {
   const shortLabels = {
-    Major: "",
+    Major: "Major",
     Minor: "m",
     "Dominant 7": "7",
     "Dominant 9": "9",
@@ -393,6 +448,8 @@ function confirm() {
 
 // Close popover
 function close() {
+  // Don't close if we just finished resizing or are still resizing
+  if (justResized || isResizing.value) return;
   emit("close");
 }
 
@@ -448,6 +505,9 @@ onUnmounted(() => {
   // Clean up drag listeners just in case
   window.removeEventListener("mousemove", onDrag);
   window.removeEventListener("mouseup", stopDrag);
+  // Clean up resize listeners
+  window.removeEventListener("mousemove", onResize);
+  window.removeEventListener("mouseup", stopResize);
 });
 </script>
 
@@ -456,30 +516,24 @@ onUnmounted(() => {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(4px);
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  z-index: 100;
 }
 
 .chord-creator-popover {
-  position: relative;
+  position: absolute;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
-  gap: 0.2em;
-  width: 320px;
-  padding: 0 1em 0.2em;
-  max-height: 90vh;
-  overflow-y: auto;
+  gap: 0.25em;
+  min-width: 260px;
+  padding: 1em;
+  max-height: 85vh;
+  overflow: hidden;
   background: linear-gradient(180deg, #1f1f1f 0%, #141414 100%);
   border: 1px solid #333;
-  border-radius: 16px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
-  z-index: 9;
-  color: #878383;
+  border-radius: 12px;
+  z-index: 1001;
+  color: #ccc;
 }
 
 .popover-header {
@@ -487,8 +541,7 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  gap: 1em;
-  padding: 0 0.25em 0.75em;
+  gap: 0.5em;
   border-bottom: 1px solid #333;
   cursor: grab;
   user-select: none;
@@ -515,7 +568,7 @@ onUnmounted(() => {
 
 .popover-title {
   flex: 1;
-  font-size: 1.2rem;
+  font-size: 0.95rem;
   font-weight: 600;
   color: #fff;
 }
@@ -524,13 +577,13 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
+  width: 22px;
+  height: 22px;
   border: none;
   border-radius: 50%;
   background: #333;
   color: #888;
-  font-size: 1.2rem;
+  font-size: 1rem;
   cursor: pointer;
   transition: all 0.15s ease;
 
@@ -543,82 +596,97 @@ onUnmounted(() => {
 // Section styling
 .section {
   width: 100%;
-  margin-bottom: 0.75em;
+  margin-bottom: 0.4em;
+  flex-grow: 1;
 }
 
 .section-label {
   display: block;
-  font-size: 0.7rem;
+  font-size: 0.6rem;
   color: #666;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  margin-bottom: 0.5em;
+  margin-bottom: 0.3em;
 }
 
 // Root Note Grid
 .note-grid {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  gap: 0.35em;
+  gap: 0.2em;
+  flex-grow: 2;
 }
 
 .note-btn {
-  height: 36px;
+  height: 28px;
   padding: 0;
   border: 1px solid #333;
-  border-radius: 6px;
+  border-radius: 4px;
   background: #252525;
   color: #aaa;
   font-family: inherit;
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all 0.2s ease;
 
   &:hover {
     background: #333;
     color: #fff;
     border-color: #444;
+    transition: all 0.2s ease;
+    box-shadow: 0 -2px 4px rgb(209, 143, 0, 0.2);
+    filter: brightness(1.1);
+    transform: translateY(-1px);
   }
 
   &.active {
-    background: linear-gradient(180deg, #00d4aa 0%, #00a88a 100%);
+    background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%);
     color: #000;
-    border-color: #00d4aa;
     font-weight: 700;
+    box-shadow: none;
+    transform: translate(0);
   }
 }
 
 // Type Tabs
 .type-tabs {
   display: flex;
-  gap: 0.25em;
-  margin-bottom: 0.5em;
+  gap: 0.2em;
+  margin-bottom: 0.3em;
+  flex-grow: 1;
 }
 
 .tab-btn {
   flex: 1;
-  height: 30px;
-  padding: 0 0.5em;
+  height: 24px;
+  padding: 0 0.4em;
   border: 1px solid #333;
-  border-radius: 6px;
+  border-radius: 4px;
   background: #1a1a1a;
   color: #777;
   font-family: inherit;
-  font-size: 0.7rem;
+  font-size: 0.6rem;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all 0.2s ease;
 
   &:hover {
-    background: #252525;
-    color: #aaa;
-  }
-
-  &.active {
     background: #333;
     color: #fff;
     border-color: #444;
+    transition: all 0.2s ease;
+    box-shadow: 0 -2px 4px rgb(209, 143, 0, 0.2);
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+  }
+
+  &.active {
+    background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%);
+    color: #000;
+    font-weight: 700;
+    box-shadow: none;
+    transform: translate(0);
   }
 }
 
@@ -626,18 +694,19 @@ onUnmounted(() => {
 .type-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 0.3em;
+  gap: 0.2em;
+  flex-grow: 2;
 }
 
 .type-btn {
-  height: 34px;
-  padding: 0 0.5em;
+  height: 26px;
+  padding: 0 0.3em;
   border: 1px solid #2a2a2a;
-  border-radius: 6px;
+  border-radius: 4px;
   background: #1f1f1f;
   color: #aaa;
   font-family: inherit;
-  font-size: 0.75rem;
+  font-size: 0.65rem;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.15s ease;
@@ -646,62 +715,75 @@ onUnmounted(() => {
   text-overflow: ellipsis;
 
   &:hover {
-    background: #2a2a2a;
+    background: #333;
     color: #fff;
-    border-color: #3a3a3a;
+    border-color: #444;
+    transition: all 0.2s ease;
+    box-shadow: 0 -2px 4px rgb(209, 143, 0, 0.2);
+    filter: brightness(1.1);
+    transform: translateY(-1px);
   }
 
   &.active {
     background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%);
     color: #000;
-    border-color: #f59e0b;
     font-weight: 700;
+    box-shadow: none;
+    transform: translate(0);
   }
 }
 
 // Duration Grid
 .duration-grid {
   display: flex;
-  gap: 0.35em;
+  gap: 0.2em;
+  flex-grow: 1;
 }
 
 .duration-btn {
   flex: 1;
-  height: 32px;
+  height: 24px;
   padding: 0;
   border: 1px solid #333;
-  border-radius: 6px;
+  border-radius: 4px;
   background: #1a1a1a;
   color: #888;
   font-family: inherit;
-  font-size: 0.7rem;
+  font-size: 0.6rem;
   cursor: pointer;
   transition: all 0.15s ease;
 
   &:hover {
-    background: #252525;
-    color: #aaa;
+    background: #333;
+    color: #fff;
+    border-color: #444;
+    transition: all 0.2s ease;
+    box-shadow: 0 -2px 4px rgb(209, 143, 0, 0.2);
+    filter: brightness(1.1);
+    transform: translateY(-1px);
   }
 
   &.active {
-    background: #333;
-    color: #fff;
-    border-color: #555;
+    background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%);
+    color: #000;
+    font-weight: 700;
+    box-shadow: none;
+    transform: translate(0);
   }
 }
 
 // Confirm Button
 .confirm-btn {
   width: 100%;
-  height: 44px;
-  margin-top: 0.5em;
-  padding: 0 1em;
+  min-height: 32px;
+  margin-top: 0.3em;
+  padding: 0 0.8em;
   border: none;
-  border-radius: 10px;
-  background: linear-gradient(180deg, #00d4aa 0%, #00a88a 100%);
+  border-radius: 6px;
+  background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%);
   color: #000;
   font-family: inherit;
-  font-size: 0.9rem;
+  font-size: 0.75rem;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -709,7 +791,7 @@ onUnmounted(() => {
   &:hover:not(:disabled) {
     filter: brightness(1.1);
     transform: translateY(-1px);
-    box-shadow: 0 4px 16px rgba(0, 212, 170, 0.4);
+    box-shadow: 0 0 8px linear-gradient(180deg, #f59e0b 0%, #d97706 100%);
   }
 
   &:disabled {
@@ -719,6 +801,38 @@ onUnmounted(() => {
 
   &:active:not(:disabled) {
     transform: translateY(0);
+  }
+}
+
+// Resize handle
+.resize-handle {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 20px;
+  height: 20px;
+  cursor: nwse-resize;
+  background: linear-gradient(
+    135deg,
+    transparent 0%,
+    transparent 50%,
+    #444 50%,
+    #444 60%,
+    transparent 60%,
+    transparent 70%,
+    #444 70%,
+    #444 80%,
+    transparent 80%,
+    transparent 90%,
+    #444 90%,
+    #444 100%
+  );
+  border-radius: 0 0 16px 0;
+  opacity: 0.6;
+  transition: opacity 0.15s ease;
+
+  &:hover {
+    opacity: 1;
   }
 }
 </style>
