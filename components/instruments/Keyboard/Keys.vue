@@ -1,5 +1,10 @@
 <template>
-  <div class="keys">
+  <div
+    class="keys"
+    @mousedown="isMouseDown = true"
+    @mouseup="handleGlobalMouseUp"
+    @mouseleave="handleGlobalMouseUp"
+  >
     <div
       v-for="(key, index) in pianoKeys"
       :key="`${key.note}${key.octave}`"
@@ -14,10 +19,12 @@
         rootnote: key.note === rootNote,
         extendednote: isExtended(key.note),
         'midi-playing': isMidiActive(key.note, key.octave),
+        playing: isKeyPlaying(key.note, key.octave),
       }"
-      @mousedown="$emit('playKey', key.note, key.octave)"
-      @mouseup="$emit('stopKey', key.note, key.octave)"
-      @mouseleave="$emit('stopKey', key.note, key.octave)"
+      @mousedown.prevent="handleKeyMouseDown(key)"
+      @mouseup="handleKeyMouseUp(key)"
+      @mouseenter="handleKeyMouseEnter(key)"
+      @mouseleave="handleKeyMouseLeave(key)"
     >
       <span v-if="notesDisplayed === 'all'">{{ key.note }}</span>
       <span v-if="notesDisplayed === 'chord' && chordNotes.includes(key.note)">
@@ -40,7 +47,7 @@ const {
   notes,
 } = storeToRefs(store);
 
-defineEmits(["playKey", "stopKey"]);
+const emit = defineEmits(["playKey", "stopKey"]);
 
 const props = defineProps({
   midiActiveNotes: {
@@ -48,6 +55,70 @@ const props = defineProps({
     default: () => new Set(),
   },
 });
+
+// Mouse drag state for glissando
+const isMouseDown = ref(false);
+const playingKeys = ref(new Set());
+
+// Check if a specific key is currently playing (for visual feedback)
+function isKeyPlaying(note, octave) {
+  return playingKeys.value.has(`${note}${octave}`);
+}
+
+// Handle mouse down on a key - start playing
+function handleKeyMouseDown(key) {
+  isMouseDown.value = true;
+  startPlayingKey(key);
+}
+
+// Handle mouse up on a key - stop playing
+function handleKeyMouseUp(key) {
+  stopPlayingKey(key);
+}
+
+// Handle mouse enter on a key - play if dragging
+function handleKeyMouseEnter(key) {
+  if (isMouseDown.value) {
+    startPlayingKey(key);
+  }
+}
+
+// Handle mouse leave on a key - stop if was playing
+function handleKeyMouseLeave(key) {
+  if (isKeyPlaying(key.note, key.octave)) {
+    stopPlayingKey(key);
+  }
+}
+
+// Handle global mouse up - stop all and reset state
+function handleGlobalMouseUp() {
+  isMouseDown.value = false;
+  // Stop all currently playing keys
+  playingKeys.value.forEach((keyStr) => {
+    const note = keyStr.slice(0, -1);
+    const octave = parseInt(keyStr.slice(-1));
+    emit("stopKey", note, octave);
+  });
+  playingKeys.value.clear();
+}
+
+// Start playing a key
+function startPlayingKey(key) {
+  const keyStr = `${key.note}${key.octave}`;
+  if (!playingKeys.value.has(keyStr)) {
+    playingKeys.value.add(keyStr);
+    emit("playKey", key.note, key.octave);
+  }
+}
+
+// Stop playing a key
+function stopPlayingKey(key) {
+  const keyStr = `${key.note}${key.octave}`;
+  if (playingKeys.value.has(keyStr)) {
+    playingKeys.value.delete(keyStr);
+    emit("stopKey", key.note, key.octave);
+  }
+}
 
 // MIDI note conversion
 const NOTE_NAMES = [
@@ -101,6 +172,15 @@ function isExtended(noteName) {
   if (!interval) return false;
   return ["9", "11", "13"].some((ext) => interval.includes(ext));
 }
+
+// Global mouseup listener to handle when mouse released outside keyboard
+onMounted(() => {
+  window.addEventListener("mouseup", handleGlobalMouseUp);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("mouseup", handleGlobalMouseUp);
+});
 </script>
 
 <style scoped lang="scss">
@@ -221,5 +301,16 @@ function isExtended(noteName) {
   border: 3px solid #0891b2;
   border-top: none;
   font-weight: 700;
+}
+
+// Visual feedback when key is pressed/playing
+.white.playing {
+  filter: brightness(0.85);
+  transform: translateY(2px);
+}
+
+.black.playing {
+  filter: brightness(1.3);
+  transform: translateY(2px);
 }
 </style>

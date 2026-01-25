@@ -11,8 +11,14 @@ export const chordLibrary = ref([
   {
     label: "5",
     intervals: [0, 4],
-    formula: ["1", "3", "5"],
-    types: ["triad", "major", "tonic"],
+    formula: ["1", "5"],
+    types: ["neutral", "tonic"],
+  },
+  {
+    label: "b5",
+    intervals: [0, 3],
+    formula: ["1", "♭5"],
+    types: ["neutral", "tonic"],
   },
   {
     label: "Major 6",

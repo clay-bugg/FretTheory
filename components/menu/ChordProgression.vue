@@ -1,4 +1,5 @@
 <template>
+  background
   <div class="chord-progression">
     <div class="settings-panel">
       <div class="setting-group" id="total-bars">
@@ -1643,7 +1644,7 @@ onUnmounted(() => {
   left: 0;
 
   .beat-cell:hover & {
-    color: #00d4aa;
+    color: #de9902;
     transform: scale(1.2);
   }
 }
