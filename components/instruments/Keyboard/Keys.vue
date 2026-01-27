@@ -313,4 +313,26 @@ onUnmounted(() => {
   filter: brightness(1.3);
   transform: translateY(2px);
 }
+
+#interval-1 {
+  background: #ab2828 !important;
+}
+#interval-2 {
+  background: #f58637 !important;
+}
+#interval-3 {
+  background: #e4d63b !important;
+}
+#interval-4 {
+  background: #5dd0cc;
+}
+#interval-5 {
+  background: #8a57c4 !important;
+}
+#interval-6 {
+  background: blue !important;
+}
+#interval-7 {
+  background: #d05aa1 !important;
+}
 </style>

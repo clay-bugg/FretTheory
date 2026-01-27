@@ -113,6 +113,7 @@ const props = defineProps({
   x: { type: Number, default: 0 },
   y: { type: Number, default: 0 },
   existingChord: { type: Object, default: null },
+  beatsPerBar: { type: Number, default: 4 },
 });
 
 const emit = defineEmits(["confirm", "close", "preview"]);
@@ -131,7 +132,7 @@ const popoverRef = ref(null);
 // State
 const selectedRoot = ref(null);
 const selectedType = ref(null);
-const selectedDuration = ref(4);
+const selectedDuration = ref(props.beatsPerBar);
 const activeCategory = ref("triads");
 
 // Drag state
@@ -482,7 +483,7 @@ watch(
         // Default to store values or reset
         selectedRoot.value = storeRootNote.value || "C";
         selectedType.value = "Major";
-        selectedDuration.value = 4;
+        selectedDuration.value = props.beatsPerBar;
         activeCategory.value = "triads";
       }
     }

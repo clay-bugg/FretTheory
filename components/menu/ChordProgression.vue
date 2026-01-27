@@ -1,5 +1,4 @@
 <template>
-  background
   <div class="chord-progression">
     <div class="settings-panel">
       <div class="setting-group" id="total-bars">
@@ -244,6 +243,14 @@
       >
         <Icon name="fa6-solid:ban" class="playback-icon" />
       </button>
+      <button
+        class="transport-btn undo-btn"
+        @click="undo"
+        :disabled="!canUndo"
+        title="Undo (Ctrl+Z)"
+      >
+        <Icon name="fa6-solid:rotate-left" class="playback-icon" />
+      </button>
     </div>
 
     <MenuChordCreatorPopover
@@ -252,6 +259,7 @@
       :x="popoverX"
       :y="popoverY"
       :existing-chord="popoverExistingChord"
+      :beats-per-bar="beatsPerBar"
       @confirm="handlePopoverConfirm"
       @close="closePopover"
       @preview="handleChordPreview"
@@ -345,6 +353,33 @@ const dropDuration = ref(4); // How many beats a dropped chord will span
 const beatChords = ref({}); // Map of beat number -> chord object
 const dragOverBeat = ref(null);
 const currentBeatIndex = ref(0);
+
+// Undo history stack
+const undoStack = ref([]);
+const MAX_UNDO_HISTORY = 50;
+
+// Save current state to undo stack
+function saveStateForUndo() {
+  // Deep clone the current beatChords
+  const snapshot = JSON.parse(JSON.stringify(beatChords.value));
+  undoStack.value.push(snapshot);
+
+  // Limit stack size
+  if (undoStack.value.length > MAX_UNDO_HISTORY) {
+    undoStack.value.shift();
+  }
+}
+
+// Undo the last action
+function undo() {
+  if (undoStack.value.length === 0) return;
+
+  const previousState = undoStack.value.pop();
+  beatChords.value = previousState;
+}
+
+// Check if undo is available
+const canUndo = computed(() => undoStack.value.length > 0);
 
 // Compute total beats based on bars and time signature
 const totalBeats = computed(() => {
@@ -465,6 +500,9 @@ function handleBeatDrop(e, beat) {
 
 // Add chord at a specific beat
 function addChordAtBeat(beat, root, type, duration) {
+  // Save state before modification
+  saveStateForUndo();
+
   // Remove any overlapping chords
   for (let b = beat; b < beat + duration && b <= totalBeats.value; b++) {
     if (beatChords.value[b]) {
@@ -489,6 +527,9 @@ function addChordAtBeat(beat, root, type, duration) {
 
 // Remove chord at a specific beat
 function removeChordAtBeat(beat) {
+  // Save state before modification
+  saveStateForUndo();
+
   delete beatChords.value[beat];
 }
 
@@ -564,67 +605,114 @@ let currentMetronomeBeat = 0;
 
 // Beat style patterns define timing and accent for each subdivision
 // Timing is relative offset (0-1) within a beat, accent is volume multiplier
+// Now with time-signature-aware accents
+
+// Helper function to determine accent pattern based on time signature
+function getAccentPattern(beatsPerBar, timeSignature) {
+  // Parse time signature to get the bottom number (beat unit)
+  const [, beatUnit] = timeSignature.split("/").map(Number);
+
+  // Compound meters (x/8 with beats divisible by 3) - accent in groups of 3
+  if (beatUnit === 8 && beatsPerBar % 3 === 0) {
+    // 6/8: accent 1 and 4 (two groups of 3)
+    // 9/8: accent 1, 4, 7 (three groups of 3)
+    // 12/8: accent 1, 4, 7, 10 (four groups of 3)
+    const accents = [];
+    for (let i = 0; i < beatsPerBar; i += 3) {
+      accents.push(i);
+    }
+    return accents;
+  }
+
+  // Odd meters with common groupings
+  if (beatsPerBar === 5) {
+    // 5/4: commonly 3+2, accent on 1 and 4
+    return [0, 3];
+  }
+  if (beatsPerBar === 7) {
+    // 7/8 or 7/4: commonly 4+3 or 2+2+3, accent on 1 and 5
+    return [0, 4];
+  }
+
+  // Standard meters: accent only on beat 1
+  return [0];
+}
+
 const beatPatterns = {
   straight: {
-    // Simple on-beat clicks, accent on beat 1
+    // Simple on-beat clicks with time-signature-aware accents
     subdivisions: 1,
-    getPattern: (beat, beatsPerBar) => [
-      {
-        offset: 0,
-        isAccent: beat === 0,
-        muted: false,
-      },
-    ],
+    getPattern: (beat, beatsPerBar) => {
+      const accents = getAccentPattern(beatsPerBar, timeSignature.value);
+      return [
+        {
+          offset: 0,
+          isAccent: accents.includes(beat),
+          muted: false,
+        },
+      ];
+    },
   },
   swing: {
     // Triplet feel - main beat + delayed offbeat
     subdivisions: 2,
     swingAmount: 0.66, // Offbeat delayed to 2/3 of the beat
-    getPattern: (beat, beatsPerBar) => [
-      {
-        offset: 0,
-        isAccent: beat === 0,
-        muted: false,
-      },
-      {
-        offset: 0.66, // Swung offbeat
-        isAccent: false,
-        muted: false,
-        softer: true,
-      },
-    ],
+    getPattern: (beat, beatsPerBar) => {
+      const accents = getAccentPattern(beatsPerBar, timeSignature.value);
+      return [
+        {
+          offset: 0,
+          isAccent: accents.includes(beat),
+          muted: false,
+        },
+        {
+          offset: 0.66, // Swung offbeat
+          isAccent: false,
+          muted: false,
+          softer: true,
+        },
+      ];
+    },
   },
   shuffle: {
-    // Heavier swing with emphasis
+    // Heavier swing with emphasis on strong beats
     subdivisions: 2,
-    getPattern: (beat, beatsPerBar) => [
-      {
-        offset: 0,
-        isAccent: beat === 0 || beat === 2,
-        muted: false,
-      },
-      {
-        offset: 0.66,
-        isAccent: false,
-        muted: false,
-        softer: true,
-      },
-    ],
+    getPattern: (beat, beatsPerBar) => {
+      const accents = getAccentPattern(beatsPerBar, timeSignature.value);
+      return [
+        {
+          offset: 0,
+          isAccent: accents.includes(beat),
+          muted: false,
+        },
+        {
+          offset: 0.66,
+          isAccent: false,
+          muted: false,
+          softer: true,
+        },
+      ];
+    },
   },
   reggae: {
-    // One-drop: emphasis on beats 2 and 4, beat 1 is quiet
+    // One-drop: emphasis on offbeats, beat 1 is quiet
     subdivisions: 1,
-    getPattern: (beat, beatsPerBar) => [
-      {
-        offset: 0,
-        isAccent: beat === 1 || beat === 3, // Accent on 2 and 4
-        muted: beat === 0, // Beat 1 is very quiet (one-drop)
-        softer: beat === 2,
-      },
-    ],
+    getPattern: (beat, beatsPerBar) => {
+      // For 4/4: accent 2 and 4, mute 1
+      // For other time sigs: accent all except beat 1
+      const isOffbeat = beat !== 0;
+      return [
+        {
+          offset: 0,
+          isAccent: isOffbeat && (beat === 1 || beat === 3),
+          muted: beat === 0,
+          softer: isOffbeat && beat !== 1 && beat !== 3,
+        },
+      ];
+    },
   },
   bossa: {
-    // Bossa nova pattern: syncopated feel
+    // Bossa nova pattern: syncopated feel (works best in 4/4)
     subdivisions: 2,
     getPattern: (beat, beatsPerBar) => {
       // Pattern: 1-and, 2, and-of-3, 4
@@ -784,6 +872,11 @@ function removeChord(index) {
 
 // Clear all chords
 function clearProgression() {
+  // Save state before clearing so user can undo
+  if (Object.keys(beatChords.value).length > 0) {
+    saveStateForUndo();
+  }
+
   stopPlayback();
   editingIndex.value = null;
   progression.value = [];
@@ -843,16 +936,23 @@ function togglePlay() {
   }
 }
 
-function startPlayback() {
+async function startPlayback() {
   if (!hasChords.value) return;
 
   // Close any editing
   editingIndex.value = null;
 
+  // Ensure audio context is ready BEFORE playing first chord
+  // This prevents the first chord from being cut off
+  const Tone = await import("tone");
+  if (Tone.context.state !== "running") {
+    await Tone.start();
+  }
+
   isPlaying.value = true;
   currentBeatIndex.value = 1; // Start at beat 1
 
-  // Play first beat immediately
+  // Play first beat immediately (audio context is now ready)
   playBeatChord(1);
 
   // Calculate ms per beat
@@ -896,9 +996,12 @@ function playBeatChord(beat) {
 
   // Wait for store to update chord notes, then play
   nextTick(() => {
-    // Stop any previous chord first
-    if (playChord) playChord("stop");
-    if (arpeggiate) arpeggiate("stop");
+    // DON'T stop previous chord - let the natural release envelope
+    // create a smooth overlap between chords (like a real piano with sustain)
+    // Only stop arpeggiator since it has ongoing scheduled notes
+    if (arpeggiatorEnabled.value && arpeggiate) {
+      arpeggiate("stop");
+    }
 
     if (arpeggiatorEnabled.value) {
       // Use arpeggiator
@@ -908,23 +1011,22 @@ function playBeatChord(beat) {
         noteDuration: arpNoteDelay.value * 0.9,
       });
     } else {
-      // Play chord normally
+      // Play chord normally - sampler's release envelope handles smooth fadeout
       if (playChord) playChord("play");
     }
 
-    // Calculate when to stop this chord (based on its duration)
+    // For non-arpeggio mode: let the chord ring naturally
+    // The release envelope (0.8s) will fade it out smoothly
+    // Only schedule a stop if chord duration is very long (prevents buildup)
     const msPerBeat = (60 / tempo.value) * 1000;
     const chordDurationMs = chord.duration * msPerBeat;
-    const stopDelay = Math.max(chordDurationMs - 50, chordDurationMs * 0.95);
 
-    setTimeout(() => {
-      // Only stop if we're still on this chord
-      if (arpeggiatorEnabled.value) {
-        arpeggiate("stop");
-      } else {
+    // Only force-stop if chord is longer than 4 seconds to prevent note buildup
+    if (chordDurationMs > 4000 && !arpeggiatorEnabled.value) {
+      setTimeout(() => {
         if (playChord) playChord("stop");
-      }
-    }, stopDelay);
+      }, chordDurationMs - 100);
+    }
   });
 }
 
@@ -1048,11 +1150,24 @@ watch([metronomeEnabled, beatStyle], ([enabled]) => {
   }
 });
 
+// Keyboard shortcut for undo (Ctrl+Z)
+function handleKeydown(e) {
+  if ((e.ctrlKey || e.metaKey) && e.key === "z") {
+    e.preventDefault();
+    undo();
+  }
+}
+
+onMounted(() => {
+  window.addEventListener("keydown", handleKeydown);
+});
+
 // Cleanup on unmount
 onUnmounted(() => {
   stopPlayback();
   stopMetronome();
   clearTimeout(tapResetTimeout);
+  window.removeEventListener("keydown", handleKeydown);
 });
 </script>
 
@@ -1065,17 +1180,22 @@ onUnmounted(() => {
   gap: 0.75em;
 }
 
+// ============================================
+// UNIFIED CONTROL STYLES
+// ============================================
+
+// Base control variables (conceptual - applied inline)
+// Height: 32px for primary, 28px for secondary
+// Border: 1px solid #3a3a3a
+// Background: linear-gradient(180deg, #252525 0%, #1a1a1a 100%)
+// Border-radius: 6px
+// Transition: all 0.15s ease
+
 .tempo-controls {
   display: flex;
   align-items: center;
   justify-content: center;
-
-  .tempo-display {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5em;
-  }
+  gap: 0.25em;
 }
 
 .playback-controls {
@@ -1083,91 +1203,118 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.75em;
+  gap: 0.5em;
 }
 
 .transport-center,
 .transport-right {
   display: flex;
   align-items: center;
-  gap: 0.75em;
+  gap: 0.5em;
 }
 
+// Primary transport buttons (play, stop, etc)
 .transport-btn {
-  width: 35px;
-  height: 35px;
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid #444;
+  border: 1px solid #3a3a3a;
   border-radius: 6px;
-  background: linear-gradient(180deg, #2a2a2a 0%, #1f1f1f 100%);
-  color: #aaa;
+  background: linear-gradient(180deg, #252525 0%, #1a1a1a 100%);
+  color: #999;
   font-family: inherit;
-  font-size: 1rem;
-  padding: 0.2em;
+  font-size: 0.9rem;
+  padding: 0;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
 
   &:hover:not(:disabled) {
-    background: linear-gradient(180deg, #333 0%, #252525 100%);
+    background: linear-gradient(180deg, #2d2d2d 0%, #222 100%);
     border-color: #555;
     color: #fff;
+    transform: translateY(-1px);
   }
 
   &:disabled {
-    opacity: 0.35;
+    opacity: 0.3;
     cursor: not-allowed;
   }
 
   &:active:not(:disabled) {
-    transform: scale(0.96);
+    transform: scale(0.95);
+  }
+
+  .playback-icon {
+    width: 14px;
+    height: 14px;
   }
 }
 
 .play-btn {
   &:hover:not(:disabled) {
-    color: #49a943;
-    border-color: #49a943;
+    color: #4ade80;
+    border-color: #4ade80;
+    box-shadow: 0 0 12px rgba(74, 222, 128, 0.2);
+  }
+
+  &.playing {
+    color: #4ade80;
+    border-color: #4ade80;
+    background: linear-gradient(180deg, #1a3a25 0%, #0f2a1a 100%);
   }
 }
 
 .stop-btn {
   &:hover:not(:disabled) {
-    color: #f43f5e;
-    border-color: #f43f5e;
+    color: #f87171;
+    border-color: #f87171;
+    box-shadow: 0 0 12px rgba(248, 113, 113, 0.2);
   }
 }
 
 .clear-btn {
-  color: #888;
-
   &:hover:not(:disabled) {
-    color: #ce9c27;
-    border-color: #ce9c27;
+    color: #fbbf24;
+    border-color: #fbbf24;
+    box-shadow: 0 0 12px rgba(251, 191, 36, 0.2);
   }
 }
 
-// Tempo control
-.tempo-control {
-  display: flex;
-  align-items: center;
+.undo-btn {
+  &:hover:not(:disabled) {
+    color: #60a5fa;
+    border-color: #60a5fa;
+    box-shadow: 0 0 12px rgba(96, 165, 250, 0.2);
+  }
 }
 
+.redo-btn {
+  &:hover:not(:disabled) {
+    color: #c084fc;
+    border-color: #c084fc;
+    box-shadow: 0 0 12px rgba(192, 132, 252, 0.2);
+  }
+}
+
+// Tempo adjust buttons (smaller, inline)
 .tempo-adjust {
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   padding: 0;
-  border: 1px solid #444;
+  border: 1px solid #3a3a3a;
   border-radius: 6px;
-  background: #252525;
-  color: #aaa;
-  font-size: 1.1rem;
+  background: linear-gradient(180deg, #252525 0%, #1a1a1a 100%);
+  color: #888;
+  font-size: 1rem;
+  font-weight: 500;
   cursor: pointer;
   transition: all 0.15s ease;
 
   &:hover {
-    background: #333;
+    background: linear-gradient(180deg, #2d2d2d 0%, #222 100%);
+    border-color: #555;
     color: #fff;
   }
 
@@ -1176,26 +1323,29 @@ onUnmounted(() => {
   }
 }
 
+// Tempo display and input
 .tempo-display {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  min-width: 60px;
+  justify-content: center;
+  min-width: 50px;
 }
 
 .tempo-input {
-  width: 56px;
+  width: 50px;
   height: 28px;
-  padding: 0;
-  border: none;
+  padding: 0 0.25em;
+  border: 1px solid transparent;
+  border-radius: 4px;
   background: transparent;
-  color: #00d4aa;
+  color: #22d3ee;
   font-family: inherit;
-  font-size: 1.25rem;
+  font-size: 1.1rem;
   font-weight: 700;
   text-align: center;
   -moz-appearance: textfield;
   appearance: textfield;
+  transition: all 0.15s ease;
 
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
@@ -1203,26 +1353,34 @@ onUnmounted(() => {
     margin: 0;
   }
 
+  &:hover {
+    border-color: #3a3a3a;
+    background: rgba(255, 255, 255, 0.03);
+  }
+
   &:focus {
     outline: none;
+    border-color: #22d3ee;
+    background: rgba(34, 211, 238, 0.05);
   }
 }
 
 .tempo-label {
-  font-size: 0.6rem;
+  font-size: 0.65rem;
   color: #666;
   text-transform: uppercase;
   letter-spacing: 0.1em;
+  margin-right: 0.25em;
 }
 
 // Tap tempo button
 .tap-btn {
   position: relative;
-  left: 0.8em;
-  height: 30px;
-  width: 35px;
-  font-size: 0.65rem;
-  font-weight: 700;
+  height: 28px;
+  min-width: 40px;
+  padding: 0 0.5em;
+  font-size: 0.6rem;
+  font-weight: 600;
   letter-spacing: 0.05em;
 
   &.tapped {
@@ -1234,16 +1392,16 @@ onUnmounted(() => {
 
 .tap-badge {
   position: absolute;
-  top: -10px;
-  right: -10px;
-  min-width: 18px;
-  height: 18px;
+  top: -8px;
+  right: -8px;
+  min-width: 16px;
+  height: 16px;
   padding: 0 4px;
-  background: #f43f5e;
-  border-radius: 9px;
+  background: linear-gradient(180deg, #f43f5e 0%, #dc2626 100%);
+  border-radius: 8px;
   color: #fff;
-  font-size: 0.65rem;
-  font-weight: 400;
+  font-size: 0.55rem;
+  font-weight: 600;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1252,60 +1410,79 @@ onUnmounted(() => {
 // Metronome button
 .metronome-btn {
   position: relative;
-  left: 0.8em;
-  height: 30px;
-  width: 35px;
-  background: none;
-  border: none;
-  color: #fff;
-  padding: 0.2em;
+  height: 36px;
+  width: 36px;
 
   .metronome-icon {
-    width: 90%;
-    height: 90%;
+    width: 18px;
+    height: 18px;
+    transition: transform 0.15s ease;
+  }
 
-    &:hover {
-      transform: scale(1.1);
-    }
+  &:hover .metronome-icon {
+    transform: scale(1.1);
+  }
 
-    &:active P {
-      transform: scale(0.9);
-    }
+  &.active {
+    color: #22d3ee;
+    border-color: #22d3ee;
+    background: linear-gradient(180deg, #0f3a3a 0%, #0a2a2a 100%);
+    animation: metronomePulse 1s ease-in-out infinite;
   }
 }
 
 @keyframes metronomePulse {
   0%,
   100% {
-    box-shadow: 0 0 8px rgba(16, 185, 129, 0.3);
+    box-shadow: 0 0 8px rgba(34, 211, 238, 0.3);
   }
   50% {
-    box-shadow: 0 0 16px rgba(16, 185, 129, 0.6);
+    box-shadow: 0 0 16px rgba(34, 211, 238, 0.5);
   }
 }
 
-// Time signature
-.time-signature-control {
-  display: flex;
-  align-items: center;
-}
-
-.time-select {
-  height: 36px;
+// Select dropdowns - unified style
+.time-select,
+.key-select,
+.setting-select {
+  height: 32px;
   padding: 0 0.75em;
-  border: 1px solid #444;
+  border: 1px solid #3a3a3a;
   border-radius: 6px;
-  background: #1a1a1a;
+  background: linear-gradient(180deg, #252525 0%, #1a1a1a 100%);
   color: #ccc;
   font-family: inherit;
-  font-size: 1rem;
-  font-weight: 600;
+  font-size: 0.85rem;
+  font-weight: 500;
   cursor: pointer;
+  transition: all 0.15s ease;
+
+  &:hover {
+    border-color: #555;
+    background: linear-gradient(180deg, #2d2d2d 0%, #222 100%);
+  }
 
   &:focus {
     outline: none;
-    border-color: #00d4aa;
+    border-color: #22d3ee;
+    box-shadow: 0 0 10px rgba(34, 211, 238, 0.15);
   }
+}
+
+.key-select {
+  color: #fbbf24;
+  font-weight: 600;
+
+  &:focus {
+    border-color: #fbbf24;
+    box-shadow: 0 0 10px rgba(251, 191, 36, 0.15);
+  }
+}
+
+// Time signature control
+.time-signature-control {
+  display: flex;
+  align-items: center;
 }
 
 // Key selector
@@ -1318,28 +1495,9 @@ onUnmounted(() => {
 
 .mini-label {
   font-size: 0.6rem;
-  color: #666;
+  color: #555;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-}
-
-.key-select {
-  height: 36px;
-  padding: 0 0.75em;
-  border: 1px solid #555;
-  border-radius: 6px;
-  background: linear-gradient(180deg, #2a2a2a 0%, #1f1f1f 100%);
-  color: #f59e0b;
-  font-family: inherit;
-  font-size: 1rem;
-  font-weight: 700;
-  cursor: pointer;
-
-  &:focus {
-    outline: none;
-    border-color: #f59e0b;
-    box-shadow: 0 0 10px rgba(245, 158, 11, 0.3);
-  }
 }
 
 // ============================================
@@ -1350,9 +1508,9 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1.5em;
+  gap: 1em;
   padding: 0.6em 1em;
-  background: #0f0f0f;
+  background: linear-gradient(180deg, #141414 0%, #0f0f0f 100%);
   border-radius: 8px;
   border: 1px solid #252525;
 }
@@ -1362,43 +1520,25 @@ onUnmounted(() => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5em;
+  gap: 0.4em;
 }
 
 .setting-label {
-  font-size: 0.7rem;
-  color: #666;
+  font-size: 0.6rem;
+  color: #555;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.setting-select {
-  width: 100%;
-  height: 28px;
-  padding: 0 0.6em;
-  border: 1px solid #333;
-  border-radius: 4px;
-  background: #1a1a1a;
-  color: #ccc;
-  font-family: inherit;
-  font-size: 0.8rem;
-  cursor: pointer;
-
-  &:focus {
-    outline: none;
-    border-color: #00d4aa;
-  }
+  letter-spacing: 0.08em;
 }
 
 .info-value {
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 700;
-  color: #00d4aa;
+  color: #22d3ee;
 }
 
 .info-label {
-  font-size: 0.65rem;
-  color: #666;
+  font-size: 0.6rem;
+  color: #555;
   text-transform: lowercase;
 }
 
@@ -2167,56 +2307,56 @@ onUnmounted(() => {
 
   // Scale degree colors (I through vii°)
   &.degree-1 {
-    background: linear-gradient(180deg, #8b1a1a 0%, #6a1414 100%);
-    border-color: #8b1a1a;
+    background: linear-gradient(180deg, #ab2828 0%, #8a2020 100%);
+    border-color: #ab2828;
     .chord-root,
     .chord-type {
       color: #fff;
     }
   }
   &.degree-2 {
-    background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%);
-    border-color: #f59e0b;
+    background: linear-gradient(180deg, #f58637 0%, #d4702c 100%);
+    border-color: #f58637;
     .chord-root,
     .chord-type {
       color: #fff;
     }
   }
   &.degree-3 {
-    background: linear-gradient(180deg, #d44488 0%, #a33569 100%);
-    border-color: #d44488;
+    background: linear-gradient(180deg, #e4d63b 0%, #c9bc30 100%);
+    border-color: #e4d63b;
     .chord-root,
     .chord-type {
-      color: #fff;
+      color: #000;
     }
   }
   &.degree-4 {
-    background: linear-gradient(180deg, #1a8b8b 0%, #146969 100%);
-    border-color: #1a8b8b;
+    background: linear-gradient(180deg, #5dd0cc 0%, #4ab5b1 100%);
+    border-color: #5dd0cc;
     .chord-root,
     .chord-type {
-      color: #fff;
+      color: #000;
     }
   }
   &.degree-5 {
-    background: linear-gradient(180deg, #3366aa 0%, #274f82 100%);
-    border-color: #3366aa;
+    background: linear-gradient(180deg, #8a57c4 0%, #7246a6 100%);
+    border-color: #8a57c4;
     .chord-root,
     .chord-type {
       color: #fff;
     }
   }
   &.degree-6 {
-    background: linear-gradient(180deg, #dd8844 0%, #aa6633 100%);
-    border-color: #dd8844;
+    background: linear-gradient(180deg, #d05aa1 0%, #b04a88 100%);
+    border-color: #d05aa1;
     .chord-root,
     .chord-type {
       color: #fff;
     }
   }
   &.degree-7 {
-    background: linear-gradient(180deg, #9944cc 0%, #73339a 100%);
-    border-color: #9944cc;
+    background: linear-gradient(180deg, #8a2020 0%, #6a1818 100%);
+    border-color: #8a2020;
     .chord-root,
     .chord-type {
       color: #fff;
