@@ -109,7 +109,8 @@ const decrementLED = () => {
         border-radius: 4px;
         cursor: pointer;
         transition: all 0.15s ease;
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.1),
           0 1px 2px rgba(0, 0, 0, 0.4);
 
         .arrow-icon {
@@ -148,8 +149,10 @@ const decrementLED = () => {
     background: linear-gradient(135deg, #4a4a4a 0%, #3a3a3a 50%, #2a2a2a 100%);
     transition: all 0.15s ease;
     border: 1px solid #1a1a1a;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08),
-      inset 0 -2px 4px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.4);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      inset 0 -2px 4px rgba(0, 0, 0, 0.3),
+      0 1px 2px rgba(0, 0, 0, 0.4);
 
     &.active {
       background: linear-gradient(
@@ -158,8 +161,10 @@ const decrementLED = () => {
         #22c400 40%,
         #189000 100%
       );
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3),
-        inset 0 -2px 4px rgba(0, 0, 0, 0.2), 0 0 8px rgba(34, 196, 0, 0.6),
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.3),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.2),
+        0 0 8px rgba(34, 196, 0, 0.6),
         0 0 16px rgba(34, 196, 0, 0.3);
     }
   }

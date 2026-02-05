@@ -46,9 +46,18 @@
 </template>
 
 <script setup>
+import { useKeyboardStore } from "~/stores/keyboardStore";
+
 const store = useControlStore();
+const keyboardStore = useKeyboardStore();
 
 const { keyboardType } = storeToRefs(store);
+const { rootNote, chordType } = storeToRefs(keyboardStore);
+
+const selectedChord = computed(() => {
+  if (!rootNote.value) return "Select a Chord";
+  return `${rootNote.value} ${chordType.value}`;
+});
 
 defineProps({
   midi: {
@@ -85,13 +94,16 @@ const buttons = ref([
 
   .keyboard-type-buttons {
     display: flex;
-    width: 100%;
+    width: fit-content;
+    min-width: fit-content;
     align-items: center;
     justify-content: space-between;
     gap: 0.2em;
 
     .keyboard-type-button {
-      width: 100%;
+      min-width: 40px;
+      min-height: 40px;
+      width: 40px;
       height: 40px;
       background: #242424;
       border-radius: 4px;

@@ -1,19 +1,17 @@
-<!----------GLOBAL------------>
-// Set SCSS global variables in main.scss and apply to all components   
+-----Keyboard-----
 
-```[[-----Keyboard-----]]
-[[                ]]
+---
 
------Guitar----
+--Guitar-----
 
 -----Drums-----
 
+-----Style-----
 
-
-<!----------STYLE------------->
-- Add transitions for chord note appearances
-- Add keyboard styling
 - Relative sizes for screen widths
-- Adjust styling for extended chords
 
+- Come up with color plan for keys and extended chords notes
 
+- Add finder logic and seperate from progression logic
+
+-

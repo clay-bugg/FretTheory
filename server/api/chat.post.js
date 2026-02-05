@@ -208,7 +208,7 @@ export default defineEventHandler(async (event) => {
   const { messages, currentState } = body;
 
   // Build the conversation history for Gemini
-  const contents = messages.map((msg: { role: string; content: string }) => ({
+  const contents = messages.map((msg) => ({
     role: msg.role === "user" ? "user" : "model",
     parts: [{ text: msg.content }],
   }));
@@ -277,17 +277,17 @@ export default defineEventHandler(async (event) => {
 
     // Check for function calls
     const functionCalls =
-      candidate.content?.parts?.filter((part: any) => part.functionCall) || [];
+      candidate.content?.parts?.filter((part) => part.functionCall) || [];
 
     // Extract text response
     const textParts =
-      candidate.content?.parts?.filter((part: any) => part.text) || [];
+      candidate.content?.parts?.filter((part) => part.text) || [];
 
-    const text = textParts.map((part: any) => part.text).join("");
+    const text = textParts.map((part) => part.text).join("");
 
     // Parse any action blocks from the text
     const actionRegex = /```action\s*\n?([\s\S]*?)\n?```/g;
-    const actions: any[] = [];
+    const actions = [];
     let match;
 
     while ((match = actionRegex.exec(text)) !== null) {
@@ -300,7 +300,7 @@ export default defineEventHandler(async (event) => {
     }
 
     // Also add function calls as actions
-    functionCalls.forEach((fc: any) => {
+    functionCalls.forEach((fc) => {
       actions.push({
         action: fc.functionCall.name,
         params: fc.functionCall.args || {},
@@ -314,7 +314,7 @@ export default defineEventHandler(async (event) => {
       message: cleanText || "I've made the changes to the keyboard!",
       actions,
     };
-  } catch (error: any) {
+  } catch (error) {
     console.error("=== Chat API Error ===");
     console.error("Error name:", error.name);
     console.error("Error message:", error.message);

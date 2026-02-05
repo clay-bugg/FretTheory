@@ -10,10 +10,10 @@ export default defineNuxtConfig({
 
   // Runtime config for API keys
   runtimeConfig: {
-    // Server-only (private) - reads from NUXT_GEMINI_API_KEY env var
-    geminiApiKey: "",
+    public: {
+      apiBase: "http://localhost:3001",
+    },
   },
-
   css: ["~/assets/scss/main.scss"],
 
   googleFonts: {

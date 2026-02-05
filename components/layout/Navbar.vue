@@ -26,7 +26,8 @@
           v-for="instrument in instruments"
           :key="instrument.name"
           class="dropdown-item"
-          @click="selectButton('Instruments')"
+          :class="{ active: selectedInstrument === instrument.name }"
+          @click="selectInstrument(instrument.name)"
         >
           <Icon :name="instrument.icon" class="dropdown-icon" />
           {{ instrument.name }}
@@ -49,6 +50,15 @@
 </template>
 
 <script setup>
+const route = useRoute();
+const buttonSelected = computed(() => {
+  if (route.path.startsWith("/instruments")) return "Instruments";
+  const match = otherNavButtons.value.find((b) =>
+    route.path.startsWith(b.link),
+  );
+  return match ? match.label : "";
+});
+
 const showDropdown = ref(false);
 
 // Instruments for dropdown
@@ -64,10 +74,16 @@ const otherNavButtons = ref([
   { label: "Tools", link: "/tools" },
 ]);
 
-const { selectedInstrument } = useControlStore();
+const { selectedInstrument } = storeToRefs(useControlStore());
 
 function selectButton(value) {
   selectedInstrument.value = value;
+}
+
+function selectInstrument(instrumentName) {
+  selectedInstrument.value = instrumentName;
+  showDropdown.value = false;
+  navigateTo("/instruments");
 }
 </script>
 
@@ -110,6 +126,17 @@ nav {
 
   &.has-dropdown .button {
     cursor: pointer;
+  }
+
+  // Invisible bridge to prevent menu from closing when crossing the gap
+  &::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 15px; // Covers the 8px gap + buffer
+    background: transparent;
   }
 }
 
@@ -170,10 +197,16 @@ nav {
   text-decoration: none;
   font-size: 0.95rem;
   transition: all 0.15s ease;
+  cursor: pointer;
 
   &:hover {
     background: rgba(255, 255, 255, 0.05);
     color: #fff;
+  }
+
+  &.active {
+    color: #f59e0b;
+    background: rgba(245, 158, 11, 0.1);
   }
 }
 

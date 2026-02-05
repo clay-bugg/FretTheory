@@ -8,27 +8,38 @@
     <div
       v-for="(key, index) in pianoKeys"
       :key="`${key.note}${key.octave}`"
-      :style="{ fontSize: keyFontSize }"
-      :id="`interval-${chordNotes.indexOf(key.note) + 1}`"
       class="key"
-      :class="{
-        black: key.sharp,
-        white: !key.sharp,
-        highlighted: chordNotes.includes(key.note),
-        interval: chordNotes.includes(key.note),
-        rootnote: key.note === rootNote,
-        extendednote: isExtended(key.note),
-        'midi-playing': isMidiActive(key.note, key.octave),
-        playing: isKeyPlaying(key.note, key.octave),
-      }"
+      :class="[
+        {
+          black: key.sharp,
+          white: !key.sharp,
+          highlighted: chordNotes.includes(key.note),
+          interval: chordNotes.includes(key.note),
+          rootnote: key.note === rootNote,
+          extendednote: isExtended(key.note),
+          'midi-playing': isMidiActive(key.note, key.octave),
+          playing: isKeyPlaying(key.note, key.octave),
+        },
+        chordNotes.includes(key.note)
+          ? `interval-${chordNotes.indexOf(key.note) + 1}`
+          : '',
+      ]"
       @mousedown.prevent="handleKeyMouseDown(key)"
       @mouseup="handleKeyMouseUp(key)"
       @mouseenter="handleKeyMouseEnter(key)"
       @mouseleave="handleKeyMouseLeave(key)"
     >
-      <span v-if="notesDisplayed === 'all'">{{ key.note }}</span>
-      <span v-if="notesDisplayed === 'chord' && chordNotes.includes(key.note)">
-        {{ key.note }}
+      <span
+        v-if="
+          notesDisplayed === 'all' ||
+          (notesDisplayed === 'chord' && chordNotes.includes(key.note))
+        "
+        :class="`interval interval-${chordNotes.indexOf(key.note) + 1}`"
+      >
+        <div class="note-name">{{ key.note }}</div>
+        <div v-if="chordNotes.includes(key.note)" class="interval-name">
+          {{ getInterval(key.note) }}
+        </div>
       </span>
     </div>
   </div>
@@ -40,12 +51,25 @@ import { useKeyboardStore } from "~/stores/keyboardStore";
 const store = useKeyboardStore();
 const {
   currentPitch,
-  chordNotes,
-  chordIntervals,
+  chordNotes: storedChordNotes,
+  chordIntervals: storedChordIntervals,
   rootNote,
   notesDisplayed,
   notes,
+  previewChordNotes,
+  previewChordIntervals,
+  isPreviewing,
 } = storeToRefs(store);
+
+const chordNotes = computed(() =>
+  isPreviewing.value ? previewChordNotes.value : storedChordNotes.value,
+);
+
+const chordIntervals = computed(() =>
+  isPreviewing.value ? previewChordIntervals.value : storedChordIntervals.value,
+);
+
+const keyFontSize = ref("1rem"); // Default font size for keys
 
 const emit = defineEmits(["playKey", "stopKey"]);
 
@@ -173,6 +197,10 @@ function isExtended(noteName) {
   return ["9", "11", "13"].some((ext) => interval.includes(ext));
 }
 
+function getInterval(noteName) {
+  return chordIntervals.value[noteName] || "";
+}
+
 // Global mouseup listener to handle when mouse released outside keyboard
 onMounted(() => {
   window.addEventListener("mouseup", handleGlobalMouseUp);
@@ -191,11 +219,11 @@ onUnmounted(() => {
   display: flex;
   width: 100%;
   height: 240px;
-  overflow: hidden;
+  /* overflow: hidden; Removed to allow intervals to show outside */
   border-top: 15px solid black;
   border-right: 2px solid black;
   border-left: 2px solid black;
-  margin-bottom: 1em;
+  margin-bottom: 2.5em; /* Added space for intervals */
   font-family: "Lexend";
   z-index: 0;
 }
@@ -206,8 +234,6 @@ onUnmounted(() => {
   align-items: center;
   justify-content: flex-end;
   border: 1px solid black;
-  padding-bottom: 0.2em;
-  font-size: 0.9rem;
   font-weight: 600;
 }
 
@@ -218,33 +244,35 @@ onUnmounted(() => {
 .white {
   position: relative;
   flex: 1;
-  width: 100%;
+  width: auto;
+  min-width: 0;
   height: 100%;
   border: 1px solid black;
   border-bottom-right-radius: 10px;
   border-bottom-left-radius: 10px;
-  padding: 0.4em;
   background-color: $white-keyboard-key;
   color: #242424;
   z-index: 1;
   font-size: 1.1rem;
+  /* overflow: hidden; Removed */
 }
 
 .white:hover {
   filter: brightness(0.9);
+  /* background-color: #f3f3f3; */
 }
 
 .black {
   position: relative;
+  bottom: 4px;
   left: 1.9em;
   width: 3.6em;
   height: 55%;
-  overflow: hidden;
+  /* overflow: hidden; Removed */
   border: 2px solid black;
   border-bottom-right-radius: 8px;
   border-bottom-left-radius: 8px;
   margin-left: -3.6em;
-  padding-bottom: 0.6em;
   background-color: #101010;
   color: #cbcbcb;
   box-shadow: 0 2px 2px black;
@@ -257,7 +285,6 @@ onUnmounted(() => {
 }
 
 .white.interval {
-  background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%);
   color: black;
   border: 3px solid black;
   border-top: none;
@@ -265,20 +292,10 @@ onUnmounted(() => {
 }
 
 .black.interval {
-  background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%);
   color: black;
   border: 3px solid black;
   border-top: none;
   font-weight: 800;
-}
-
-.rootnote,
-.black.rootnote,
-.white.rootnote {
-  background-color: #b81f1f;
-  color: black;
-  border: 3px solid black;
-  border-top: none;
 }
 
 .black.extendednote,
@@ -311,28 +328,65 @@ onUnmounted(() => {
 
 .black.playing {
   filter: brightness(1.3);
-  transform: translateY(2px);
 }
 
-#interval-1 {
-  background: #ab2828 !important;
+span.interval {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 0.2em;
+  font-weight: 800;
+  line-height: 1.1;
 }
-#interval-2 {
-  background: #f58637 !important;
+
+.note-name {
+  font-size: 1em;
+  position: relative;
+  z-index: 2;
 }
-#interval-3 {
-  background: #e4d63b !important;
+
+.interval-name {
+  position: absolute;
+  bottom: -30px; /* Position below the 240px height keyboard */
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 0.8em;
+  font-weight: 600;
+  opacity: 0.9;
+  color: #ccc; /* Subtle color */
+  pointer-events: none; /* Let clicks pass through */
+  z-index: 10;
 }
-#interval-4 {
-  background: #5dd0cc;
+
+span.interval-1 {
+  background: #d2ae38 !important;
+  border-top: 2px solid black;
 }
-#interval-5 {
-  background: #8a57c4 !important;
+span.interval-2 {
+  background: #d2ae38 !important;
+  border-top: 2px solid black;
 }
-#interval-6 {
-  background: blue !important;
+span.interval-3 {
+  background: #d2ae38 !important;
+  border-top: 2px solid black;
 }
-#interval-7 {
-  background: #d05aa1 !important;
+span.interval-4 {
+  background: #d2ae38 !important;
+  border-top: 2px solid black;
+}
+span.interval-5 {
+  background: #d2ae38 !important;
+  border-top: 2px solid black;
+}
+span.interval-6 {
+  background: #d2ae38 !important;
+  border-top: 2px solid black;
+}
+span.interval-7 {
+  background: #d2ae38 !important;
+  border-top: 2px solid black;
 }
 </style>

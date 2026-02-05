@@ -4,7 +4,7 @@
       <ControlsLEDControl :ledAmount="3" label="LABELS" />
       <ControlsLEDControl :ledAmount="6" label="PITCH" />
     </div>
-    <MenuChordButtons :midi="midi" />
+    <InstrumentsKeyboardModeSelector :midi="midi" />
     <ControlsVolumeSlider />
   </div>
 </template>

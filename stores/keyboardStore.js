@@ -61,38 +61,74 @@ export const useKeyboardStore = defineStore("keyboard", () => {
   const chordIntervals = ref({});
 
   // Computed Chord Notes
-  function updateChord() {
-    if (!rootNote.value || !chordType.value) return;
+  function calculateChordNotes(root, type) {
+    if (!root || !type) return [];
 
     // chordLibrary uses 'label' as the identifier
-    const chord = chordTypes.value.find((c) => c.label === chordType.value);
-    if (!chord) return;
+    const chord = chordTypes.value.find((c) => c.label === type);
+    if (!chord) return [];
 
     const { intervals, formula } = chord;
-    const rootIndex = notes.value.indexOf(rootNote.value);
+    const rootIndex = notes.value.indexOf(root);
 
     // Reset intervals map
     const newIntervalsMap = {};
 
-    const updatedChordNotes = intervals.map((i, index) => {
+    const calculatedNotes = intervals.map((i, index) => {
       const note = notes.value[(rootIndex + i) % 12];
-      // Map scale degree formula to the note
-      // If a note appears multiple times (unlikely in this logic but possible in theory), latest one wins or we handle it.
-      // For basic chord display, 1:1 mapping is usually fine.
       newIntervalsMap[note] = formula[index];
       return note;
     });
 
-    chordIntervals.value = newIntervalsMap;
-    chordNotes.value = Array.from(new Set(updatedChordNotes));
+    return {
+      notes: Array.from(new Set(calculatedNotes)),
+      intervals: newIntervalsMap,
+      formula,
+    };
+  }
 
-    console.log(
-      `Chord: ${rootNote.value}${
-        chordType.value
-      }, Notes: ${chordNotes.value.join(", ")}, Intervals: ${formula.join(
-        ", "
-      )}`
-    );
+  function updateChord() {
+    if (!rootNote.value || !chordType.value) return;
+
+    const result = calculateChordNotes(rootNote.value, chordType.value);
+
+    if (result.notes && result.notes.length > 0) {
+      chordIntervals.value = result.intervals;
+      chordNotes.value = result.notes;
+
+      console.log(
+        `Chord: ${rootNote.value}${
+          chordType.value
+        }, Notes: ${chordNotes.value.join(", ")}, Intervals: ${result.formula.join(
+          ", ",
+        )}`,
+      );
+    }
+  }
+
+  // Preview State (for hovering)
+  const previewChordNotes = ref([]);
+  const previewChordIntervals = ref({});
+  const isPreviewing = ref(false);
+
+  function setPreviewChord(root, type) {
+    if (!root || !type) {
+      clearPreviewChord();
+      return;
+    }
+
+    const result = calculateChordNotes(root, type);
+    if (result.notes && result.notes.length > 0) {
+      previewChordNotes.value = result.notes;
+      previewChordIntervals.value = result.intervals;
+      isPreviewing.value = true;
+    }
+  }
+
+  function clearPreviewChord() {
+    previewChordNotes.value = [];
+    previewChordIntervals.value = {};
+    isPreviewing.value = false;
   }
 
   // Watchers for Chord Updates
@@ -170,5 +206,12 @@ export const useKeyboardStore = defineStore("keyboard", () => {
     changeLabels,
     assignChordOctaves,
     changeRootNote,
+
+    // Preview
+    previewChordNotes,
+    previewChordIntervals,
+    isPreviewing,
+    setPreviewChord,
+    clearPreviewChord,
   };
 });

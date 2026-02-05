@@ -363,37 +363,7 @@ function stopResize() {
 
 // Format chord label for display
 function formatLabel(label) {
-  const shortLabels = {
-    Major: "Major",
-    Minor: "m",
-    "Dominant 7": "7",
-    "Dominant 9": "9",
-    "Dominant 11": "11",
-    "Dominant 13": "13",
-    "Major 7": "maj7",
-    "Major 9": "maj9",
-    "Major 11": "maj11",
-    "Major 6": "6",
-    "Minor 7": "m7",
-    "Minor 9": "m9",
-    "Minor 6": "m6",
-    "Minor Major 7": "mMaj7",
-    "Minor Major 9": "mMaj9",
-    "Suspended 2": "sus2",
-    "Suspended 4": "sus4",
-    "7 Suspended 4": "7sus4",
-    "7#9 (Hendrix)": "7#9",
-    Augmented: "aug",
-    Diminished: "dim",
-    "Diminished 7": "°7",
-    5: "5",
-    "Major 6/9": "6/9",
-    "Minor 6/9": "m6/9",
-    "Minor 7b5": "m7b5",
-    "Minor 7b9": "m7b9",
-    "Minor Augmented": "m(#5)",
-  };
-  return shortLabels[label] !== undefined ? shortLabels[label] : label;
+  return label;
 }
 
 // Select root note
@@ -513,6 +483,7 @@ onUnmounted(() => {
 </script>
 
 <style scoped lang="scss">
+
 .popover-overlay {
   position: fixed;
   inset: 0;

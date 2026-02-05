@@ -134,15 +134,18 @@ function nutReleased(stringIndex) {
   height: 280px;
   overflow: hidden;
   border-radius: 5px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  border: 4px solid #1a1a1a;
 }
 
 .nut {
   display: flex;
   flex-direction: column;
   grid-area: nut;
-  border-right: 4px solid black;
-  background: rgb(162, 127, 82);
+  border-right: 4px solid #1a1a1a;
+  background: linear-gradient(to right, #f5f0e1, #e8dcc8); /* Bone/Ivory */
   box-shadow: 2px 0 4px rgba(0, 0, 0, 0.4);
+  z-index: 10;
 }
 
 .nut-note {
@@ -152,41 +155,50 @@ function nutReleased(stringIndex) {
   justify-content: center;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   background-color: transparent;
-  color: black;
+  color: #333;
   font-family: "Ubuntu", sans-serif;
   font-size: 0.85rem;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   transition: all 0.2s ease;
   user-select: none;
 }
 
 .nut-note:last-child {
-  filter: brightness(0.9);
+  border-bottom: none;
 }
 
 .nut-note:hover {
-  background-color: black;
-}
-
-.nut-note:active {
-  background-color: black;
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
 .nut-note.highlighted-note {
-  background-color: black;
+  background: radial-gradient(circle, #f59e0b, #d97706);
   color: black;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
 }
 
 .nut-note.root-note {
-  background-color: black;
+  background: radial-gradient(circle, #f43f5e, #e11d48);
   color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .fretboard {
   position: relative;
   grid-area: fretboard;
-  background-color: black;
+
+  background: linear-gradient(
+    to bottom,
+    #deb887,
+    #d2a679,
+    #c19a6b,
+    #d2a679,
+    #deb887
+  );
+  width: 941.23px;
+  height: 511.81px;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.4);
 }
 
 .fret-markers {
@@ -207,6 +219,8 @@ function nutReleased(stringIndex) {
   display: flex;
   align-items: center;
   justify-content: center;
+  border-right: 2px solid #8a8a8a; /* Fret wire */
+  box-shadow: 1px 0 2px rgba(0, 0, 0, 0.3);
 }
 
 .single-marker,
@@ -222,8 +236,10 @@ function nutReleased(stringIndex) {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, black, black);
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2), 0 2px 4px black;
+  /* Black inlay for Maple fretboard contrast */
+  background: radial-gradient(circle at 30% 30%, #333, #000);
+  box-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
+  opacity: 0.9;
 }
 
 .strings {
@@ -248,30 +264,41 @@ function nutReleased(stringIndex) {
   position: absolute;
   top: 50%;
   width: 100%;
-  height: 3px;
-  background: linear-gradient(to bottom, black, black, black);
-  box-shadow: 0 1px 2px black;
+  background: linear-gradient(
+    to bottom,
+    #d1d5db,
+    #9ca3af,
+    #6b7280
+  ); /* Silver/Nickel */
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.4);
   transform: translateY(-50%);
   pointer-events: none;
 }
 
+/* Bronze/Gold for lower strings */
+.string-4 .string-line,
+.string-5 .string-line,
+.string-6 .string-line {
+  background: linear-gradient(to bottom, #fcd34d, #d97706, #92400e);
+}
+
 .string-1 {
-  height: 2px;
+  height: 1.5px;
 }
 .string-2 {
-  height: 2.5px;
+  height: 2px;
 }
 .string-3 {
-  height: 3px;
+  height: 2.5px;
 }
 .string-4 {
-  height: 4px;
+  height: 3.5px;
 }
 .string-5 {
-  height: 5px;
+  height: 4.5px;
 }
 .string-6 {
-  height: 6px;
+  height: 5.5px;
 }
 
 .fret {
@@ -279,43 +306,57 @@ function nutReleased(stringIndex) {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-right: 3px solid black;
   cursor: pointer;
   transition: all 0.15s ease;
   z-index: 2;
 }
 
-.fret:hover {
-  filter: brightness(0.9);
+.fret:hover::after {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  filter: blur(5px);
 }
 
 .fret-note {
-  border-radius: 50px;
-  padding: 2px 6px;
-  background-color: black;
-  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background-color: #1f1f1f;
+  color: #e5e5e5;
   font-family: "Ubuntu", sans-serif;
   font-size: 0.75rem;
   font-weight: 600;
-  text-shadow: black;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
   z-index: 3;
 }
 
 .fret.highlighted-note .fret-note {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border: 3px solid black;
-  filter: brightness(0.9);
+  width: 38px;
+  height: 38px;
+  background: radial-gradient(circle at 30% 30%, #f59e0b, #d97706);
+  border: 2px solid white;
   color: black;
-  font-size: 1.3rem;
-  font-weight: 400;
+  font-size: 1.1rem;
+  font-weight: 700;
+  box-shadow:
+    0 4px 8px rgba(0, 0, 0, 0.4),
+    0 0 10px rgba(245, 158, 11, 0.4);
 }
 
 .fret.root-note .fret-note {
-  border: 3px solid black;
-  color: black;
+  background: radial-gradient(circle at 30% 30%, #f43f5e, #e11d48);
+  border: 2px solid white;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  box-shadow:
+    0 4px 8px rgba(0, 0, 0, 0.4),
+    0 0 10px rgba(244, 63, 94, 0.4);
 }
 </style>

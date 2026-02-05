@@ -1,257 +1,42 @@
 <template>
   <div class="chord-progression">
-    <div class="settings-panel">
-      <div class="setting-group" id="total-bars">
-        <label class="setting-label">Total Bars</label>
-        <select v-model.number="totalBars" class="setting-select">
-          <option :value="2">2</option>
-          <option :value="4">4</option>
-          <option :value="8">8</option>
-          <option :value="12">12</option>
-          <option :value="16">16</option>
-        </select>
-      </div>
+    <MenuProgressionControls
+      v-model:totalBars="totalBars"
+      v-model:tempo="tempo"
+      v-model:timeSignature="timeSignature"
+      v-model:progressionKey="progressionKey"
+      v-model:metronomeEnabled="metronomeEnabled"
+      :notes="notes"
+      :tapCount="tapCount"
+      :showTapFeedback="showTapFeedback"
+      @adjustTempo="adjustTempo"
+      @tapTempo="handleTapTempo"
+    />
 
-      <div class="setting-group">
-        <span class="tempo-label">BPM</span>
-        <div class="tempo-controls">
-          <button class="tempo-adjust" @click="adjustTempo(-5)">−</button>
+    <MenuProgressionTimeline
+      :totalBars="totalBars"
+      :beatsPerBar="beatsPerBar"
+      :beatChords="beatChords"
+      :isPlaying="isPlaying"
+      :currentBeatIndex="currentBeatIndex"
+      :progressionKey="progressionKey"
+      :dragOverBeat="dragOverBeat"
+      @beatClick="handleBeatClickFromTimeline"
+      @beatDrop="handleBeatDropFromTimeline"
+      @beatDragOver="handleBeatDragOverFromTimeline"
+      @beatDragLeave="handleBeatDragLeave"
+      @removeChord="removeChordAtBeat"
+    />
 
-          <div class="tempo-display">
-            <input
-              type="number"
-              v-model.number="tempo"
-              min="40"
-              max="240"
-              class="tempo-input"
-            />
-          </div>
-
-          <button class="tempo-adjust" @click="adjustTempo(5)">+</button>
-          <button
-            class="transport-btn tap-btn"
-            :class="{ tapped: showTapFeedback }"
-            @click="handleTapTempo"
-            title="Tap Tempo"
-          >
-            TAP
-            <span v-if="tapCount > 0" class="tap-badge">{{ tapCount }}</span>
-          </button>
-          <button
-            class="transport-btn metronome-btn"
-            :class="{ active: metronomeEnabled }"
-            @click="metronomeEnabled = !metronomeEnabled"
-            title="Toggle Metronome (plays with chord progression)"
-          >
-            <Icon name="mdi:metronome" class="metronome-icon" />
-          </button>
-        </div>
-      </div>
-
-      <div class="time-signature-control">
-        <select v-model="timeSignature" class="time-select">
-          <option value="4/4">4/4</option>
-          <option value="3/4">3/4</option>
-          <option value="6/8">6/8</option>
-          <option value="2/4">2/4</option>
-          <option value="5/4">5/4</option>
-          <option value="7/8">7/8</option>
-        </select>
-      </div>
-
-      <div class="key-selector">
-        <label class="mini-label">Key</label>
-        <select v-model="progressionKey" class="key-select">
-          <option v-for="note in notes" :key="note" :value="note">
-            {{ note }}
-          </option>
-        </select>
-      </div>
-    </div>
-
-    <div class="timeline-container" :class="{ 'multi-row': totalBars > 4 }">
-      <template v-if="totalBars > 4">
-        <div
-          v-for="rowIndex in Math.ceil(totalBars / 4)"
-          :key="'row-' + rowIndex"
-          class="timeline-row"
-        >
-          <!-- Bar markers for this row -->
-          <div class="bar-markers">
-            <div
-              v-for="bar in getBarsForRow(rowIndex)"
-              :key="'marker-' + bar"
-              class="bar-marker"
-              :style="{ width: `${100 / Math.min(4, totalBars)}%` }"
-            >
-              <span class="bar-number">{{ bar }}</span>
-            </div>
-          </div>
-
-          <!-- Beat grid track for this row -->
-          <div
-            class="timeline-track"
-            :style="{
-              gridTemplateColumns: `repeat(${getBeatsForRow(rowIndex).length}, 1fr)`,
-            }"
-          >
-            <div
-              v-for="beat in getBeatsForRow(rowIndex)"
-              :key="'beat-' + beat"
-              class="beat-cell"
-              :class="{
-                'bar-start': (beat - 1) % beatsPerBar === 0,
-                'drag-over': dragOverBeat === beat,
-                'has-chord': getBeatChord(beat),
-                'chord-start': isChordStart(beat),
-                playing: isPlaying && currentBeatIndex === beat,
-              }"
-              @dragover.prevent="handleBeatDragOver($event, beat)"
-              @dragleave="handleBeatDragLeave"
-              @drop.prevent="handleBeatDrop($event, beat)"
-              @click="handleBeatClick($event, beat)"
-            >
-              <!-- Empty slot indicator -->
-              <span v-if="!getBeatChord(beat)" class="add-indicator">+</span>
-
-              <template v-if="isChordStart(beat)">
-                <div
-                  class="chord-block"
-                  :class="[`degree-${getScaleDegree(getBeatChord(beat).root)}`]"
-                  :style="{
-                    width: getChordBlockWidth(beat, rowIndex),
-                  }"
-                >
-                  <span class="chord-name">
-                    {{ getBeatChord(beat).root
-                    }}{{ formatType(getBeatChord(beat).type) }}
-                  </span>
-                  <button
-                    class="remove-chord-btn"
-                    @click.stop="removeChordAtBeat(beat)"
-                    title="Remove"
-                  >
-                    ×
-                  </button>
-                </div>
-              </template>
-            </div>
-          </div>
-        </div>
-      </template>
-
-      <template v-else>
-        <!-- Bar markers -->
-        <div class="bar-markers">
-          <div
-            v-for="bar in totalBars"
-            :key="'marker-' + bar"
-            class="bar-marker"
-            :style="{ width: `${(beatsPerBar / totalBeats) * 100}%` }"
-          >
-            <span class="bar-number">{{ bar }}</span>
-          </div>
-        </div>
-
-        <!-- Beat grid track -->
-        <div
-          class="timeline-track"
-          :style="{ gridTemplateColumns: `repeat(${totalBeats}, 1fr)` }"
-        >
-          <div
-            v-for="beat in totalBeats"
-            :key="'beat-' + beat"
-            class="beat-cell"
-            :class="{
-              'bar-start': (beat - 1) % beatsPerBar === 0,
-              'drag-over': dragOverBeat === beat,
-              'has-chord': getBeatChord(beat),
-              'chord-start': isChordStart(beat),
-              playing: isPlaying && currentBeatIndex === beat,
-            }"
-            @dragover.prevent="handleBeatDragOver($event, beat)"
-            @dragleave="handleBeatDragLeave"
-            @drop.prevent="handleBeatDrop($event, beat)"
-            @click="handleBeatClick($event, beat)"
-          >
-            <!-- Empty slot indicator -->
-            <span v-if="!getBeatChord(beat)" class="add-indicator">+</span>
-
-            <template v-if="isChordStart(beat)">
-              <div
-                class="chord-block"
-                :class="[`degree-${getScaleDegree(getBeatChord(beat).root)}`]"
-                :style="{
-                  width: `calc(${getBeatChord(beat).duration * 100}% + ${
-                    (getBeatChord(beat).duration - 1) * 2
-                  }px)`,
-                }"
-              >
-                <span class="chord-name">
-                  {{ getBeatChord(beat).root
-                  }}{{ formatType(getBeatChord(beat).type) }}
-                </span>
-                <button
-                  class="remove-chord-btn"
-                  @click.stop="removeChordAtBeat(beat)"
-                  title="Remove"
-                >
-                  ×
-                </button>
-              </div>
-            </template>
-          </div>
-        </div>
-      </template>
-
-      <!-- Playback progress -->
-      <div
-        v-if="isPlaying"
-        class="playback-indicator"
-        :class="{ 'multi-row': totalBars > 8 }"
-      >
-        <div class="playback-head" :style="getPlaybackHeadStyle()"></div>
-      </div>
-    </div>
-
-    <div class="playback-controls">
-      <button
-        class="transport-btn play-btn"
-        :class="{ playing: isPlaying }"
-        @click="togglePlay"
-        :disabled="!hasChords"
-        :title="isPlaying ? 'Pause' : 'Play'"
-      >
-        <span v-if="!isPlaying"
-          ><Icon name="fa6-solid:play" class="playback-icon"
-        /></span>
-        <span v-else>⏸</span>
-      </button>
-      <button
-        class="transport-btn stop-btn"
-        @click="stopPlayback"
-        :disabled="!isPlaying && !hasChords"
-        title="Stop"
-      >
-        <Icon name="fa6-solid:stop" class="playback-icon" />
-      </button>
-      <button
-        class="transport-btn clear-btn"
-        @click="clearProgression"
-        :disabled="!hasChords"
-        title="Clear All"
-      >
-        <Icon name="fa6-solid:ban" class="playback-icon" />
-      </button>
-      <button
-        class="transport-btn undo-btn"
-        @click="undo"
-        :disabled="!canUndo"
-        title="Undo (Ctrl+Z)"
-      >
-        <Icon name="fa6-solid:rotate-left" class="playback-icon" />
-      </button>
-    </div>
+    <MenuPlaybackControls
+      :isPlaying="isPlaying"
+      :hasChords="hasChords"
+      :canUndo="canUndo"
+      @togglePlay="togglePlay"
+      @stopPlayback="stopPlayback"
+      @clearProgression="clearProgression"
+      @undo="undo"
+    />
 
     <MenuChordCreatorPopover
       :visible="popoverVisible"
@@ -281,16 +66,18 @@ const {
   notes,
 } = storeToRefs(keyboardStore);
 
+const props = defineProps({
+  externalPlay: {
+    type: Function,
+    default: null,
+  },
+});
+
 // Get chord types from library
 const chordTypes = computed(() => chordLibrary.value);
 
 // Progression state
-const progression = ref([]);
-const isDragOver = ref(false);
-const draggedIndex = ref(null);
 const isPlaying = ref(false);
-const currentChordIndex = ref(-1);
-const editingIndex = ref(null);
 let playbackInterval = null;
 let chordIdCounter = 0;
 
@@ -304,47 +91,17 @@ const popoverExistingChord = ref(null);
 // Progression key for scale degree coloring
 const progressionKey = ref("C");
 
-// Calculate scale degree (1-7) based on progression key
-function getScaleDegree(chordRoot) {
-  const noteOrder = [
-    "C",
-    "C#",
-    "D",
-    "D#",
-    "E",
-    "F",
-    "F#",
-    "G",
-    "G#",
-    "A",
-    "A#",
-    "B",
-  ];
-  const keyIndex = noteOrder.indexOf(progressionKey.value);
-  const chordIndex = noteOrder.indexOf(chordRoot);
-  if (keyIndex === -1 || chordIndex === -1) return 1;
+// Event handlers for ProgressionTimeline events
+function handleBeatDragOverFromTimeline({ event, beat }) {
+  handleBeatDragOver(event, beat);
+}
 
-  // Major scale intervals: 0, 2, 4, 5, 7, 9, 11 (semitones)
-  const majorScaleIntervals = [0, 2, 4, 5, 7, 9, 11];
-  const interval = (chordIndex - keyIndex + 12) % 12;
+function handleBeatDropFromTimeline({ event, beat }) {
+  handleBeatDrop(event, beat);
+}
 
-  // Find closest scale degree
-  for (let i = 0; i < majorScaleIntervals.length; i++) {
-    if (majorScaleIntervals[i] === interval) {
-      return i + 1; // 1-indexed scale degree
-    }
-  }
-  // If not exact match, find closest
-  let closest = 1;
-  let minDiff = 12;
-  for (let i = 0; i < majorScaleIntervals.length; i++) {
-    const diff = Math.abs(majorScaleIntervals[i] - interval);
-    if (diff < minDiff) {
-      minDiff = diff;
-      closest = i + 1;
-    }
-  }
-  return closest;
+function handleBeatClickFromTimeline({ event, beat }) {
+  handleBeatClick(event, beat);
 }
 
 // Beat grid state
@@ -407,72 +164,7 @@ function isChordStart(beat) {
   return !!beatChords.value[beat];
 }
 
-// Multi-row helper: Get bars for a specific row (4 bars per row)
-function getBarsForRow(rowIndex) {
-  const startBar = (rowIndex - 1) * 4 + 1;
-  const endBar = Math.min(rowIndex * 4, totalBars.value);
-  const bars = [];
-  for (let bar = startBar; bar <= endBar; bar++) {
-    bars.push(bar);
-  }
-  return bars;
-}
-
-// Multi-row helper: Get beats for a specific row
-function getBeatsForRow(rowIndex) {
-  const barsInRow = getBarsForRow(rowIndex);
-  const startBeat = (barsInRow[0] - 1) * beatsPerBar.value + 1;
-  const endBeat = barsInRow[barsInRow.length - 1] * beatsPerBar.value;
-  const beats = [];
-  for (let beat = startBeat; beat <= endBeat; beat++) {
-    beats.push(beat);
-  }
-  return beats;
-}
-
-// Multi-row helper: Calculate chord block width, clipping at row boundaries
-function getChordBlockWidth(beat, rowIndex) {
-  const chord = beatChords.value[beat];
-  if (!chord) return "100%";
-
-  // Calculate the end beat of this row
-  const rowBeats = getBeatsForRow(rowIndex);
-  const rowEndBeat = rowBeats[rowBeats.length - 1];
-
-  // Clip the chord duration to not extend past the current row
-  const effectiveDuration = Math.min(chord.duration, rowEndBeat - beat + 1);
-
-  return `calc(${effectiveDuration * 100}% + ${(effectiveDuration - 1) * 2}px)`;
-}
-
-// Multi-row helper: Get playback head style (position within row)
-function getPlaybackHeadStyle() {
-  if (totalBars.value <= 4) {
-    // Single row - original logic
-    return {
-      left: `${((currentBeatIndex.value - 0.5) / totalBeats.value) * 100}%`,
-    };
-  }
-
-  // Multi-row: determine which row and position within that row
-  const beatsPerRow = 4 * beatsPerBar.value;
-  const currentRow = Math.ceil(currentBeatIndex.value / beatsPerRow);
-  const beatWithinRow = ((currentBeatIndex.value - 1) % beatsPerRow) + 1;
-
-  // Position within the row
-  const leftPercent = ((beatWithinRow - 0.5) / beatsPerRow) * 100;
-
-  // Calculate vertical position based on row (approximate row height)
-  // Each row is roughly the same height
-  const rowHeight = 100 / Math.ceil(totalBars.value / 4);
-  const topPercent = (currentRow - 1) * rowHeight;
-
-  return {
-    left: `${leftPercent}%`,
-    top: `${topPercent}%`,
-    height: `${rowHeight}%`,
-  };
-}
+// Helper functions (getBarsForRow, getBeatsForRow, etc.) moved to ProgressionTimeline.vue
 
 // Handle drag over a beat cell
 function handleBeatDragOver(e, beat) {
@@ -818,98 +510,6 @@ function toggleMetronome() {
   }
 }
 
-// Chord editing
-function startEditing(index) {
-  editingIndex.value = index;
-}
-
-function finishEditing() {
-  editingIndex.value = null;
-}
-
-// Handle external chord drop (from ChordGrid)
-function handleDragOver(e) {
-  isDragOver.value = true;
-}
-
-function handleDragLeave() {
-  isDragOver.value = false;
-}
-
-function handleDrop(e) {
-  isDragOver.value = false;
-
-  const data = e.dataTransfer.getData("application/json");
-  if (data) {
-    try {
-      const chord = JSON.parse(data);
-      addChord(chord.root, chord.type);
-    } catch (err) {
-      console.error("Failed to parse dropped chord data", err);
-    }
-  }
-}
-
-// Add chord to progression
-function addChord(root, type) {
-  progression.value.push({
-    id: `chord-${++chordIdCounter}`,
-    root,
-    type,
-  });
-}
-
-// Remove chord from progression
-function removeChord(index) {
-  if (editingIndex.value === index) {
-    editingIndex.value = null;
-  }
-  progression.value.splice(index, 1);
-  if (progression.value.length === 0) {
-    stopPlayback();
-  }
-}
-
-// Clear all chords
-function clearProgression() {
-  // Save state before clearing so user can undo
-  if (Object.keys(beatChords.value).length > 0) {
-    saveStateForUndo();
-  }
-
-  stopPlayback();
-  editingIndex.value = null;
-  progression.value = [];
-  beatChords.value = {}; // Clear beat grid chords
-}
-
-// Internal drag/drop for reordering
-function handleSlotDragStart(e, index) {
-  if (editingIndex.value !== null) return; // Don't drag while editing
-  draggedIndex.value = index;
-  e.dataTransfer.effectAllowed = "move";
-  e.dataTransfer.setData("text/plain", index.toString());
-}
-
-function handleSlotDragEnd() {
-  draggedIndex.value = null;
-}
-
-function handleSlotDragOver(e, index) {
-  if (draggedIndex.value !== null && draggedIndex.value !== index) {
-    e.dataTransfer.dropEffect = "move";
-  }
-}
-
-function handleSlotDrop(e, targetIndex) {
-  const sourceIndex = draggedIndex.value;
-  if (sourceIndex !== null && sourceIndex !== targetIndex) {
-    const [movedChord] = progression.value.splice(sourceIndex, 1);
-    progression.value.splice(targetIndex, 0, movedChord);
-  }
-  draggedIndex.value = null;
-}
-
 // Format chord type for display
 function formatType(type) {
   const shortLabels = {
@@ -927,6 +527,17 @@ function formatType(type) {
   return shortLabels[type] !== undefined ? shortLabels[type] : type;
 }
 
+// Clear all chords
+function clearProgression() {
+  // Save state before clearing so user can undo
+  if (Object.keys(beatChords.value).length > 0) {
+    saveStateForUndo();
+  }
+
+  stopPlayback();
+  beatChords.value = {}; // Clear beat grid chords
+}
+
 // Playback controls
 function togglePlay() {
   if (isPlaying.value) {
@@ -938,9 +549,6 @@ function togglePlay() {
 
 async function startPlayback() {
   if (!hasChords.value) return;
-
-  // Close any editing
-  editingIndex.value = null;
 
   // Ensure audio context is ready BEFORE playing first chord
   // This prevents the first chord from being cut off
@@ -976,7 +584,6 @@ async function startPlayback() {
 function stopPlayback() {
   isPlaying.value = false;
   currentBeatIndex.value = 0;
-  currentChordIndex.value = -1;
   if (playbackInterval) {
     clearInterval(playbackInterval);
     playbackInterval = null;
@@ -1011,8 +618,14 @@ function playBeatChord(beat) {
         noteDuration: arpNoteDelay.value * 0.9,
       });
     } else {
-      // Play chord normally - sampler's release envelope handles smooth fadeout
-      if (playChord) playChord("play");
+      // Play chord normally
+      if (props.externalPlay) {
+        // Use external instrument (e.g., guitar)
+        props.externalPlay(chord);
+      } else {
+        // Use default synth
+        if (playChord) playChord("play");
+      }
     }
 
     // For non-arpeggio mode: let the chord ring naturally
@@ -1027,39 +640,6 @@ function playBeatChord(beat) {
         if (playChord) playChord("stop");
       }, chordDurationMs - 100);
     }
-  });
-}
-
-// Legacy function for old progression system (keeping for compatibility)
-function playCurrentChord() {
-  const chord = progression.value[currentChordIndex.value];
-  if (!chord) return;
-
-  storeRootNote.value = chord.root;
-  storeChordType.value = chord.type;
-
-  nextTick(() => {
-    if (arpeggiatorEnabled.value) {
-      arpeggiate("play", {
-        pattern: arpPattern.value,
-        noteDelay: arpNoteDelay.value,
-        noteDuration: arpNoteDelay.value * 0.9,
-      });
-    } else {
-      if (playChord) playChord("play");
-    }
-
-    const stopDelay = Math.max(
-      chordDuration.value - 100,
-      chordDuration.value * 0.9,
-    );
-    setTimeout(() => {
-      if (arpeggiatorEnabled.value) {
-        arpeggiate("stop");
-      } else {
-        if (playChord) playChord("stop");
-      }
-    }, stopDelay);
   });
 }
 
@@ -1172,24 +752,12 @@ onUnmounted(() => {
 </script>
 
 <style scoped lang="scss">
-// Main container
 .chord-progression {
-  width: 80%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 0.75em;
 }
-
-// ============================================
-// UNIFIED CONTROL STYLES
-// ============================================
-
-// Base control variables (conceptual - applied inline)
-// Height: 32px for primary, 28px for secondary
-// Border: 1px solid #3a3a3a
-// Background: linear-gradient(180deg, #252525 0%, #1a1a1a 100%)
-// Border-radius: 6px
-// Transition: all 0.15s ease
 
 .tempo-controls {
   display: flex;
@@ -1213,83 +781,6 @@ onUnmounted(() => {
   gap: 0.5em;
 }
 
-// Primary transport buttons (play, stop, etc)
-.transport-btn {
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid #3a3a3a;
-  border-radius: 6px;
-  background: linear-gradient(180deg, #252525 0%, #1a1a1a 100%);
-  color: #999;
-  font-family: inherit;
-  font-size: 0.9rem;
-  padding: 0;
-  cursor: pointer;
-  transition: all 0.15s ease;
-
-  &:hover:not(:disabled) {
-    background: linear-gradient(180deg, #2d2d2d 0%, #222 100%);
-    border-color: #555;
-    color: #fff;
-    transform: translateY(-1px);
-  }
-
-  &:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-  }
-
-  &:active:not(:disabled) {
-    transform: scale(0.95);
-  }
-
-  .playback-icon {
-    width: 14px;
-    height: 14px;
-  }
-}
-
-.play-btn {
-  &:hover:not(:disabled) {
-    color: #4ade80;
-    border-color: #4ade80;
-    box-shadow: 0 0 12px rgba(74, 222, 128, 0.2);
-  }
-
-  &.playing {
-    color: #4ade80;
-    border-color: #4ade80;
-    background: linear-gradient(180deg, #1a3a25 0%, #0f2a1a 100%);
-  }
-}
-
-.stop-btn {
-  &:hover:not(:disabled) {
-    color: #f87171;
-    border-color: #f87171;
-    box-shadow: 0 0 12px rgba(248, 113, 113, 0.2);
-  }
-}
-
-.clear-btn {
-  &:hover:not(:disabled) {
-    color: #fbbf24;
-    border-color: #fbbf24;
-    box-shadow: 0 0 12px rgba(251, 191, 36, 0.2);
-  }
-}
-
-.undo-btn {
-  &:hover:not(:disabled) {
-    color: #60a5fa;
-    border-color: #60a5fa;
-    box-shadow: 0 0 12px rgba(96, 165, 250, 0.2);
-  }
-}
-
 .redo-btn {
   &:hover:not(:disabled) {
     color: #c084fc;
@@ -1298,7 +789,6 @@ onUnmounted(() => {
   }
 }
 
-// Tempo adjust buttons (smaller, inline)
 .tempo-adjust {
   width: 28px;
   height: 28px;
@@ -1323,7 +813,6 @@ onUnmounted(() => {
   }
 }
 
-// Tempo display and input
 .tempo-display {
   display: flex;
   align-items: center;
@@ -1441,7 +930,6 @@ onUnmounted(() => {
   }
 }
 
-// Select dropdowns - unified style
 .time-select,
 .key-select,
 .setting-select {
@@ -1500,51 +988,8 @@ onUnmounted(() => {
   letter-spacing: 0.1em;
 }
 
-// ============================================
-// SETTINGS PANEL - Bar options
-// ============================================
-.settings-panel {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1em;
-  padding: 0.6em 1em;
-  background: linear-gradient(180deg, #141414 0%, #0f0f0f 100%);
-  border-radius: 8px;
-  border: 1px solid #252525;
-}
+// Settings panel styles moved to ProgressionControls.vue
 
-.setting-group {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.4em;
-}
-
-.setting-label {
-  font-size: 0.6rem;
-  color: #555;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
-
-.info-value {
-  font-size: 1rem;
-  font-weight: 700;
-  color: #22d3ee;
-}
-
-.info-label {
-  font-size: 0.6rem;
-  color: #555;
-  text-transform: lowercase;
-}
-
-// ============================================
-// TIMELINE - Continuous track
-// ============================================
 .timeline-container {
   position: relative;
   background: linear-gradient(180deg, #0a0a0a 0%, #0f0f0f 100%);
@@ -1665,7 +1110,6 @@ onUnmounted(() => {
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
   }
 
-  // Modern scale degree colors with better palette
   &.degree-1 {
     background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);
     border-color: rgba(244, 63, 94, 0.5);
@@ -1731,7 +1175,6 @@ onUnmounted(() => {
   }
 }
 
-// Playback indicator
 .playback-indicator {
   position: absolute;
   top: 0;
@@ -1768,7 +1211,6 @@ onUnmounted(() => {
   }
 }
 
-// Add indicator for empty slots
 .add-indicator {
   font-size: 1.5rem;
   color: #444;
@@ -2509,5 +1951,14 @@ onUnmounted(() => {
 .chord-list-leave-to {
   opacity: 0;
   transform: scale(0.8);
+}
+
+.progression-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1em;
+  background: linear-gradient(180deg, #151515 0%, #0a0a0a 100%);
+  border-top: 1px solid #252525;
 }
 </style>

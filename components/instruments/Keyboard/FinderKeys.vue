@@ -22,8 +22,8 @@
     <!-- Chord Display Panel -->
     <div class="chord-display">
       <div class="chord-name">
-        <span v-if="identifiedRoot && chordType !== 'Unknown'">
-          {{ identifiedRoot }}{{ chordLabel }}
+        <span v-if="identifiedRoot && identifiedChord">
+          {{ identifiedRoot }}{{ identifiedChord.abbr }}
         </span>
         <span
           v-else-if="selectedKeys.length > 0 && chordType === 'Unknown'"
@@ -69,7 +69,7 @@ defineEmits(["playKey", "stopKey"]);
 const pianoKeys = computed(() => {
   const octavesArray = Array.from(
     { length: 2 },
-    (_, i) => currentPitch.value + i
+    (_, i) => currentPitch.value + i,
   );
 
   const keys = [];
@@ -85,16 +85,15 @@ const pianoKeys = computed(() => {
   return keys;
 });
 
-// Get the label for the identified chord
-const chordLabel = computed(() => {
-  if (!chordType.value || chordType.value === "Unknown") return "";
-  // chordType now stores the label directly (e.g., "Minor")
-  return chordType.value;
+// Get the full chord object for the identified chord
+const identifiedChord = computed(() => {
+  if (!chordType.value || chordType.value === "Unknown") return null;
+  return chordLibrary.value.find((c) => c.label === chordType.value);
 });
 
 function isSelected(key) {
   return selectedKeys.value.some(
-    (k) => k.note === key.note && k.octave === key.octave
+    (k) => k.note === key.note && k.octave === key.octave,
   );
 }
 
@@ -108,7 +107,7 @@ function clearNotes() {
 
 function toggleNote(key) {
   const existingIndex = selectedKeys.value.findIndex(
-    (k) => k.note === key.note && k.octave === key.octave
+    (k) => k.note === key.note && k.octave === key.octave,
   );
 
   if (existingIndex !== -1) {
@@ -157,7 +156,7 @@ function identifyChord() {
       if (normalizedLibraryIntervals.length !== currentIntervals.length)
         return false;
       return normalizedLibraryIntervals.every(
-        (val, index) => val === currentIntervals[index]
+        (val, index) => val === currentIntervals[index],
       );
     });
 
